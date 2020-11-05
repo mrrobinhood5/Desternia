@@ -6,4 +6,7 @@ tembed -t 201 -title "Step by Step Crafting Rules"
 -f "Step 5| Complete the Rolls for the minimum amount, up to the desired quality. See `!craft item` for more information"
 -f "Step 6| For magic items, you must meet the item quality in required for enchantment in `!craft ench quality`"
 -f "Step 7| Determine your DC for the spellwork. See `!craft ench dc` for reference"
--f "Step 8| You must 1. Be able to cast the spell, 2. Pay for the materials for each day required and 3. Have a formula. You must successfully pass the DC a number of times equal to the spell level"
+-f "Step 8| You must 
+1. Be able to cast the spell
+2. Pay for the materials for each day required and 
+3. Have a formula. You must successfully pass the DC a number of times equal to the spell level"
