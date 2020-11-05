@@ -1,4 +1,4 @@
-tembed -title "Step by Step Crafting Rules"
+tembed -t 201 -title "Step by Step Crafting Rules"
 -f "Step 1| Determine the ability you will be using for the tools you will use. See `!craft ability` for reference and `!craft level` for restrictions on Rarity"
 -f "Step 2| Determine the Base Costs in GP. You must run `!craft base` to determine what will be the base cost of the item"
 -f "Step 3| Determine the Materials you will be using. You are limited to crafting item rarity by your level. See `!craft material` for a breakdown of materials"
