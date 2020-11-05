@@ -1,0 +1,20 @@
+!alias undeadf embed -title "Zombie uses its Undead Feature" -footer "Usage - !undeadf -t [target] -d [damage]"
+<drac2>
+pargs, baseroll,returnstr = argparse(&ARGS&), "1d20+",""
+target = pargs.get("t") if pargs.get("t") else "zo1"
+damaget = pargs.get("d") if pargs.get("d") else "0"
+descstr = f' -f "Undead Fortitude|If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead." '
+if not combat():
+  return descstr
+
+savedc = int(damaget[0])+5
+zombie = combat().get_combatant(target[0])
+consave = zombie.save("con")
+didSave = True if consave.total >= savedc else False
+returnstr += f' -f "Constitution Save|{consave.full}\nDC: `{savedc}`" '
+if didSave:
+  zombie.modify_hp(1)
+returnstr += descstr
+return returnstr
+</drac2>
+  

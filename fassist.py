@@ -1,0 +1,18 @@
+!alias fassist
+<drac2>
+pargs=argparse(&ARGS&)
+target = pargs.get("t","")
+familiar = load_json(get("familiarData", "{}"))
+if not familiar:
+    return 'echo You have not set a familiar. Check out `!familiar`!'
+title = f'-title "{name}\'s {familiar.type} provides help!"'
+image = ''
+if combat():
+  helped = combat().get_combatant(target[0])
+  helped.add_effect(f'"Helped by {familiar.name if "name" in familiar else familiar.type}"',"", 1, False, None, False, "")
+if 'name' in familiar:
+    title = f'-title "{familiar.name} helps out {helped.name if helped != "" else ""}!"'
+if 'image' in familiar:
+    image = f'-thumb {familiar.image}'  
+return f'tembed {title} {image} -f "Help|You can lend your aid to another creature in the completion of a task. When you take the Help action, the creature you aid gains advantage on the next ability check it makes to perform the task you are helping with, provided that it makes the check before the start of your next turn."'
+</drac2>

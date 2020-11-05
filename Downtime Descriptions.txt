@@ -1,0 +1,26 @@
+** Downtime Reference **
+Recuperating and Relaxation 
+Pit-fighting 
+Gambling
+Carousing 
+Sowing Rumors 
+Crime 
+Community Service 
+Running a Business 
+Work 
+Public Performances 
+Crafting 
+Mass 
+Training Racial feats 
+Training Animals 
+Extended Animal Training 
+Researching 
+Tool Learning 
+Language Learning 
+
+### Downtimes not relevant to Rosemere
+Blackmarket Magic Items `!blackmarket`
+Dueling or Monster fighting `!monsterfight`
+Enforcement `!enforce`
+Basic Training  `!enftrain`
+Selling Magic Items `!marketsell`
