@@ -1,5 +1,7 @@
 tembed -title "Desternia Downtimes" -desc "Available downtimes for Rosemere" 
--f "Downtime Reference|Recuperating and Relaxation
+-f "Downtime Reference|Work - `!dt work`
+Crafting - `!craft`
+Recuperating and Relaxation
 Pit-fighting 
 Gambling
 Carousing 
@@ -9,11 +11,12 @@ Community Service
 Running a Business 
 Work 
 Public Performances 
-Crafting - `!craft`
 Mass 
 Training Racial feats 
 Training Animals 
 Extended Animal Training 
 Researching 
 Tool Learning 
-Language Learning"
+Language Learning
+Working
+"
