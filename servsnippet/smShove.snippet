@@ -1,0 +1,11 @@
+<drac2>
+hasFeat = "Shield Master" or "shield master" in feats
+if hasFeat:
+  returnstr = f' -f "Shield Master|If you take the Attack action on your turn, you can use a bonus action to try to shove a creature within 5 feet of you with your shield"\n'
+  if combat():
+    groll = vroll("1d20+"+str(character().skills.athletics.value))
+    returnstr += f' -f "Grapple Roll|{groll.full} - The target must use `!shove -dc {groll.total}` or be prone"'
+else:
+  returnstr = f' -f "Error|You do not have the Shield Master feat. Add with `!manage feat add \'Shield Master\'` "'
+return returnstr
+</drac2>

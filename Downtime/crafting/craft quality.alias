@@ -1,0 +1,14 @@
+tembed -t 90 -title "Step 6: Crafting Quality"
+-desc "This table is used to average out your rolls for crafting an item. To **enchant** it, it must meet a **Superior** Quality or higher. To get the **FINAL** value of your item, multiply the Standard Value from `!craft-time` by the quality Value from below"
+-f "Quality Values|
+```
+Average  | Quality    | Value x
+Rolls    | _______    | _____
+0-4      | Ruined     | 0x
+4.01-  12| Shoddy     | 0.1x
+12.01- 14| Poor       | 0.5x
+14.01- 17| Standard   | 1x
+17.01- 19| Superior   | 1.2x
+19.01- 21| Exceptional| 1.5x
+21+      | Masterwork | 2x```
+"

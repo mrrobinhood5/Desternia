@@ -1,0 +1,25 @@
+tembed -title "Common Game Commands" -desc "These commands are usually used anytime within the game" -t 60 -f "**During in-game**/
+`!c (skill)` (make a skill check)
+
+`!s (ability)` (ability saves) 
+
+`!s death` (Death saves, resets with `!g ds reset`)
+
+`!passive (skill)` (check passive skills)
+
+`!lr` (Longrest)
+
+`!sr #d#` (short rest and how many hit die to heal)
+
+`!hp +#` or `!hp -#` (modifies your hp)
+
+`!thp +` or `!thp -#` (modifies your thp)
+
+`!ss (slot level) (+ or -# of slots)` (To add or subtract spell slots ex: `!ss 1 +1` adds +1 to 1st level slots)
+
+`!sb` (Shows spellbook)
+
+`!a list` (lists your attacks)
+
+`!tool (tool name) (ability)` (makes an ability tool check, accepts adv and -rr)
+"

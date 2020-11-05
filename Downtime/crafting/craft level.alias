@@ -1,0 +1,11 @@
+tembed -t 90 -title "Step 1: Crafting by Level"
+-f "Restrictions by Level|
+```
+Rarity    | Level
+mundane   | 1
+common    | 3
+uncommon  | 3
+rare      | 6
+very rare | 11
+legendary | 17```
+"

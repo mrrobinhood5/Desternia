@@ -1,5 +1,4 @@
-#dt work save
-!alias dt-work-save embed -title "Configuring Job Settings"
+embed -title "Configuring Job Settings"
 <drac2>
 pargs,me,returnstr,errstr,jobstr,charskills,hasTools,isTool=argparse(&ARGS&),character(),"",f' -f "Usage| `!dt work save -quan [skill] -qual [skill or tool|ability] -relation [charisma skill]`"\n -f "Example | Steve will work fishing. He will use his athletics (con) for quantity of work, Fishing Tackle and Wisdom for his quality, and persuasion to sell his items\n `!dt work save -quan ath -qual fish|wis -relation pers`"',f' -f "Error| You must set your job first with `!dt work job -set \\"jobname\\""`', "persuasiondeceptionperformanceintimidation",True if exists("pTools") else False, False
 qualarg, quanarg, relationarg = pargs.get("qual"),pargs.get("quan"),pargs.get("relation")

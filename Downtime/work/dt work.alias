@@ -57,21 +57,3 @@ else:
   character().set_cvar("DTTrack",dump_json(workdata)) 
   return returnstr
 </drac2>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

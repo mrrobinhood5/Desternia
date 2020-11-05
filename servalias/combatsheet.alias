@@ -1,0 +1,25 @@
+tembed -t 90 -title "Common Combat Commands" -desc "These commands can be used within combat **INIT**" -f "**Combat**|
+`!init join` (join init combat)
+
+`!i a (weapon) -t (target)` (Melee weapon attack)
+
+`!i cast (spell) -t (target)` (attacking with a spell)
+
+`!i aoo (your character) (weapon) -t (target)` (Melee aoo command)"
+-f "**Roll Modifiers**|
+Put these on the ends of rolls to do certain effects:
+`-rr #` (rerolls for # times)
+
+`adv` or `dis` (at the very end to add advantage or disadvantage)
+
+`-d +#` or `-d -#` (this adds or subtracts from the dmg roll)
+
+`-t (target)` (when doing multiple targets do `-t (target) -t (other target)`)
+
+`-i` (at the end of a spell to ignore using spell slots)
+
+`-L #` (to cast at a higher level)
+
+`ammo` (deducts your ammo from your attack)
+
+`sneak` (adds the sneak attack bonus)"

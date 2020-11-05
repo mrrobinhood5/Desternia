@@ -1,0 +1,2 @@
+tembed -desc "You are now using custom `!use` cvars from **Dungeons of Desternia**"
+{{set_cvar("resources","[\"a8dc85f0-3bef-442f-918b-3935610d96ab\",\"4df6c4b7-efd2-4903-8766-4dfcebcdd695\"]")}}

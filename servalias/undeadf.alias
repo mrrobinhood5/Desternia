@@ -1,4 +1,4 @@
-!alias undeadf embed -title "Zombie uses its Undead Feature" -footer "Usage - !undeadf -t [target] -d [damage]"
+embed -title "Zombie uses its Undead Feature" -footer "Usage - !undeadf -t [target] -d [damage]"
 <drac2>
 pargs, baseroll,returnstr = argparse(&ARGS&), "1d20+",""
 target = pargs.get("t") if pargs.get("t") else "zo1"
@@ -17,4 +17,3 @@ if didSave:
 returnstr += descstr
 return returnstr
 </drac2>
-  

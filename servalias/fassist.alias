@@ -1,4 +1,3 @@
-!alias fassist
 <drac2>
 pargs=argparse(&ARGS&)
 target = pargs.get("t","")

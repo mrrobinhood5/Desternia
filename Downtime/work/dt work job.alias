@@ -1,4 +1,4 @@
-!alias dt-work-job tembed
+tembed
 <drac2>
 pargs=argparse(&ARGS&)
 if not &ARGS&:
