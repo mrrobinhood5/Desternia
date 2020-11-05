@@ -10,7 +10,7 @@ if not qualarg or not relationarg or not quanarg or relationarg[0] not in charsk
 else:
   for x in availTools:
     if qualargs[0].lower() in x.lower():
-      qualskill = x[1:]
+      qualskill = x[1:] if x[1] == "" else x
       isTool = True
   for x, y in me.skills: #passing qualargs ability
       if not isTool and qualargs[1].lower() in x.lower():

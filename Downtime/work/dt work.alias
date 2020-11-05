@@ -52,7 +52,7 @@ else:
     relationroll = vroll(baseroll+js[7])
     averageroll = (quanroll.total+qualroll.total+relationroll.total)/3
     results[timestamp][downtime].update({str(x+1):floor(averageroll)})
-    returnstr += f' -title "{name} works at {RosemereJob}" -thumb <image> -f "Results|Work Quantity: *{js[0].capitalize()}(Constitution)*\n{quanroll.full}\nWork Quality: *{js[3].capitalize()}({js[4].capitalize()})*\n{qualroll.full}\nWork Relations: *{js[6].capitalize()}*\n{relationroll.full}"'   
+    returnstr += f' -title "{name} works at {RosemereJob} for {timestamp}" -thumb <image> -f "Results|Work Quantity: *{js[0].capitalize()}(Constitution)*\n{quanroll.full}\nWork Quality: *{js[3].capitalize()}({js[4].capitalize()})*\n{qualroll.full}\nWork Relations: *{js[6].capitalize()}*\n{relationroll.full}"'   
   workdata.update(results)
   character().set_cvar("DTTrack",dump_json(workdata)) 
   return returnstr
