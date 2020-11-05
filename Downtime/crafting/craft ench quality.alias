@@ -1,0 +1,7 @@
+tembed -t 90 -title "Step 6: Enchanting Requirements" -f "Tiers|
+
+Tier          Spelllvl   MatCost   Item Quality
+Basic       | 1-3      | 90gp    | Superior
+Advanced    | 4-6      | 450gp   | Exceptional
+Mastercraft | 7-9      | 4,000gp | Masterwork
+"
