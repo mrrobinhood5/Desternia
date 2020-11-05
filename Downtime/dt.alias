@@ -1,6 +1,6 @@
 tembed -title "Desternia Downtimes" -desc "Available downtimes for Rosemere" 
--f "Downtime Reference|Work - `!dt work`
-Crafting - `!craft`
+-f "Downtime Reference|Work - `!dt work` 
+Crafting - `!craft` 
 Recuperating and Relaxation
 Pit-fighting 
 Gambling
