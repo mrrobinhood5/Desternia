@@ -43,7 +43,7 @@ else:
     for dts in workdata[timestamp][downtime]:
       dtcount += 1
     if dtcount + downtimes > 2: 
-      return f' -title "{name} attemps to work" -desc "You dont have enought downtimes" -f "Fix|Roses are red\n Violets are blue\nMy poems suck\nCome back tomorrow for work or if do `!dt work part-time`"'
+      return f' -title "{name} attemps to work" -desc "You dont have enough downtimes" -f "Fix|Roses are red\n Violets are blue\nMy poems suck\nCome back tomorrow for work or if do `!dt work part-time`"'
   #loads Job Settings from !dt work save
   js = JobSettings.split(",")
   for x in range(downtimes):    

@@ -1,8 +1,5 @@
-!alias craft-item tembed -title "Step 5: Crafting Items" -thumb <image> -footer "Usage - !craft item -tool \"ToolName\" -item \"Item Name\""
-{{f'''{'{'*2}pargs=&ARGS&{'}'*2}'''}}
-{{get_gvar("4f86b818-5fae-43c2-9484-c41d9f54cdac")}}
+tembed -title "Step 5: Crafting Items" -thumb <image> -footer "Usage - !craft item -tool \"ToolName\" -item \"Item Name\""
 
-#craft item
 <drac2>
 calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
 hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
