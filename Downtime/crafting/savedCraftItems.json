@@ -1,0 +1,23 @@
+{
+  "fighterDummy": {
+    "mindays": 10.0, 
+    "dailygp": 5, 
+    "ab": "dex", 
+    "stdvalue": 50.0, 
+    "dailyrolls": {
+      "11.05.20": 21
+    }, 
+    "done": false, 
+    "itemqual": "Masterwork", 
+    "itemval": 100.0,
+    "enchspell": "Spell Name",
+    "enchspelllvl": 1,
+    "enchdc": 12,
+    "hasFormula": false, 
+    "enchgp": 90,
+    "enchrolls": {
+      "11.05.20": true
+    },
+    "isEnchanted": false
+  }
+}

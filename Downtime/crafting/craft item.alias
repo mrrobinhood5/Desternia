@@ -1,4 +1,4 @@
-!alias craft-item tembed -title "Step 5: Crafting Items" -footer "Usage - !craft item -tool \"ToolName\" -item \"Item Name\""
+!alias craft-item tembed -title "Step 5: Crafting Items" -thumb <image> -footer "Usage - !craft item -tool \"ToolName\" -item \"Item Name\""
 {{f'''{'{'*2}pargs=&ARGS&{'}'*2}'''}}
 {{get_gvar("4f86b818-5fae-43c2-9484-c41d9f54cdac")}}
 
