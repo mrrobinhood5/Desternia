@@ -36,6 +36,8 @@ if hasAdv:
   quanAdv = True if pargs.get("adv")[0] == "quan" else False
   qualAdv = True if pargs.get("adv")[0] == "qual" else False
   relationAdv = True if pargs.get("adv")[0] == "relation" else False
+else: 
+  quanAdv, qualAdv, relationAdv = False, False, False
 # check if Job and Settings have been set first, and then parse the arguments
 if not exists("RosemereJob"):
   return f' -title "{name} attemps to work" -desc "You dont have a job." -f "Fix| Set your job with `!dt work job -set \\"Bunnis Bar and Grill\\"`" '
