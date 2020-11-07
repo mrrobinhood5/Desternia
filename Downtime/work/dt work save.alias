@@ -32,7 +32,7 @@ else:
       returnstr +=f' -f "Work Relations| Is set to `{relationskill}`:  +`{relationmod}`"\n'
     if isTool and qualargs[1].lower() in x.lower(): #checks the qual ability and sets the name and bonus for the ability plus proficiency if you are using tools
       qualability = x
-      qualmod = y.value+proficiencyBonus if not isToolE else y.value+proficiencyBonus*2
+      qualmod = y.value+proficiencyBonus if not isToolE else y.value+proficiencyBonus+proficiencyBonus
     if not isTool and qualargs[0].lower() in x.lower():
       qualskill = x
       qualskmod = floor(proficiencyBonus*y.prof)+y.bonus
