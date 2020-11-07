@@ -60,7 +60,8 @@ else:
     relationroll = vroll(baseroll+js[7]) if not relationAdv else vroll(advroll+js[7])
     averageroll = (quanroll.total+qualroll.total+relationroll.total)/3
     results[timestamp][downtime].update({str(x+1):floor(averageroll)})
-    returnstr += f' -title "{name} works at {RosemereJob} for {timestamp}" -thumb <image> -f "Results|Work Quantity: *{js[0].capitalize()}(Constitution)*\n{quanroll.full}\nWork Quality: *{js[3].capitalize()}({js[4].capitalize()})*\n{qualroll.full}\nWork Relations: *{js[6].capitalize()}*\n{relationroll.full}" -f "Familiar|Using your familiar for work gives your advantage on one work roll" -footer "Usage - !dt work [part] [-adv quan/qual/relation]"'   
+    returnstr += f' -title "{name} works at {RosemereJob} for {timestamp}" -thumb <image> -f "Results|Work Quantity: *{js[0].capitalize()}(Constitution)*\n{quanroll.full}\nWork Quality: *{js[3].capitalize()}({js[4].capitalize()})*\n{qualroll.full}\nWork Relations: *{js[6].capitalize()}*\n{relationroll.full}" -footer "Usage - !dt work [part] [-adv quan/qual/relation]"'
+    returnstr += f'-f "Familiar|Using your familiar for work gives your advantage on one work roll"' if hasAdv else f''
   workdata.update(results)
   character().set_cvar("DTTrack",dump_json(workdata)) 
   return returnstr
