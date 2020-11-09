@@ -23,7 +23,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
-if ctx.channel.id not in "746529962361749594,773790279530184714":
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -title "{name} attempts to work..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
 #initialize all of the variables
 pargs, downtime, returnstr, baseroll, advroll =argparse(&ARGS&), "work",  "", "1d20+", "2d20kh1+"
