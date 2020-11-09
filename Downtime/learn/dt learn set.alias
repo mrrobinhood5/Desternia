@@ -14,7 +14,7 @@ if pargs.get("mentor"):
 if pargs.get("lang"):
   language = pargs.get("lang")[0]
   if hasMentor:
-    character().set_cvar("DTLearnLang",",".join(language,mentor)
+    character().set_cvar("DTLearnLang",",".join(language,mentor))
   else:
      character().set_cvar("DTLearnLang", language)
   returnstr += f' -title "{name} sets their learning to language" -desc "You now will start learning {language}" -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\" '
