@@ -9,16 +9,16 @@ helpstr += f' -f "LEARNING|```200 - ((( INT x 2 ) - 20) x 10) = Total Number of 
            f' - You can only do Learning for 2 DT per day rolling with a DC 10 **Intelligence** check \n'\
            f' - Training Cost is 1 gp per day, regardless of how many checks you passed or if you used 1 or 2 DT \n' \
            f' - You have 6 Learning Slots. Languages take up 1 Slot, Tools take up 2 Slots, Feats take up 3 Slots" ' \
-           f' -f "EXAMPLE|```You are a commoner with 12 INT and wants to learn Elvish from a Wood Elf mentor, twice a day.' \
-           f' Multiply 12 (INT) by 2 = 24' \
-           f' Subtract 20 from 24 = 4 ' \
-           f' Multiply 4 by 10 = 40 ' \
-           f' Subtract 40 from 200 = 160 Downtimes (80 full days, 80gp minimum)' \
-           f' Since you have a mentor:' \
-           f' 160 divided by 4 = 40 Downtimes (20 full Days, 20gp minimum)' \
-           f' Doing it twice a day:' \
+           f' -f "EXAMPLE|```You are a commoner with 12 INT and wants to learn Elvish from a Wood Elf mentor, twice a day.\n' \
+           f' Multiply 12 (INT) by 2 = 24\n' \
+           f' Subtract 20 from 24 = 4\n' \
+           f' Multiply 4 by 10 = 40\n' \
+           f' Subtract 40 from 200 = 160 Downtimes (80 full days, 80gp minimum)\n' \
+           f' Since you have a mentor:\n' \
+           f' 160 divided by 4 = 40 Downtimes (20 full Days, 20gp minimum)\n' \
+           f' Doing it twice a day:\n' \
            f' 40 divided by 2 = 20 Days (minimum) and 20gp (minimum)```"' \
-           f' -f "SETUP|```!dt learn set -lang \"Language\" -mentor \"Mentor Name\"```"' \
+           f' -f "SETUP|```!dt learn set -lang \\"Language\\" -mentor \\"Mentor Name\\" ``` "' \
            f' -f "USAGE|```!dt learn -lang \"Language\" [part]```"'
 return helpstr
 </drac2>
