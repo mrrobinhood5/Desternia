@@ -1,4 +1,4 @@
-tembed -title "Learning Downtime"	-desc "You can spend your time learning new skills, languages, and tools. You can do so **with** or **without** a mentor. Ability for learning is **Intelligence**
+tembed -title "Learning Downtime"	-desc "You can spend your time learning new skills, languages, and tools. You can do so **with** or **without** a mentor. Ability for learning is **Intelligence**"
 <drac2>
 # defines primary variables
 helpstr = ""
