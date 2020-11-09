@@ -25,6 +25,6 @@
   "servalias/fassist.alias": "5f9727c8049b94e304538654",
   "servsnippet/smShove.alias": "5f84bb65bbee1bca82ad3280",
   "servsnippet/smSave.alias": "5f84bb89bbee1bca82ad3281",
-  "Downtime/work/dt learn.alias": "5fa96fe8181a164697a74966",
-  "Downtime/work/dt learn set.alias": "5fa97247181a164697a74969"
+  "Downtime/learn/dt learn.alias": "5fa96fe8181a164697a74966",
+  "Downtime/learn/dt learn set.alias": "5fa97247181a164697a74969"
 }
