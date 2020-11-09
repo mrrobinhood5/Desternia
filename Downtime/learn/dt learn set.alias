@@ -9,7 +9,7 @@ if not &ARGS&:
 if pargs.get("mentor"):
   mentor =  pargs.get("mentor")[0]
   hasMentor = True
-  mentorstr += f' -f "Mentor|You have chosen {mentor} as your Mentor."
+  mentorstr += f' -f "Mentor|You have chosen {mentor} as your Mentor." '
 # checks for language set and stores into cvar
 if pargs.get("lang"):
   language = pargs.get("lang")[0]
