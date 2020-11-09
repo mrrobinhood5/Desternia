@@ -1,5 +1,5 @@
 tembed -title "Step 5: Crafting Items" -thumb <image> -footer "Usage - !craft item -tool \"ToolName\" -item \"Item Name\""
-
+#loads the timestamp
 <drac2>
 calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
 hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
@@ -131,23 +131,3 @@ returnstr += f' -f "Progress|Day `{numberOfRolls}` out of `{selectedData["minday
 returnstr += f' -f "Costs and Rewards|XP: `{oxp}` -> `{nxp}`\n Material Cost: `{ogp}` -> `{ngp}` gp"' if not alreadyRolled else f''
 return returnstr
 </drac2>
-
-#saved Data Format
-{
-  "LongItem": {
-    "mindays": 60.0, 
-    "dailygp": 30, 
-    "ab": "con", 
-    "stdvalue": 3000,
-    "dailyrolls": {
-      "10.30.20": 19,
-      "10.31.20": 20
-      }
-    }, 
-    "coolItem": {
-      "mindays": 12.5, 
-      "dailygp": 1, 
-      "ab": "dex", 
-      "stdvalue": 100
-      }
-}
