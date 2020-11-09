@@ -8,7 +8,7 @@ helpstr += f' -f "LEARNING|```200 - ((( INT x 2 ) - 20) x 10) = Total Number of 
            f' - If you train with a mentor, you can **HALF** that number (rounded up) ' \
            f' - You can only do Learning for 2 DT per day rolling with a DC 10 **Intelligence** check '\
            f' - Training Cost is 1 gp per day, regardless of how many checks you passed or if you used 1 or 2 DT' \
-           f' - You have 6 Learning Slots. Languages take up 1 Slot, Tools take up 2 Slots, Feats take up 3 Slots" '
+           f' - You have 6 Learning Slots. Languages take up 1 Slot, Tools take up 2 Slots, Feats take up 3 Slots" ' \
            f' -f "EXAMPLE|```You are a commoner with 12 INT and wants to learn Elvish from a Wood Elf mentor, twice a day.' \
            f' ```Multiply 12 (INT) by 2 = 24' \
            f' Subtract 20 from 24 = 4 ' \
