@@ -9,7 +9,7 @@ if not &ARGS&:
 if parsedArgs.get("mentor"):
   mentor =  parsedArgs.get("mentor")[0]
   hasMentor = True
-  mentorStr += f' -f "Mentor|You have chosen `{mentor}` as their Mentor." '
+  mentorStr += f' -f "Mentor|{name}has chosen `{mentor}` as their Mentor." '
 # checks for language set and stores into cvar
 if parsedArgs.get("lang"):
   language = parsedArgs.get("lang")[0]
@@ -17,7 +17,7 @@ if parsedArgs.get("lang"):
     character().set_cvar("DTLearnLang",language+","+mentor)
   else:
      character().set_cvar("DTLearnLang", language)
-  returnStr += f' -title "{name} sets their learning to language" -desc "You now will start learning {language}" -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
+  returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning {language}" -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
 
 return returnStr + mentorStr
 
