@@ -1,4 +1,4 @@
-tembed -title "Step 4: Crafting Time - List" -footer "Usage - !dt craft list [-delete] [item]"
+tembed -title "Step 4: Crafting Time - List" -footer "Usage - !raft list [-delete \"item\"]"
 <drac2>
 # loads all primary variables
 pargs, returnstr, items = argparse(&ARGS&), "", load_json(savedCraftItems)  
