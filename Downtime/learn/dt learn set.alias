@@ -1,25 +1,25 @@
 tembed
 <drac2>
 #set primary variables
-pargs, hasMentor, mentorstr, mentor, returnstr = argparse(&ARGS&), False, "", "", ""
+parsedArgs, hasMentor, mentorStr, mentor, returnStr = argparse(&ARGS&), False, "", "", ""
 # if set is ran without arguments
 if not &ARGS&:
   return f' -title \"{name} attempts to set a learning activity\" -desc \"You didn\'t provide any arguments\" -f \"Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
 # checks for mentor and stores info
-if pargs.get("mentor"):
-  mentor =  pargs.get("mentor")[0]
+if parsedArgs.get("mentor"):
+  mentor =  parsedArgs.get("mentor")[0]
   hasMentor = True
-  mentorstr += f' -f "Mentor|You have chosen {mentor} as your Mentor." '
+  mentorStr += f' -f "Mentor|You have chosen `{mentor}` as their Mentor." '
 # checks for language set and stores into cvar
-if pargs.get("lang"):
-  language = pargs.get("lang")[0]
+if parsedArgs.get("lang"):
+  language = parsedArgs.get("lang")[0]
   if hasMentor:
     character().set_cvar("DTLearnLang",language+","+mentor)
   else:
      character().set_cvar("DTLearnLang", language)
-  returnstr += f' -title "{name} sets their learning to language" -desc "You now will start learning {language}" -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\" " '
+  returnStr += f' -title "{name} sets their learning to language" -desc "You now will start learning {language}" -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
 
-return returnstr + mentorstr
+return returnStr + mentorStr
 
 
 </drac2>
