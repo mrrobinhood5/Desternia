@@ -17,3 +17,4 @@ jobs:
         avrae-token: '${{ secrets.AVRAETOKEN }}'
         alias_id_file_name: 'alias-ids.json'
         modified-files: '${{ steps.modifed.outputs.added_modified }}'
+

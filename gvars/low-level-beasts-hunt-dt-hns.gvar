@@ -1,0 +1,57 @@
+[
+    {
+        "size": "Medium",
+        "name": "Deer",
+        "cr": "0"
+    },
+    {
+        "size": "Medium",
+        "name": "Goat",
+        "cr": "0"
+    },
+    {
+        "size": "Medium",
+        "name": "Hyena",
+        "cr": "0"
+    },
+    {
+        "size": "Medium",
+        "name": "Peacock",
+        "cr": "0"
+    },
+    {
+        "size": "Medium",
+        "name": "Pig",
+        "cr": "0"
+    },
+    {
+        "size": "Medium",
+        "name": "Vulture",
+        "cr": "0"
+    },
+    {
+        "size": "Medium",
+        "name": "Boar",
+        "cr": "1/4"
+    },
+    {
+        "size": "Medium",
+        "name": "Giant Badger",
+        "cr": "1/4"
+    },
+    {
+        "size": "Medium",
+        "name": "Giant Posinous Snake",
+        "cr": "1/4"
+    },
+    {
+        "size": "Medium",
+        "name": "Wolf ",
+        "cr": "1/4"
+    },
+    {
+        "size": "Medium",
+        "name": "Black Bear",
+        "cr": "1/2"
+    }
+]
