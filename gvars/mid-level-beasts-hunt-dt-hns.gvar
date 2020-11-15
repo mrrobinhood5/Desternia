@@ -1,0 +1,127 @@
+[
+    {
+        "size": "Large",
+        "name": "Giant Fly",
+        "cr": "0"
+    },
+    {
+        "size": "Large",
+        "name": "Axe Beak",
+        "cr": "1/4"
+    },
+    {
+        "size": "Large",
+        "name": "Constrictor Snake",
+        "cr": "1/4"
+    },
+    {
+        "size": "Large",
+        "name": "Diatryma",
+        "cr": "1/4"
+    },
+    {
+        "size": "Large",
+        "name": "Elk ",
+        "cr": "1/4"
+    },
+    {
+        "size": "Large",
+        "name": "Giant Lizard",
+        "cr": "1/4"
+    },
+    {
+        "size": "Large",
+        "name": "Golden Stag",
+        "cr": "1/4"
+    },
+    {
+        "size": "Large",
+        "name": "Yak",
+        "cr": "1/4"
+    },
+    {
+        "size": "Large",
+        "name": "Giant Goat",
+        "cr": "1/2"
+    },
+    {
+        "size": "Large",
+        "name": "Jaculi",
+        "cr": "1/2"
+    },
+    {
+        "size": "Large",
+        "name": "Brown Bear",
+        "cr": "1"
+    },
+    {
+        "size": "Large",
+        "name": "Dire Wolf",
+        "cr": "1"
+    },
+    {
+        "size": "Large",
+        "name": "Giant Flying Spider",
+        "cr": "1"
+    },
+    {
+        "size": "Large",
+        "name": "Giant Hyena",
+        "cr": "1"
+    },
+    {
+        "size": "Large",
+        "name": "Giant Spider",
+        "cr": "1"
+    },
+    {
+        "size": "Large",
+        "name": "Lion",
+        "cr": "1"
+    },
+    {
+        "size": "Large",
+        "name": "Moorbounder",
+        "cr": "1"
+    },
+    {
+        "size": "Large",
+        "name": "Tiger",
+        "cr": "1"
+    },
+    {
+        "size": "Large",
+        "name": "Aurochs",
+        "cr": "2"
+    },
+    {
+        "size": "Large",
+        "name": "Cave Bear",
+        "cr": "2"
+    },
+    {
+        "size": "Large",
+        "name": "Giant Boar",
+        "cr": "2"
+    },
+    {
+        "size": "Large",
+        "name": "Rhinoceros",
+        "cr": "2"
+    },
+    {
+        "size": "Large",
+        "name": "Saber Tooth Tiger",
+        "cr": "2"
+    },
+    {
+        "size": "Large",
+        "name": "Giant Scorpion",
+        "cr": "3"
+    },
+    {
+        "size": "Large ",
+        "name": "Bristled Moorbounder",
+        "cr": "3"
+    }
+]
