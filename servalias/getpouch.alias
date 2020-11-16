@@ -1,9 +1,9 @@
 tembed 
 <drac2>
 if str(ctx.channel.id) not in "772656544893632532, 736439805436755998":
-  return f' -title "{{name}} Attempts to claim their Welcome Pouch" -f "Error|You can only do this in #xx-rift-house-basement. Shoo!" '
+  return f' -title "{name} Attempts to claim their Welcome Pouch" -f "Error|You can only do this in #xx-rift-house-basement. Shoo!" '
 if exists("basement"):
-  return f' -title "{{name}} Attempts to claim their Welcome Pouch" -f "Error|You aready claimed it, bzzz!" '
+  return f' -title "{name} Attempts to claim their Welcome Pouch" -f "Error|You aready claimed it, bzzz!" '
 bagsLoaded=load_json(bags) #load the bags
 pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
 ogp = pouch[1]['gp'] # what gp was before?
@@ -13,5 +13,5 @@ welcomePouch = ["Welcome Pouch", {"Potion of Healing": 3, "Healer's Kit": 1, "Sc
 welcomePouch in bagsLoaded or bagsLoaded.append(welcomePouch)
 set_cvar("bags",dump_json(bagsLoaded)) #dumps them coins back to the cvar
 character().set_cvar("basement","")
-return f' -title "{{name}} receives their Welcome Pouch!" -f "Welcome Pouch|• 250gp\n• 3 potions of healing (regular)\n• Healer\'s kit\n• Spell Scroll for beginniners - Cast \\"Protection from Poison\\" (2nd level Spell)  (Can be used by any class)\n• Small Azure Gem (instantly cast \\"spare the dying\\" when broken)\n• 2 daggers" '
+return f' -title "{name} receives their Welcome Pouch!" -f "Welcome Pouch|• 250gp\n• 3 potions of healing (regular)\n• Healer\'s kit\n• Spell Scroll for beginniners - Cast \\"Protection from Poison\\" (2nd level Spell)  (Can be used by any class)\n• Small Azure Gem (instantly cast \\"spare the dying\\" when broken)\n• 2 daggers" '
 </drac2>
