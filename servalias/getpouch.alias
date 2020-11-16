@@ -2,11 +2,8 @@ tembed
 <drac2>
 if ctx.channel.id not in "772656544893632532, 736439805436755998":
   return f' -title "{{name}} Attempts to claim their Welcome Pouch" -f "Error|You can only do this in #xx-rift-house-basement. Shoo!" '
-<<<<<<< HEAD
 if exists(basement):
   return f' -title "{{name}} Attempts to claim their Welcome Pouch" -f "Error|You aready claimed it, bzzz!" '
-=======
->>>>>>> 585ab619f809edf8844134d913a4a947bc6619d3
 bagsLoaded=load_json(bags) #load the bags
 pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
 ogp = pouch[1]['gp'] # what gp was before?
