@@ -7,7 +7,7 @@ ogp = pouch[1]['gp'] # what gp was before?
 pouch[1].update({'gp':ogp+250}) #updates new quantities locally
 pouch in bagsLoaded or bagsLoaded.append(pouch)
 welcomePouch = ["Welcome Pouch", {"Potion of Healing": 3, "Healer's Kit": 1, "Scroll of Protection from Poison": 1, "Small Azure Gem, Spare the Dying": 1, "Dagger": 2}]
-welcomePouch in bagsLoaded or bagsLoaded.append(welcomPouch)
+welcomePouch in bagsLoaded or bagsLoaded.append(welcomePouch)
 set_cvar("bags",dump_json(bagsLoaded)) #dumps them coins back to the cvar
 </drac2>
 -f "Welcome Pouch|• 250gp
