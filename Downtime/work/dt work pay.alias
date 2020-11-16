@@ -35,7 +35,8 @@ if workdata:
   allrollsavg = totalrolls/daysworked
   returnstr += f'\" -f "Average|{allrollsavg}" '
   character().set_cvar("DTTrack",dump_json(workdata))
-  paybonus = 2 if allrollsavg >= 20 else 1.5 if allrollsavg >=16 else 1 if allrollsavg >= 10 else .75
+  # paybonus = 2 if allrollsavg >= 20 else 1.5 if allrollsavg >=16 else 1 if allrollsavg >= 10 else .75
+  paybonus = round(allrollsavg * .1,1)
   coincount = daysworked * paybonus
   returnstr += f' -f "PayCheck|You Worked `{daysworked/2}` days at `2gp` per day with a bonus of `x{paybonus}` for a total of `{coincount} gp`" '
   #breaks down into gp sp and cp
