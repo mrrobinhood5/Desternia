@@ -1,0 +1,18 @@
+tembed -title "{name} receives their Welcome Pouch!" 
+<drac2>
+bagsLoaded=load_json(bags) #load the bags
+
+pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
+ogp = pouch[1]['gp'] # what gp was before?
+pouch[1].update({'gp':ogp+250}) #updates new quantities locally
+pouch in bagsLoaded or bagsLoaded.append(pouch)
+welcomePouch = ["Welcome Pouch", {"Potion of Healing": 3, "Healer's Kit": 1, "Scroll of Protection from Poison": 1, "Small Azure Gem, Spare the Dying": 1, "Dagger": 2}]
+welcomePouch in bagsLoaded or bagsLoaded.append(welcomPouch)
+set_cvar("bags",dump_json(bagsLoaded)) #dumps them coins back to the cvar
+</drac2>
+-f "Welcome Pouch|• 250gp
+    • 3 potions of healing (regular) 
+    • Healer's kit
+    • Spell Scroll for beginniners - Cast "Protection from Poison" (2nd level Spell)  (Can be used by any class)
+    • Small Azure Gem (instantly cast "spare the dying" when broken)
+    • 2 daggers"
