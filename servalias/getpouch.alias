@@ -13,10 +13,5 @@ welcomePouch = ["Welcome Pouch", {"Potion of Healing": 3, "Healer's Kit": 1, "Sc
 welcomePouch in bagsLoaded or bagsLoaded.append(welcomePouch)
 set_cvar("bags",dump_json(bagsLoaded)) #dumps them coins back to the cvar
 character().set_cvar("basement","")
-return f' -title "{{name}} receives their Welcome Pouch!" -f "Welcome Pouch|• 250gp
-    • 3 potions of healing (regular) 
-    • Healer's kit
-    • Spell Scroll for beginniners - Cast "Protection from Poison" (2nd level Spell)  (Can be used by any class)
-    • Small Azure Gem (instantly cast "spare the dying" when broken)
-    • 2 daggers" '
+return f' -title "{{name}} receives their Welcome Pouch!" -f "Welcome Pouch|• 250gp\n• 3 potions of healing (regular)\n• Healer's kit\n• Spell Scroll for beginniners - Cast "Protection from Poison" (2nd level Spell)  (Can be used by any class)\n• Small Azure Gem (instantly cast "spare the dying" when broken)\n• 2 daggers" '
 </drac2>
