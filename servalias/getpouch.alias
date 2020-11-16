@@ -1,4 +1,4 @@
-tembed -title "{name} receives their Welcome Pouch!" 
+tembed -title "{{name}} receives their Welcome Pouch!" 
 <drac2>
 bagsLoaded=load_json(bags) #load the bags
 
