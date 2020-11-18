@@ -1,12 +1,29 @@
 embed -title "Configuring Job Settings" -thumb <image>
 <drac2>
-pargs,me,returnstr,errstr,jobstr,charskills,hasTools,hasToolsE, isTool, isToolE=argparse(&ARGS&),character(),"",f' -f "Usage| `!dt work save -quan [skill] -qual [skill or tool|ability] -relation [charisma skill]`"\n -f "Example | Steve will work fishing. He will use his athletics (con) for quantity of work, Fishing Tackle and Wisdom for his quality, and persuasion to sell his items\n `!dt work save -quan ath -qual fish|wis -relation pers`"',f' -f "Error| You must set your job first with `!dt work job -set \\"jobname\\""`', "persuasiondeceptionperformanceintimidation",True if exists("pTools") else False, True if exists("eTools") else False, False, False
+# set primary variables
+pargs,me,returnstr = argparse(&ARGS&),character(),""
+errstr = f' -f "Usage| `!dt work save -quan [skill] -qual [skill or tool|ability] -relation [charisma skill]`"\n '\
+               f' -f "Example | Steve will work fishing. He will use his athletics (con) for quantity of work, Fishing '\
+               f' Tackle and Wisdom for his quality, and persuasion to sell his items\n ' \
+               f' `!dt work save -quan ath -qual fish|wis -relation pers`"' \
+jobstr = f' -f "Error| You must set your job first with `!dt work job -set \\"jobname\\""`'
+charskills = "persuasiondeceptionperformanceintimidation"
+
+# variables required for Tools
+hasTools,hasToolsE, isTool, isToolE=True if exists("pTools") else False, True if exists("eTools") else False, False, False
+availTools, availToolsE = pTools.split(",") if hasTools else "", eTools.split(",") if hasTools and isToolE else ""
+
+# variables for arguments
 qualarg, quanarg, relationarg = pargs.get("qual"),pargs.get("quan"),pargs.get("relation")
-qualargs,availTools, availToolsE = qualarg[0].split("|") if qualarg else "",pTools.split(",") if hasTools else "", eTools.split(",") if hasTools and isToolE else ""
+qualargs = qualarg[0].split("|") if qualarg else ""
+
+# Error Checking
 if not exists("RosemereJob") or RosemereJob == "":
   return jobstr
 if not qualarg or not relationarg or not quanarg or relationarg[0] not in charskills:
-  return errstr 
+  return errstr
+
+# Tool Checking
 else:
   for x in availTools:
     if qualargs[0].lower() in x.lower():
@@ -17,28 +34,41 @@ else:
       qualskill = x[1:] if x[1] == "" else x
       isTool = True
       isToolE = True
-  for x, y in me.skills: #passing qualargs ability
+
+# passing quality ability
+  for x, y in me.skills:
       if not isTool and qualargs[1].lower() in x.lower():
         qualability = x
         qualabmod = y.value
+
+# checks the quantity skill in skills are assignes the skill name and skill bonus
   for x, y in me.skills:
-    if quanarg[0].lower() in x.lower(): #checks the quantity skill in skills are assignes the skill name and skill bonus
+    if quanarg[0].lower() in x.lower():
       quanskill = x
       quanmod =floor(proficiencyBonus*y.prof)+y.bonus+constitutionMod
       returnstr +=f' -f "Work Quantity| Is set to `{quanskill}`: +`{quanmod}`"\n'
-    if relationarg[0].lower() in x.lower(): #checks the relation skill and assigns the relation skill name and bonus
+
+# checks the relation skill and assigns the relation skill name and bonus
+    if relationarg[0].lower() in x.lower():
       relationskill = x
       relationmod=y.value
       returnstr +=f' -f "Work Relations| Is set to `{relationskill}`:  +`{relationmod}`"\n'
-    if isTool and qualargs[1].lower() in x.lower(): #checks the qual ability and sets the name and bonus for the ability plus proficiency if you are using tools
+
+# checks the qual ability and sets the name and bonus for the ability plus proficiency if you are using tools
+    if isTool and qualargs[1].lower() in x.lower():
       qualability = x
-      qualmod = y.value-floor((proficiencyBonus*y.prof)) if not isToolE else y.value-floor((proficiencyBonus*y.prof))+(proficiencyBonus*2)
+      qualmod = proficiencyBonus + y.value if not isToolE else (proficiencyBonus*2) + y.value
+      # qualmod = y.value-floor((proficiencyBonus*y.prof)) if not isToolE else y.value-floor((proficiencyBonus*y.prof))+(proficiencyBonus*2)
     if not isTool and qualargs[0].lower() in x.lower():
       qualskill = x
       qualskmod = floor(proficiencyBonus*y.prof)+y.bonus
       qualmod = qualskmod+qualabmod
+
+# builds the return strings
   returnstr += f' -f "Work Quality| Is set to `{qualskill}({qualability})`:  +`{qualmod}`"\n'
   settingstr = f'{quanskill},{quanmod},{isTool},{qualskill},{qualability},{qualmod},{relationskill},{relationmod}'
+
+# saves all the settings
   me.set_cvar("JobSettings",settingstr)
 return returnstr
 </drac2>
