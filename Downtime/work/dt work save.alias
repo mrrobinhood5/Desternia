@@ -5,7 +5,7 @@ pargs,me,returnstr = argparse(&ARGS&),character(),""
 errstr = f' -f "Usage| `!dt work save -quan [skill] -qual [skill or tool|ability] -relation [charisma skill]`"\n '\
                f' -f "Example | Steve will work fishing. He will use his athletics (con) for quantity of work, Fishing '\
                f' Tackle and Wisdom for his quality, and persuasion to sell his items\n ' \
-               f' `!dt work save -quan ath -qual fish|wis -relation pers`"' \
+               f' `!dt work save -quan ath -qual fish|wis -relation pers`"'
 jobstr = f' -f "Error| You must set your job first with `!dt work job -set \\"jobname\\""`'
 charskills = "persuasiondeceptionperformanceintimidation"
 
