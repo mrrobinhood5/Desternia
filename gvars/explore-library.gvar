@@ -1,0 +1,10 @@
+{
+ "Setting Name": {
+  "Begin": "You are alone in a room. It is dank and poignant.",
+  "BeginChoices": "Door, Vent",
+  "Door": "As you cross the Door, you can see a hallway."
+  "DoorChoices": "Begin, Further On",
+  "Vent": "This vent is tight.",
+  "VentChoices": "Begin, CrawlSpace"
+ }
+}
