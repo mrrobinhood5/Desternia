@@ -1,10 +1,16 @@
 {
- "Setting Name": {
-  "Begin": "You are alone in a room. It is dank and poignant.",
-  "BeginChoices": "Door, Vent",
-  "Door": "As you cross the Door, you can see a hallway.",
-  "DoorChoices": "Begin, Further On",
-  "Vent": "This vent is tight.",
-  "VentChoices": "Begin, CrawlSpace"
+ "Tower of Terror": {
+  "JailCell": "You are alone in a cell. It is dank and poignant. There is a dead guard at your feet. You hold a bloody shank and breathe heavily",
+  "BeginChoices": "GrabKeys, TakeNap",
+  "GrabKeys": "You take the ring of Keys from the body. An audible grunt can be hard. He seems to still be alive.",
+  "GrabKeysEarns": "JailCellKey",
+  "GrabKeyChoices": "TakeNap, KillHimAgain, Talk",
+  "TakeNap": "You lay down and take a nap. Other guards show up and kill you. You are Dead.",
+  "TakeNapChoices": "None you are Dead",
+  "KillHimAgain": "You stab him multiple times on the back. He seems to have died correctly this time",
+  "KillHimAgainChoices": "ExitCell",
+  "Talk": "You decide to talk to him. He tells you about his wife and kids with his last breath",
+  "TalkChoices": "ExitCell",
+  "ExitCell": "You are FREE!"
  }
 }
