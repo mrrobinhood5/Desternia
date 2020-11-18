@@ -3,7 +3,7 @@
   "Begin": "You are alone in a cell. It is dank and poignant. There is a dead guard at your feet. You hold a bloody shank and breathe heavily",
   "BeginChoices": "GrabKeys, TakeNap",
   "GrabKeys": "You take the ring of Keys from the body. An audible grunt can be hard. He seems to still be alive.",
-  "GrabKeyChoices": "TakeNap, KillHimAgain, Talk",
+  "GrabKeysChoices": "TakeNap, KillHimAgain, Talk",
   "GrabKeysEarns": "JailCellKey",
   "TakeNap": "You lay down and take a nap. Other guards show up and kill you. You are Dead.",
   "TakeNapChoices": "None you are Dead",
