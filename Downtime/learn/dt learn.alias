@@ -41,9 +41,9 @@ if pArgs.get("lang"):
 #does the rolls
 for myroll in range(rr):
     attempt = vroll(rollstr+learnMod)
-    attemptcrit = [1,2,-1][attempt.result.crit]
+    critstr, attemptcrit= [['none', 1],['**CRIT SUCCESS +2**', 2], ['**CRIT FAIL -1**', -1]][attempt.result.crit]
     passDC = True if attempt.total >= 10 else False
-    returnstr += f' -f "Roll #{myroll+1}|{attempt}\n{"Passed +1" if passDC else "No Progress"}" '
+    returnstr += f' -f "Roll #{myroll+1}|{attempt}\n{"Passed +1" if passDC and critstr == "none" else critstr if critstr != "none" else "No Progress"}" '
     me.mod_cc(ccName,attemptcrit) if passDC else me.mod_cc(ccName,attemptcrit) if attemptcrit == -1 else 0
 
 new_cc = me.get_cc(ccName)
