@@ -4,8 +4,7 @@ tembed
 parsedArgs, hasMentor, mentorStr, mentor, returnStr, me = argparse(&ARGS&), False, "", "", "", character()
 # if set is ran without arguments
 if not &ARGS&:
-  return f' -title "{name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" ' \ 
-         f' -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
+  return f' -title "{name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
 # checks for mentor and stores info
 if parsedArgs.get("mentor"):
   mentor =  parsedArgs.last("mentor")
