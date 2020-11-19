@@ -36,7 +36,7 @@ if pArgs.get("lang"):
     language, mentor, ccName = get("DTLearnLang").split(",")
     hasMentor = False if mentor == "none" else True
     returnstr += f' -desc "Learning Language: {language} {"mentored by "+mentor if hasMentor else "all alone"} "'
-    learnMod = me.skills.intelligence.value
+    learnMod = str(me.skills.intelligence.value)
 #does the rolls
 for myroll in range(rr):
     attempt = vroll(rollstr+learnMod)
