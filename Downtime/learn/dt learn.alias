@@ -37,12 +37,16 @@ if pArgs.get("lang"):
     hasMentor = False if mentor == "none" else True
     returnstr += f' -desc "Learning Language: {language} {"mentored by "+mentor if hasMentor else "all alone"} "'
     learnMod = str(me.skills.intelligence.value)
+    prev_cc = me.get_cc(ccName)
 #does the rolls
 for myroll in range(rr):
     attempt = vroll(rollstr+learnMod)
+    attemptcrit = [1,2,-1][attempt.result.crit]
     passDC = True if attempt.total >= 10 else False
     returnstr += f' -f "Roll #{myroll+1}|{attempt}\n{"Passed +1" if passDC else "No Progress"}" '
+    me.mod_cc(ccName,attemptcrit) if passDC else me.mod_cc(ccName,attemptcrit) if attemptcrit == -1 else 0
 
-returnstr += f' -f "Progress|{me.cc_str(ccName)}" '
+new_cc = me.get(ccName)
+returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})" '
 return returnstr
 </drac2>
