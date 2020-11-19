@@ -69,7 +69,7 @@ if isComplete:
 #adds complete flag to dt lang cvar
     learnStatus = "True"
     learnData = (language, mentor, ccName, learnStatus)
-    me.set_cvar("DTLangLearn", ", ".join(learnData))
+    me.set_cvar("DTLearnLang", ", ".join(learnData))
 new_cc = me.get_cc(ccName)
 returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})" '
 return returnstr
