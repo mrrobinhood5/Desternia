@@ -5,7 +5,7 @@ pArgs, helpstr, returnstr, me = argparse(&ARGS&), "", "", character()
 #defines secondary variables
 rr = 2 if not pArgs.get("part") else 1
 # defines the roll strings
-rollstr = ['1d20+', '2d20kh1+', '3d20kh1+', '2d20kl1+'][pArgs.get("adv")]
+rollstr = ['1d20+', '2d20kh1+', '3d20kh1+', '2d20kl1+'][pArgs.adv()]
 
 # defines the help string
 helpstr += f' -desc "You can spend your time learning new skills, languages, and tools. You can do so **with** or **without** a mentor.' \
