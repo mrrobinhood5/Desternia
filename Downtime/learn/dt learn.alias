@@ -31,13 +31,13 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
 
 # error checks #TODO Add error check to see if there is any downtime left for the day
 
-if not &ARGS&:
+if not &ARGS& or not exists("DTLearnLang"):
     return helpstr
 #set up the info into the cvar
 if pArgs.get("lang"):
     language, mentor, ccName, learnStatus = get("DTLearnLang").split(",")
     hasMentor = False if mentor == "none" else True
-    returnstr += f' -desc "Learning Language: {language} {"mentored by "+mentor if hasMentor else "all alone"} "'
+    returnstr += f' -desc "Learning Language: `{language}` {"mentored by `"+mentor+"`" if hasMentor else "`no one`. All alone :("} "'
     learnMod = str(me.skills.intelligence.value)
     prev_cc = me.get_cc(ccName)
 
@@ -67,8 +67,8 @@ if isComplete:
         me.set_cvar("languages", language.capitalize())
 #adds complete flag to dt lang cvar
     learnStatus = "True"
-    learnData = ",".join(language, mentor, ccName, learnStatus)
-    me.set_cvar("DTLangLearn", learnData)
+    learnData = (language, mentor, ccName, learnStatus)
+    me.set_cvar("DTLangLearn", ",".join(learnData))
 new_cc = me.get_cc(ccName)
 returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})" '
 return returnstr

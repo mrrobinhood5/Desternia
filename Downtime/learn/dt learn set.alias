@@ -4,7 +4,7 @@ tembed
 parsedArgs, hasMentor, mentorStr, mentor, returnStr, me = argparse(&ARGS&), False, "", "", "", character()
 # if set is ran without arguments
 if not &ARGS&:
-  return f' -title "{name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
+  return f' -title "{me.name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
 # checks for mentor and stores info
 if parsedArgs.get("mentor"):
   mentor =  parsedArgs.last("mentor")
@@ -20,8 +20,8 @@ knownLanguages = get("languages") if exists("languages") else ""
 if parsedArgs.get("lang"):
   language = parsedArgs.last("lang")
   ccName = f'DT Learn-Language-{language}'
-  if language in knownLanguages:
-    return f' -title "{name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
+  if language.lower() in knownLanguages.lower():
+    return f' -title "{me.name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
 
 # does the math for number of Downtimes required
   if hasMentor:
@@ -29,8 +29,8 @@ if parsedArgs.get("lang"):
   else:
      me.set_cvar("DTLearnLang", language+",none")
 
-returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning {language}" ' \
-                  f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
+returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning `{language}`" ' \
+                  f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang {language}` " '
 saveInfo = (language, mentor, ccName, "False")
 me.set_cvar("DTLearnLang",",".join(saveInfo))
 me.create_cc(ccName, "0", str(totalDowntimesRequired), 'none')
