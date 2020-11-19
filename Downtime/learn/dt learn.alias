@@ -38,10 +38,10 @@ if pArgs.get("lang"):
     returnstr += f' -desc "Learning Language: {language} {"mentored by "+mentor if hasMentor else "all alone"} "'
     learnMod = me.skills.intelligence.value
 #does the rolls
-for roll in range(rr):
+for myroll in range(rr):
     attempt = vroll(rollstr+learnMod)
     passDC = True if vroll.total >= 10 else False
-    returnstr += f' -f "Roll #{roll+1}|{attempt}\n{"Passed +1" if passDC else "No Progress"}" '
+    returnstr += f' -f "Roll #{myroll+1}|{attempt}\n{"Passed +1" if passDC else "No Progress"}" '
 
 returnstr += f' -f "Progress|{me.cc_str(ccName)}" '
 return returnstr

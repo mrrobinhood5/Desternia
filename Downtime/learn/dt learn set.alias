@@ -13,7 +13,7 @@ if parsedArgs.get("mentor"):
 
 # does the math for downtimes required
 totalDowntimesRequired = ceil(200 - (((me.stats.intelligence*2)-20)*10))
-totalDowntimesRequired = 20 if totalDowntimesRequired < 20 else totalDowntimesRequired
+totalDowntimesRequired = 80 if totalDowntimesRequired < 80 else totalDowntimesRequired
 
 # checks for language set and stores into cvar
 if parsedArgs.get("lang"):
@@ -25,7 +25,8 @@ if parsedArgs.get("lang"):
     totalDowntimesRequired = floor(totalDowntimesRequired / 2)
   else:
      me.set_cvar("DTLearnLang", language+",none")
-     returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning {language}" ' \
+
+returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning {language}" ' \
                   f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
 saveInfo = (language, mentor, ccName)
 me.set_cvar("DTLearnLang",",".join(saveInfo))
