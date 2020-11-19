@@ -24,7 +24,7 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
            f' 160 divided by 4 = 40 Downtimes (20 full Days, 20gp minimum)\n' \
            f' Doing it twice a day:\n' \
            f' 40 divided by 2 = 20 Days (minimum) and 20gp (minimum)```"' \
-           f' -f "SETUP|```!dt learn set -lang \\"Language\\" -mentor \\"Mentor Name\\" ``` \n ' \ 
+           f' -f "SETUP|```!dt learn set -lang \\"Language\\" -mentor \\"Mentor Name\\" ``` \n ' \
            f' **Running Setup after starting training will result in progress to reset**"' \
            f' -f "USAGE|```!dt learn -lang \"Language\" [part]```"'
 
