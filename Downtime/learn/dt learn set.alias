@@ -11,12 +11,15 @@ if parsedArgs.get("mentor"):
   mentor =  parsedArgs.last("mentor")
   hasMentor = True
   mentorStr += f' -f "Mentor|{me.name} has chosen `{mentor}` as their Mentor." '
+
 # does the math for downtimes required
 totalDowntimesRequired = ceil(200 - (((me.stats.intelligence*2)-20)*10))
+
 # checks for language set and stores into cvar
 if parsedArgs.get("lang"):
   language = parsedArgs.last("lang")
   ccName = f'DT Learn-Language-{language}'
+
 # does the math for number of Downtimes required
   if hasMentor:
     totalDowntimesRequired = floor(totalDowntimesRequired / 2)
