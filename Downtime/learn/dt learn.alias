@@ -106,7 +106,7 @@ if isComplete:
     me.set_cvar("DTLearnLang", ",".join(learnData))
 
 #push results back to the DTTrack CVAR
-dtHistory.update({timestamp:{learnTrack}})
+dtHistory[timestamp].update(learnTrack)
 me.set_cvar("DTTrack", dump_json(dtHistory))
 new_cc = me.get_cc(ccName)
 returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})" '
