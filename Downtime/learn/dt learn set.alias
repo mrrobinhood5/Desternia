@@ -1,4 +1,4 @@
-tembed
+tembed -thumb <image> -color <color>
 <drac2>
 #set primary variables
 parsedArgs, hasMentor, mentorStr, mentor, returnStr, me = argparse(&ARGS&), False, "", "", "", character()

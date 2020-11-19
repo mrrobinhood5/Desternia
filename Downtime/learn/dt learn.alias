@@ -1,4 +1,4 @@
-tembed -title "Learning Downtime"
+tembed -thumb <image> -color <color>
 <drac2>
 # defines primary variables
 pArgs, helpstr, returnstr, me, isComplete = argparse(&ARGS&), "", "", character(), False
@@ -8,6 +8,7 @@ rr = 2 if not pArgs.get("part") else 1
 rollstr = ['1d20+', '2d20kh1+', '3d20kh1+', '2d20kl1+'][pArgs.adv()]
 # add a datetimestamp gvar
 get_gvar("9315e3d7-9bba-4f30-ab51-411307741179")
+returnstr += f' -title "Learning Downtime for {timestamp}" '
 # defines the help string
 helpstr += f' -desc "You can spend your time learning new skills, languages, and tools. You can do so **with** or **without** a mentor.' \
            f' Ability for learning is **Intelligence**"' \
@@ -30,6 +31,17 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
            f' -f "USAGE|```!dt learn -lang \"Language\" [part]```"'
 
 # error checks #TODO Add error check to see if there is any downtime left for the day
+dtHistory = load_json(DTTrack)
+if timestamp in dtHistory:
+    todaysDT = dtHistory[timestamp]
+    dtcount = 0
+    for a,b in todaysDT.items():
+        for c,d in b.items():
+            dtcount += 1
+    if dtcount >= 2:
+        return f' -f "ERROR|You already did your 2 downtimes for today. Come back tomorrow" '
+    if dtcount == 1 and rr == 2:
+        return f' -f "ERROR|You only have 1 DT left, you must run the command with `part` for part time" '
 
 if not &ARGS& or not exists("DTLearnLang"):
     return helpstr
@@ -61,7 +73,7 @@ else:
 if isComplete:
     # add language to cvar
     if exists("languages"):
-        prev_languages = get("languages").split(",")
+        prev_languages = get("languages").split(", ")
         prev_languages.append(language.capitalize())
         me.set_cvar("languages", ", ".join(prev_languages))
     else:
