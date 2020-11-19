@@ -10,7 +10,8 @@ if parsedArgs.get("mentor"):
   mentor =  parsedArgs.last("mentor")
   hasMentor = True
   mentorStr += f' -f "Mentor|{me.name} has chosen `{mentor}` as their Mentor." '
-
+else:
+  mentor = "none"
 # does the math for downtimes required
 totalDowntimesRequired = ceil(200 - (((me.stats.intelligence*2)-20)*10))
 totalDowntimesRequired = 80 if totalDowntimesRequired < 80 else totalDowntimesRequired
@@ -26,8 +27,6 @@ if parsedArgs.get("lang"):
 # does the math for number of Downtimes required
   if hasMentor:
     totalDowntimesRequired = floor(totalDowntimesRequired / 2)
-  else:
-     me.set_cvar("DTLearnLang", language+",none")
 
 returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning `{language}`" ' \
                   f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang {language}` " '
