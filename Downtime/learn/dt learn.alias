@@ -1,7 +1,7 @@
-tembed -title "Learning Downtime"	
+tembed -title "Learning Downtime"
 <drac2>
 # defines primary variables
-helpstr = ""
+pArgs, helpstr, returnstr, me = argparse(&ARGS&), "", "", character()
 # defines the help string
 helpstr += f' -desc "You can spend your time learning new skills, languages, and tools. You can do so **with** or **without** a mentor.' \
            f' Ability for learning is **Intelligence**"' \
@@ -21,5 +21,14 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
            f' 40 divided by 2 = 20 Days (minimum) and 20gp (minimum)```"' \
            f' -f "SETUP|```!dt learn set -lang \\"Language\\" -mentor \\"Mentor Name\\" ``` "' \
            f' -f "USAGE|```!dt learn -lang \"Language\" [part]```"'
-return helpstr
+
+# error checks
+if not &ARGS&:
+    return helpstr
+if pArgs.get("lang"):
+    language, mentor = me.get_cvar("DTLearnLang").split(",")
+    hasMentor = False if mentor == "none" else True
+    returnstr += f' -desc "Learning Language: {language} {"mentored by "+mentor if hasMentor else "all alone"} "'
+    returnstr += f' -f "Roll 1|1d20+100" '
+return returnstr
 </drac2>
