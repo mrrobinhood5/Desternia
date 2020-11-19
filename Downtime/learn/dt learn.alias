@@ -26,7 +26,7 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
 if not &ARGS&:
     return helpstr
 if pArgs.get("lang"):
-    language, mentor = me.get_cvar("DTLearnLang").split(",")
+    language, mentor = me.get("DTLearnLang").split(",")
     hasMentor = False if mentor == "none" else True
     returnstr += f' -desc "Learning Language: {language} {"mentored by "+mentor if hasMentor else "all alone"} "'
     returnstr += f' -f "Roll 1|1d20+100" '
