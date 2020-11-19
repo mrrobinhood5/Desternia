@@ -23,7 +23,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 <drac2>
 # defines primary variables
-pArgs, helpstr, returnstr, me, isComplete = argparse(&ARGS&), "", "", character(), False
+pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", "", character(), False, {"learn":{}}
 #defines secondary variables
 rr = 2 if not pArgs.get("part") else 1
 # defines the roll strings
@@ -52,7 +52,7 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
            f' **Running Setup after starting training will result in progress to reset**"' \
            f' -f "USAGE|```!dt learn -lang \"Language\" [part]```"'
 
-# error checks #TODO Add error check to see if there is any downtime left for the day
+# error checks to see if there is any downtime left for the day
 dtHistory = load_json(DTTrack)
 if timestamp in dtHistory:
     todaysDT = dtHistory[timestamp]
@@ -71,7 +71,7 @@ if not &ARGS& or not exists("DTLearnLang"):
 if pArgs.get("lang"):
     language, mentor, ccName, learnStatus = get("DTLearnLang").split(",")
     hasMentor = False if mentor == "none" else True
-    returnstr += f' -desc "Learning Language: `{language}` {"mentored by `"+mentor+"`" if hasMentor else "`no one`. All alone :("} "'
+    returnstr += f' -desc "Learning Language: `{language}` {"mentored by `"+mentor+"`" if hasMentor else "with `no one`. All alone :("} "'
     learnMod = str(me.skills.intelligence.value)
     prev_cc = me.get_cc(ccName)
 
@@ -81,12 +81,12 @@ if learnStatus == "True":
 else:
     for myroll in range(rr):
         # checks to see if you are complete already before rolling
-
         attempt = vroll(rollstr+learnMod)
         critstr, attemptcrit= [['none', 1],['**CRIT SUCCESS +2**', 2], ['**CRIT FAIL -1**', -1]][attempt.result.crit]
         passDC = True if attempt.total >= 10 else False
         returnstr += f' -f "Roll #{myroll+1}|{attempt}\n{"Passed +1" if passDC and critstr == "none" else critstr if critstr != "none" else "No Progress"}" '
         me.mod_cc(ccName,attemptcrit) if passDC else me.mod_cc(ccName,attemptcrit) if attemptcrit == -1 else 0
+        learnTrack["learn"].update({str(myroll):str(attempt.total)})
         if me.get_cc(ccName) >= me.get_cc_max(ccName):
             returnstr += f' -f "COMPLETE|You have completed language training. It has been added to your known languages" '
             isComplete = True
@@ -104,6 +104,10 @@ if isComplete:
     learnStatus = "True"
     learnData = (language, mentor, ccName, learnStatus)
     me.set_cvar("DTLearnLang", ",".join(learnData))
+
+#push results back to the DTTrack CVAR
+dtHistory.update({timestamp:{learnTrack}})
+me.set_cvar("DTTrack", dump_json(dtHistory))
 new_cc = me.get_cc(ccName)
 returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})" '
 return returnstr
