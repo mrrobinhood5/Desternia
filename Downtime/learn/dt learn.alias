@@ -2,6 +2,11 @@ tembed -title "Learning Downtime"
 <drac2>
 # defines primary variables
 pArgs, helpstr, returnstr, me = argparse(&ARGS&), "", "", character()
+#defines secondary variables
+rr = 2 if not pArgs.get("part") else 1
+# defines the roll strings
+rollstr = ['1d20+', '2d20kh1+', '3d20kh1+', '2d20kl1+'][pArgs.get("adv")]
+
 # defines the help string
 helpstr += f' -desc "You can spend your time learning new skills, languages, and tools. You can do so **with** or **without** a mentor.' \
            f' Ability for learning is **Intelligence**"' \
@@ -19,16 +24,25 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
            f' 160 divided by 4 = 40 Downtimes (20 full Days, 20gp minimum)\n' \
            f' Doing it twice a day:\n' \
            f' 40 divided by 2 = 20 Days (minimum) and 20gp (minimum)```"' \
-           f' -f "SETUP|```!dt learn set -lang \\"Language\\" -mentor \\"Mentor Name\\" ``` "' \
+           f' -f "SETUP|```!dt learn set -lang \\"Language\\" -mentor \\"Mentor Name\\" ``` \n ' \ 
+           f' **Running Setup after starting training will result in progress to reset**"' \
            f' -f "USAGE|```!dt learn -lang \"Language\" [part]```"'
 
-# error checks
+# error checks #TODO Add error check to see if there is any downtime left for the day
 if not &ARGS&:
     return helpstr
+#set up the info into the cvar
 if pArgs.get("lang"):
-    language, mentor = me.get("DTLearnLang").split(",")
+    language, mentor, ccName = get("DTLearnLang").split(",")
     hasMentor = False if mentor == "none" else True
     returnstr += f' -desc "Learning Language: {language} {"mentored by "+mentor if hasMentor else "all alone"} "'
-    returnstr += f' -f "Roll 1|1d20+100" '
+    learnMod = me.skills.intelligence.value
+#does the rolls
+for roll in range(rr):
+    attempt = vroll(rollstr+learnMod)
+    passDC = True if vroll.total >= 10 else False
+    returnstr += f' -f "Roll #{roll+1}|{attempt}\n{"Passed +1" if passDC else "No Progress"}" '
+
+returnstr += f' -f "Progress|{me.cc_str(ccName)}" '
 return returnstr
 </drac2>

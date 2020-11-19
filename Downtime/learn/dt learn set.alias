@@ -4,22 +4,32 @@ tembed
 parsedArgs, hasMentor, mentorStr, mentor, returnStr, me = argparse(&ARGS&), False, "", "", "", character()
 # if set is ran without arguments
 if not &ARGS&:
-  return f' -title \"{name} attempts to set a learning activity\" -desc \"You didn\'t provide any arguments\" -f \"Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
+  return f' -title "{name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" ' \ 
+         f' -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
 # checks for mentor and stores info
 if parsedArgs.get("mentor"):
   mentor =  parsedArgs.last("mentor")
   hasMentor = True
   mentorStr += f' -f "Mentor|{me.name} has chosen `{mentor}` as their Mentor." '
+# does the math for downtimes required
+totalDowntimesRequired = ceil(200 - (((me.stats.intelligence*2)-20)*10))
 # checks for language set and stores into cvar
 if parsedArgs.get("lang"):
   language = parsedArgs.last("lang")
+  ccName = f'DT Learn-Language-{language}'
+# does the math for number of Downtimes required
   if hasMentor:
-    me.set_cvar("DTLearnLang",language+","+mentor)
+    totalDowntimesRequired = floor(totalDowntimesRequired / 2)
   else:
      me.set_cvar("DTLearnLang", language+",none")
-  returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning {language}" -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
-
-return returnStr + mentorStr
+     returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning {language}" '\ 
+                  f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
+saveInfo = (language, mentor, ccName)
+me.set_cvar("DTLearnLang",",".join(saveInfo))
+me.create_cc(ccName, 0, totalDowntimesRequired, 'none')
+me.set_cc(ccName, 0)
+returnstr += mentorStr
+return returnStr
 
 
 </drac2>
