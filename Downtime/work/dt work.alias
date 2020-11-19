@@ -25,13 +25,17 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 <drac2>
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -title "{name} attempts to work..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+
 #initialize all of the variables
 pargs, downtime, returnstr, baseroll, advroll =argparse(&ARGS&), "work",  "", "1d20+", "2d20kh1+"
+
 #determine if it will run once or twice
 downtimes, results = 1 if pargs.get("part") or pargs.get("parttime") or pargs.get("part-time") else 2, {timestamp:{downtime:{}}}
+
 #If this is first time, save an empty dict for today and load the work history
 character().set_cvar("DTTrack",dump_json(results)) if not exists("DTTrack") else 0 
-workdata = load_json(DTTrack) 
+workdata = load_json(DTTrack)
+
 # Flag which skill will have advantage
 hasAdv = True if pargs.get("adv") else False
 if hasAdv:
@@ -40,6 +44,7 @@ if hasAdv:
   relationAdv = True if pargs.get("adv")[0] == "relation" else False
 else: 
   quanAdv, qualAdv, relationAdv = False, False, False
+
 # check if Job and Settings have been set first, and then parse the arguments
 if not exists("RosemereJob"):
   return f' -title "{name} attempts to work" -desc "You dont have a job." -f "Fix| Set your job with `!dt work job -set \\"Bunnis Bar and Grill\\"`" '
