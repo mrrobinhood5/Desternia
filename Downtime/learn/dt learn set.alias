@@ -16,9 +16,12 @@ totalDowntimesRequired = ceil(200 - (((me.stats.intelligence*2)-20)*10))
 totalDowntimesRequired = 80 if totalDowntimesRequired < 80 else totalDowntimesRequired
 
 # checks for language set and stores into cvar
+knownLanguages = get("languages") if exists("languages") else ""
 if parsedArgs.get("lang"):
   language = parsedArgs.last("lang")
   ccName = f'DT Learn-Language-{language}'
+  if language in knownLanguages:
+    return f' -title "{name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
 
 # does the math for number of Downtimes required
   if hasMentor:
@@ -28,7 +31,7 @@ if parsedArgs.get("lang"):
 
 returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning {language}" ' \
                   f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
-saveInfo = (language, mentor, ccName)
+saveInfo = (language, mentor, ccName, "False")
 me.set_cvar("DTLearnLang",",".join(saveInfo))
 me.create_cc(ccName, "0", str(totalDowntimesRequired), 'none')
 me.set_cc(ccName, 0)
