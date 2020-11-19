@@ -46,7 +46,7 @@ for myroll in range(rr):
     returnstr += f' -f "Roll #{myroll+1}|{attempt}\n{"Passed +1" if passDC else "No Progress"}" '
     me.mod_cc(ccName,attemptcrit) if passDC else me.mod_cc(ccName,attemptcrit) if attemptcrit == -1 else 0
 
-new_cc = me.get(ccName)
+new_cc = me.get_cc(ccName)
 returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})" '
 return returnstr
 </drac2>
