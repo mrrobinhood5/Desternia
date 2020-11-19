@@ -31,7 +31,7 @@ saveInfo = (language, mentor, ccName)
 me.set_cvar("DTLearnLang",",".join(saveInfo))
 me.create_cc(ccName, "0", str(totalDowntimesRequired), 'none')
 me.set_cc(ccName, 0)
-returnstr += mentorStr
+returnStr += mentorStr
 return returnStr
 
 
