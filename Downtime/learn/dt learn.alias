@@ -40,7 +40,7 @@ if pArgs.get("lang"):
 #does the rolls
 for myroll in range(rr):
     attempt = vroll(rollstr+learnMod)
-    passDC = True if vroll.total >= 10 else False
+    passDC = True if attempt.total >= 10 else False
     returnstr += f' -f "Roll #{myroll+1}|{attempt}\n{"Passed +1" if passDC else "No Progress"}" '
 
 returnstr += f' -f "Progress|{me.cc_str(ccName)}" '
