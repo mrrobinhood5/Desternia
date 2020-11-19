@@ -1,5 +1,27 @@
 tembed -thumb <image> -color <color>
 <drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+timestamp_long=f'{month:02}.{day:02}.{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+<drac2>
 # defines primary variables
 pArgs, helpstr, returnstr, me, isComplete = argparse(&ARGS&), "", "", character(), False
 #defines secondary variables
