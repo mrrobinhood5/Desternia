@@ -28,7 +28,7 @@ if parsedArgs.get("lang"):
                   f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang \\"Language\\"` " '
 saveInfo = (language, mentor, ccName)
 me.set_cvar("DTLearnLang",",".join(saveInfo))
-me.create_cc(ccName, 0, totalDowntimesRequired, 'none')
+me.create_cc(ccName, "0", str(totalDowntimesRequired), 'none')
 me.set_cc(ccName, 0)
 returnstr += mentorStr
 return returnStr
