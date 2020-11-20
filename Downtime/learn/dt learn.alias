@@ -22,6 +22,8 @@ timestamp_long=f'{month:02}.{day:02}.{str(year)[2:]} ({hour:02}:{minute:02}:{sec
 timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 <drac2>
+# TODO: add a check to see if there are any slots left from the 6
+# TODO: add dt learn remove for refactoring the slots
 # defines primary variables
 pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", f' -title "Learning Downtime for {timestamp}" ', character(), False, {"learn":{}}
 #defines secondary variables
