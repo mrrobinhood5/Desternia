@@ -127,5 +127,12 @@
       "fail":"True",
       "title":"[name] uses their Feline Agility",
       "desc":"Your reflexes and agility allow you to move with a burst of speed. When you move on your turn in combat, you can double your speed until the end of the turn. Once you use this trait, you can't use it again until you move 0 feet on one of your turns."
+   },
+   "sacredweapon":{
+      "fail": "True",
+      "cc": "Channel Divinity",
+      "title": "[name] uses their Channel Divinity: Sacred Weapon",
+      "desc": "For 1 minute, you add your Charisma modifier to attack rolls made with that weapon (with a minimum bonus of +1). The weapon also emits bright light in a 20-foot radius and dim light 20 feet beyond that. If the weapon is not already magical, it becomes magical for the duration.",
+      "seffect": "Sacred Weapon|-b {charismaMod}|10"
    }
 }
