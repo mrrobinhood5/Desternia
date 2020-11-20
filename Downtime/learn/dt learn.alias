@@ -60,7 +60,7 @@ helpstr += f' -t 201 -desc "You can spend your time learning new languages, and 
            f' -f "USAGE|```!dt learn -lang \\"Language\\" OR -tool \\"Tool\\" [part]```"'
 
 # error checks to see if there is any downtime left for the day
-if not &ARGS& or not exists("DTLearnLang"):
+if not &ARGS&:
     return helpstr
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -title "{name} attempts to learn..." -t 90 -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your learn downtime in the #downtime channel"'

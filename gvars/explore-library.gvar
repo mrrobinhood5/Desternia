@@ -1,19 +1,19 @@
 {
  "DreamScape1": {
-  "Begin": "Dungeon History\tThe dungeon was created by a lich as a tomb. Its creators were destroyed by attacking raiders, and the dungeon has been attacked and abandoned many times since then.\nDungeon Walls\tHewn Stone (DC 20 to climb)\nDungeon Floor\tNatural Stone (difficult terrain, disadvantage on acrobatics)\nTemperature\tCold (DC 10 Constitution save each hour or gain one level of exhaustion)\nIllumination\tBright (fires every 40 ft.)",
+  "Begin": "**Dungeon History** - The dungeon was created by a lich as a tomb. Its creators were destroyed by attacking raiders, and the dungeon has been attacked and abandoned many times since then.\n**Dungeon Walls** - Hewn Stone (DC 20 to climb)\n**Dungeon Floor** - Natural Stone (difficult terrain, disadvantage on acrobatics)\n**Temperature** - Cold (DC 10 Constitution save each hour or gain one level of exhaustion)\n**Illumination** - Bright (fires every 40 ft.)",
   "BeginChoices": "Room1",
-  "Room1": "There are 4 doors, and a Kobold in the room",
+  "Room1": "There is a Kobold carrying a box on his back. He just stands there in the room looking at you. There are 3 bone Doors, each with a different pattern, and 1 stone door with a smooth finish. ",
   "Room1Choices": "NorthEntry, EastEntryLeft, EastEntryRight, SouthEntry, Talk, Fight",
-  "NorthEntry": "Locked Bone Door",
-  "NorthEntryChoices": "Pick, Break, Begin" ,
+  "NorthEntry": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
+  "NorthEntryChoices": "Room1, NorthEntryRoom" ,
   "EastEntryLeft": "Locked Bone Door",
-  "EastEntryLeftChoices": "Pick, Break, Begin",
+  "EastEntryLeftChoices": "Pick, Break, Room1",
   "EastEntryRight": "Stuck Stone Door",
-  "EastEntryRightChoices": "Break, Begin",
+  "EastEntryRightChoices": "Break, Room1",
   "SouthEntry": "Locked Bone Door",
-  "SouthEntryChoices": "Pick, Break, Begin",
+  "SouthEntryChoices": "Pick, Break, Room1",
   "Talk": "The Kobold addresses you",
-  "TalkChoices": "Begin, Fight",
+  "TalkChoices": "Room1, Fight",
   "Fight": "The Kobold draws its weapon and prepares for battle",
   "FightChoices": "Talk"
 
