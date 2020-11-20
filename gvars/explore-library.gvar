@@ -6,16 +6,22 @@
   "Room1Choices": "NorthEntry, EastEntryLeft, EastEntryRight, SouthEntry, Talk, Fight",
   "NorthEntry": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
   "NorthEntryChoices": "Room1, NorthEntryRoom" ,
-  "EastEntryLeft": "Locked Bone Door",
-  "EastEntryLeftChoices": "Pick, Break, Room1",
-  "EastEntryRight": "Stuck Stone Door",
-  "EastEntryRightChoices": "Break, Room1",
-  "SouthEntry": "Locked Bone Door",
-  "SouthEntryChoices": "Pick, Break, Room1",
-  "Talk": "The Kobold addresses you",
+  "NorthEntryRoom": "It is a hallway. At the end of the hallway is a protrait of a devil looking thing.",
+  "NorthEntryRoomReqs" : "KeyAGHOA",
+  "NorthEntryRoomChoices" : "Room1",
+  "EastEntryLeft": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
+  "EastEntryLeftChoices": "Room1, EastEntryLeftRoom",
+  "EastEntryRoom": "A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus. There is a winged Kobold in the center of the room",
+  "EastEntryRoomReqs" : "KeyASFJJ",
+  "EastEntryRoomChoices" : "Room1, Room2BoneDoor",
+  "EastEntryRight": "The stone door is broken. Breaking it may be the only option",
+  "EastEntryRightChoices": "Room1, EastEntryRightRoom",
+  "SouthEntry": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
+  "SouthEntryChoices": "Room1, SouthEntryRoom",
+  "Talk": "The Kobold addresses you, in a friendly manner.",
   "TalkChoices": "Room1, Fight",
   "Fight": "The Kobold draws its weapon and prepares for battle",
-  "FightChoices": "Talk"
+  "FightChoices": "Room1"
 
  }
 }
