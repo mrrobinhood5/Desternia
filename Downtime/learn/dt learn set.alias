@@ -51,6 +51,8 @@ me.set_cvar(cvarName,",".join(saveInfo))
 me.create_cc(ccName, "0", str(totalDowntimesRequired), 'none')
 me.set_cc(ccName, 0)
 me.set_cvar("learnedProficiencies",dump_json({}))
+if not exists("DTTrack"):
+  me.set_cvar("DTTrack",{})
 returnstr += mentorStr
 return returnstr
 
