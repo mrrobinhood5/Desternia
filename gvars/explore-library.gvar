@@ -1,16 +1,21 @@
 {
- "Tower of Terror": {
-  "Begin": "You are alone in a cell. It is dank and poignant. There is a dead guard at your feet. You hold a bloody shank and breathe heavily",
-  "BeginChoices": "GrabKeys, TakeNap",
-  "GrabKeys": "You take the ring of Keys from the body. An audible grunt can be hard. He seems to still be alive.",
-  "GrabKeysChoices": "TakeNap, KillHimAgain, Talk",
-  "GrabKeysEarns": "JailCellKey",
-  "TakeNap": "You lay down and take a nap. Other guards show up and kill you. You are Dead.",
-  "TakeNapChoices": "None you are Dead",
-  "KillHimAgain": "You stab him multiple times on the back. He seems to have died correctly this time",
-  "KillHimAgainChoices": "ExitCell",
-  "Talk": "You decide to talk to him. He tells you about his wife and kids with his last breath",
-  "TalkChoices": "ExitCell",
-  "ExitCell": "You are FREE!"
+ "DreamScape1": {
+  "Begin": "Dungeon History\tThe dungeon was created by a lich as a tomb. Its creators were destroyed by attacking raiders, and the dungeon has been attacked and abandoned many times since then.\nDungeon Walls\tHewn Stone (DC 20 to climb)\nDungeon Floor\tNatural Stone (difficult terrain, disadvantage on acrobatics)\nTemperature\tCold (DC 10 Constitution save each hour or gain one level of exhaustion)\nIllumination\tBright (fires every 40 ft.)",
+  "BeginChoices": "Room1",
+  "Room1": "There are 4 doors, and a Kobold in the room",
+  "Room1Choices": "NorthEntry, EastEntryLeft, EastEntryRight, SouthEntry, Talk, Fight",
+  "NorthEntry": "Locked Bone Door",
+  "NorthEntryChoices": "Pick, Break, Begin" ,
+  "EastEntryLeft": "Locked Bone Door",
+  "EastEntryLeftChoices": "Pick, Break, Begin",
+  "EastEntryRight": "Stuck Stone Door",
+  "EastEntryRightChoices": "Break, Begin",
+  "SouthEntry": "Locked Bone Door",
+  "SouthEntryChoices": "Pick, Break, Begin",
+  "Talk": "The Kobold addresses you",
+  "TalkChoices": "Begin, Fight",
+  "Fight": "The Kobold draws its weapon and prepares for battle",
+  "FightChoices": "Talk"
+
  }
 }
