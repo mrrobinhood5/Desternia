@@ -26,7 +26,7 @@ knownToolsE = get("eTools") if exists("eTools") else ""
 if parsedArgs.get("lang"):
   cvarName = "DTLearnLang"
   activity = parsedArgs.last("lang")
-  ccName = f'DT Learn-Language-{language}'
+  ccName = f'DT Learn-Language-{activity}'
   if language.lower() in knownLanguages.lower():
     return errorstr
   returnstr += f' -title "{me.name} sets their language to learn" -desc "You can now start learning `{activity}`" '\
