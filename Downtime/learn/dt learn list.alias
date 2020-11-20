@@ -1,0 +1,35 @@
+tembed -thumb <image> -color <color>
+<drac2>
+# sets primary variables
+dt, returnstr, slotcounter = "learn", "", 0
+# error checks to see if you have DTTrack cvar
+if not exists("DTTrack") or DTTrack == "":
+  return  f' -title "{name} attemps to check their learning history" -desc "No Learning History" -f "Fix| Either you havent learned anything yet, or you erased your own history!" '
+
+proHistory= load_json(learnedProficiencies)
+returnstr += f' -title "{name} checks their learning history and progress"'
+
+#loads the current learning progress if any
+currentLanguage = get("DTLearnLang").split(",") if exists("DTLearnLang") else 0
+currentTool = get("DTLearnTool").split(",") if exists("DTLearnTool") else 0
+
+# returns the current progress
+
+if currentLanguage:
+  lang, mentor, ccName, completion = currentLanguage.split(",")
+  returnstr += f' -f "Language Progress| {"Done" if completion == "True" else ""}Learning {lang} with {mentor}\n ' \
+               f' {me.cc_str(ccName) if completion == False else "**COMPLETED**"}" '
+if currentTool:
+  tool, mentor, ccName, completion = currentTool.split(",")
+  returnstr += f' -f "Tool Progress| {"Done" if completion == "True" else ""}Learning {tool} with {mentor}\n ' \
+               f' {me.cc_str(ccName) if completion == False else "**COMPLETED**"}" '
+
+# Lists all the slots
+for x, t in proHistory.items():
+  returnstr += f' -f "{x}|Type: {t["type"]}\n '\
+               f'Mentor: {t["mentor"]}\n '\
+               f'Slots Taken: {t["proslots"]}'\
+               f'Completion Date: {t["achieved"]}" '
+  slotcounter += t["proslots"]
+returnstr += f' -f "Learn Slots| You currently are using {slotcounter} out of 6 learning slots." '
+</drac2>

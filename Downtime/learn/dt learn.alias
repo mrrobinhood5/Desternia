@@ -69,6 +69,7 @@ if not &ARGS& or not exists("DTLearnLang"):
     return helpstr
 #set up the info into the cvar
 if pArgs.get("lang"):
+    learnType = "language"
     language, mentor, ccName, learnStatus = get("DTLearnLang").split(",")
     hasMentor = False if mentor == "none" else True
     returnstr += f' -desc "Learning Language: `{language}` {"mentored by `"+mentor+"`" if hasMentor else "with `no one`. All alone :("} "'
@@ -88,7 +89,7 @@ else:
         me.mod_cc(ccName,attemptcrit) if passDC else me.mod_cc(ccName,attemptcrit) if attemptcrit == -1 else 0
         learnTrack["learn"].update({str(myroll+1):str(attempt.total)})
         if me.get_cc(ccName) >= me.get_cc_max(ccName):
-            returnstr += f' -f "COMPLETE|You have completed language training. It has been added to your known languages" '
+            returnstr += f' -f "COMPLETE|You have completed {learnType} learning. It has been added to your known {learnType}s" '
             isComplete = True
             break
 
@@ -100,10 +101,16 @@ if isComplete:
         me.set_cvar("languages", ", ".join(prev_languages))
     else:
         me.set_cvar("languages", language.capitalize())
-#adds complete flag to dt lang cvar
+# adds complete flag to dt lang cvar
     learnStatus = "True"
     learnData = (language, mentor, ccName, learnStatus)
     me.set_cvar("DTLearnLang", ",".join(learnData))
+
+#adds all the data to the learnedProficiencies Tracker
+    protracker = {language:{"type":learnType, "proslots": 1, "mentor": mentor, "achieved":timestamp}}
+    prodata = load_json(learnedProficiencies)
+    prodata.update(protracker)
+    me.set_cvar("learnedProficiencies", dump_json(prodata))
 
 #push results back to the DTTrack CVAR
 dtHistory[timestamp].update(learnTrack)

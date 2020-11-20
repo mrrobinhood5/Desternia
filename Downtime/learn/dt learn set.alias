@@ -2,9 +2,10 @@ tembed -thumb <image> -color <color>
 <drac2>
 #set primary variables
 parsedArgs, hasMentor, mentorStr, mentor, returnStr, me = argparse(&ARGS&), False, "", "", "", character()
+errorstr=f' -title "{me.name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set [-lang \\"Language\\"] [-tool \\"Tool\\" [-mentor \\"Mentor\\"]` "'
 # if set is ran without arguments
 if not &ARGS&:
-  return f' -title "{me.name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
+  return f' -title "{me.name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" -f "Usage| `!dt learn set [-lang \\"Language\\"] [-tool \\"Tool\\" [-mentor \\"Mentor\\"]` "'
 # checks for mentor and stores info
 if parsedArgs.get("mentor"):
   mentor =  parsedArgs.last("mentor")
@@ -16,24 +17,40 @@ else:
 totalDowntimesRequired = ceil(200 - (((me.stats.intelligence*2)-20)*10))
 totalDowntimesRequired = 80 if totalDowntimesRequired < 80 else totalDowntimesRequired
 
-# checks for language set and stores into cvar
+# checks for language or Tools set and stores into cvar
 knownLanguages = get("languages") if exists("languages") else ""
+knownTools = get("pTools") if exists("pTools") else ""
+knownToolsE = get("eTools") if exists("eTools") else ""
+
+#sets up if language is chosen
 if parsedArgs.get("lang"):
-  language = parsedArgs.last("lang")
+  cvarName = "DTLearnLang"
+  activity = parsedArgs.last("lang")
   ccName = f'DT Learn-Language-{language}'
   if language.lower() in knownLanguages.lower():
-    return f' -title "{me.name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set -lang \\"Language\\" [-mentor \\"Mentor\\"]` "'
+    return errorstr
+  returnstr += f' -title "{me.name} sets their language to learn" -desc "You can now start learning `{activity}`" '\
+               f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang {activity}` " '
+
+#sets up if tools is chosen
+if parsedArgs.get("tool"):
+  cvarName = "DTLearnTool"
+  activity = parsedArgs.last("tool")
+  ccName = f'DT Learn-Tool-{tool}'
+  if tool.lower() in knownTools.lower() or tool.lower() in knownToolsE.lower():
+    return errorstr
+  returnStr += f' -title "{me. name} sets their tool to learn" -desc "You can now start learning `{activity}`" ' \
+               f' -f "Usage| You can now set start rolling for it \n`!dt learn -tool {activity}` " '
 
 # does the math for number of Downtimes required
-  if hasMentor:
-    totalDowntimesRequired = floor(totalDowntimesRequired / 2)
+if hasMentor:
+  totalDowntimesRequired = floor(totalDowntimesRequired / 2)
 
-returnStr += f' -title "{name} sets their learning to language" -desc "You can now start learning `{language}`" ' \
-                  f' -f "Usage| You can now set start rolling for it \n`!dt learn -lang {language}` " '
-saveInfo = (language, mentor, ccName, "False")
-me.set_cvar("DTLearnLang",",".join(saveInfo))
+saveInfo = (activity, mentor, ccName, "False")
+me.set_cvar(cvarName,",".join(saveInfo))
 me.create_cc(ccName, "0", str(totalDowntimesRequired), 'none')
 me.set_cc(ccName, 0)
+me.set_cvar("learnedProficiencies",dump_json({}))
 returnStr += mentorStr
 return returnStr
 
