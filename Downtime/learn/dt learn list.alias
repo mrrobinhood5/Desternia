@@ -32,4 +32,6 @@ for x, t in proHistory.items():
                f'Completion Date: {t["achieved"]}" '
   slotcounter += t["proslots"]
 returnstr += f' -f "Learn Slots| You currently are using {slotcounter} out of 6 learning slots." '
+
+return returnstr
 </drac2>
