@@ -1,7 +1,7 @@
 tembed -thumb <image> -color <color>
 <drac2>
 # sets primary variables
-dt, returnstr, slotcounter = "learn", "", 0
+dt, returnstr, slotcounter, me = "learn", "", 0, character()
 # error checks to see if you have DTTrack cvar
 if not exists("DTTrack") or DTTrack == "":
   return  f' -title "{name} attemps to check their learning history" -desc "No Learning History" -f "Fix| Either you havent learned anything yet, or you erased your own history!" '
