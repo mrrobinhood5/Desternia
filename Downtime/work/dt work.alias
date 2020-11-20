@@ -47,9 +47,9 @@ else:
 
 # check if Job and Settings have been set first, and then parse the arguments
 if not exists("RosemereJob"):
-  return f' -title "{name} attempts to work" -desc "You dont have a job." -f "Fix| Set your job with `!dt work job -set \\"Bunnis Bar and Grill\\"`" '
+  return f' -t 90 -title "{name} attempts to work" -desc "You dont have a job." -f "Fix| Set your job with `!dt work job -set \\"Bunnis Bar and Grill\\"`" '
 elif not exists("JobSettings"):
-  return f' -title "{name} attempts to work" -desc "You havent set up your job settings" -f "Fix| Do `!dt work save` for more info" '
+  return f' -t 90 -title "{name} attempts to work" -desc "You havent set up your job settings" -f "Fix| Do `!dt work save` for more info" '
   #if all is well, execute work
 else:
   dtcount = 0
@@ -59,7 +59,7 @@ else:
       for c , d in b.items():
         dtcount += 1
     if dtcount >= 2:
-      return f' -title "{name} attemtps to work" -desc "You dont have enough downtimes" -t 30 -f "Fix|Roses are red\n Violets are blue\nMy poems suck\nCome back tomorrow for work or if do `!dt work part`"'
+      return f'-t90 -title "{name} attemtps to work" -desc "You dont have enough downtimes" -t 30 -f "Fix| If you only have 1 DT left, try `!dt work part`"'
   #loads Job Settings from !dt work save
   js = JobSettings.split(",")
   for x in range(downtimes):    

@@ -22,13 +22,12 @@ timestamp_long=f'{month:02}.{day:02}.{str(year)[2:]} ({hour:02}:{minute:02}:{sec
 timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 <drac2>
-if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
-  return f' -title "{name} attempts to learn..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your learn downtime in the #downtime channel"'
+
 # TODO: add a check to see if there are any slots left from the 6
 # TODO: add dt learn remove for refactoring the slots
 # TODO: add check to only run in downtime.
 # defines primary variables
-pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", f' -title "Learning Downtime for {timestamp}" ', character(), False, {"learn":{}}
+pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", f' -title "Learning Downtime for {timestamp}" -footer "Usage - !dt learn [list] [set]"', character(), False, {"learn":{}}
 #defines secondary variables
 rr = 2 if not pArgs.get("part") else 1
 # defines the roll strings
@@ -40,7 +39,7 @@ pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
 ogp = pouch[1]['gp'] # what gp was before?
 
 # defines the help string
-helpstr += f' -desc "You can spend your time learning new languages, and tools. You can do so **with** or **without** a mentor.' \
+helpstr += f' -t 201 -desc "You can spend your time learning new languages, and tools. You can do so **with** or **without** a mentor.' \
            f' Ability for learning is **Intelligence**"' \
            f' -f "LEARNING|```200 - ((( INT x 2 ) - 20) x 10) = Total Number of Downtimes (minimum of 20) ```' \
            f' - If you train with a mentor, you can **HALF** that number (rounded up) \n ' \
@@ -63,10 +62,12 @@ helpstr += f' -desc "You can spend your time learning new languages, and tools. 
 # error checks to see if there is any downtime left for the day
 if not &ARGS& or not exists("DTLearnLang"):
     return helpstr
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to learn..." -t 90 -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your learn downtime in the #downtime channel"'
 if ogp < 1: #checks to see if you have enough gp to craft
-    return f' -f "ERROR| You don\'t have any `gp` convert money or get more gp" '
+    return f' -t 90 -f "ERROR| You don\'t have any `gp` convert money or get more gp" '
 if not exists("DTTrack"):
-    return f' -f "ERROR|Re run setup with `!dt learn set`" '
+    return f' -t 90 -f "ERROR|Re run setup with `!dt learn set`" '
 dtHistory = load_json(DTTrack)
 if timestamp in dtHistory:
     todaysDT = dtHistory[timestamp]
@@ -75,9 +76,9 @@ if timestamp in dtHistory:
         for c,d in b.items():
             dtcount += 1
     if dtcount >= 2:
-        return f' -f "ERROR|You already did your 2 downtimes for today. Come back tomorrow" '
+        return f' -t 90 -f "ERROR|You already did your 2 downtimes for today. Come back tomorrow" '
     if dtcount == 1 and rr == 2:
-        return f' -f "ERROR|You only have 1 DT left, you must run the command with `part` for part time" '
+        return f' -t 90 -f "ERROR|You only have 1 DT left, you must run the command with `part` for part time" '
 else:
     dtHistory.update({timestamp:{}})
 #set up the info into the cvar
@@ -159,8 +160,6 @@ dtHistory[timestamp].update(learnTrack)
 me.set_cvar("DTTrack", dump_json(dtHistory))
 new_cc = me.get_cc(ccName)
 returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})\n `{ogp}` -> `{ngp}` gp" '
-
-
 
 return returnstr
 </drac2>

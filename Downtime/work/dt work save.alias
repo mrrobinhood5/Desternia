@@ -1,4 +1,4 @@
-embed -title "Configuring Job Settings" -thumb <image>
+embed -title "Configuring Job Settings" -thumb <image> -footer "Usage - !dt work save -quan (skill) -qual (skill or tool|ability) -relation (charisma skill)"
 <drac2>
 # set primary variables
 pargs,me,returnstr = argparse(&ARGS&),character(),""
@@ -6,7 +6,7 @@ errstr = f' -f "Usage| `!dt work save -quan [skill] -qual [skill or tool|ability
                f' -f "Example | Steve will work fishing. He will use his athletics (con) for quantity of work, Fishing '\
                f' Tackle and Wisdom for his quality, and persuasion to sell his items\n ' \
                f' `!dt work save -quan ath -qual fish|wis -relation pers`"'
-jobstr = f' -f "Error| You must set your job first with `!dt work job -set \\"jobname\\""`'
+jobstr = f' -t 90 -f "Error| You must set your job first with `!dt work job -set \\"jobname\\""`'
 charskills = "persuasiondeceptionperformanceintimidation"
 
 # variables required for Tools

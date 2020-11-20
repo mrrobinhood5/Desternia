@@ -1,7 +1,7 @@
 tembed -thumb <image> -color <color>
 <drac2>
 #set primary variables
-parsedArgs, hasMentor, mentorStr, mentor, returnstr, me = argparse(&ARGS&), False, "", "", "", character()
+parsedArgs, hasMentor, mentorStr, mentor, returnstr, me = argparse(&ARGS&), False, "", "", f' -footer "Usage - !dt learn set [-lang language] [-tool tool] [-mentor mentor]"', character()
 errorstr=f' -title "{me.name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set [-lang \\"Language\\"] [-tool \\"Tool\\" [-mentor \\"Mentor\\"]` "'
 # if set is ran without arguments
 if not &ARGS&:

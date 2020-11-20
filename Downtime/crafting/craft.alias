@@ -13,3 +13,4 @@ tembed -t 201 -title "Step by Step Crafting Rules"
 4. Pass the DC a number of times equal to the spell level
 
 Setup the enchantment data with `!craft ench setup` and then execute with `!craft ench -item itemname`"
+-footer "Usage - !craft"

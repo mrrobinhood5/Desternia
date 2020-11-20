@@ -2,7 +2,7 @@ tembed
 <drac2>
 pargs=argparse(&ARGS&)
 if not &ARGS&:
-  return f' -title \"{name} attempts to set their job\" -desc \"You didn\'t provide any arguments\" -f \"Usage| `!dt work job -[set] Bunnis Bar and Grill` "'
+  return f' -t 90 -title \"{name} attempts to set their job\" -desc \"You didn\'t provide any arguments\" -f \"Usage| `!dt work job -[set] Bunnis Bar and Grill` "'
 elif pargs.get("set"):
   job = pargs.get("set")[0]
   character().set_cvar("RosemereJob",job)

@@ -5,3 +5,4 @@ Basic       | 1-3      | 90gp    | Superior
 Advanced    | 4-6      | 450gp   | Exceptional
 Mastercraft | 7-9      | 4,000gp | Masterwork```
 "
+-footer "Usage - !craft ench quality"

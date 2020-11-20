@@ -1,4 +1,4 @@
-tembed -title "Desternia Downtimes" -desc "Available downtimes for Rosemere" 
+tembed -t 90 -title "Desternia Downtimes" -desc "Available downtimes for Rosemere"
 -f "Downtime Reference|Work - `!dt work` 
 Crafting - `!craft` 
 Recuperating and Relaxation
@@ -18,3 +18,4 @@ Researching
 Tool Learning 
 Language Learning
 "
+-footer "Usage - !dt"

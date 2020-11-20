@@ -1,4 +1,4 @@
-tembed -title "Working Downtime Rules" -desc "Once you get a job with a business, or a person, you can do your working downtime. You can choose to work part time or full time (1 or 2 DT)" 
+tembed -t 201 -title "Working Downtime Rules" -desc "Once you get a job with a business, or a person, you can do your working downtime. You can choose to work part time or full time (1 or 2 DT)"
 -f "Usage|You will do 3 rolls
 1. Work Quantity - The first will represent how long you can do the work. Do a **Constitution + relevant skill** of your choice.
 2. Work Quality - Next do a **skills/tool check with a relevant ability** of your choice. This represents how good you do the work.
@@ -24,3 +24,5 @@ Set your Settings with `!dt work save`
 Work for the day (or part time) `!dt work [part]`
 Check your work history `!dt work list`
 Get paid `!dt work pay`"
+
+-footer "Usage - !dt work help"

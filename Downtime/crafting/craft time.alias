@@ -1,4 +1,4 @@
-tembed -title "Step 4: Crafting Time"
+tembed -title "Step 4: Crafting Time" -footer "Usage - !dt craft time (ability) (rarity) [-b bonus] -base # [-save ItemName]"
 # craft-time v2
 <drac2>
 #loads both raw arguments and parsed arguments
