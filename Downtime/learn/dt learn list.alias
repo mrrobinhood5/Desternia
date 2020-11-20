@@ -1,4 +1,4 @@
-tembed -thumb <image> -color <color>
+tembed -thumb <image> -color <color> -footer "Usage - !dt learn list"
 <drac2>
 # sets primary variables
 dt, returnstr, slotcounter, me = "learn", "", 0, character()
