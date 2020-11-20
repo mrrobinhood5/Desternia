@@ -10,8 +10,8 @@ proHistory= load_json(learnedProficiencies)
 returnstr += f' -title "{name} checks their learning history and progress"'
 
 #loads the current learning progress if any
-currentLanguage = get("DTLearnLang").split(",") if exists("DTLearnLang") else 0
-currentTool = get("DTLearnTool").split(",") if exists("DTLearnTool") else 0
+currentLanguage = get("DTLearnLang") if exists("DTLearnLang") else 0
+currentTool = get("DTLearnTool") if exists("DTLearnTool") else 0
 
 # returns the current progress
 
