@@ -66,6 +66,8 @@ if timestamp in dtHistory:
         return f' -f "ERROR|You already did your 2 downtimes for today. Come back tomorrow" '
     if dtcount == 1 and rr == 2:
         return f' -f "ERROR|You only have 1 DT left, you must run the command with `part` for part time" '
+else:
+    dtHistory.update({timestamp:{}})
 
 if not &ARGS& or not exists("DTLearnLang"):
     return helpstr
@@ -75,6 +77,13 @@ if pArgs.get("lang"):
     language, mentor, ccName, learnStatus = get("DTLearnLang").split(",")
     hasMentor = False if mentor == "none" else True
     returnstr += f' -desc "Learning Language: `{language}` {"mentored by `"+mentor+"`" if hasMentor else "with `no one`. All alone :("} "'
+    learnMod = str(me.skills.intelligence.value)
+    prev_cc = me.get_cc(ccName)
+if pArgs.get("tool"):
+    learnType = "tool"
+    tool, mentor, ccName, learnStatus = get("DTLearnTool").split(",")
+    hasMentor = False if mentor == "none" else True
+    returnstr += f' -desc "Learning Tools: `{tool}` {"mentored by `"+mentor+"`" if hasMentor else "with `no one`. All alone :("} "'
     learnMod = str(me.skills.intelligence.value)
     prev_cc = me.get_cc(ccName)
 
