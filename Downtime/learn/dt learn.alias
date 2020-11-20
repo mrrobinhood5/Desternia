@@ -23,14 +23,17 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 <drac2>
 # defines primary variables
-pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", "", character(), False, {"learn":{}}
+pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", f' -title "Learning Downtime for {timestamp}" ', character(), False, {"learn":{}}
 #defines secondary variables
 rr = 2 if not pArgs.get("part") else 1
 # defines the roll strings
 rollstr = ['1d20+', '2d20kh1+', '3d20kh1+', '2d20kl1+'][pArgs.adv()]
-# add a datetimestamp gvar
-get_gvar("9315e3d7-9bba-4f30-ab51-411307741179")
-returnstr += f' -title "Learning Downtime for {timestamp}" '
+
+#loads the coins
+bagsLoaded=load_json(bags) #load the bags
+pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
+ogp = pouch[1]['gp'] # what gp was before?
+
 # defines the help string
 helpstr += f' -desc "You can spend your time learning new skills, languages, and tools. You can do so **with** or **without** a mentor.' \
            f' Ability for learning is **Intelligence**"' \
@@ -53,6 +56,8 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
            f' -f "USAGE|```!dt learn -lang \"Language\" [part]```"'
 
 # error checks to see if there is any downtime left for the day
+if ogp < 1: #checks to see if you have enough gp to craft
+    return f' -f "ERROR| You don\'t have any `gp` convert money or get more gp" '
 if not exists("DTTrack"):
     return f' -f "ERROR|Re run setup with `!dt learn set`" '
 dtHistory = load_json(DTTrack)
@@ -79,6 +84,7 @@ if pArgs.get("lang"):
     returnstr += f' -desc "Learning Language: `{language}` {"mentored by `"+mentor+"`" if hasMentor else "with `no one`. All alone :("} "'
     learnMod = str(me.skills.intelligence.value)
     prev_cc = me.get_cc(ccName)
+    isLanguage = True
 if pArgs.get("tool"):
     learnType = "tool"
     tool, mentor, ccName, learnStatus = get("DTLearnTool").split(",")
@@ -86,6 +92,7 @@ if pArgs.get("tool"):
     returnstr += f' -desc "Learning Tools: `{tool}` {"mentored by `"+mentor+"`" if hasMentor else "with `no one`. All alone :("} "'
     learnMod = str(me.skills.intelligence.value)
     prev_cc = me.get_cc(ccName)
+    isTool = True
 
 #does the rolls
 if learnStatus == "True":
@@ -105,28 +112,51 @@ else:
             break
 
 if isComplete:
-    # add language to cvar
-    if exists("languages"):
-        prev_languages = get("languages").split(", ")
-        prev_languages.append(language.capitalize())
-        me.set_cvar("languages", ", ".join(prev_languages))
-    else:
-        me.set_cvar("languages", language.capitalize())
-# adds complete flag to dt lang cvar
     learnStatus = "True"
-    learnData = (language, mentor, ccName, learnStatus)
-    me.set_cvar("DTLearnLang", ",".join(learnData))
+# complete the language things
+    if learnType == "language":
+        # add language to languages cvar
+        if exists("languages"):
+            prev_languages = get("languages").split(", ")
+            prev_languages.append(language.capitalize())
+            me.set_cvar("languages", ", ".join(prev_languages))
+        else:
+            me.set_cvar("languages", language.capitalize())
+    # adds complete flag to dt lang cvar
+        learnData = (language, mentor, ccName, learnStatus)
+        me.set_cvar("DTLearnLang", ",".join(learnData))
+        protracker = {language: {"type": learnType, "proslots": 1, "mentor": mentor, "achieved": timestamp}}
+# complete the tool things
+    if learnType == "tool":
+        # add tool to tool cvar
+        if exists("pTools"):
+            prev_tools = get("pTools").split(", ")
+            prev_tools.append(tool.capitalize())
+            me.set_cvar("pTools", ", ".join(prev_tools))
+        else:
+            me.set_cvar("pTools", tool.capitalize())
+        protracker = {tool:{"type":learnType, "proslots": 2, "mentor": mentor, "achieved":timestamp}}
+        learnData = (tool, mentor, ccName, learnStatus)
+        me.set_cvar("DTLearnTool", ",".join(learnData))
 
 #adds all the data to the learnedProficiencies Tracker
-    protracker = {language:{"type":learnType, "proslots": 1, "mentor": mentor, "achieved":timestamp}}
     prodata = load_json(learnedProficiencies)
     prodata.update(protracker)
     me.set_cvar("learnedProficiencies", dump_json(prodata))
+
+#deducts the coins
+pouch[1].update({'gp': ogp-1})  # updates the local copy to subtract material costs
+ngp = pouch[1]['gp']  # grabs the new amount
+pouch in bagsLoaded or bagsLoaded.append(pouch)
+set_cvar("bags", dump_json(bagsLoaded))  # dumps the coins back to the cvar
 
 #push results back to the DTTrack CVAR
 dtHistory[timestamp].update(learnTrack)
 me.set_cvar("DTTrack", dump_json(dtHistory))
 new_cc = me.get_cc(ccName)
-returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})" '
+returnstr += f' -f "Progress|{me.cc_str(ccName)}({new_cc-prev_cc:+})\n `{ogp}` -> `{ngp}` gp" '
+
+
+
 return returnstr
 </drac2>

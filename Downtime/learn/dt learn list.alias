@@ -17,21 +17,21 @@ currentTool = get("DTLearnTool") if exists("DTLearnTool") else 0
 
 if currentLanguage:
   lang, mentor, ccName, completion = currentLanguage.split(",")
-  returnstr += f' -f "Language Progress| {"Done" if completion == "True" else ""}Learning {lang} with {mentor}\n ' \
+  returnstr += f' -f "Language Progress| {"Done " if completion == "True" else ""}learning `{lang}` with `{mentor}`\n ' \
                f' {me.cc_str(ccName) if completion == "False" else "**COMPLETED**"}" '
 if currentTool:
   tool, mentor, ccName, completion = currentTool.split(",")
-  returnstr += f' -f "Tool Progress| {"Done" if completion == "True" else ""}Learning {tool} with {mentor}\n ' \
+  returnstr += f' -f "Tool Progress| {"Done " if completion == "True" else ""}Learning `{tool}` with `{mentor}`\n ' \
                f' {me.cc_str(ccName) if completion == "False" else "**COMPLETED**"}" '
 
 # Lists all the slots
 for x, t in proHistory.items():
-  returnstr += f' -f "{x}|Type: {t["type"]}\n '\
-               f'Mentor: {t["mentor"]}\n '\
-               f'Slots Taken: {t["proslots"]}'\
-               f'Completion Date: {t["achieved"]}" '
+  returnstr += f' -f "{x.capitalize()}|Type: `{t["type"]}`\n '\
+               f'Mentor: `{t["mentor"]}`\n '\
+               f'Slots Taken: `{t["proslots"]}`\n'\
+               f'Completion Date: `{t["achieved"]}`" '
   slotcounter += t["proslots"]
-returnstr += f' -f "Learn Slots| You currently are using {slotcounter} out of 6 learning slots." '
+returnstr += f' -f "Learn Slots| You currently are using `{slotcounter}` out of `6` learning slots." '
 
 return returnstr
 </drac2>
