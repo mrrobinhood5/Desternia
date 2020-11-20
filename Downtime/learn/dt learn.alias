@@ -22,8 +22,11 @@ timestamp_long=f'{month:02}.{day:02}.{str(year)[2:]} ({hour:02}:{minute:02}:{sec
 timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 <drac2>
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to learn..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your learn downtime in the #downtime channel"'
 # TODO: add a check to see if there are any slots left from the 6
 # TODO: add dt learn remove for refactoring the slots
+# TODO: add check to only run in downtime.
 # defines primary variables
 pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", f' -title "Learning Downtime for {timestamp}" ', character(), False, {"learn":{}}
 #defines secondary variables
