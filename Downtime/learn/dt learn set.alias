@@ -37,7 +37,7 @@ if parsedArgs.get("tool"):
   cvarName = "DTLearnTool"
   activity = parsedArgs.last("tool")
   ccName = f'DT Learn-Tool-{activity}'
-  if tool.lower() in knownTools.lower() or tool.lower() in knownToolsE.lower():
+  if activity.lower() in knownTools.lower() or activity.lower() in knownToolsE.lower():
     return errorstr
   returnstr += f' -title "{me. name} sets their tool to learn" -desc "You can now start learning `{activity}`" ' \
                f' -f "Usage| You can now set start rolling for it \n`!dt learn -tool {activity}` " '
