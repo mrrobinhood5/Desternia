@@ -53,6 +53,8 @@ helpstr += f' -desc "You can spend your time learning new skills, languages, and
            f' -f "USAGE|```!dt learn -lang \"Language\" [part]```"'
 
 # error checks to see if there is any downtime left for the day
+if not exists("DTTrack"):
+    return f' -f "ERROR|Re run setup with `!dt learn set`" '
 dtHistory = load_json(DTTrack)
 if timestamp in dtHistory:
     todaysDT = dtHistory[timestamp]
