@@ -1,7 +1,7 @@
 tembed -thumb <image> -color <color>
 <drac2>
 #set primary variables
-parsedArgs, hasMentor, mentorStr, mentor, returnStr, me = argparse(&ARGS&), False, "", "", "", character()
+parsedArgs, hasMentor, mentorStr, mentor, returnstr, me = argparse(&ARGS&), False, "", "", "", character()
 errorstr=f' -title "{me.name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set [-lang \\"Language\\"] [-tool \\"Tool\\" [-mentor \\"Mentor\\"]` "'
 # if set is ran without arguments
 if not &ARGS&:
@@ -39,7 +39,7 @@ if parsedArgs.get("tool"):
   ccName = f'DT Learn-Tool-{tool}'
   if tool.lower() in knownTools.lower() or tool.lower() in knownToolsE.lower():
     return errorstr
-  returnStr += f' -title "{me. name} sets their tool to learn" -desc "You can now start learning `{activity}`" ' \
+  returnstr += f' -title "{me. name} sets their tool to learn" -desc "You can now start learning `{activity}`" ' \
                f' -f "Usage| You can now set start rolling for it \n`!dt learn -tool {activity}` " '
 
 # does the math for number of Downtimes required
@@ -51,8 +51,8 @@ me.set_cvar(cvarName,",".join(saveInfo))
 me.create_cc(ccName, "0", str(totalDowntimesRequired), 'none')
 me.set_cc(ccName, 0)
 me.set_cvar("learnedProficiencies",dump_json({}))
-returnStr += mentorStr
-return returnStr
+returnstr += mentorStr
+return returnstr
 
 
 </drac2>
