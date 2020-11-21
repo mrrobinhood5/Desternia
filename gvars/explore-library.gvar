@@ -28,7 +28,7 @@
   "TalkChoices": "Room1, Fight",
   "Fight": "The Kobold draws its weapon and prepares for battle",
   "FightChoices": "Room1, Defeat",
-  "Defeat": "You win",
+  "Defeat": "You win, you picked up some keys from him.",
   "DefeatEarns": "KeyAGHOA, KeyASFJJ, KeyLASDFJ",
   "DefeatChoices" : "Room1"
  }
