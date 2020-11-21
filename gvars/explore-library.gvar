@@ -11,17 +11,25 @@
   "NorthEntryRoomChoices" : "Room1",
   "EastEntryLeft": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
   "EastEntryLeftChoices": "Room1, EastEntryLeftRoom",
-  "EastEntryRoom": "A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus. There is a winged Kobold in the center of the room",
-  "EastEntryRoomReqs" : "KeyASFJJ",
-  "EastEntryRoomChoices" : "Room1, Room2BoneDoor",
+  "EastEntryLeftRoom": "A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus. There is a winged Kobold in the center of the room",
+  "EastEntryRoomLeftReqs" : "KeyASFJJ",
+  "EastEntryRoomLeftChoices" : "Room1, Room2BoneDoor",
   "EastEntryRight": "The stone door is broken. Breaking it may be the only option",
   "EastEntryRightChoices": "Room1, EastEntryRightRoom",
+  "EastEntryRightRoom" : "There is a hallway that extends both left and right.",
+  "EastEntryRightRoomChoices" : "Go Left, Go Right",
+  "EastEntryRightRoomReqs" : "EERRStoneDoor",
   "SouthEntry": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
   "SouthEntryChoices": "Room1, SouthEntryRoom",
+  "SouthEntryRoom": "There is a hallway tha turns left",
+  "SouthEntryRoomReqs": "KeyLASDFJ",
+  "SouthEntryRoomChoices": "Go Left",
   "Talk": "The Kobold addresses you, in a friendly manner.",
   "TalkChoices": "Room1, Fight",
   "Fight": "The Kobold draws its weapon and prepares for battle",
-  "FightChoices": "Room1"
-
+  "FightChoices": "Room1, Defeat",
+  "Defeat": "You win",
+  "DefeatEarns": "KeyAGHOA, KeyASFJJ, KeyLASDFJ",
+  "DefeatChoices" : "Room1"
  }
 }
