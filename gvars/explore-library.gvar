@@ -31,5 +31,9 @@
   "Defeat": "You win, you picked up some keys from him.",
   "DefeatEarns": "KeyAGHOA, KeyASFJJ, KeyLASDFJ",
   "DefeatChoices" : "Room1"
+ },
+ "DeamScape2": {
+  "Begin": "**This is the Test DreamScape**",
+  "BeginChoices": "Enter"
  }
 }

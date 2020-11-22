@@ -1,0 +1,90 @@
+embed
+<drac2>
+# sets the library cvar that points to the default story
+set_cvar_nx("library", "d3acf794-8342-42f3-a48f-4942f891acad")
+# loads the json from library cvar
+l = load_json(get_gvar(library))
+
+# sets cvar library to the gvar for public library
+if "public-library" in "&*&":
+ set_cvar("library", "&2&")
+ l = load_json(get_gvar(library))
+
+# This is the same, but instead of a gvar it stores a cvar name
+if "private-library" in "&*&":
+ set_cvar("library", "&2&")
+ l = load_json(get(library))
+
+ #checks for svar and loads it instead
+svarexists = get_svar('serverlibrary', 0)
+if svarexists != 0:
+ l = load_json(get_gvar(get_svar('serverlibrary')))
+
+ #Setting cvar is set to the first key in json which is the name of the tsetting
+set_cvar_nx("Setting",str(l).split("'")[1].split(':')[0])
+
+#checks for argument set or setting and checks to see if the word exists in the JSON, sets cvar Setting to that
+# if it doesnt find it, it defaults to the first setting
+if "set" in "&*&":
+ if "&2&" in str(l):
+  set_cvar("Setting", "&2&")
+if Setting not in str(l):
+ set_cvar("Setting",str(l).split("'")[1].split(':')[0])
+
+
+set_cvar_nx("Prereqs", "")
+set_cvar_nx("Position", "Begin")
+set_cvar("Position", "Begin") if "begin" in "&*&" else ""
+set_cvar("Position", "Begin") if "set" in "&*&" else ""
+set_cvar("Choices", "BeginChoices") if "Begin" in Position else ""
+set_cvar("Choices", Position+str("Choices"))
+set_cvar("choiceList", l[Setting][Choices])
+Earns = Position + "Earns"
+eexists = 1 if Earns in l[Setting] else 0
+nreq = 0
+bar = 0
+if eexists:
+ if l[Setting][Earns] not in Prereqs:
+  set_cvar("Prereqs", Prereqs + l[Setting][Earns])
+if "&*&" != "":
+ csplit = choiceList.split(", ")
+ x = Position
+ z = "&*&"
+ for y in csplit:
+  x = y if z.lower() in y.lower() else x
+ Needs = x + "Reqs"
+ rexists = 1 if Needs in l[Setting] else 0
+ if rexists:
+  if l[Setting][Needs] in Prereqs:
+   x = x
+   nreq = 0
+  else:
+   x = Position
+   nreq = 1
+ Nots = x + "Not"
+ nexists = 1 if Nots in l[Setting] else 0
+ if nexists:
+  if l[Setting][Nots] in Prereqs:
+   x = Position
+   bar = 1
+  else:
+   x = x
+   bar = 0
+else:
+ x = Position
+set_cvar("Position",x)
+set_cvar("Choices", Position+str("Choices"))
+set_cvar("choiceList", l[Setting][Choices])
+set_cvar("SetMessage","Your setting is now "+Setting+".")
+</drac2>
+-title '{{Setting + ": " + Position if get("Setting") else "Exploration Alias!"}}'
+-desc "{{'You cannot yet access that option.' if nreq else 'You have been barred from that option.' if bar else ''}}
+{{''}}
+{{SetMessage if "set" in "&*&" else l[Setting][Position]}}"
+{{f'-f "List of Available Settings|{", ".join([y for y in l])}"' if "list" in "&*&" else ""}}
+-footer '{{"• You can continue to: " + choiceList}}
+{{"• Your position: " + Position}}
+{{''}}
+!explore Area Name to move to another area.
+!explore setting|set "Setting Name"  to enter a different setting.
+!explore list to view a list of available settings.'
