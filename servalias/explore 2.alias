@@ -1,0 +1,92 @@
+tembed
+<drac2>
+# sets default variables
+rawargs, pargs, me, settingsCVAR, settings = "&*&".split(" "), argparse(&ARGS&), character(), "ExploreSettings", {}
+returnstr, setMessage = "", False
+# sets the boolean checks
+svarExists = me.get_svar("serverlibrary", False)
+
+# set the default story if no svar exists, and writes the default settingsCVAR
+me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
+me.set_cvar_nx(settingsCVAR,dump_json({"setting" : "Test Area","position" : "begin", "prereqs":[]}))
+
+# if public-library is passed, set the library cvar to that gvar passed
+if pargs.get("public-library"):
+    # TODO: Add error check to see if that GVAR is valid
+    me.set_cvar("library", rawargs[1])
+    libraryData = load_json(get_gvar(library))
+
+# if private-library is passed  set the cvar to a cvar name that holds the JSON
+if pargs.get("private-library"):
+    # TODO: Add error check to see if that CVAR exists
+    me.set_cvar("library", rawargs[1])
+    libraryData = load_json(get(library))
+
+# checks for svar and loads it first, otherwise, loads the default
+if svarExists:
+    libraryData = load_json(get_gvar(get_svar("serverlibrary")))
+else:
+    libraryData = load_json(get_gvar(library))
+
+# Sets the Setting to the first string of the JSON by default
+settings.update({"setting":list(libraryData.keys())[0]})
+me.set_cvar(settingsCVAR,dump_json(settings))
+
+# checks to see if set or setting is passed and the loads that setting
+if pargs.get("set") or pargs.get("setting"):
+    if rawargs[1] in libraryData.keys():
+        # updates the settings dict
+        settings.update({"setting":rawargs[1]})
+        me.set_cvar(settingsCVAR, dump_json(settings))
+        setMessage = f' Your setting is now {rawargs[1]}'
+
+# MAIN LOGIC !!
+# saves what the current setting is
+acquiredPrereqs = settings["prereqs"]
+loadedSetting = settings["setting"]
+loadedPosition = libraryData[loadedSetting]["position"]
+
+
+# checks to see if you provided a good and valid Next Position and loads it.
+nextPosition = "&*&"
+validNextPosition = True if nextPosition in loadedPosition["choices"] else False
+currentPosition = libraryData[loadedSetting][validNextPosition]
+
+# writes the new position to JSON if its Valid
+if validNextPosition:
+    settings.update({"position":nextPosition})
+    me.set_cvar(settingsCVAR,dump_json(settings))
+
+## Check to see if you are Bar from this Position
+    hasBar = get(currentPosition["not"], False)
+    isBar = False if not hasBar else True if hasBar in acquiredPrereqs else False
+    returnstr += f' -desc "You have been barred from that option" ' if isBar else f''
+
+## Check to see if you have the prereqs for this Position
+    if not isBar:
+        hasPrereqs = get(currentPosition["prereqs"], False)
+        isAllowed = True if not hasPrereqs else True if currentPosition["prereqs"] in acquiredPrereqs else False
+        returnstr += f' -desc "You cannot yet access that option" ' if not isAllowed else f''
+
+## check to see if this place has Earns if Allowed or Not Barred
+        if isAllowed:
+            hasEarns = get(currentPosition["earns"], False)
+            if hasEarns:
+                oldprereqs = settings["prereqs"]
+                oldprereqs.append(currentPosition["earns"])
+                settings.update(oldprereqs)
+                me.set_cvar(settingsCVAR, dump_json(settings))
+                moveOn = True
+else:
+    err("Not a Valid new Position.")
+
+#Outputs the tembed
+# sets the title
+returnstr += f' -title "{loadedSetting+": "+nextPosition if validNextPosition else "Exploration Alias!"}'
+# sets a Set Message
+returnstr += f' -f "|{setMessage}' if setMessage else f''
+## TODO separate into a list subcommand
+# sets the footer
+returnstr += f' -footer "`!explore area name` to move to another area \n ' \
+             f'`!explore setting|set \\"Setting Name\\"` to enter a different setting \n '\
+             f'`!explore list` to view a list of available settings"'
