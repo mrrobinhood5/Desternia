@@ -72,7 +72,7 @@ elif not setPUB and not setPRIV and "&*&" != "":
     selectedSetting = "&*&".lower()
     # gonna iterate through all libraries starting with private, then public, then server
     if hasServerLib:
-        locallib = load_json(get_gvar(get_svar("serverlibrary")))
+        localLib = load_json(get_gvar(get_svar("serverlibrary")))
         settingType = "server"
     if isPrivate:
         localLib = load_json(get(library))
