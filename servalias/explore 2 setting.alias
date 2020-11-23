@@ -3,7 +3,7 @@ tembed -thumb <image> -color <color>
 rawargs, pargs, me, settingsCVAR  = "&*&".split(" "), argparse(&ARGS&), character(), "ExploreSettings"
 settings = {"setting": "Test Area", "type": "public", "position": "begin", "prereqs": []}
 isPrivate, isPublic = False, False
-returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:'
+returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:"'
 
 # runs the booleans
 setPUB = True if pargs.get("public") else False
