@@ -1,4 +1,4 @@
-tembed
+tembed -thumb <image> -color <color>
 <drac2>
 me, settingsCVAR, setting, currentSetting = character(), "ExploreSettings", {}, ""
 returnstr = f' -title "Exploration Alias!" -desc "Listing all available Settings:"'
@@ -12,7 +12,7 @@ if hasSettings:
 # gets the keys in all the cvars, aliases, and svars
 if cvarData:
 # now determine if its a JSON or a gvar
-    if len(cvarData) >= 36:
+    if len(cvarData) <= 36:
     # this means its a pointer to JSON in a gvar
         libraryData = load_json(get_gvar(cvarData))
         returnstr += f' -f "Public Library| '
@@ -35,8 +35,8 @@ if svarPointer != "":
         returnstr += f'{savedsetting}: *{serverLibraryData[savedsetting]["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
     returnstr += f'"'
 # builds the footer
-returnstr += f' -footer "`!explore area name` to move to another area \n ' \
-             f'`!explore setting|set \\"Setting Name\\"` to enter a different setting \n '\
-             f'`!explore list` to view a list of available settings"'
+returnstr += f' -footer "!explore area name to move to another area \n ' \
+             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n '\
+             f'!explore list to view a list of available settings"'
 return returnstr
 </drac2>
