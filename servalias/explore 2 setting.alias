@@ -1,6 +1,6 @@
 tembed -thumb <image> -color <color>
 <drac2>
-rawargs, pargs, me, settingsCVAR  = "&*&".split(" "), argparse(&ARGS&), character(), "ExploreSettings"
+pargs, me, settingsCVAR  = argparse(&ARGS&), character(), "ExploreSettings"
 settings = {"setting": "Test Area", "type": "public", "position": "begin", "prereqs": []}
 isPrivate, isPublic = False, False
 returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:"'
@@ -71,18 +71,17 @@ elif setPRIV:
 
 # if you pass just setting
 if not setPUB and not setPRIV and "&*&" != "":
-    err(f'You passed {"&ARGS&"}')
     selectedSetting = "&*&".lower()
     # gonna iterate through all libraries starting with private, then public, then server
-    if hasServerLib:
-        localLib = load_json(get_gvar(get_svar("serverlibrary")))
-        settingType = "server"
     if isPrivate:
         localLib = load_json(get(library))
         settingType = "private"
     if isPublic:
         localLib = load_json(get_gvar(library))
         settingType = "public"
+    if hasServerLib:
+        localLib = load_json(get_gvar(get_svar("serverlibrary")))
+        settingType = "server"
     for savedsetting in localLib.keys():
         if selectedSetting in savedsetting.lower():
             settings.update({"setting":savedsetting, "position":list(localLib[savedsetting])[0], "type":settingType})
