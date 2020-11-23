@@ -8,7 +8,7 @@ svarPointer= get_svar("serverlibrary", "")
 hasSettings = get(settingsCVAR, False)
 if hasSettings:
     loadedSetting = load_json(hasSettings)
-    currentSetting = loadedSetting["Setting"]
+    currentSetting = loadedSetting["setting"]
 # gets the keys in all the cvars, aliases, and svars
 if cvarData:
 # now determine if its a JSON or a gvar
@@ -35,8 +35,8 @@ if svarPointer != "":
         returnstr += f'{savedsetting}: *{serverLibraryData[savedsetting]["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
     returnstr += f'"'
 # builds the footer
-returnstr += f' -footer "!explore area name to move to another area \n ' \
-             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n '\
+returnstr += f' -footer "!explore area name to move to another area\n' \
+             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n'\
              f'!explore list to view a list of available settings"'
 return returnstr
 </drac2>
