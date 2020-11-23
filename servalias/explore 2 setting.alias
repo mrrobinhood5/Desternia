@@ -15,7 +15,7 @@ if exists("library"):
         amIaCVAR = get(library, False)
         if amIaCVAR:
             isPrivate, isPublic = True, False
-hasServerLib = True if exists("serverlibrary") else False
+hasServerLib = get_svar("serverlibrary", False)
 
 #grabs the current configuration
 hasSettings = get(settingsCVAR, False)
