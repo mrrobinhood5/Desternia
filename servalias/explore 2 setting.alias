@@ -80,7 +80,7 @@ if not setPUB and not setPRIV and "&*&" != "":
             if selectedSetting in savedsetting.lower():
                 settingType = "server"
                 settings.update({"setting": savedsetting, "position": list(serverLib[savedsetting])[0], "type": "server"})
-                dump_json(settingsCVAR, settings)
+                me.set_cvar(settingsCVAR, dump_json(settings))
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
     if isPublic and not settingType:
@@ -90,7 +90,7 @@ if not setPUB and not setPRIV and "&*&" != "":
             if selectedSetting in savedsetting.lower():
                 settingType = "public"
                 settings.update({"setting": savedsetting, "position": list(publicLib[savedsetting])[0], "type": "public"})
-                dump_json(settingsCVAR, settings)
+                me.set_cvar(settingsCVAR, dump_json(settings))
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
     if isPrivaten and not settingType:
@@ -99,7 +99,7 @@ if not setPUB and not setPRIV and "&*&" != "":
             if selectedSetting in savedsetting.lower():
                 settingType = "private"
                 settings.update({"setting": savedsetting, "position": list(privateLib[savedsetting])[0], "type": "private"})
-                dump_json(settingsCVAR, settings)
+                me.set_cvar(settingsCVAR, dump_json(settings))
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
     if not settingType:
