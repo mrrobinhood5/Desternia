@@ -5,7 +5,7 @@ returnstr = f' -title "Exploration Alias!" -desc "Listing all available Settings
 # checks for exisiting cvar/svars and settings
 cvarData = get("library", False)
 svarPointer= get_svar("serverlibrary", "")
-hasSettings = get("settingsCVAR", False)
+hasSettings = get(settingsCVAR, False)
 if hasSettings:
     loadedSetting = load_json(hasSettings)
     currentSetting = loadedSetting["Setting"]
