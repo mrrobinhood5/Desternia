@@ -93,7 +93,7 @@ if not setPUB and not setPRIV and "&*&" != "":
                 me.set_cvar(settingsCVAR, dump_json(settings))
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
-    if isPrivaten and not settingType:
+    if isPrivate and not settingType:
         privateLib = load_json(get(library))
         for savedsetting in privateLib.keys():
             if selectedSetting in savedsetting.lower():
