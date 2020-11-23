@@ -35,6 +35,7 @@ if svarPointer != "":
         returnstr += f'{savedsetting}: *{serverLibraryData[savedsetting]["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
     returnstr += f'"'
 # builds the footer
+returnstr += f' -f ""'
 returnstr += f' -footer "`!explore area name` to move to another area \n ' \
              f'`!explore setting|set \\"Setting Name\\"` to enter a different setting \n '\
              f'`!explore list` to view a list of available settings"'
