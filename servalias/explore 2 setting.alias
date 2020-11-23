@@ -8,6 +8,8 @@ returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:
 # runs the booleans
 setPUB = True if pargs.get("public") else False
 setPRIV = True if pargs.get("private") else False
+
+# checks to see what kind of libraries exist
 if exists("library"):
     if len(library) == 32 and library.count("-") == 4:
         isPublic, isPrivate = True, False
@@ -37,7 +39,7 @@ if setPUB:
     if validGVAR:
         me.set_cvar("library", passedGVAR)
         returnstr += f' -f "Public Library| You have set your `library` to `{passedGVAR}`\n\n'\
-                     f'The following settings are now available:"'
+                     f'The following settings are now available:'
         publicLibrary = load_json(get_gvar(library))
         for savedsetting in publicLibrary.keys():
             returnstr += f'{savedsetting}:\n>>*{publicLibrary[savedsetting]["description"]}*\n '
