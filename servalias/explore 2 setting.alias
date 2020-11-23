@@ -1,10 +1,10 @@
 tembed -thumb <image> -color <color>
 <drac2>
-pargs, me, settingsCVAR  = argparse(&ARGS&), character(), "ExploreSettings"
+pargs, me, settingsCVAR, settingType  = argparse(&ARGS&), character(), "ExploreSettings", False
 settings = {"setting": "Test Area", "type": "public", "position": "begin", "prereqs": []}
 isPrivate, isPublic = False, False
 returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:"'
-
+savestr = ""
 # runs the booleans
 setPUB = True if pargs.get("public") else False
 setPRIV = True if pargs.get("private") else False
@@ -73,21 +73,37 @@ elif setPRIV:
 if not setPUB and not setPRIV and "&*&" != "":
     selectedSetting = "&*&".lower()
     # gonna iterate through all libraries starting with private, then public, then server
-    if isPrivate:
-        localLib = load_json(get(library))
-        settingType = "private"
-    if isPublic:
-        localLib = load_json(get_gvar(library))
-        settingType = "public"
     if hasServerLib:
-        localLib = load_json(get_gvar(get_svar("serverlibrary")))
-        settingType = "server"
-    for savedsetting in localLib.keys():
-        if selectedSetting in savedsetting.lower():
-            settings.update({"setting":savedsetting, "position":list(localLib[savedsetting])[0], "type":settingType})
-            dump_json(settingsCVAR, settings)
-            returnstr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
+        serverLib = load_json(get_gvar(get_svar("serverlibrary")))
+        for savedsetting in serverLib.keys():
+            if selectedSetting in savedsetting.lower():
+                settingType = "server"
+                settings.update({"setting": savedsetting, "position": list(serverLib[savedsetting])[0], "type": "server"})
+                dump_json(settingsCVAR, settings)
+                savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
+    if isPublic:
+        publicLib = load_json(get_gvar(library))
+        settingType = "public"
+        for savedsetting in publicLib.keys():
+            if selectedSetting in savedsetting.lower():
+                settingType = "public"
+                settings.update({"setting": savedsetting, "position": list(publicLib[savedsetting])[0], "type": "public"})
+                dump_json(settingsCVAR, settings)
+                savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
+
+    if isPrivate:
+        privateLib = load_json(get(library))
+        for savedsetting in privateLib.keys():
+            if selectedSetting in savedsetting.lower():
+                settingType = "private"
+                settings.update({"setting": savedsetting, "position": list(privateLib[savedsetting])[0], "type": "private"})
+                dump_json(settingsCVAR, settings)
+                savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
+
+    if not settingType:
+        savestr += f' -f "Setting Error|That setting was not found in any library. Make sure you have already loaded the library"'
+    returnstr += savestr
 returnstr += f' -f "Usage|`!explore setting -private CVAR-NAME` to set a private CVAR library\n' \
              f'`!exlore setting -public GVAR-ID` to set a public GVAR library\n' \
              f'`!svar serverlibrary GVAR-ID` to set the server library (must be DragonSpeaker or Admin)"'
