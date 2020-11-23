@@ -7,7 +7,7 @@ returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:
 # runs the booleans
 setPUB = True if pargs.get("public") else False
 setPRIV = True if pargs.get("private") else False
-if exists(library):
+if exists("library"):
     if len(library) == 32 and library.count("-") == 4:
         isPublic, isPrivate = True, False
     else:
