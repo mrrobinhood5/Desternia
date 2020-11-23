@@ -70,7 +70,7 @@ elif setPRIV:
     settings.update({"setting":newSetting, "position":newPosition, "type":"private"})
 
 # if you pass just setting
-elif not setPUB and not setPRIV:
+if not setPUB and not setPRIV:
     selectedSetting = "&*&".lower()
     # gonna iterate through all libraries starting with private, then public, then server
     if hasServerLib:
