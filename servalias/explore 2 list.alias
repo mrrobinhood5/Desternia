@@ -1,0 +1,41 @@
+tembed
+<drac2>
+me, settingsCVAR, setting = character(), "ExploreSettings", {}
+returnstr = f' -title "Exploration Alias!" -desc "Listing all available Settings:"'
+# checks for exisiting cvar/svars and settings
+cvarData = me.get(library, False)
+svarPointer= get_svar("serverlibrary", "")
+hasSettings = me.get(settingsCVAR, False)
+if hasSettings:
+    loadedSetting = load_json(hasSettings)
+    currentSetting = loadedSetting["Setting"]
+# gets the keys in all the cvars, aliases, and svars
+if cvarData:
+# now determine if its a JSON or a gvar
+    if len(cvarData) >= 36:
+    # this means its a pointer to JSON in a gvar
+        libraryData = load_json(get_gvar(cvarData))
+        returnstr += f' -f "Public Library| '
+        for savedsetting in libraryData.keys():
+            returnstr += f'{savedsetting}: *{savedsetting["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
+        returnstr += f'"'
+    else:
+    # this means its a JSON in the cvar
+        libraryData = load_json(cvarData)
+        returnstr += f' -f "Private Library| '
+        for savedsetting in libraryData.keys():
+            returnstr += f'{savedsetting}: *{savedsetting["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
+        returnstr += f'"'
+
+#this means its an svar pointer to JSON in a gvar
+if svarPointer != "":
+    serverLibraryData = load_json(get_gvar(svarPointer))
+    returnstr += f' -f "Server Library| '
+    for savedsetting in serverLibraryData.keys():
+        returnstr += f'{savedsetting}: *{savedsetting["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
+    returnstr += f'"'
+# builds the footer
+returnstr += f' -footer "`!explore area name` to move to another area \n ' \
+             f'`!explore setting|set \\"Setting Name\\"` to enter a different setting \n '\
+             f'`!explore list` to view a list of available settings"'
+</drac2>
