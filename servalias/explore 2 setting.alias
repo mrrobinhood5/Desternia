@@ -78,13 +78,12 @@ if not setPUB and not setPRIV and "&*&" != "":
         serverLib = load_json(get_gvar(get_svar("serverlibrary")))
         for savedsetting in serverLib.keys():
             if selectedSetting in savedsetting.lower():
-                err("found it in sserverlib")
                 settingType = "server"
                 settings.update({"setting": savedsetting, "position": list(serverLib[savedsetting])[0], "type": "server"})
                 dump_json(settingsCVAR, settings)
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
-    if isPublic:
+    if isPublic and not settingType:
         publicLib = load_json(get_gvar(library))
         settingType = "public"
         for savedsetting in publicLib.keys():
@@ -94,7 +93,7 @@ if not setPUB and not setPRIV and "&*&" != "":
                 dump_json(settingsCVAR, settings)
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
-    if isPrivate:
+    if isPrivaten and not settingType:
         privateLib = load_json(get(library))
         for savedsetting in privateLib.keys():
             if selectedSetting in savedsetting.lower():
