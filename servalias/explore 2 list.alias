@@ -24,7 +24,7 @@ if cvarData:
         libraryData = load_json(cvarData)
         returnstr += f' -f "Private Library| '
         for savedsetting in libraryData.keys():
-            returnstr += f'{savedsetting}: *{savedsetting["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
+            returnstr += f'{savedsetting}: *{libraryData[savedsetting]["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
         returnstr += f'"'
 
 #this means its an svar pointer to JSON in a gvar
