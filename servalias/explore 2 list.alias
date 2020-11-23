@@ -14,7 +14,7 @@ if cvarData:
 # now determine if its a JSON or a gvar
     if len(cvarData) <= 36:
     # this means its a pointer to JSON in a gvar
-        libraryData = load_json(get_gvar(cvarData))
+        libraryData = load_json(get_gvar(get(cvarData)))
         returnstr += f' -f "Public Library| '
     else:
     # this means its a JSON in the cvar
