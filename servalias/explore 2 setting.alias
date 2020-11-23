@@ -39,7 +39,7 @@ if setPUB:
     if validGVAR:
         me.set_cvar("library", passedGVAR)
         returnstr += f' -f "Public Library| You have set your `library` to `{passedGVAR}`\n\n'\
-                     f'The following settings are now available:'
+                     f'The following settings are now available:\n\n'
         publicLibrary = load_json(get_gvar(library))
         for savedsetting in publicLibrary.keys():
             returnstr += f'{savedsetting}:\n>>*{publicLibrary[savedsetting]["description"]}*\n '
@@ -60,7 +60,7 @@ elif setPRIV:
     privateLibrary = load_json(loadedCVAR)
     me.set_cvar("library", passedCVAR)
     returnstr += f' -f "Private Library| You have set your `library` to `{passedCVAR}`\n\n' \
-                 f'The following settings are now available:"'
+                 f'The following settings are now available:\n\n'
     for savedsetting in privateLibrary.keys():
         returnstr += f'{savedsetting}:\n>>*{privateLibrary[savedsetting]["description"]}*\n '
     returnstr += f'"'
