@@ -12,12 +12,12 @@ if hasSettings:
 # gets the keys in all the cvars, aliases, and svars
 if cvarData:
 # now determine if its a JSON or a gvar
-    if len(cvarData) <= 36:
-    # this means its a pointer to JSON in a gvar
-        libraryData = load_json(get_gvar(get(cvarData)))
+    if len(cvarData) == 36 and cvarData.count("-") == 4:
+    # this means cvarDATA has a GVAR
+        libraryData = load_json(get_gvar(cvarData))
         returnstr += f' -f "Public Library| '
     else:
-    # this means its a JSON in the cvar
+    # this means cvarDATA has a CVAR
         libraryData = load_json(get(cvarData))
         returnstr += f' -f "Private Library| '
     for savedsetting in libraryData.keys():
