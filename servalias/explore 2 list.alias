@@ -17,7 +17,7 @@ if cvarData:
         libraryData = load_json(get_gvar(cvarData))
         returnstr += f' -f "Public Library| '
         for savedsetting in libraryData.keys():
-            returnstr += f'{savedsetting}: *{savedsetting["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
+            returnstr += f'{savedsetting}: *{libraryData[savedsetting]["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
         returnstr += f'"'
     else:
     # this means its a JSON in the cvar
@@ -32,7 +32,7 @@ if svarPointer != "":
     serverLibraryData = load_json(get_gvar(svarPointer))
     returnstr += f' -f "Server Library| '
     for savedsetting in serverLibraryData.keys():
-        returnstr += f'{savedsetting}: *{savedsetting["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
+        returnstr += f'{savedsetting}: *{serverLibraryData[savedsetting]["description"]}*{" <- You are here" if currentSetting == savedsetting else ""}\n '
     returnstr += f'"'
 # builds the footer
 returnstr += f' -footer "`!explore area name` to move to another area \n ' \
