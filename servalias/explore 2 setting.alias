@@ -74,10 +74,11 @@ if not setPUB and not setPRIV and "&*&" != "":
     selectedSetting = "&*&".lower()
     # gonna iterate through all libraries starting with private, then public, then server
     if hasServerLib:
-        err("entered serverlib check")
+
         serverLib = load_json(get_gvar(get_svar("serverlibrary")))
         for savedsetting in serverLib.keys():
             if selectedSetting in savedsetting.lower():
+                err("found it in sserverlib")
                 settingType = "server"
                 settings.update({"setting": savedsetting, "position": list(serverLib[savedsetting])[0], "type": "server"})
                 dump_json(settingsCVAR, settings)
