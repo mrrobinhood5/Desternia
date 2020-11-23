@@ -71,7 +71,7 @@ elif setPRIV:
 
 # if you pass just setting
 if not setPUB and not setPRIV and "&*&" != "":
-    err(f'You passed {"%*%"}')
+    err(f'You passed {"&ARGS&"}')
     selectedSetting = "&*&".lower()
     # gonna iterate through all libraries starting with private, then public, then server
     if hasServerLib:
