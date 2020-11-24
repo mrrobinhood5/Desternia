@@ -45,8 +45,7 @@ if setPUB:
             returnstr += f'{savedsetting}:\n>>*{publicLibrary[savedsetting]["description"]}*\n '
         returnstr += f'"'
         newSetting = list(publicLibrary.keys())[0]
-        newPosition = publicLibrary[newSetting]["begin"]
-        settings.update({"setting": newSetting, "position": newPosition, "type": "public"})
+        settings.update({"setting": newSetting, "position": "begin", "type": "public"})
     else:
         err("You must pass in a valid GVAR ID")
 
@@ -66,8 +65,7 @@ elif setPRIV:
     returnstr += f'"'
     # sets the settings to the first one in the library
     newSetting = list(privateLibrary.keys())[0]
-    newPosition = privateLibrary[newSetting]["begin"]
-    settings.update({"setting":newSetting, "position":newPosition, "type":"private"})
+    settings.update({"setting":newSetting, "position":"begin", "type":"private"})
 
 # if you pass just setting
 if not setPUB and not setPRIV and "&*&" != "":
@@ -79,7 +77,7 @@ if not setPUB and not setPRIV and "&*&" != "":
         for savedsetting in serverLib.keys():
             if selectedSetting in savedsetting.lower():
                 settingType = "server"
-                settings.update({"setting": savedsetting, "position": list(serverLib[savedsetting])[0], "type": "server"})
+                settings.update({"setting": savedsetting, "position": "begin", "type": "server"})
                 me.set_cvar(settingsCVAR, dump_json(settings))
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
@@ -89,7 +87,7 @@ if not setPUB and not setPRIV and "&*&" != "":
         for savedsetting in publicLib.keys():
             if selectedSetting in savedsetting.lower():
                 settingType = "public"
-                settings.update({"setting": savedsetting, "position": list(publicLib[savedsetting])[0], "type": "public"})
+                settings.update({"setting": savedsetting, "position": "begin", "type": "public"})
                 me.set_cvar(settingsCVAR, dump_json(settings))
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
@@ -98,7 +96,7 @@ if not setPUB and not setPRIV and "&*&" != "":
         for savedsetting in privateLib.keys():
             if selectedSetting in savedsetting.lower():
                 settingType = "private"
-                settings.update({"setting": savedsetting, "position": list(privateLib[savedsetting])[0], "type": "private"})
+                settings.update({"setting": savedsetting, "position": "begin", "type": "private"})
                 me.set_cvar(settingsCVAR, dump_json(settings))
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
