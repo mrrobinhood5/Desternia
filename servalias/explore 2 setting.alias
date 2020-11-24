@@ -11,7 +11,7 @@ setPRIV = True if pargs.get("private") else False
 
 # checks to see what kind of libraries exist
 if exists("library"):
-    if len(library) == 32 and library.count("-") == 4:
+    if len(library) == 36 and library.count("-") == 4:
         isPublic, isPrivate = True, False
     else:
         amIaCVAR = get(library, False)
