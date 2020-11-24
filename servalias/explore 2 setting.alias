@@ -84,7 +84,6 @@ if not setPUB and not setPRIV and "&*&" != "":
                 savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
 
     if isPublic and not settingType:
-        err("im in public check")
         publicLib = load_json(get_gvar(library))
         settingType = "public"
         for savedsetting in publicLib.keys():
