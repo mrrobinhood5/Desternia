@@ -44,12 +44,12 @@ nextPosition = loadedSetting[nextPosition] if validNextPosition else loadedPosit
 returnstr += f' -f "Error|Not a valid choice" ' if not validNextPosition else f''
 
 ## Check to see if you are Bar from this Position
-if nextPosition.has_key("not"):
+if "not" in nextPosition.keys():
     isBar = True if any(item in savedEarns for item in nextPosition["not"]) else False
     returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 
 ## check to see if you have the requirments for this new location
-if nextPosition.has_key("prereqs"):
+if "prereqs" in nextPosition.keys():
     isAllowed = True if any(item in savedEarns for item in nextPosition["prereqs"]) else False
     returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 
