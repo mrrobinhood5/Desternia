@@ -134,5 +134,11 @@
       "title": "[name] uses their Channel Divinity: Sacred Weapon",
       "desc": "For 1 minute, you add your Charisma modifier to attack rolls made with that weapon (with a minimum bonus of +1). The weapon also emits bright light in a 20-foot radius and dim light 20 feet beyond that. If the weapon is not already magical, it becomes magical for the duration.",
       "seffect": "Sacred Weapon|-b {charismaMod}|10"
+   },
+   "tkfeat": {
+      "dc": "{8+proficiencyBonus+charismaMod}",
+      "title": "[name] uses their Telekenetic Feat!",
+      "desc": "As a bonus action, you can try to telekinetically shove one creature you can see within 30 feet of you. When you do so, the target must succeed on a Strength saving throw or be moved 5 feet toward you or away from you. A creature can willingly fail this save.",
+      "save": "str"
    }
 }
