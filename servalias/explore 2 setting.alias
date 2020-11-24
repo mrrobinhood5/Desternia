@@ -103,9 +103,9 @@ if not setPUB and not setPRIV and "&*&" != "":
     if not settingType:
         savestr += f' -f "Setting Error|That setting was not found in any library. Make sure you have already loaded the library"'
     returnstr += savestr
-returnstr += f' -f "Usage|`!explore setting -private CVAR-NAME` to set a private CVAR library\n' \
-             f'`!exlore setting -public GVAR-ID` to set a public GVAR library\n' \
-             f'`!svar serverlibrary GVAR-ID` to set the server library (must be DragonSpeaker or Admin)"'
+returnstr += f' -footer "!explore setting -private CVAR-NAME to set a private CVAR library\n' \
+             f'!exlore setting -public GVAR-ID to set a public GVAR library\n' \
+             f'!svar serverlibrary GVAR-ID to set the server library (must be DragonSpeaker or Admin)"'
 
 return returnstr
 </drac2>
