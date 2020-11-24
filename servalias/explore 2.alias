@@ -23,10 +23,10 @@ savedSetting, savedPosition, savedType, savedEarns = savedExploreSettings["setti
 # checks to see what kind of settings is saved and loads it
 if savedType == "public":
     loadedData = load_json(get_gvar(get("library")))
-elif savedType == "private":
+if savedType == "private":
     cvarData = get("library")
     loadedData = load_json(get(cvarData))
-elif savedType == "server":
+if savedType == "server":
     loadedData = load_json(get_gvar(get_svar("serverlibrary")))
 loadedSetting = loadedData[savedSetting]
 loadedPosition = loadedData[savedPosition]
