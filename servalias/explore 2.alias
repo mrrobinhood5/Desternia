@@ -6,7 +6,7 @@ tembed -thumb <image> -color <color>
 # sets default variables
 me, settingsCVAR= character(), "ExploreSettings"
 returnstr, setMessage = "", False
-defaultSettings = {"setting" : "Test Area","type" : "public","position" : "begin","prereqs" : []}
+defaultSettings = {"setting" : "Public Home","type" : "public", "position" : "begin","prereqs" : []}
 
 # checks to see if there are settings, otherwise set the default ones
 hasSettings = get(settingsCVAR, False)
@@ -24,7 +24,8 @@ savedSetting, savedPosition, savedType, savedEarns = savedExploreSettings["setti
 if savedType == "public":
     loadedData = load_json(get_gvar(get("library")))
 elif savedType == "private":
-    loadedData = load_json(get(get("library")))
+    cvarData = get("library")
+    loadedData = load_json(get(cvarData))
 elif savedType == "server":
     loadedData = load_json(get_gvar(get_svar("serverlibrary")))
 loadedSetting = loadedData[savedSetting]
