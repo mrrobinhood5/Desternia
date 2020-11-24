@@ -15,6 +15,7 @@ me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 # if no settings exists, load the default ones
 if not hasSettings:
     me.set_cvar(settingsCVAR, dump_json(defaultSettings))
+    hasSettings = get(settingsCVAR)
 
 # load ExploreSettings CVAR
 savedExploreSettings = load_json(hasSettings)
