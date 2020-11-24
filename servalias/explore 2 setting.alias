@@ -42,7 +42,7 @@ if setPUB:
                      f'The following settings are now available:\n\n'
         publicLibrary = load_json(get_gvar(library))
         for savedsetting in publicLibrary.keys():
-            returnstr += f'{savedsetting}:\n>>*{publicLibrary[savedsetting]["description"]}*\n '
+            returnstr += f'{savedsetting}:\n\u2022{publicLibrary[savedsetting]["description"]}\n '
         returnstr += f'"'
         newSetting = list(publicLibrary.keys())[0]
         settings.update({"setting": newSetting, "position": "begin", "type": "public"})
@@ -61,7 +61,7 @@ elif setPRIV:
     returnstr += f' -f "Private Library| You have set your `library` to `{passedCVAR}`\n\n' \
                  f'The following settings are now available:\n\n'
     for savedsetting in privateLibrary.keys():
-        returnstr += f'{savedsetting}:\n>>*{privateLibrary[savedsetting]["description"]}*\n '
+        returnstr += f'{savedsetting}:\n\u2022{privateLibrary[savedsetting]["description"]}\n '
     returnstr += f'"'
     # sets the settings to the first one in the library
     newSetting = list(privateLibrary.keys())[0]
