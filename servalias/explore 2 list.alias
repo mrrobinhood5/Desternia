@@ -1,19 +1,4 @@
 tembed -thumb <image> -color <color>
-<drac2>
-me, settingsCVAR, setting, currentSetting = character(), "ExploreSettings", {}, ""
-returnstr = f' -title "Exploration Alias!" -desc "Listing all available Settings:"'
-# checks for exisiting cvar/svars and settings
-cvarData = get("library", False)
-svarPointer= get_svar("serverlibrary", "")
-hasSettings = get(settingsCVAR, False)
-if hasSettings:
-    loadedSetting = load_json(hasSettings)
-    currentSetting = loadedSetting["setting"]
-# gets the keys in all the cvars, aliases, and svars
-if cvarData:
-# now determine if its a JSON or a gvar
-    if len(cvarData) == 36 and cvarData.count("-") == 4:
-    # this means cvarDATA has a GVAR
         libraryData = load_json(get_gvar(cvarData))
         returnstr += f' -f "Public Library| '
     else:

@@ -1,9 +1,9 @@
-embed
+tembed
 <drac2>
 # sets the library cvar that points to the default story
 set_cvar_nx("library", "d3acf794-8342-42f3-a48f-4942f891acad")
 # loads the json from library cvar
-l = load_json(get_gvar(library))
+l = load_json(get_gvar(library)) ## THIS SHOULDNT BE THE FIRST LOAD
 
 # sets cvar library to the gvar for public library
 if "public-library" in "&*&":
@@ -28,17 +28,27 @@ set_cvar_nx("Setting",str(l).split("'")[1].split(':')[0])
 if "set" in "&*&":
  if "&2&" in str(l):
   set_cvar("Setting", "&2&")
+
 if Setting not in str(l):
  set_cvar("Setting",str(l).split("'")[1].split(':')[0])
 
-
+# sets the required cvars
+# TODO change all this to one CVAR JSON setting, or a list
 set_cvar_nx("Prereqs", "")
 set_cvar_nx("Position", "Begin")
+
+# Sets your position to Begin if specifically called the begin or new setting
 set_cvar("Position", "Begin") if "begin" in "&*&" else ""
 set_cvar("Position", "Begin") if "set" in "&*&" else ""
+
+# SEts your default choices to Begin or whatever position you specivfied
 set_cvar("Choices", "BeginChoices") if "Begin" in Position else ""
 set_cvar("Choices", Position+str("Choices"))
+
+# Sets your choice lists to the JSON choices
 set_cvar("choiceList", l[Setting][Choices])
+
+#defines the Earns, and checks to see if exists, seting it on the prereqs cvar
 Earns = Position + "Earns"
 eexists = 1 if Earns in l[Setting] else 0
 nreq = 0
@@ -46,32 +56,42 @@ bar = 0
 if eexists:
  if l[Setting][Earns] not in Prereqs:
   set_cvar("Prereqs", Prereqs + l[Setting][Earns])
+
+# if some argument was passed, do stuff
 if "&*&" != "":
  csplit = choiceList.split(", ")
  x = Position
  z = "&*&"
  for y in csplit:
   x = y if z.lower() in y.lower() else x
+     # checks to see if there are prereqs for the choice
  Needs = x + "Reqs"
  rexists = 1 if Needs in l[Setting] else 0
+ # checks to see if the needs are in your prereqs
  if rexists:
   if l[Setting][Needs] in Prereqs:
    x = x
+  # sets nreq to false if you dont and you dont advance position
    nreq = 0
   else:
    x = Position
    nreq = 1
+  #checks to see if you have a NOT
  Nots = x + "Not"
  nexists = 1 if Nots in l[Setting] else 0
  if nexists:
   if l[Setting][Nots] in Prereqs:
    x = Position
+   #sets the barred flags
    bar = 1
+
   else:
    x = x
    bar = 0
 else:
  x = Position
+
+ # After all the checks to see if you provided a correct place, sets all the new settings in CVARs
 set_cvar("Position",x)
 set_cvar("Choices", Position+str("Choices"))
 set_cvar("choiceList", l[Setting][Choices])
