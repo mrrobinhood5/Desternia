@@ -57,7 +57,8 @@ if "prereqs" in nextPosition.keys():
 ## check to see if you have new earns because you are allowed
 if isAllowed and not isBar:
     # add the earns allowed in nextPosition to the savedEarns to save later
-    savedEarns.append(nextPosition["earns"])
+    if "earns" in nextPosition.keys():
+        savedEarns.append(nextPosition["earns"])
     # writes all new data to CVAR
     savedExploreSettings.update({"position":list(nextPosition)[0], "prereqs":savedEarns})
     me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
