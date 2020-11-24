@@ -6,7 +6,7 @@ tembed -thumb <image> -color <color>
 # sets default variables
 me, settingsCVAR= character(), "ExploreSettings"
 returnstr, setMessage = "", False
-defaultSettings = {"setting" : "Public Home","type" : "public", "position" : "begin","prereqs" : []}
+defaultSettings = {"setting" : "Hacienda","type" : "public", "position" : "begin","prereqs" : []}
 
 # checks to see if there are settings, otherwise set the default ones
 hasSettings = get(settingsCVAR, False)
