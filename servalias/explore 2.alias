@@ -30,8 +30,8 @@ if savedType == "private":
 if savedType == "server":
     loadedData = load_json(get_gvar(get_svar("serverlibrary")))
 loadedSetting = loadedData[savedSetting]
-loadedPosition = loadedData[savedPosition]
-loadedChoices = loadedData[loadedPosition]["choices"]
+loadedPosition = loadedSetting[savedPosition]
+loadedChoices = loadedPosition["choices"]
 
 # MAIN LOGIC !!
 
