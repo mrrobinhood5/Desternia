@@ -6,6 +6,7 @@ tembed -thumb <image> -color <color>
 # sets default variables
 me, settingsCVAR= character(), "ExploreSettings"
 returnstr, setMessage = "", False
+isAllowed, isBar = True, False
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : []}
 
 # checks to see if there are settings, otherwise set the default ones
