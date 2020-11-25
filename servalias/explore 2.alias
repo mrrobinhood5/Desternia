@@ -60,7 +60,7 @@ if typedPosition != "":
     if isAllowed and not isBar:
         # add the earns allowed in nextPosition to the savedEarns to save later
         if "earns" in nextPosition.keys():
-            savedEarns.append(nextPosition["earns"])
+            savedEarns.append(nextPosition["earns"][0])
         # writes all new data to CVAR
         savedExploreSettings.update({"position":typedPosition, "prereqs":savedEarns})
         me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
