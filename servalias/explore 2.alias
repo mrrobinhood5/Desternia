@@ -64,11 +64,14 @@ if nextPosition != "":
     returnstr += f' -f "Choices|{nextPosition["choices"]}"'
 #  the tembed
 # sets the title
-returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
-# returnstr += f' -title "Explore Alias!" -desc "This appears when you didnt pass any arguments" -f "GPS|You are here ^^" '
+    returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
+else:
+    returnstr += f' -title "{savedSetting+": "+savedPosition}" '
+    returnstr += f' -f "Description|{loadedPosition["description"]}'
+    returnstr += f' -f "Choices|{loadedChoices}" '
 # sets the footer
-returnstr += f' -footer "`!explore area name` to move to another area \n ' \
-             f'`!explore setting|set \\"Setting Name\\"` to enter a different setting \n '\
-             f'`!explore list` to view a list of available settings"'
+returnstr += f' -footer "!explore area name to move to another area \n ' \
+             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n '\
+             f'!explore list to view a list of available settings"'
 return returnstr
 </drac2>
