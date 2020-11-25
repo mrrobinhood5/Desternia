@@ -1,8 +1,5 @@
-# from Desternia.FakeTestingStuff import *
-
 tembed -thumb <image> -color <color>
 <drac2>
-
 # sets default variables
 me, settingsCVAR= character(), "ExploreSettings"
 returnstr = ""
