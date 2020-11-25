@@ -1,4 +1,4 @@
-from Desternia.FakeTestingStuff import *
+# from Desternia.FakeTestingStuff import *
 
 tembed -thumb <image> -color <color>
 <drac2>
@@ -65,7 +65,7 @@ if nextPosition != "":
         me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
     returnstr += f' -f "Description|{nextPosition["description"]}"'
     returnstr += f' -f "Choices|{nextPosition["choices"]}"'
-#Outputs the tembed
+#  the tembed
 # sets the title
 # returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
 returnstr += f' -title "Explore Alias!" -desc "This appears when you didnt pass any arguments" -f "GPS|You are here ^^" '
