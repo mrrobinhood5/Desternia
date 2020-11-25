@@ -61,14 +61,14 @@ if nextPosition != "":
         if "earns" in nextPosition.keys():
             savedEarns.append(nextPosition["earns"])
         # writes all new data to CVAR
-        savedExploreSettings.update({"position":list(nextPosition)[0], "prereqs":savedEarns})
+        savedExploreSettings.update({"position":list(nextPosition)[1], "prereqs":savedEarns})
         me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
     returnstr += f' -f "Description|{nextPosition["description"]}"'
     returnstr += f' -f "Choices|{nextPosition["choices"]}"'
 #Outputs the tembed
 # sets the title
-returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
-
+# returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
+returnstr += f' -title "Explore Alias!" -desc "This appears when you didnt pass any arguments" -f "GPS|You are here ^^" '
 # sets the footer
 returnstr += f' -footer "`!explore area name` to move to another area \n ' \
              f'`!explore setting|set \\"Setting Name\\"` to enter a different setting \n '\
