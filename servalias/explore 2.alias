@@ -38,36 +38,37 @@ loadedChoices = loadedPosition["choices"]
 
 # checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
 nextPosition = "&*&"
-validNextPosition = True if nextPosition in loadedChoices else False
+if nextPosition != "":
+    validNextPosition = True if nextPosition in loadedChoices else False
 
-# loads the nextPosition as current, and pulls all its data
-nextPosition = loadedSetting[nextPosition] if validNextPosition else loadedPosition
-returnstr += f' -f "Error|Not a valid choice" ' if not validNextPosition else f''
+    # loads the nextPosition as current, and pulls all its data
+    nextPosition = loadedSetting[nextPosition] if validNextPosition else loadedPosition
+    returnstr += f' -f "Error|Not a valid choice" ' if not validNextPosition else f''
 
-## Check to see if you are Bar from this Position
-if "not" in nextPosition.keys():
-    isBar = True if any(item in savedEarns for item in nextPosition["not"]) else False
-    returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
+    ## Check to see if you are Bar from this Position
+    if "not" in nextPosition.keys():
+        isBar = True if any(item in savedEarns for item in nextPosition["not"]) else False
+        returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 
-## check to see if you have the requirments for this new location
-if "prereqs" in nextPosition.keys():
-    isAllowed = True if any(item in savedEarns for item in nextPosition["prereqs"]) else False
-    returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
+    ## check to see if you have the requirments for this new location
+    if "prereqs" in nextPosition.keys():
+        isAllowed = True if any(item in savedEarns for item in nextPosition["prereqs"]) else False
+        returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 
-## check to see if you have new earns because you are allowed
-if isAllowed and not isBar:
-    # add the earns allowed in nextPosition to the savedEarns to save later
-    if "earns" in nextPosition.keys():
-        savedEarns.append(nextPosition["earns"])
-    # writes all new data to CVAR
-    savedExploreSettings.update({"position":list(nextPosition)[0], "prereqs":savedEarns})
-    me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
-
+    ## check to see if you have new earns because you are allowed
+    if isAllowed and not isBar:
+        # add the earns allowed in nextPosition to the savedEarns to save later
+        if "earns" in nextPosition.keys():
+            savedEarns.append(nextPosition["earns"])
+        # writes all new data to CVAR
+        savedExploreSettings.update({"position":list(nextPosition)[0], "prereqs":savedEarns})
+        me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
+    returnstr += f' -f "Description|{nextPosition["description"]}"'
+    returnstr += f' -f "Choices|{nextPosition["choices"]}"'
 #Outputs the tembed
 # sets the title
 returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
-returnstr += f' -f "Description|{nextPosition["description"]}"'
-returnstr += f' -f "Choices|{nextPosition["choices"]}"'
+
 # sets the footer
 returnstr += f' -footer "`!explore area name` to move to another area \n ' \
              f'`!explore setting|set \\"Setting Name\\"` to enter a different setting \n '\
