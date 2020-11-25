@@ -64,8 +64,8 @@ if nextPosition != "":
     returnstr += f' -f "Choices|{nextPosition["choices"]}"'
 #  the tembed
 # sets the title
-# returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
-returnstr += f' -title "Explore Alias!" -desc "This appears when you didnt pass any arguments" -f "GPS|You are here ^^" '
+returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
+# returnstr += f' -title "Explore Alias!" -desc "This appears when you didnt pass any arguments" -f "GPS|You are here ^^" '
 # sets the footer
 returnstr += f' -footer "`!explore area name` to move to another area \n ' \
              f'`!explore setting|set \\"Setting Name\\"` to enter a different setting \n '\
