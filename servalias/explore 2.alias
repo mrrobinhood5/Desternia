@@ -67,8 +67,8 @@ if nextPosition != "":
     returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
 else:
     returnstr += f' -title "{savedSetting+": "+savedPosition}" '
-    returnstr += f' -f "Description|{loadedPosition["description"]}'
-    returnstr += f' -f "Choices|{loadedChoices}" '
+    returnstr += f' -f "Description|{loadedPosition["description"]}" \n'
+    returnstr += f' -f "Choices|{loadedChoices}" \n'
 # sets the footer
 returnstr += f' -footer "!explore area name to move to another area \n ' \
              f'!explore setting|set \\"Setting Name\\" to enter a different setting \n '\
