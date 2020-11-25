@@ -34,13 +34,17 @@ loadedChoices = loadedPosition["choices"]
 # MAIN LOGIC !!
 
 # checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
-nextPosition = "&*&"
-if nextPosition != "":
-    validNextPosition = True if nextPosition in loadedChoices else False
+typedPosition = "&*&"
+if typedPosition != "":
+    validNextPosition = True if typedPosition in loadedChoices else False
 
     # loads the nextPosition as current, and pulls all its data
-    nextPosition = loadedSetting[nextPosition] if validNextPosition else loadedPosition
-    returnstr += f' -f "Error|Not a valid choice" ' if not validNextPosition else f''
+    if validNextPosition:
+        returnstr += f' -title "{savedSetting}: {typedPosition} " '
+        nextPosition = loadedSetting[typedPosition]
+    else:
+        nextPosition = loadedPosition
+        returnstr += f' -f "Error|Not a valid choice" '
 
     ## Check to see if you are Bar from this Position
     if "not" in nextPosition.keys():
@@ -58,14 +62,14 @@ if nextPosition != "":
         if "earns" in nextPosition.keys():
             savedEarns.append(nextPosition["earns"])
         # writes all new data to CVAR
-        savedExploreSettings.update({"position":list(nextPosition)[1], "prereqs":savedEarns})
+        savedExploreSettings.update({"position":typedPosition, "prereqs":savedEarns})
         me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
+    # builds the embed for the choice you made
     returnstr += f' -f "Description|{nextPosition["description"]}"'
     returnstr += f' -f "Choices|{nextPosition["choices"]}"'
-#  the tembed
-# sets the title
-    returnstr += f' -title "{loadedSetting+": "+savedExploreSettings["position"] if validNextPosition else "Exploration Alias!"}'
+
 else:
+    #builds the embed for the old setting
     returnstr += f' -title "{savedSetting+": "+savedPosition}" '
     returnstr += f' -f "Description|{loadedPosition["description"]}" \n'
     returnstr += f' -f "Choices|{loadedChoices}" \n'
