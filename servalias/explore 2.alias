@@ -46,7 +46,7 @@ if typedPosition != "":
     # loads the nextPosition as current, and pulls all its data
     if validNextPosition:
         for position in loadedChoices:
-            nextPosition = loadedSetting[position] if typedPosition.lower() in position.lower() else savedExploreSettings["position"]
+            nextPosition = loadedSetting[position] if typedPosition.lower() in position.lower() else loadedSetting[savedPosition]
             savedExploreSettings.update({"position":position})
         returnstr += f' -title "{savedSetting}: {position} " '
     else:
