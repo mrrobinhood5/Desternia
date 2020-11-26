@@ -1,5 +1,10 @@
 tembed -thumb <image> -color <color>
 <drac2>
+from Desternia.FakeTestingStuff import *
+# TODO: if you give it a non existing position, it still saves it to settings then errors out next time
+# TODO: prereqs are being added multiple times
+# TODO: fisher is not being added to prereqs
+# TODO: need to make choices lowercase fuzzy search
 # sets default variables
 me, settingsCVAR= character(), "ExploreSettings"
 returnstr = ""
@@ -36,34 +41,42 @@ loadedChoices = loadedPosition["choices"]
 # checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
 typedPosition = "&*&"
 if typedPosition != "":
-    validNextPosition = True if typedPosition in loadedChoices else False
+    validNextPosition = True if typedPosition.lower() in str(loadedChoices).lower() else False
 
     # loads the nextPosition as current, and pulls all its data
     if validNextPosition:
-        returnstr += f' -title "{savedSetting}: {typedPosition} " '
-        nextPosition = loadedSetting[typedPosition]
+        for position in loadedChoices:
+            nextPosition = loadedSetting[position] if typedPosition.lower() in position.lower() else savedExploreSettings["position"]
+            savedExploreSettings.update({"position":position})
+        returnstr += f' -title "{savedSetting}: {position} " '
     else:
-        nextPosition = loadedPosition
+        # not sure what this does
+        nextPosition = loadedSetting[savedPosition]
+        savedExploreSettings.update({"position": savedPosition})
         returnstr += f' -f "Error|Not a valid choice" '
 
     ## Check to see if you are Bar from this Position
-    if "not" in nextPosition.keys():
+    if "not" in nextPosition.keys() and validNextPosition:
         isBar = True if any(item in savedEarns for item in nextPosition["not"]) else False
+        savedExploreSettings.update({"position": savedPosition})
         returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 
     ## check to see if you have the requirments for this new location
-    if "prereqs" in nextPosition.keys():
+    if "prereqs" in nextPosition.keys() and validNextPosition:
         isAllowed = True if any(item in savedEarns for item in nextPosition["prereqs"]) else False
+        savedExploreSettings.update({"position": savedPosition})
         returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 
     ## check to see if you have new earns because you are allowed
-    if isAllowed and not isBar:
+    if isAllowed and not isBar and validNextPosition:
         # add the earns allowed in nextPosition to the savedEarns to save later
         if "earns" in nextPosition.keys():
-            savedEarns.append(nextPosition["earns"][0])
-        # writes all new data to CVAR
-        savedExploreSettings.update({"position":typedPosition, "prereqs":savedEarns})
-        me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
+            for x in nextPosition["earns"]:
+                if x not in savedEarns:
+                    savedEarns.append(x)
+                    savedExploreSettings.update({"prereqs": savedEarns})
+    # writes all new data to CVAR
+    me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
     # builds the embed for the choice you made
     returnstr += f' -f "Description|{nextPosition["description"]}"'
     returnstr += f' -f "Choices|{nextPosition["choices"]}"'
@@ -74,8 +87,8 @@ else:
     returnstr += f' -f "Description|{loadedPosition["description"]}" \n'
     returnstr += f' -f "Choices|{loadedChoices}" \n'
 # sets the footer
-returnstr += f' -footer "!explore area name to move to another area \n ' \
-             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n '\
+returnstr += f' -footer "!explore area name to move to another area \n' \
+             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n'\
              f'!explore list to view a list of available settings"'
 return returnstr
 </drac2>
