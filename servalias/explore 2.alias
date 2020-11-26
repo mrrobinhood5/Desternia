@@ -1,6 +1,6 @@
 tembed -thumb <image> -color <color>
 <drac2>
-from Desternia.FakeTestingStuff import *
+# from Desternia.FakeTestingStuff import *
 # TODO: if you give it a non existing position, it still saves it to settings then errors out next time
 # TODO: prereqs are being added multiple times
 # TODO: fisher is not being added to prereqs
