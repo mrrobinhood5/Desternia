@@ -140,5 +140,21 @@
       "title": "[name] uses their Telekenetic Feat!",
       "desc": "As a bonus action, you can try to telekinetically shove one creature you can see within 30 feet of you. When you do so, the target must succeed on a Strength saving throw or be moved 5 feet toward you or away from you. A creature can willingly fail this save.",
       "save": "str"
-   }
+   },
+   "favfoe": {
+      "fail": "True",
+      "d":"1d{scale}",
+      "scale":"{'1':4,'6':6,'14':8}",
+      "cc": "Favored Foe",
+      "title": "[name] uses their Favored Foe ability!",
+      "desc": "The first time on each of your turns that you hit the favored enemy and deal damage to it, including when you mark it, you can increase that damage by 1d4. On the following attacks use `favfoe` snippet after the attack.\n\nYou can use this feature to mark a favored enemy a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest",
+      "seffect": "Favored Foe active|parent concentration|10",
+      "effect": "Targeted by {{name}} with Favored Foe||10"
+   },
+   "mercyheal": {
+      "fail": "True",
+      "d": "-1d{(((MonkLevel // 5) * 2) + ((MonkLevel // 11) * 2) + ((MonkLevel // 17) * 2) - ((MonkLevel //10) * 2) - ((MonkLevel // 15)*2) + 4)}-{wisdomMod}",
+      "cc": "Ki Points",
+      "title": "[name] uses Hands of Healing!",
+      "desc": "Your mystical touch can mend wounds. As an action, you can spend 1 ki point to touch a creature and restore a number of hit points equal to a roll of your Martial Arts die + your Wisdom modifier.\n\nWhen you use your Flurry of Blows, you can replace one of the unarmed strikes with a use of this feature without spending a ki point for the healing."}
 }
