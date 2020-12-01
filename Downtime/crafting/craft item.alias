@@ -24,12 +24,13 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 <drac2>
 #sets all all primary variables
-alreadyRolled, hasTools, hasItems, rollstr, me, dailyroll, numberOfRolls, hasRolls, averagerolls, returnstr, foundTool, foundItem, oxp, nxp = False, True if exists("pTools") else False, True if exists("savedCraftItems") else False, "1d20+", character(), 0, 0, False, 0, "", False, False, 0, 0
+alreadyRolled, hasTools, hasItems, me, dailyroll, numberOfRolls, hasRolls, averagerolls, returnstr, foundTool, foundItem, oxp, nxp = False, True if exists("pTools") else False, True if exists("savedCraftItems") else False, character(), 0, 0, False, 0, "", False, False, 0, 0
+rollstr = ["1d20+","2d20kh1+","3d20kh1+","2d20kl1+"]
 pargs = argparse(&ARGS&) # only uncomment on WorkShop
 # pargs = argparse(pargs) # only uncomment on GVAR
 #sets all the secondary variables
 availTools, selectedTool, selectedItem = pTools.split(",") if hasTools else "", pargs.last("tool"), pargs.last("item")
-
+rollstr = rollstr[pargs.adv()]
 #loads the saved crafting items from craft time 
 availItems=load_json(savedCraftItems) if hasItems else None
 
