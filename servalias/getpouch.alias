@@ -5,7 +5,7 @@ if str(ctx.channel.id) not in "772656544893632532, 736439805436755998":
 if exists("basement"):
   return f' -title "{name} Attempts to claim their Welcome Pouch" -f "Error|You aready claimed it, bzzz!" '
 bagsLoaded=load_json(bags) #load the bags
-if "Coin Pouch" not in bagsLoaded.keys():
+if "Coin Pouch" not in str(bagsLoaded):
   return f' -title "{name} Attempts to claim their Welcome Pouch" -f "Error|You didn\'t do `!coins` from the `!initial` commands. Go back to #avrae-temple!" '
 pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
 ogp = pouch[1]['gp'] # what gp was before?
