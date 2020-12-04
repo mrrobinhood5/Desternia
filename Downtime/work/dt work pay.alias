@@ -21,35 +21,38 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 
 <drac2>
 rollslist, totalrolls, workdata, returnstr = [], 0, load_json(DTTrack) if exists("DTTrack") else False, f' -f "Unpaid Rolls|'
-if workdata:
-  for loggedDay, dt in workdata.items():
-    if loggedDay != timestamp:
-      for unpaidDays, dayroll in dt.items():
-        if unpaidDays == "work":
-          for each in dayroll.values():
-              rollslist.append(each)
-              totalrolls += each
-              returnstr += f'{each}, '
-        dt.pop(unpaidDays)            
-  daysworked = len(rollslist)
-  allrollsavg = totalrolls/daysworked
-  returnstr += f'\" -f "Average|{allrollsavg}" '
-  character().set_cvar("DTTrack",dump_json(workdata))
-  # paybonus = 2 if allrollsavg >= 20 else 1.5 if allrollsavg >=16 else 1 if allrollsavg >= 10 else .75
-  paybonus = round(allrollsavg * .1,1)
-  coincount = daysworked * paybonus
-  returnstr += f' -f "PayCheck|You Worked `{daysworked/2}` days at `2gp` per day with a bonus of `x{paybonus}` for a total of `{coincount} gp`" '
-  #breaks down into gp sp and cp
-  ngp = int(coincount)
-  nsp = (coincount - ngp)*10
-  ncp = int((nsp-int(nsp))*10)
-  nsp = int(nsp)
-  bagsLoaded=load_json(bags) #load the bags
-  pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
-  ogp = pouch[1]['gp'] # what gp was before?
-  pouch[1].update({'gp':pouch[1]['gp']+ngp, 'sp':pouch[1]['sp']+nsp, 'cp':pouch[1]['cp']+ncp}) #updates new quantities locally
-  pouch in bagsLoaded or bagsLoaded.append(pouch)
-  set_cvar("bags",dump_json(bagsLoaded)) #dumps the coins back to the cvar
-  returnstr += f' -f "Coins|`{ogp}` gp -> `{ogp+ngp}` gp" '
+if not workdata:
+  err("You dont have any Work Data")  #or whatever
+for loggedDay, dt in workdata.items():
+  if loggedDay == timestamp:
+    continue
+  for unpaidDays, dayroll in dt.items():
+    if unpaidDays != 'work':
+      continue
+    for each in dayroll.values():
+      rollslist.append(each)
+      totalrolls += each
+      returnstr += f' {each}, '
+  dt.pop('work') if 'work' in dt else 0
+daysworked = len(rollslist)
+allrollsavg = totalrolls/daysworked
+returnstr += f'\" -f "Average|{allrollsavg}" '
+character().set_cvar("DTTrack",dump_json(workdata))
+# paybonus = 2 if allrollsavg >= 20 else 1.5 if allrollsavg >=16 else 1 if allrollsavg >= 10 else .75
+paybonus = round(allrollsavg * .1,1)
+coincount = daysworked * paybonus
+returnstr += f' -f "PayCheck|You Worked `{daysworked/2}` days at `2gp` per day with a bonus of `x{paybonus}` for a total of `{coincount} gp`" '
+#breaks down into gp sp and cp
+ngp = int(coincount)
+nsp = (coincount - ngp)*10
+ncp = int((nsp-int(nsp))*10)
+nsp = int(nsp)
+bagsLoaded=load_json(bags) #load the bags
+pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
+ogp = pouch[1]['gp'] # what gp was before?
+pouch[1].update({'gp':pouch[1]['gp']+ngp, 'sp':pouch[1]['sp']+nsp, 'cp':pouch[1]['cp']+ncp}) #updates new quantities locally
+pouch in bagsLoaded or bagsLoaded.append(pouch)
+set_cvar("bags",dump_json(bagsLoaded)) #dumps the coins back to the cvar
+returnstr += f' -f "Coins|`{ogp}` gp -> `{ogp+ngp}` gp" '
 return returnstr
 </drac2>
