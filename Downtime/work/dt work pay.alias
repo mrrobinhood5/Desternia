@@ -24,8 +24,8 @@ rollslist, totalrolls, workdata, returnstr = [], 0, load_json(DTTrack) if exists
 if workdata:
   for loggedDay, dt in workdata.items():
     if loggedDay != timestamp:
-      if "work" in dt:
-        for unpaidDays, dayroll in dt.items():
+      for unpaidDays, dayroll in dt.items():
+        if unpaidDays == "work":
           for each in dayroll.values():
               rollslist.append(each)
               totalrolls += each
