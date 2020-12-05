@@ -1,11 +1,11 @@
-!alias preserve tembed -thumb <image> -color <color> -title "{{name}} uses their Preserve Life Channel Divinity"
+tembed -thumb <image> -color <color> -title "{{name}} uses their Preserve Life Channel Divinity"
 <drac2>
 pargs, returnstr = argparse(&ARGS&), ""
 err("You are not a L2 Cleric") if int(ClericLevel) < 2 else 0
 subExists = get("subclass", False)
 err("You do not even have a subclass!") if not subExists else 0
 subclasses = load_json(subclass)
-err("You are not a LIFE cleric") if subclasses["ClericLevel"] == "Life" else 0
+err("You are not a LIFE cleric") if subclasses["ClericLevel"] != "Life" else 0
 err("You do not have Channel Divinity Counters. Run !level") if not character().cc_exists("Channel Divinity") else 0
 err("You are out of Channel Divinity until you short rest") if character().get_cc("Channel Divinity") == 0 else 0
 err("You are not even in combat, how you gonna be trynna heal people") if not combat() else 0
