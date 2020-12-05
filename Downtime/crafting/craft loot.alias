@@ -1,1 +1,25 @@
-embed -title "Loot Assistant" -desc "Reference for Looting Monster Parts" -footer "!craft loot [aberration]" -f "Abberation|CR 1 - 4 Roll Arcana"
+embed -title "Loot Assistant" -desc "Reference for Looting Monster Parts" -footer "!craft loot" -thumb <image>
+<drac2>
+returnstr = ""
+
+returnstr += f' -f "Basic Concepts|1. Number of items found on a creature should approximately equal CR. ' \
+             f'1d4 small items can count as a single items, and tattered equipment doesn\'t count.\n\n' \
+             f'2. Make tool proficiencies more useful. Some items can\'t be used until they are crafted into' \
+             f'a workable item by someone trained with the proper equipment.\n\n' \
+             f'3. Make basic balance considerations - lower CR creatures should give items about equivalent to ' \
+             f'adventuring gear (PHB pg. 150), while higher CR creatures can give items that are equivalent to ' \
+             f'or craftable into magic items"'
+returnstr += f' -f "Loot Claim|'\
+             f'Beast/Dragon/Monstrosity/Plant:      **Nature** check \n' \
+             f'Giant/Humanoid:                      **Survival** check \n' \
+             f'Celestial/Fey/Fiend/Undead:          **Religion** check \n' \
+             f'Aberration/Construct/Elemental/Ooze: **Arcana** check\n\n' \
+             f'This represents the type of knowledge required to successfully identify the valuable loot on the body." '
+returnstr += f' -f "Loot DC|```' \
+             f' CR     DC(All)   DC(Half) \n' \
+             f'<5         10       5 \n' \
+             f'6-10       15       10 \n' \
+             f'11-15      20       15 \n' \
+             f'>16        25       20 ``` "'
+return returnstr
+</drac2>

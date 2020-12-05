@@ -56,7 +56,7 @@ if pargs.get("save"):
   itemcraft=load_json(savedCraftItems)
   itemcraft.update({itemname[0]: {"mindays": mindays, "dailygp": dailygp, "ab": ab, "stdvalue": stdvalue}})
   character().set_cvar("savedCraftItems",dump_json(itemcraft))
-  returnstr += f'-f "Your item has been saved. You can now craft it with `!craft item {itemname[0]}`"\n'
+  returnstr += f'-f "Your item has been saved. You can now craft it with `!craft item -tool \\"tool\\" -item \\"{itemname[0]}\\"`"\n'
 #returns whaever is in return string
 return returnstr
 </drac2>
