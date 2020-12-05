@@ -1,0 +1,27 @@
+embed -title "Candy's Roll Table" -footer "!candyroll"
+<drac2>
+pargs, returnstr, rollstr, me, noitem = argparse(&ARGS&), "", ["1d20+", "2d20kh1+", "3d20kh1+", "2d20kl1+"], character(), 0
+# choose inv or perc
+rollbonus = str(max(me.skills.perception.value, me.skills.investigation.value))
+# build rollstr
+lootroll = vroll(rollstr[pargs.adv()]+rollbonus)
+# return the choices
+if lootroll.total >= 19:
+    returnstr += f' -f "Result|{lootroll.full}\nPremium crafting item worth above `25gp`" '
+elif lootroll.total >= 16:
+    returnstr += f' -f "Result|{lootroll.full}\nMedium crafting item worth `16-25gp`" '
+elif lootroll.total >= 12:
+    returnstr += f' -f "Result|{lootroll.full}\nMinor crafting item worth `6-15gp`" '
+elif lootroll.total >= 7:
+    returnstr += f' -f "Result|{lootroll.full}\nMinor loot worth `1-5gp`" '
+else:
+    returnstr += f' -f "Result|{lootroll.full}\nYou got nothing. Boo." '
+    noitem = 1
+if lootroll.result.crit == 1:
+    returnstr += f' -f "BONUS|{lootroll.full}\nAn extra premium Item!"'
+
+#roll for amounts
+partsroll = vroll("1d4")
+returnstr += f' -f "Parts Roll|{partsroll.full}" ' if not noitem else f''
+return returnstr
+</drac2>
