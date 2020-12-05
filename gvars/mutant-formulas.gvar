@@ -1,0 +1,66 @@
+{
+  "Aether": {
+    "Prerequisite": "11th level",
+    "Description": "You gain a flying speed of 20 feet.",
+    "Side Effect": "You have disadvantage on  all Strength and Dexterity ability checks."
+  },
+  "Celerity": {
+    "Description": "Your Dexterity score increases by an amount equal to your mutation score, as does your Dexterity maximum.,",
+    "Side Effect": "Your Wisdom score decreases by amount equal to your mutation score."
+  },
+  "Conversant": {
+    "Description": "You gain advantage on Intelligence ability checks.",
+    "Side effect": "You have disadvantage on Charisma ability checks."
+  },
+  "Cruelty": {
+    "Prerequisite": "11th level",
+    "Description": "You can make a single weapon attack as a bonus action on each of your turns.",
+    "Side Effect": "You have disadvantage on all Intelligence, Wisdom, and Charisma saving throws."
+  },
+  "Impermiable": {
+    "Description": "You gain resistance to piercing damage.",
+    "Side Effect": "You gain vulnerability to slashing damage."
+  },
+  "Mobility": {
+    "Description": "You gain immunity to the grappled and restrained conditions. At 11th level, you also are immune to the paralyzed condition.",
+    "Side Effect": "You gain a penalty to initiative equal to 2 times your mutation score."
+  },
+  "Nighteye": {
+    "Description": "You gain darkvision for up to 60 feet. If you already have darkvision, this increases its range by 60 additional feet.",
+    "Side Effect": "You gain sunlight sensitivity: You have disadvantage on attack rolls and on Wisdom(Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight."
+  },
+  "Potency": {
+    "Description": "Your Strength score increases by an amount equal to your mutation score, as does your Strength maximum.",
+    "Side Effect": "You have disadvantage on all Dexterity saving throws."
+  },
+  "Precision": {
+    "Prerequisite": "11th level.",
+    "Description": "Your weapon attacks score a critical hit on a roll of 19 — 20.",
+    "Side Effect": "All healing you receive is halved."
+  },
+  "Rapidity": {
+    "Description": "Your speed increases by 15 feet. At 15th level, your speed increases by 20 feet instead.",
+    "Side Effect": "You have disadvantage on Dexterity ability checks."
+  },
+  "Reconstruction": {
+    "Prerequisite": "7th level.",
+    "Description": "While conscious and in combat, you regenerate hit points equal to 2 times your mutation score at the start of your turn as long as you are above 0 hit points.",
+    "Side Effect": "Your speed decreases by 10 ft."
+  },
+  "Sagacity": {
+    "Description": "Your Wisdom score increases by an amount equal to your mutation score, as does your Wisdom maximum.",
+    "Side Effect": "Your armor class is reduced by an amount equal to your mutation score."
+  },
+  "Shielded": {
+    "Description": "You gain resistance to slashing damage.",
+    "Side Effect": "You gain vulnerability to bludgeoning damage."
+  },
+  "Unbreakable": {
+    "Description": "You gain resistance to bludgeoning damage.",
+    "Side Effect": "You gain vulnerability to piercing damage."
+  },
+  "Wariness": {
+    "Description": "You gain a bonus to initiative equal to 2 times your mutation score.",
+    "Side Effect": "You have disadvantage on Wisdom(Perception) checks."
+  }
+}

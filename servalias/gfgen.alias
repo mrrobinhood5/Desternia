@@ -1,0 +1,12 @@
+tembed -title "Girlfriend Generator" -thumb <image> -color <color>
+<drac2>
+pargs, me, returnstr = argparse(&ARGS&), character(), ""
+if ctx.author.id == 784859693356285972:
+    returnstr += f' -f "ERROR|Shek bout to get pinged, don\'t DO IT!!" '
+    return returnstr
+randotrait = get_gvar("39f06ce0-d098-40aa-a99b-813d0520e73d").split("\n")
+randoquirk = get_gvar("3176f14a-e9de-4ef6-956a-27a50721cde8").split("\n")
+returnstr += f' -f "Traits|- {randotrait[vroll("1d98").total-1]} \n - {randotrait[vroll("1d98").total-1]}" '
+returnstr += f' -f "Quirks|- {randoquirk[vroll("1d108").total-1]} \n - {randoquirk[vroll("1d108").total-1]}"'
+return returnstr
+</drac2>
