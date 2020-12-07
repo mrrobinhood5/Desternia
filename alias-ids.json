@@ -30,5 +30,7 @@
   "Downtime/learn/dt learn set.alias": "5fa97247181a164697a74969",
   "Downtime/learn/dt learn list.alias": "5fb742e230b59cacdc589cd0",
   "servalias/getpouch.alias": "5fb29dee0cae0e98f6337c38",
-  "servalias/e.alias": "5fb98bf930b59cacdc589f08"
+  "servalias/e.alias": "5fb98bf930b59cacdc589f08",
+  "servalias/e list.alias": "5fcdbb8730b59cacdc58aeff",
+  "servalias/e setting.alias": "5fcdbb940260807c831fec6e"
 }

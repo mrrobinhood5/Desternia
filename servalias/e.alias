@@ -1,0 +1,58 @@
+tembed -thumb <image> -color <color>
+<drac2>
+# from Desternia.FakeTestingStuff import *
+# sets default variables
+me, settingsCVAR, returnstr, isAllowed, isBar, validNextPosition  = character(), "ExploreSettings", "", True, False, False
+defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : []}
+me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
+me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
+savedExploreSettings = load_json(get(settingsCVAR))
+cvarData = get("library") if savedExploreSettings['type'] == "private" else 0
+loadedData = load_json(get_gvar(get("library"))) if savedExploreSettings['type'] == "public" else load_json(get_gvar(get_svar("serverlibrary"))) if savedExploreSettings['type'] == "server" else load_json(get(cvarData))
+## MAIN LOGIC ##
+# checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
+typedPosition = "&*&"
+# sets nextPosition to the default, which is the current position saved in settings
+nextPosition = loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]
+if typedPosition != "":
+    # iterates over the settings sources
+    for position in loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]['choices']:
+        # if it finds a match, it means that its a valid next position
+        if typedPosition.lower() in position.lower():
+            # before saving, needs to check if theres a barred requirement
+            if "not" in loadedData[savedExploreSettings['setting']][position].keys():
+                isBar = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["not"]) else False
+            # if you are not barred from the next position check to see if you have the prereqs for this position
+            if "requires" in loadedData[savedExploreSettings['setting']][position].keys() and not isBar:
+                isAllowed = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
+            if not isBar and isAllowed:
+                # If you are allowed and not barred, set the next postition to what you typed
+                nextPosition = loadedData[savedExploreSettings['setting']][position]
+                # save it to settings for the next time this loop runs
+                savedExploreSettings.update({"position": position})
+                #adds the earns for the next position.
+                if "earns" in nextPosition.keys():
+                    for x in nextPosition['earns']:
+                        if x not in savedExploreSettings['prereqs']:
+                            savedExploreSettings['prereqs'].append(x)
+            # if anything fails, like being barred or not allowed, save the settings to the previous thing
+            else:
+                savedExploreSettings.update({"position": savedExploreSettings['position']})
+        # if what you typed is not in the possible places
+        else:
+            nextPosition = loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]
+            savedExploreSettings.update({"position": savedExploreSettings['position']})
+#saves the new settings
+me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
+#builds the embed for the old setting
+returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
+returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
+returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
+returnstr += f' -f "Description|{nextPosition["description"]}"' if isAllowed and not isBar else f''
+returnstr += f' -f "Choices|{nextPosition["choices"]}"' if isAllowed and not isBar else f''
+# sets the footer
+returnstr += f' -footer "!explore area name to move to another area \n' \
+             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n'\
+             f'!explore list to view a list of available settings"'
+return returnstr
+</drac2>
