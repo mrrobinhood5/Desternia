@@ -44,7 +44,7 @@ if typedPosition != "":
             savedExploreSettings.update({"position": savedExploreSettings['position']})
 #saves the new settings
 me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
-hasImage = true if "image" in nextPosition.keys() else False
+hasImage = True if "image" in nextPosition.keys() else False
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
