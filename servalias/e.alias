@@ -44,12 +44,14 @@ if typedPosition != "":
             savedExploreSettings.update({"position": savedExploreSettings['position']})
 #saves the new settings
 me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
+hasImage = true if "image" in nextPosition.keys() else False
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 returnstr += f' -f "Description|{nextPosition["description"]}"' if isAllowed and not isBar else f''
 returnstr += f' -f "Choices|{nextPosition["choices"]}"' if isAllowed and not isBar else f''
+returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 # sets the footer
 returnstr += f' -footer "!explore area name to move to another area \n' \
              f'!explore setting|set \\"Setting Name\\" to enter a different setting \n'\
