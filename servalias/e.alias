@@ -54,7 +54,8 @@ if typedPosition != "":
                     hasMonsters = True
                     for monster, mname in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
                         #checks to see if you already loaded this one, it wont reload it. 
-                        if monster in savedExploreSettings.values():
+                        if monster in savedExploreSettings.["monsters"]:
+                          hasMonsters = False
                           continue
                         #re rolls their INIT
                         combat().get_combatant(monster).set_init(vroll("1d20+"+str(combat().get_combatant(monster).initmod)).total)
@@ -78,8 +79,8 @@ returnstr += f' -f "Trap|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRo
 returnstr += f' -f "Monsters|New Monsters Appeared in INIT!"' if hasMonsters else f''
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
-returnstr += f' -f "Description|{nextPosition["description"]}"' if isAllowed and not isBar else f''
-returnstr += f' -f "Choices|{nextPosition["choices"]}"' if isAllowed and not isBar else f''
+returnstr += f' -f "Description|{nextPosition["description"]}"' # if isAllowed and not isBar else f''
+returnstr += f' -f "Choices|{nextPosition["choices"]}"' # if isAllowed and not isBar else f''
 returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 # sets the footer
 returnstr += f' -footer "!explore area name to move to another area \n' \
