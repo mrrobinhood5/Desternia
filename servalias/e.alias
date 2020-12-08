@@ -53,10 +53,15 @@ if typedPosition != "":
                 if inCombat and "monsters" in loadedData[savedExploreSettings['setting']][position].keys():
                     hasMonsters = True
                     for monster, mname in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
+                        #checks to see if you already loaded this one, it wont reload it. 
+                        if monster in savedExploreSettings.values():
+                          next
                         #re rolls their INIT
                         combat().get_combatant(monster).set_init(vroll("1d20+"+str(combat().get_combatant(monster).initmod)).total)
                         #re names them
                         combat().get_combatant(monster).set_name(mname)
+                        # adds it to the saved Settings that its been loaded
+                        savedExploreSettings.update({"monsters": monster})
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedExploreSettings.update({"position": savedExploreSettings['position']})
