@@ -43,7 +43,7 @@ if typedPosition != "":
                     hasTrap = True
                     trapSave = combat().me.save(loadedData[savedExploreSettings['setting']][position]["trap"]["save"])
                     trapDC = loadedData[savedExploreSettings['setting']][position]["trap"]["dc"]
-                    saveAbility = loadedData[savedExploreSettings['setting']][position]["trap"]["save"]
+                    saveAbility = str(loadedData[savedExploreSettings['setting']][position]["trap"]["save"]).capitalize()
                     if trapSave.total < trapDC:
                         damageRoll = combat().me.damage(loadedData[savedExploreSettings['setting']][position]["trap"]["damage"])
                     else:
@@ -60,7 +60,7 @@ me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
 hasImage = True if "image" in nextPosition.keys() else False
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
-returnstr += f' -f "Trap|\nDC: {trapDC}\n{saveAbility} Save: {trapSave}\nDamage: {damageRoll if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
+returnstr += f' -f "Trap|\nDC: {trapDC}\n{saveAbility} Save: {trapSave}\nDamage: {damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 returnstr += f' -f "Description|{nextPosition["description"]}"' if isAllowed and not isBar else f''
