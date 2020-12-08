@@ -47,7 +47,6 @@ if typedPosition != "":
                         damageRoll = combat().me.damage(loadedData[savedExploreSettings['setting']][position]["trap"]["damage"])
                     else:
                         damageRoll = False
-
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedExploreSettings.update({"position": savedExploreSettings['position']})
@@ -60,11 +59,11 @@ me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
 hasImage = True if "image" in nextPosition.keys() else False
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
+returnstr += f' -f "Trap|\nDC: {trapDC}\n{trapSave}\n{damageRoll if damageRoll else "Zero!"}"' if inCombat and hasTrap else f''
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 returnstr += f' -f "Description|{nextPosition["description"]}"' if isAllowed and not isBar else f''
 returnstr += f' -f "Choices|{nextPosition["choices"]}"' if isAllowed and not isBar else f''
-returnstr += f' -f "Trap|{trapSave}\n{trapSave}\n{damageRoll if damageRoll else "Zero!"}"' if inCombat and hasTrap else f''
 returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 # sets the footer
 returnstr += f' -footer "!explore area name to move to another area \n' \
