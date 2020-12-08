@@ -43,7 +43,7 @@ if typedPosition != "":
                     hasTrap = True
                     trapSave = combat().me.save(loadedData[savedExploreSettings['setting']][position]["trap"]["save"])
                     trapDC = loadedData[savedExploreSettings['setting']][position]["trap"]["dc"]
-                    if trapSave < trapDC:
+                    if trapSave.total < trapDC:
                         damageRoll = combat().me.damage(loadedData[savedExploreSettings['setting']][position]["trap"]["damage"])
                     else:
                         damageRoll = False
