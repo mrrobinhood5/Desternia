@@ -2,7 +2,8 @@ tembed -thumb <image> -color <color>
 <drac2>
 # from Desternia.FakeTestingStuff import *
 # sets default variables
-me, settingsCVAR, returnstr, isAllowed, isBar, validNextPosition, inCombat, hasTrap, saveAbility  = character(), "ExploreSettings", "", True, False, False, False, False, ""
+me, settingsCVAR, returnstr, saveAbility  = character(), "ExploreSettings", "", ""
+hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap,  = False, True, False, False, False, False
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
@@ -48,6 +49,14 @@ if typedPosition != "":
                         damageRoll = combat().me.damage(loadedData[savedExploreSettings['setting']][position]["trap"]["damage"])
                     else:
                         damageRoll = False
+                #this is where the monsters get reorganized
+                if inCombat and "monsters" in loadedData[savedExploreSettings['setting']][position].keys():
+                    hasMonsters = True
+                    for monster, mname in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
+                        #re rolls their INIT
+                        combat().get_combatant(monster).set_init(vroll("1d20+"+str(combat().get_combatant(monster).initmod)).total)
+                        #re names them
+                        combat().get_combatant(monster).set_name(mname)
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedExploreSettings.update({"position": savedExploreSettings['position']})
@@ -60,7 +69,8 @@ me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
 hasImage = True if "image" in nextPosition.keys() else False
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
-returnstr += f' -f "Trap|\nDC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
+returnstr += f' -f "Trap|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
+returnstr += f' -f "Monsters|New Monsters Appeared in INIT!' if hasMonsters else f''
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 returnstr += f' -f "Description|{nextPosition["description"]}"' if isAllowed and not isBar else f''
@@ -70,6 +80,6 @@ returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 returnstr += f' -footer "!explore area name to move to another area \n' \
              f'!explore setting|set \\"Setting Name\\" to enter a different setting \n'\
              f'!explore list to view a list of available settings \n\n'\
-             f'{combat().me}"'
+             f'{combat().me if inCombat else ""}"'
 return returnstr
 </drac2>
