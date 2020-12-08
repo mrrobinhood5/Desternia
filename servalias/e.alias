@@ -12,6 +12,9 @@ loadedData = load_json(get_gvar(get("library"))) if savedExploreSettings['type']
 ## MAIN LOGIC ##
 # checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
 typedPosition = "&*&"
+# loads combatants into init
+if combat():
+    inCombat = True
 # sets nextPosition to the default, which is the current position saved in settings
 nextPosition = loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]
 if typedPosition != "":
@@ -35,9 +38,7 @@ if typedPosition != "":
                     for x in nextPosition['earns']:
                         if x not in savedExploreSettings['prereqs']:
                             savedExploreSettings['prereqs'].append(x)
-            # loads combatants into init
-            if not combat():
-                inCombat = True
+
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedExploreSettings.update({"position": savedExploreSettings['position']})
