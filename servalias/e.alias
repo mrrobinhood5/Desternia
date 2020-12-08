@@ -2,7 +2,7 @@ tembed -thumb <image> -color <color>
 <drac2>
 # from Desternia.FakeTestingStuff import *
 # sets default variables
-me, settingsCVAR, returnstr, isAllowed, isBar, validNextPosition  = character(), "ExploreSettings", "", True, False, False
+me, settingsCVAR, returnstr, isAllowed, isBar, validNextPosition, inCombat  = character(), "ExploreSettings", "", True, False, False, False
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
@@ -35,6 +35,9 @@ if typedPosition != "":
                     for x in nextPosition['earns']:
                         if x not in savedExploreSettings['prereqs']:
                             savedExploreSettings['prereqs'].append(x)
+            # loads combatants into init
+            if not combat():
+                inCombat = True
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedExploreSettings.update({"position": savedExploreSettings['position']})
@@ -51,6 +54,7 @@ returnstr += f' -f "Error| You are barred from this location" ' if isBar else f'
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 returnstr += f' -f "Description|{nextPosition["description"]}"' if isAllowed and not isBar else f''
 returnstr += f' -f "Choices|{nextPosition["choices"]}"' if isAllowed and not isBar else f''
+returnstr += f' -f "Combat|NOT IN COMBAT"' if not inCombat else f' -f "Combat|IN COMBAT, YES!"'
 returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 # sets the footer
 returnstr += f' -footer "!explore area name to move to another area \n' \
