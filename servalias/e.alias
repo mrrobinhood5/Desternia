@@ -60,7 +60,7 @@ me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
 hasImage = True if "image" in nextPosition.keys() else False
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
-returnstr += f' -f "Trap|\nDC: {trapDC}\n{saveAbility} Save: {trapSave}\nDamage: {damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
+returnstr += f' -f "Trap|\nDC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 returnstr += f' -f "Description|{nextPosition["description"]}"' if isAllowed and not isBar else f''
@@ -69,6 +69,7 @@ returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 # sets the footer
 returnstr += f' -footer "!explore area name to move to another area \n' \
              f'!explore setting|set \\"Setting Name\\" to enter a different setting \n'\
-             f'!explore list to view a list of available settings"'
+             f'!explore list to view a list of available settings \n\n'\
+             f'{combat().me}"'
 return returnstr
 </drac2>
