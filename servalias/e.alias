@@ -4,7 +4,7 @@ tembed -thumb <image> -color <color>
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility  = character(), "ExploreSettings", "", ""
 hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap,  = False, True, False, False, False, False
-defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : []}
+defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
 savedExploreSettings = load_json(get(settingsCVAR))
