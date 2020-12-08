@@ -1,39 +1,133 @@
 {
- "DreamScape1": {
-  "Begin": "**Dungeon History** - The dungeon was created by a lich as a tomb. Its creators were destroyed by attacking raiders, and the dungeon has been attacked and abandoned many times since then.\n**Dungeon Walls** - Hewn Stone (DC 20 to climb)\n**Dungeon Floor** - Natural Stone (difficult terrain, disadvantage on acrobatics)\n**Temperature** - Cold (DC 10 Constitution save each hour or gain one level of exhaustion)\n**Illumination** - Bright (fires every 40 ft.)",
-  "BeginChoices": "Room1",
-  "Room1": "There is a Kobold carrying a box on his back. He just stands there in the room looking at you. There are 3 bone Doors, each with a different pattern, and 1 stone door with a smooth finish. ",
-  "Room1Choices": "NorthEntry, EastEntryLeft, EastEntryRight, SouthEntry, Talk, Fight",
-  "NorthEntry": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
-  "NorthEntryChoices": "Room1, NorthEntryRoom" ,
-  "NorthEntryRoom": "It is a hallway. At the end of the hallway is a protrait of a devil looking thing.",
-  "NorthEntryRoomReqs" : "KeyAGHOA",
-  "NorthEntryRoomChoices" : "Room1",
-  "EastEntryLeft": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
-  "EastEntryLeftChoices": "Room1, EastEntryLeftRoom",
-  "EastEntryLeftRoom": "A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus. There is a winged Kobold in the center of the room",
-  "EastEntryLeftRoomReqs" : "KeyASFJJ",
-  "EastEntryLeftRoomChoices" : "Room1, Room2BoneDoor",
-  "EastEntryRight": "The stone door is broken. Breaking it may be the only option",
-  "EastEntryRightChoices": "Room1, EastEntryRightRoom",
-  "EastEntryRightRoom" : "There is a hallway that extends both left and right.",
-  "EastEntryRightRoomChoices" : "Go Left, Go Right",
-  "EastEntryRightRoomReqs" : "EERRStoneDoor",
-  "SouthEntry": "The bone door is locked. You can attempt to pick it, it break, it or if you have they key, you can just open it.",
-  "SouthEntryChoices": "Room1, SouthEntryRoom",
-  "SouthEntryRoom": "There is a hallway tha turns left",
-  "SouthEntryRoomReqs": "KeyLASDFJ",
-  "SouthEntryRoomChoices": "Go Left",
-  "Talk": "The Kobold addresses you, in a friendly manner.",
-  "TalkChoices": "Room1, Fight",
-  "Fight": "The Kobold draws its weapon and prepares for battle",
-  "FightChoices": "Room1, Defeat",
-  "Defeat": "You win, you picked up some keys from him.",
-  "DefeatEarns": "KeyAGHOA, KeyASFJJ, KeyLASDFJ",
-  "DefeatChoices" : "Room1"
- },
- "DeamScape2": {
-  "Begin": "**This is the Test DreamScape**",
-  "BeginChoices": "Enter"
- }
+   "Small Town":{
+      "description":"This is a public setting",
+      "begin":{
+         "description":"From here you can enter the Plaza.",
+         "choices":[
+            "Plaza"
+         ],
+         "image":"https://i.imgur.com/jMs2w1o.jpg"
+      },
+      "Plaza":{
+         "description":"From here you can go to the Docks and the Fields.",
+         "choices":[
+            "Docks",
+            "Fields"
+         ],
+         "image":"https://i.imgur.com/TI2TZw3.jpg?1"
+      },
+      "Docks":{
+         "description":"From here you can go back to the Plaza, but not to the Fields.",
+         "choices":[
+            "Plaza"
+         ],
+         "not":[
+            "trailtaker"
+         ],
+         "earns":[
+            "fisher"
+         ],
+         "image":"https://i.imgur.com/HcmQsxo.jpg?1"
+      },
+      "Fields":{
+         "description":"From here you can go back to the Plaza, and to the Road if you have been to the Docks, but not to the Docks.",
+         "choices":[
+            "Plaza",
+            "Road"
+         ],
+         "image":"https://i.imgur.com/D09soz5.jpg"
+      },
+      "Road":{
+         "description":"You can come here because you went to the Docks first. By coming here, you are now barred from returning to the Docks.",
+         "choices":[
+            "Fields"
+         ],
+         "earns":[
+            "trailtaker"
+         ],
+         "requires":[
+            "fisher"
+         ],
+         "image":"https://i.imgur.com/KkC2Vm9.jpg"
+      }
+   },
+   "Beach":{
+      "description":"public beach",
+      "begin":{
+         "description":"begin description",
+         "choices":[
+            "sand"
+         ]
+      },
+      "sand":{
+         "description":"the sand if very sandy",
+         "choices":[
+            "water",
+            "go home"
+         ]
+      }
+   },
+  "Hostile Setting": {
+    "description": "This is a very hostile settings. We'll see how combat is handled by this. ",
+    "begin": {
+      "description": "You awaken in a dank room, no lights. The floor smells like piss. \n\n Before you start your adventure, run `!bplan begin hostilesetting` to load all the required items",
+      "choices": [
+        "First Room"
+      ],
+      "image": "https://i.imgur.com/m9KaNKT.jpg"
+    },
+    "First Room": {
+      "description": "In this room there are three doors. each with a different marking on it. There is a Goblin just standing in the middle.",
+      "choices": [
+        "Door1",
+        "Door2",
+        "Door3"
+      ],
+      "image": "https://i.imgur.com/Dzy1YYs.jpg",
+      "monsters": {
+        "m1": "Barry the Gobbo"
+      }
+    },
+    "Door1": {
+      "description": "Behind Door 1 there is a TRAP!! oh SHIT!! an arrow shots at you.",
+      "choices": [
+        "First Room"
+      ],
+      "trap": {
+        "save": "dexterity",
+        "dc": 10,
+        "damage": "1d6[piercing]"
+      },
+      "requires":["barryisdead"],
+      "image": "https://i.imgur.com/72YRr0w.jpg"
+    },
+    "Door2": {
+      "description": "Behind Door 2 there is a TRAP!! oh SHIT!! There is a false floor, and spikes on the ground.",
+      "choices": [
+        "First Room"
+      ],
+      "trap": {
+        "save": "dexterity",
+        "dc": 15,
+        "damage": "1d8[slashing]"
+      },
+      "image": "https://i.imgur.com/bmjeqg7.png"
+    },
+    "Door3": {
+      "description": "Behind Door 3 there is not a trap. But an Exit!",
+      "choices": [
+        "Exit"
+      ],
+      "monsters": {
+        "m2": "Larry the Hobo"
+      },
+      "image": "https://i.imgur.com/rXhnW1x.jpg"
+      },
+    "Exit": {
+      "description": "Well Done! You survive!",
+      "choices": [],
+      "image": "https://i.imgur.com/O2UHRPe.jpg",
+      "requires":["larryisdead"]
+    }
+  }
 }

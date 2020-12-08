@@ -55,7 +55,7 @@ if typedPosition != "":
                     for monster, mname in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
                         #checks to see if you already loaded this one, it wont reload it. 
                         if monster in savedExploreSettings.values():
-                          next
+                          continue
                         #re rolls their INIT
                         combat().get_combatant(monster).set_init(vroll("1d20+"+str(combat().get_combatant(monster).initmod)).total)
                         #re names them
