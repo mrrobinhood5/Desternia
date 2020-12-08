@@ -7,18 +7,18 @@ if pargs.get("give"):
   keyProvided = pargs.last("give")
   for letter in keyProvided:
     keyReturned += abcarray[1][abcarray[0].index(letter)]
-  returnstr += f' -f "Copy and Paste This|``` !e award -take {keyReturned} ``` "
+  returnstr += f' -f "Copy and Paste This|``` !e award -take {keyReturned} ``` "'
 
 elif pargs.get("take"):
   keyProvided = pargs.last("take")
   for letter in keyProvided:
     keyReturned += abcarray[0][abcarray[1].index(letter)]
-  loadedExploreSettings = load_json(me.get_cvar("ExploreSettings"))
+  loadedExploreSettings = load_json(ExploreSettings)
   loadedExploreSettings["prereqs"].append(keyReturned)
   me.set_cvar("ExploreSettings", dump_json(loadedExploreSettings))
-  returnstr += f' -f "Success|You have acquired that prerequisite!"
+  returnstr += f' -f "Success|You have acquired that prerequisite!"'
 
 else: 
-  returnstr += f' -f "Help|Give keys with `!e award -give keyname`"
+  returnstr += f' -f "Help|Give keys with `!e award -give keyname`"'
 return returnstr
 </drac2>

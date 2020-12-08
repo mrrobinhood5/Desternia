@@ -54,7 +54,7 @@ if typedPosition != "":
                     hasMonsters = True
                     for monster, mname in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
                         #checks to see if you already loaded this one, it wont reload it. 
-                        if monster in savedExploreSettings.["monsters"]:
+                        if monster in savedExploreSettings["monsters"]:
                           hasMonsters = False
                           continue
                         #re rolls their INIT
