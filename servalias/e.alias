@@ -62,7 +62,7 @@ if typedPosition != "":
                         #re names them
                         combat().get_combatant(monster).set_name(mname)
                         # adds it to the saved Settings that its been loaded
-                        savedExploreSettings.update({"monsters": monster})
+                        savedExploreSettings["monsters"].append(monster) if monster not in savedExploreSettings["monsters"] else 0
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedExploreSettings.update({"position": savedExploreSettings['position']})
