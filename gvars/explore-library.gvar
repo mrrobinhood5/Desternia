@@ -95,7 +95,7 @@
          "image":"https://i.imgur.com/MJ5cjUZ.jpg",
          "trap":{
             "dc":15,
-            "ability":"dexterity",
+            "save":"dexterity",
             "damage":"2d6[fun]"
          }
       },
