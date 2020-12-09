@@ -7,7 +7,7 @@ if pargs.get("give"):
   keyProvided = pargs.last("give")
   for letter in keyProvided:
     keyReturned += abcarray[1][abcarray[0].index(letter)]
-  returnstr += f' -f "Copy and Paste This|``` !e award -take {keyReturned} ``` "'
+  returnstr += f' -f "Copy and Paste This|```!e award -take {keyReturned} ``` "'
 
 elif pargs.get("take"):
   keyProvided = pargs.last("take")
