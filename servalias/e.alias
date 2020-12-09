@@ -1,5 +1,8 @@
 tembed -thumb <image> -color <color>
 <drac2>
+# TODO: Add a "You are dead" check if your HP is below 0
+# TODO: Add thumbnails options in JSON
+# TODO: Fix the CVAR thing for private libraries
 # from Desternia.FakeTestingStuff import *
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility  = character(), "ExploreSettings", "", ""
