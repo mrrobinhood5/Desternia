@@ -21,7 +21,7 @@ if cvarData:
         libraryData = load_json(get(cvarData))
         returnstr += f' -f " -- PRIVATE LIBRARY --| '
     for savedsetting in libraryData.keys():
-        returnstr += f'**{savedsetting}**:\n\u039E {libraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
+        returnstr += f'**{savedsetting}**:\n\u039E\u2015 {libraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
     returnstr += f'"'
 
 #this means its an svar pointer to JSON in a gvar
@@ -29,7 +29,7 @@ if svarPointer != "":
     serverLibraryData = load_json(get_gvar(svarPointer))
     returnstr += f' -f " -- SERVER LIBRARY --| '
     for savedsetting in serverLibraryData.keys():
-        returnstr += f'**{savedsetting}**:\n\u039E  {serverLibraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
+        returnstr += f'**{savedsetting}**:\n\u039E\u2015  {serverLibraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
     returnstr += f'"'
 # builds the footer
 returnstr += f' -footer "!e list\n'\
