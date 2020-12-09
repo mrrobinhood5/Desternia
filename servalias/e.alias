@@ -83,9 +83,9 @@ returnstr += f' -f "Description|{nextPosition["description"]}"' # if isAllowed a
 returnstr += f' -f "Choices|{nextPosition["choices"]}"' # if isAllowed and not isBar else f''
 returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 # sets the footer
-returnstr += f' -footer "!explore area name to move to another area \n' \
-             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n'\
-             f'!explore list to view a list of available settings \n\n'\
-             f'{combat().me if inCombat else ""}"'
+returnstr += f' -footer "!e <area name>\n' \
+             f'For the Help Page:\n'\
+             f'!help e\n\n'\
+             f'{combat().me if inCombat else "<Not in Combat"}"'
 return returnstr
 </drac2>

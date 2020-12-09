@@ -1,15 +1,15 @@
 {
    "Small Town":{
-      "description":"This is a public setting",
+      "description":"Small quaint town in the middle of nowhere.",
       "begin":{
-         "description":"From here you can enter the Plaza.",
+         "description":"The small town gives you the basics of `!e`. This description appears only once and normally has any prerequisite commands to be run by the player or DM, like `!bplan begin SmallTown`. \n Describe the setting in general or detail as you wish.",
          "choices":[
             "Plaza"
          ],
          "image":"https://i.imgur.com/jMs2w1o.jpg"
       },
       "Plaza":{
-         "description":"From here you can go to the Docks and the Fields.",
+         "description":"The plaza is a busy place. There are vendors and merchants bustiling around. \n\n The buildings around the plaza are red and 3 stories high. There is a path south towards the fishing district, to the docks, where ships and boats are moving in and out bringing in goods for the small town. There is a man here checking peoples marking on their hands. If you have one you may not be able to get in.\n\n On the opposite side, a road leads to the fields. They call to you. \"come\".",
          "choices":[
             "Docks",
             "Fields"
@@ -17,7 +17,7 @@
          "image":"https://i.imgur.com/TI2TZw3.jpg?1"
       },
       "Docks":{
-         "description":"From here you can go back to the Plaza, but not to the Fields.",
+         "description":"The docks are full of movement, fish markets and sailors spending their time carousing until their next departure. By being here, a voice says to you `\"You cannot leave the town. Ever\".",
          "choices":[
             "Plaza"
          ],
@@ -30,7 +30,7 @@
          "image":"https://i.imgur.com/HcmQsxo.jpg?1"
       },
       "Fields":{
-         "description":"From here you can go back to the Plaza, and to the Road if you have been to the Docks, but not to the Docks.",
+         "description":"The fields are empty and the road continues. You only options is to continue on to the road or go back to the Plaza. An old man stops you. ```\"You must bring me a fish to pass\"``` He says to you.",
          "choices":[
             "Plaza",
             "Road"
@@ -38,7 +38,7 @@
          "image":"https://i.imgur.com/D09soz5.jpg"
       },
       "Road":{
-         "description":"You can come here because you went to the Docks first. By coming here, you are now barred from returning to the Docks.",
+         "description":"The old man takes the fish and as he touches your hands, you feel a burn, leaving a mark behind.\n\n The road seems endless, and you may not be up for the long long trip ahead. Your only way out is to go back to the Fields.",
          "choices":[
             "Fields"
          ],
@@ -52,82 +52,153 @@
       }
    },
    "Beach":{
-      "description":"public beach",
+      "description":"Public Beach for Sunday Fun!",
       "begin":{
-         "description":"begin description",
+         "description":"You start at the beach. Fun in the Sun!! ",
          "choices":[
-            "sand"
-         ]
+            "make a sand castle"
+         ],
+         "image":"https://i.imgur.com/rYJN0nx.jpg"
       },
-      "sand":{
-         "description":"the sand if very sandy",
+      "make a sand castle":{
+         "description":"The sand if very sandy, and you decide to make a sand castle using your best attributes",
          "choices":[
-            "water",
+            "go in the water",
             "go home"
-         ]
+         ],
+         "image":"https://i.imgur.com/9qsjMVf.jpg",
+         "trap":{
+            "dc":10,
+            "save":"charisma",
+            "damage":"1d10[fun]"
+         }
+      },
+      "go in the water":{
+         "description":"The water is very wet, but you decide to go in for a splash. \nThere are crabs and fish in there, some attempt to nibble at you.",
+         "choices":[
+            "play a ball game",
+            "go home"
+         ],
+         "image":"https://i.imgur.com/LzllgEf.jpg",
+         "trap":{
+            "dc":15,
+            "save":"constitution",
+            "damage":"2d10[fun]"
+         }
+      },
+      "play a ball game":{
+         "description":"Volleyball is Great!! You play with your team mates and others in the beach. Maybe you win?",
+         "choices":[
+            "read a book",
+            "go home"
+         ],
+         "image":"https://i.imgur.com/MJ5cjUZ.jpg",
+         "trap":{
+            "dc":15,
+            "ability":"dexterity",
+            "damage":"2d6[fun]"
+         }
+      },
+      "read a book":{
+         "description":"After a lot of fun, you decide to take a break. Recover some energy by reading and relaxing. You read a book by Ron L Hubbard.",
+         "choices":[
+            "take a nap",
+            "go home"
+         ],
+         "image":"https://i.imgur.com/2fk75hi.jpg",
+         "trap":{
+            "dc":100,
+            "save":"wisdom",
+            "damage":"-10[rest]"
+         }
+      },
+      "take a nap":{
+         "description":"All that reading made you sleepy. You decide to take a nap in the sun. Hopefully you dont burn!",
+         "choices":[
+            "go home"
+         ],
+         "image":"https://i.imgur.com/BEnBTSo.png",
+         "trap":{
+            "dc":20,
+            "save":"constitution",
+            "damage":"5d10[fire]"
+         }
+      },
+      "go home":{
+         "description":"Tough day at the beach. Visit again Soon!",
+         "choices":[
+
+         ],
+         "image":"https://i.imgur.com/y0ToYmO.jpg"
       }
    },
-  "Hostile Setting": {
-    "description": "This is a very hostile settings. We'll see how combat is handled by this. ",
-    "begin": {
-      "description": "You awaken in a dank room, no lights. The floor smells like piss. \n\n Before you start your adventure, run `!bplan begin hostilesetting` to load all the required items",
-      "choices": [
-        "First Room"
-      ],
-      "image": "https://i.imgur.com/m9KaNKT.jpg"
-    },
-    "First Room": {
-      "description": "In this room there are three doors. each with a different marking on it. There is a Goblin just standing in the middle.",
-      "choices": [
-        "Door1",
-        "Door2",
-        "Door3"
-      ],
-      "image": "https://i.imgur.com/Dzy1YYs.jpg",
-      "monsters": {
-        "m1": "Barry the Gobbo"
+   "Hostile Setting":{
+      "description":"This is a very hostile settings. We'll see how combat is handled by this. ",
+      "begin":{
+         "description":"You awaken in a dank room, no lights. The floor smells like piss. \n\n Before you start your adventure, run `!bplan begin hostilesetting` to load all the required items",
+         "choices":[
+            "First Room"
+         ],
+         "image":"https://i.imgur.com/m9KaNKT.jpg"
+      },
+      "First Room":{
+         "description":"In this room there are three doors. each with a different marking on it. There is a Goblin just standing in the middle.",
+         "choices":[
+            "Door1",
+            "Door2",
+            "Door3"
+         ],
+         "image":"https://i.imgur.com/Dzy1YYs.jpg",
+         "monsters":{
+            "m1":"Barry the Gobbo"
+         }
+      },
+      "Door1":{
+         "description":"Behind Door 1 there is a TRAP!! oh SHIT!! an arrow shots at you.",
+         "choices":[
+            "First Room"
+         ],
+         "trap":{
+            "save":"dexterity",
+            "dc":10,
+            "damage":"1d6[piercing]"
+         },
+         "requires":[
+            "barryisdead"
+         ],
+         "image":"https://i.imgur.com/72YRr0w.jpg"
+      },
+      "Door2":{
+         "description":"Behind Door 2 there is a TRAP!! oh SHIT!! There is a false floor, and spikes on the ground.",
+         "choices":[
+            "First Room"
+         ],
+         "trap":{
+            "save":"dexterity",
+            "dc":15,
+            "damage":"1d8[slashing]"
+         },
+         "image":"https://i.imgur.com/bmjeqg7.png"
+      },
+      "Door3":{
+         "description":"Behind Door 3 there is not a trap. But an Exit!",
+         "choices":[
+            "Exit"
+         ],
+         "monsters":{
+            "m2":"Larry the Hobo"
+         },
+         "image":"https://i.imgur.com/rXhnW1x.jpg"
+      },
+      "Exit":{
+         "description":"Well Done! You survive!",
+         "choices":[
+
+         ],
+         "image":"https://i.imgur.com/O2UHRPe.jpg",
+         "requires":[
+            "larryisdead"
+         ]
       }
-    },
-    "Door1": {
-      "description": "Behind Door 1 there is a TRAP!! oh SHIT!! an arrow shots at you.",
-      "choices": [
-        "First Room"
-      ],
-      "trap": {
-        "save": "dexterity",
-        "dc": 10,
-        "damage": "1d6[piercing]"
-      },
-      "requires":["barryisdead"],
-      "image": "https://i.imgur.com/72YRr0w.jpg"
-    },
-    "Door2": {
-      "description": "Behind Door 2 there is a TRAP!! oh SHIT!! There is a false floor, and spikes on the ground.",
-      "choices": [
-        "First Room"
-      ],
-      "trap": {
-        "save": "dexterity",
-        "dc": 15,
-        "damage": "1d8[slashing]"
-      },
-      "image": "https://i.imgur.com/bmjeqg7.png"
-    },
-    "Door3": {
-      "description": "Behind Door 3 there is not a trap. But an Exit!",
-      "choices": [
-        "Exit"
-      ],
-      "monsters": {
-        "m2": "Larry the Hobo"
-      },
-      "image": "https://i.imgur.com/rXhnW1x.jpg"
-      },
-    "Exit": {
-      "description": "Well Done! You survive!",
-      "choices": [],
-      "image": "https://i.imgur.com/O2UHRPe.jpg",
-      "requires":["larryisdead"]
-    }
-  }
+   }
 }
