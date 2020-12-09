@@ -17,7 +17,7 @@
          "image":"https://i.imgur.com/TI2TZw3.jpg?1"
       },
       "Docks":{
-         "description":"The docks are full of movement, fish markets and sailors spending their time carousing until their next departure. By being here, a voice says to you `\"You cannot leave the town. Ever\".",
+         "description":"The docks are full of movement, fish markets and sailors spending their time carousing until their next departure. By being here, a voice says to you `You cannot leave the town. Ever`",
          "choices":[
             "Plaza"
          ],
