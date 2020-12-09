@@ -15,25 +15,25 @@ if cvarData:
     if len(cvarData) == 36 and cvarData.count("-") == 4:
     # this means cvarDATA has a GVAR
         libraryData = load_json(get_gvar(cvarData))
-        returnstr += f' -f "Public Library| '
+        returnstr += f' -f " -- PUBLIC LIBRARY --| '
     else:
     # this means cvarDATA has a CVAR
         libraryData = load_json(get(cvarData))
-        returnstr += f' -f "Private Library| '
+        returnstr += f' -f " -- PRIVATE LIBRARY --| '
     for savedsetting in libraryData.keys():
-        returnstr += f'{savedsetting}:\n\u2022  {libraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
+        returnstr += f'**{savedsetting}**:\n\u0088  {libraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
     returnstr += f'"'
 
 #this means its an svar pointer to JSON in a gvar
 if svarPointer != "":
     serverLibraryData = load_json(get_gvar(svarPointer))
-    returnstr += f' -f "Server Library| '
+    returnstr += f' -f " -- SERVER LIBRARY --| '
     for savedsetting in serverLibraryData.keys():
-        returnstr += f'{savedsetting}:\n\u2022  {serverLibraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
+        returnstr += f'{savedsetting}:\n\u0088  {serverLibraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
     returnstr += f'"'
 # builds the footer
-returnstr += f' -footer "!explore area name to move to another area\n' \
-             f'!explore setting|set \\"Setting Name\\" to enter a different setting \n'\
-             f'!explore list to view a list of available settings"'
+returnstr += f'!e list\n'\
+             f'To view the Help Page\n'\
+             f'!help e list'
 return returnstr
 </drac2>
