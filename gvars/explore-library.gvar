@@ -30,7 +30,7 @@
          "image":"https://i.imgur.com/HcmQsxo.jpg?1"
       },
       "Fields":{
-         "description":"The fields are empty and the road continues. You only options is to continue on to the road or go back to the Plaza. An old man stops you. ```\"You must bring me a fish to pass\"``` He says to you.",
+         "description":"The fields are empty and the road continues. You only options is to continue on to the road or go back to the Plaza. An old man stops you. ```You must bring me a fish to pass``` He says to you.",
          "choices":[
             "Plaza",
             "Road"
