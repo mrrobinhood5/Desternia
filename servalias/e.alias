@@ -89,8 +89,8 @@ if typedPosition != "":
             nextPosition = loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]
             savedExploreSettings.update({"position": savedExploreSettings['position']})
 #saves the new settings to both cvar and init 
-combat().get_combatant("explore").add_effect("settings",f"""-attack '||{savedExploreSettings}'""", -1, False, None, False,None)
 me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
+combat().get_combatant("explore").add_effect("settings",f"""-attack '||{ExploreSettings}'""", -1, False, None, False,None)
 hasImage = True if "image" in nextPosition.keys() else False
 hasThumb = True if "thumb" in nextPosition.keys() else False
 #builds the embed for the old setting
