@@ -18,8 +18,7 @@ if combat(): #check to see if combat is running else error out. It should always
     if "explore" in [x.name for x in combat().get_group("DM").combatants]:
       #check to see if there are settings already available to grab from INIT else load them from CVAR
       if "settings" in [x.name for x in combat().get_combatant("explore").effects]:
-        sx = combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"]
-        savedExploreSettings = load_json(sx)
+        savedExploreSettings = load_json(str(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"]))
       else:
         savedExploreSettings = load_json(get(settingsCVAR))
     else:
@@ -90,7 +89,7 @@ if typedPosition != "":
             nextPosition = loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]
             savedExploreSettings.update({"position": savedExploreSettings['position']})
 #saves the new settings to both cvar and init
-combat().get_combatant("explore").add_effect("settings",f'-attack "||{dump_json(savedExploreSettings)}"', -1, False, None, False,None)
+combat().get_combatant("explore").add_effect("settings",f"""-attack '||{ExploreSettings}'""", -1, False, None, False,None)
 me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
 hasImage = True if "image" in nextPosition.keys() else False
 hasThumb = True if "thumb" in nextPosition.keys() else False
