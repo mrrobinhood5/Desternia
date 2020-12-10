@@ -19,6 +19,8 @@ typedPosition = "&*&"
 # loads combatants into init
 if combat():
     inCombat = True
+else:
+    err("Please start initiative with `!i begin` so that stuff works")
 # sets nextPosition to the default, which is the current position saved in settings
 nextPosition = loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]
 if typedPosition != "":
