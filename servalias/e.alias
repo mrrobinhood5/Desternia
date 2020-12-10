@@ -18,7 +18,8 @@ if combat(): #check to see if combat is running else error out. It should always
     if "explore" in [x.name for x in combat().get_group("DM").combatants]:
       #check to see if there are settings already available to grab from INIT else load them from CVAR
       if "settings" in [x.name for x in combat().get_combatant("explore").effects]:
-        savedExploreSettings = combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"]
+        sx = combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"]
+        savedExploreSettings = load_json(sx)
       else:
         savedExploreSettings = load_json(get(settingsCVAR))
     else:
