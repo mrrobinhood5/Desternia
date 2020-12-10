@@ -1,7 +1,7 @@
-tembed -thumb <image> -color <color>
+tembed -color <color>
 <drac2>
+# TODO: move monsters out of the group once they are activated
 # TODO: Add a "You are dead" check if your HP is below 0
-# TODO: Add thumbnails options in JSON
 # TODO: Fix the CVAR thing for private libraries
 # from Desternia.FakeTestingStuff import *
 # sets default variables
@@ -10,15 +10,30 @@ hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap,  = False, T
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
-savedExploreSettings = load_json(get(settingsCVAR))
-cvarData = get("library") if savedExploreSettings['type'] == "private" else 0
+
+# need to decide where to load the savedSettingsFrom, either init or CVAR. 
+if combat(): #check to see if combat is running else error out. It should always be running. 
+    inCombat = True
+    # check to see if you have a DM group and explore is loaded, else error out
+    if "explore" in [x.name for x in combat().get_group("DM").combatants]:
+      #check to see if there are settings already available to grab from INIT else load them from CVAR
+      if "settings" in [x.name for x in combat().get_combatant("explore").effects]:
+        savedExploreSettings = load_json(str(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"]))
+      else:
+        savedExploreSettings = load_json(get(settingsCVAR))
+    else:
+      err("You need to add an explore combatant like this `!i add 0 explore -group \"DM\" -p 0`")
+else:
+    err("Please start initiative with `!i begin` so that stuff works")
+
+# cvarData = get("library") if savedExploreSettings['type'] == "private" else 0
 loadedData = load_json(get_gvar(get("library"))) if savedExploreSettings['type'] == "public" else load_json(get_gvar(get_svar("serverlibrary"))) if savedExploreSettings['type'] == "server" else load_json(get(cvarData))
+
+
 ## MAIN LOGIC ##
 # checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
 typedPosition = "&*&"
 # loads combatants into init
-if combat():
-    inCombat = True
 # sets nextPosition to the default, which is the current position saved in settings
 nextPosition = loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]
 if typedPosition != "":
@@ -73,9 +88,11 @@ if typedPosition != "":
         else:
             nextPosition = loadedData[savedExploreSettings['setting']][savedExploreSettings['position']]
             savedExploreSettings.update({"position": savedExploreSettings['position']})
-#saves the new settings
+#saves the new settings to both cvar and init
+combat().get_combatant("explore").add_effect("settings",f"""-attack '||{ExploreSettings}'""", -1, False, None, False,None)
 me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
 hasImage = True if "image" in nextPosition.keys() else False
+hasThumb = True if "thumb" in nextPosition.keys() else False
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
 returnstr += f' -f "Trap|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
@@ -85,6 +102,7 @@ returnstr += f' -f "Error| You do not have the requirements for this location" '
 returnstr += f' -f "Description|{nextPosition["description"]}"' # if isAllowed and not isBar else f''
 returnstr += f' -f "Choices|{nextPosition["choices"]}"' # if isAllowed and not isBar else f''
 returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
+returnstr += f' -thumb "{nextPosition["thumb"]}"' if hasThumb else f' -thumb <image>'
 # sets the footer
 returnstr += f' -footer "!e <area name>\n' \
              f'For the Help Page:\n'\
