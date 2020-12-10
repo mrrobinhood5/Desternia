@@ -15,7 +15,7 @@ me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
 if combat(): #check to see if combat is running else error out. It should always be running. 
     inCombat = True
     # check to see if you have a DM group and explore is loaded, else error out
-    if "explore" in [x.name for x in combat().get_group("DM").combatants]
+    if "explore" in [x.name for x in combat().get_group("DM").combatants]:
       #check to see if there are settings already available to grab from INIT else load them from CVAR
       if "settings" in [x.name for x in combat().get_combatant("explore").effects]:
         savedExploreSettings = load_json(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"])
