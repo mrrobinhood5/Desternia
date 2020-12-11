@@ -70,15 +70,19 @@ if typedPosition != "":
                 #this is where the monsters get reorganized
                 if inCombat and "monsters" in loadedData[savedExploreSettings['setting']][position].keys():
                     hasMonsters = True
-                    for monster, mname in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
+                    for monster, mdata in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
                         #checks to see if you already loaded this one, it wont reload it. 
                         if monster in savedExploreSettings["monsters"]:
                           hasMonsters = False
                           continue
                         #re rolls their INIT
                         combat().get_combatant(monster).set_init(vroll("1d20+"+str(combat().get_combatant(monster).initmod)).total)
+                        #moves it out of DM group
+                        combat().get_combatant(monster).add_effect("active","-group None",-1, False, None, False, None)
                         #re names them
-                        combat().get_combatant(monster).set_name(mname)
+                        combat().get_combatant(monster).set_name(mdata[0])
+                        #adds the note to the monster for map data
+                        combat().get_combatant(monster).set_note(f'Token: {mdata[2]} | Location: {mdata[1]}')
                         # adds it to the saved Settings that its been loaded
                         savedExploreSettings["monsters"].append(monster) if monster not in savedExploreSettings["monsters"] else 0
             # if anything fails, like being barred or not allowed, save the settings to the previous thing

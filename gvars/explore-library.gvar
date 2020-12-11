@@ -140,7 +140,7 @@
       "image": "https://i.imgur.com/m9KaNKT.jpg"
     },
     "Room1": {
-      "description": "In this room there are four doors, each with a different marking on it. There is a Kobold in the middle, minding its own business\n\n**North Entry**\tLocked Bone Door\n**East Entry #1**\tLocked Bone Door \n**East Entry #2**\tStone Door\n**South Entry**\tBone Door",
+      "description": "In this room there are four doors, each with a different marking on it. There is a Kobold in the middle, minding its own business\n\n**North Entry**\tBone Door\n**East Entry #1**\tBone Door \n**East Entry #2**\tStone Door\n**South Entry**\tBone Door\n\nYou can attempt to break down a door, pick it, or if you have a key, just open in",
       "choices": [
         "North",
         "East1",
@@ -149,7 +149,7 @@
       ],
       "thumb": "https://i.imgur.com/Dzy1YYs.jpg",
       "monsters": {
-        "k1": "Kree the Kobold"
+        "k1": ["Kree the Kobold", "e12", "m2v2m~"]
       },
        "image": "http://otfbm.io/29x29/a7:9x11/@d/*fa7i17/?a=1&bg=https://i.imgur.com/DV7QATG.png"
     },
