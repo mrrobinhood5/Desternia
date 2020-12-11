@@ -139,7 +139,7 @@
       ],
       "image": "https://i.imgur.com/m9KaNKT.jpg"
     },
-    "First Room": {
+    "Room1": {
       "description": "In this room there are four doors, each with a different marking on it. There is a Kobold in the middle, minding its own business\n\n**North Entry**\tLocked Bone Door\n**East Entry #1**\tLocked Bone Door \n**East Entry #2**\tStone Door\n**South Entry**\tBone Door",
       "choices": [
         "North",
