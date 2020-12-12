@@ -151,7 +151,7 @@
       "monsters": {
         "k1": ["Kree the Kobold", "e12", "m2v2m~"]
       },
-       "image": "http://otfbm.io/29x29/a7:9x11/@d/*fa7i17/?a=1&bg=https://i.imgur.com/DV7QATG.png"
+       "image": "map"
     },
     "Door1": {
       "description": "Behind Door 1 there is a TRAP!! oh SHIT!! an arrow shots at you.",

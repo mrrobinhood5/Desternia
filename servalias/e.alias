@@ -5,8 +5,8 @@ tembed -color <color>
 # TODO: Fix the CVAR thing for private libraries
 # from Desternia.FakeTestingStuff import *
 # sets default variables
-me, settingsCVAR, returnstr, saveAbility  = character(), "ExploreSettings", "", ""
-hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap,  = False, True, False, False, False, False
+me, settingsCVAR, returnstr, saveAbility, mImgData  = character(), "ExploreSettings", "", "", ""
+hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap = False, True, False, False, False, False, False
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
@@ -71,15 +71,16 @@ if typedPosition != "":
                 if inCombat and "monsters" in loadedData[savedExploreSettings['setting']][position].keys():
                     hasMonsters = True
                     for monster, mdata in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
-                        #checks to see if you already loaded this one, it wont reload it. 
+                        # checks to see if you already loaded this one, it wont reload it.
                         if monster in savedExploreSettings["monsters"]:
                           hasMonsters = False
                           continue
-                        # adds the note to the monster for map data
+                        # adds the note to the monster for map data and push them to a variable
                         combat().get_combatant(monster).set_note(f'Token: {mdata[2]} | Location: {mdata[1]}')
-                        #re rolls their INIT
+                        mImgData += f'{mdata[1]}-{mdata[0].replace(" ","_")}~{mdata[2]}'
+                        # re rolls their INIT
                         combat().get_combatant(monster).set_init(vroll("1d20+"+str(combat().get_combatant(monster).initmod)).total)
-                        #moves it out of DM group # not implemented yet PR #1383
+                        # moves it out of DM group # not implemented yet PR #1383
                         # combat().get_combatant(monster).set_group(None)
                         #re names them
                         combat().get_combatant(monster).set_name(mdata[0])
@@ -96,8 +97,20 @@ if typedPosition != "":
 #saves the new settings to both cvar and init 
 me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
 combat().get_combatant("explore").add_effect("settings",f"""-attack '||{ExploreSettings}'""", -1, False, None, False,None)
-hasImage = True if "image" in nextPosition.keys() else False
+# check to see if there is a map call or a custom image
+if "image" in nextPosition.keys():
+    hasImage = True if nextPosition["image"] != "map" else False
+    useMap = True if nextPosition["image"] == "map" else False
 hasThumb = True if "thumb" in nextPosition.keys() else False
+# build the map string for init
+if useMap:
+    mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"]
+    mapstr = mapstr.replace(' ~ ','" , "')
+    mapstr = mapstr.replace(": ",'": "')
+    mapstr = load_json('{"'+mapstr+'"}')
+    mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["view"]}/*{mapstr["FOW"].replace(":","")}/{iImgData}?{mapstr["Background"]}'
+    # push the new update to map attack
+
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
 returnstr += f' -f "Trap|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
@@ -106,6 +119,7 @@ returnstr += f' -f "Error| You are barred from this location" ' if isBar else f'
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 returnstr += f' -f "Description|{nextPosition["description"]}"' # if isAllowed and not isBar else f''
 returnstr += f' -f "Choices|{nextPosition["choices"]}"' # if isAllowed and not isBar else f''
+returnstr += f' -image {mapstr}' if useMap else f''
 returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 returnstr += f' -thumb "{nextPosition["thumb"]}"' if hasThumb else f' -thumb <image>'
 # sets the footer
