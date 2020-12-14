@@ -118,7 +118,7 @@ if useMap:
             mData = f'{{"{mData}"}}'
             mData = load_json(mData)
             monsterstr += f'{mData["Location"]}-{monster.name.replace(" ","_")}{"~"+mData["Token"] if "Token" in mData.keys() else ""}/'
-    mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/*{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
+    mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/@{mapstr["Options"]}/*{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
     # push the new update to map attack
 
 #builds the embed for the old setting
