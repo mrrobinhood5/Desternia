@@ -117,7 +117,7 @@ if useMap:
             mData = mData.replace(' | ', '", "')
             mData = f'{{"{mData}"}}'
             mData = load_json(mData)
-            monsterstr += f'{mdata["Location"]}-{monster.name.replace(" ","_")}~{mdata["Token"]}/'
+            monsterstr += f'{mData["Location"]}-{monster.name.replace(" ","_")}~{mData["Token"]}/'
     mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/*{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
     # push the new update to map attack
 
