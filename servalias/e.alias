@@ -5,7 +5,7 @@ tembed -color <color>
 # TODO: Fix the CVAR thing for private libraries
 # from Desternia.FakeTestingStuff import *
 # sets default variables
-me, settingsCVAR, returnstr, saveAbility, mImgData  = character(), "ExploreSettings", "", "", ""
+me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
 hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap = False, True, False, False, False, False, False
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
@@ -67,7 +67,7 @@ if typedPosition != "":
                         damageRoll = combat().me.damage(loadedData[savedExploreSettings['setting']][position]["trap"]["damage"])
                     else:
                         damageRoll = False
-                #this is where the monsters get reorganized
+                #this is where the monsters get loaded into init
                 if inCombat and "monsters" in loadedData[savedExploreSettings['setting']][position].keys():
                     hasMonsters = True
                     for monster, mdata in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
@@ -109,8 +109,16 @@ if useMap:
     mapstr = mapstr.replace(": ",'": "')
     mapstr = load_json('{"'+mapstr+'"}')
     ## the Monsters in Init need to be build again for the image. Gonna have to iterate through all combatants for a Location and Token
-
-    mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/*{mapstr["FOW"].replace(":","")}/{mImgData}?bg={mapstr["Background"]}'
+    for monster in combat().combatants:
+        if monster.note == None or monster.note == '':
+            continue
+        else:
+            mData = monster.note.replace(': ', '": "')
+            mData = mData.replace(' | ', '", "')
+            mData = f'{{"{mData}"}}'
+            mData = load_json(mData)
+            monsterstr =+ f'{mdata["Location"]}-{monster.name.replace(" ","_")}~{mdata["Token"]}/'
+    mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/*{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
     # push the new update to map attack
 
 #builds the embed for the old setting
@@ -124,6 +132,7 @@ returnstr += f' -f "Choices|{nextPosition["choices"]}"' # if isAllowed and not i
 returnstr += f' -image {mapstr}' if useMap else f''
 returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 returnstr += f' -thumb "{nextPosition["thumb"]}"' if hasThumb else f' -thumb <image>'
+
 # sets the footer
 returnstr += f' -footer "!e <area name>\n' \
              f'For the Help Page:\n'\
