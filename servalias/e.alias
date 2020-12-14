@@ -104,6 +104,7 @@ if "image" in nextPosition.keys():
 hasThumb = True if "thumb" in nextPosition.keys() else False
 # build the map string for init
 if useMap:
+    # mapstring being built as a dict
     mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"]
     mapstr = mapstr.replace(' ~ ','" , "')
     mapstr = mapstr.replace(": ",'": "')
@@ -117,7 +118,8 @@ if useMap:
             mData = mData.replace(' | ', '", "')
             mData = f'{{"{mData}"}}'
             mData = load_json(mData)
-            monsterstr += f'{mData["Location"]}-{monster.name.replace(" ","_")}{"~"+mData["Token"] if "Token" in mData.keys() else ""}/'
+            mData.update({"Color":"r", "Size": "M"})
+            monsterstr += f'{mData["Location"]}{mData["Size"]}{mData["Color"]}-{monster.name.replace(" ","_")}{"~"+mData["Token"] if "Token" in mData.keys() else ""}/'
     mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/@{mapstr["Options"]}/*f{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
     # push the new update to map attack
 
