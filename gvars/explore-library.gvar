@@ -3,51 +3,31 @@
     "description": "Small quaint town in the middle of nowhere.",
     "begin": {
       "description": "The small town gives you the basics of `!e`. This description appears only once and normally has any prerequisite commands to be run by the player or DM, For this setting, you just need `!init begin` and `!init join` commands before starting. \n Describe the setting in general or detail as you wish.",
-      "choices": [
-        "Plaza"
-      ],
+      "choices": ["Plaza"],
       "image": "https://i.imgur.com/jMs2w1o.jpg"
     },
     "Plaza": {
       "description": "The plaza is a busy place. There are vendors and merchants bustling around. \n\n The buildings around the plaza are red and 3 stories high. There is a path south towards the fishing district, to the docks, where ships and boats are moving in and out bringing in goods for the small town. There is a man here checking peoples marking on their hands. If you have one you may not be able to get in.\n\n On the opposite side, a road leads to the fields. They call to you. \"come\".",
-      "choices": [
-        "Docks",
-        "Fields"
-      ],
+      "choices": ["Docks","Fields"],
       "image": "https://i.imgur.com/TI2TZw3.jpg?1"
     },
     "Docks": {
       "description": "The docks are full of movement, fish markets and sailors spending their time carousing until their next departure. By being here, a voice says to you `You cannot leave the town. Ever`\n\n You grab a random fish that you find.",
-      "choices": [
-        "Plaza"
-      ],
-      "not": [
-        "trailtaker"
-      ],
-      "earns": [
-        "fisher"
-      ],
+      "choices": ["Plaza"],
+      "not": ["trailtaker"],
+      "earns": ["fisher"],
       "image": "https://i.imgur.com/HcmQsxo.jpg?1"
     },
     "Fields": {
       "description": "The fields are empty and the road continues. You only options is to continue on to the road or go back to the Plaza. An old man stops you. ```You must bring me a fish to pass``` He says to you.",
-      "choices": [
-        "Plaza",
-        "Road"
-      ],
+      "choices": ["Plaza","Road"],
       "image": "https://i.imgur.com/D09soz5.jpg"
     },
     "Road": {
       "description": "The old man takes the fish and as he touches your hands, you feel a burn, leaving a mark behind.\n\n The road seems endless, and you may not be up for the long long trip ahead. Your only way out is to go back to the Fields.",
-      "choices": [
-        "Fields"
-      ],
-      "earns": [
-        "trailtaker"
-      ],
-      "requires": [
-        "fisher"
-      ],
+      "choices": ["Fields"],
+      "earns": ["trailtaker"],
+      "requires": ["fisher"],
       "image": "https://i.imgur.com/KkC2Vm9.jpg"
     }
   },
@@ -55,74 +35,38 @@
     "description": "Public Beach for Sunday Fun!",
     "begin": {
       "description": "You start at the beach. Fun in the Sun!! ",
-      "choices": [
-        "make a sand castle"
-      ],
+      "choices": ["make a sand castle"],
       "image": "https://i.imgur.com/rYJN0nx.jpg"
     },
     "make a sand castle": {
       "description": "The sand if very sandy, and you decide to make a sand castle using your best attributes",
-      "choices": [
-        "go in the water",
-        "go home"
-      ],
+      "choices": ["go in the water","go home"],
       "image": "https://i.imgur.com/9qsjMVf.jpg",
-      "trap": {
-        "dc": 10,
-        "save": "charisma",
-        "damage": "1d10[fun]"
-      }
+      "trap": {"dc": 10,"save": "charisma","damage": "1d10[fun]"}
     },
     "go in the water": {
       "description": "The water is very wet, but you decide to go in for a splash. \nThere are crabs and fish in there, some attempt to nibble at you.",
-      "choices": [
-        "play a ball game",
-        "go home"
-      ],
+      "choices": ["play a ball game","go home"],
       "image": "https://i.imgur.com/LzllgEf.jpg",
-      "trap": {
-        "dc": 15,
-        "save": "constitution",
-        "damage": "2d10[fun]"
-      }
+      "trap": {"dc": 15,"save": "constitution","damage": "2d10[fun]"}
     },
     "play a ball game": {
       "description": "Volleyball is Great!! You play with your team mates and others in the beach. Maybe you win?",
-      "choices": [
-        "read a book",
-        "go home"
-      ],
+      "choices": ["read a book","go home"],
       "image": "https://i.imgur.com/MJ5cjUZ.jpg",
-      "trap": {
-        "dc": 15,
-        "save": "dexterity",
-        "damage": "2d6[fun]"
-      }
+      "trap": {"dc": 15,"save": "dexterity","damage": "2d6[fun]"}
     },
     "read a book": {
       "description": "After a lot of fun, you decide to take a break. Recover some energy by reading and relaxing. You read a book by Ron L Hubbard.",
-      "choices": [
-        "take a nap",
-        "go home"
-      ],
+      "choices": ["take a nap","go home"],
       "image": "https://i.imgur.com/2fk75hi.jpg",
-      "trap": {
-        "dc": 100,
-        "save": "wisdom",
-        "damage": "-10[rest]"
-      }
+      "trap": {"dc": 100,"save": "wisdom","damage": "-10[rest]"}
     },
     "take a nap": {
       "description": "All that reading made you sleepy. You decide to take a nap in the sun. Hopefully you dont burn!",
-      "choices": [
-        "go home"
-      ],
+      "choices": ["go home"],
       "image": "https://i.imgur.com/BEnBTSo.png",
-      "trap": {
-        "dc": 20,
-        "save": "constitution",
-        "damage": "5d10[fire]"
-      }
+      "trap": {"dc": 20,"save": "constitution","damage": "5d10[fire]"}
     },
     "go home": {
       "description": "Tough day at the beach. Visit again Soon!",
@@ -141,62 +85,36 @@
     },
     "Room1": {
       "description": "In this room there are four doors, each with a different marking on it. There is a Kobold in the middle, minding its own business\n\n**North Entry**\tBone Door\n**East Entry #1**\tBone Door \n**East Entry #2**\tStone Door\n**South Entry**\tBone Door\n\nYou can attempt to break down a door, pick it, or if you have a key, just open in",
-      "choices": [
-        "North",
-        "East1",
-        "East2",
-         "South"
-      ],
+      "choices": ["North","East1","East2","South"],
       "thumb": "https://i.imgur.com/Dzy1YYs.jpg",
       "monsters": {
         "k1": ["Kree the Kobold", "e12", "m2v2m~", "M", "r"]
       },
        "image": "map"
     },
-    "Door1": {
-      "description": "Behind Door 1 there is a TRAP!! oh SHIT!! an arrow shots at you.",
-      "choices": [
-        "First Room"
-      ],
-      "trap": {
-        "save": "dexterity",
-        "dc": 10,
-        "damage": "1d6[piercing]"
-      },
-      "requires": [
-        "barryisdead"
-      ],
-      "image": "https://i.imgur.com/72YRr0w.jpg"
+    "North": {
+      "description": "The hallway goes down 25ft, there is a painting at the end of the door",
+      "choices": ["Room1"],
+      "thumb": "https://i.imgur.com/i8VfLXv.jpg",
+      "map": {"View": "a1:9x17", "FOW": "a1:c7"},
+      "image": "map"
     },
-    "Door2": {
-      "description": "Behind Door 2 there is a TRAP!! oh SHIT!! There is a false floor, and spikes on the ground.",
-      "choices": [
-        "First Room"
-      ],
-      "trap": {
-        "save": "dexterity",
-        "dc": 15,
-        "damage": "1d8[slashing]"
-      },
-      "image": "https://i.imgur.com/bmjeqg7.png"
+    "East1": {
+      "description": "**Room 2** A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus",
+      "choices": ["West Door 1","Room1"],
+      "image": "map",
+      "trap": {"dc": 10,"save": "wisdom","damage": "0[paralyzed]"}
     },
-    "Door3": {
-      "description": "Behind Door 3 there is not a trap. But an Exit!",
-      "choices": [
-        "Exit"
-      ],
-      "monsters": {
-        "m2": "Larry the Hobo"
-      },
-      "image": "https://i.imgur.com/rXhnW1x.jpg"
+    "East2": {
+      "description": "",
+      "choices": ["Room1"],
+      "image": "map"
     },
-    "Exit": {
-      "description": "Well Done! You survive!",
-      "choices": [],
-      "image": "https://i.imgur.com/O2UHRPe.jpg",
-      "requires": [
-        "larryisdead"
-      ]
+    "South": {
+      "description": "",
+      "choices": ["Room1"],
+      "image": "map",
+      "requires": []
     }
   }
 }

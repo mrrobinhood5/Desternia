@@ -3,6 +3,7 @@ tembed -color <color>
 # TODO: move monsters out of the group once they are activated (cant do this until the next update)
 # TODO: Add a "You are dead" check if your HP is below 0
 # TODO: Fix the CVAR thing for private libraries
+# TODO: TRAPS add trap names and effects to player
 # from Desternia.FakeTestingStuff import *
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
