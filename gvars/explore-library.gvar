@@ -149,7 +149,7 @@
       ],
       "thumb": "https://i.imgur.com/Dzy1YYs.jpg",
       "monsters": {
-        "k1": ["Kree the Kobold", "e12", "m2v2m~"]
+        "k1": ["Kree the Kobold", "e12", "m2v2m~", "M", "r"]
       },
        "image": "map"
     },

@@ -76,15 +76,13 @@ if typedPosition != "":
                           hasMonsters = False
                           continue
                         # adds the note to the monster for map data and push them to a variable
-                        combat().get_combatant(monster).set_note(f'Token: {mdata[2]} | Location: {mdata[1]}')
-                        # mImgData += f'{mdata[1]}-{mdata[0].replace(" ","_")}~{mdata[2]}'
+                        combat().get_combatant(monster).set_note(f'Location: {mdata[1]} | Token: {mdata[2]} | Size: {mdata[3]} | Color: {mdata[4]}')
                         # re rolls their INIT
                         combat().get_combatant(monster).set_init(vroll("1d20+"+str(combat().get_combatant(monster).initmod)).total)
                         # moves it out of DM group # not implemented yet PR #1383
                         # combat().get_combatant(monster).set_group(None)
                         #re names them
                         combat().get_combatant(monster).set_name(mdata[0])
-
                         # adds it to the saved Settings that its been loaded
                         savedExploreSettings["monsters"].append(monster) if monster not in savedExploreSettings["monsters"] else 0
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
@@ -118,7 +116,8 @@ if useMap:
             mData = mData.replace(' | ', '", "')
             mData = f'{{"{mData}"}}'
             mData = load_json(mData)
-            mData.update({"Color":"r", "Size": "M"})
+            mData.update({"Color": mdata["Color"]}) if "Color" in mdata.keys() else mData.update({"Color": "r"})
+            mData.update({"Size": mdata["Size"]}) if "Size" in mdata.keys() else mData.update({"Size": "M"})
             monsterstr += f'{mData["Location"]}{mData["Size"]}{mData["Color"]}-{monster.name.replace(" ","_")}{"~"+mData["Token"] if "Token" in mData.keys() else ""}/'
     mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/@{mapstr["Options"]}/*f{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
     # push the new update to map attack
