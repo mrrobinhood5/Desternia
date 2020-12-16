@@ -1,0 +1,19 @@
+embed -footer "!pillowfight [name]"
+<drac2>
+# from Desternia.FakeTestingStuff import *
+pargs, returnstr, you = argparse(&ARGS&), "", "you" if "%*%" == "" else "%*%"
+
+defaultPFList = ["https://media.giphy.com/media/fQr48EYTVWW52/source.gif",
+                 "https://media.giphy.com/media/xUPGcdlIDdjwxbjrO0/source.gif",
+                 "https://media.giphy.com/media/ZeP3leqiAGHK/source.gif",
+                 "https://media.giphy.com/media/51mT1rvB9FRlK/source.gif",
+                 "https://media.giphy.com/media/CGWw2X6v6OcAE/source.gif",
+                 "https://media.giphy.com/media/57YD9VMoN291u/source.gif",
+                 "https://media.giphy.com/media/wIr74BbT5LCpy/source.gif",
+                 "https://media.giphy.com/media/zJ2Ad7ECrc67C/source.gif",
+                 "https://media.giphy.com/media/xT0xeizZQG6CnbPUmk/source.gif",
+                 "https://media.giphy.com/media/l1J3uOcVZ8QN4nJok/source.gif"]
+randGIF=randint(10)
+returnstr += f'-title "{name} challenges {you} to a pillow fight!" -image {defaultPFList[randGIF]}'
+return returnstr
+</drac2>
