@@ -1,134 +1,134 @@
 {
-   "Flamethrower":{
-      "dc":"{spellDC}",
-      "d":"{scale}d8[fire]",
-      "scale":"{'1':2,'9':3}",
-      "half":"True",
-      "title":"Eldritch Cannon: Flamethrower",
-      "desc":"The cannon exhales fire in an adjacent 15-foot cone that you designate. Each creature in that area must make a Dexterity saving throw against your spell save DC, taking\u00a02d8\u00a0fire damage on a failed save or half as much damage on a successful one. The fire ignites any flammable objects in the area that aren't being worn or carried.",
-      "save":"dex"
+   "Flamethrower": {
+      "dc": "{spellDC}",
+      "d": "{scale}d8[fire]",
+      "scale": "{'1':2,'9':3}",
+      "half": "True",
+      "title": "Eldritch Cannon: Flamethrower",
+      "desc": "The cannon exhales fire in an adjacent 15-foot cone that you designate. Each creature in that area must make a Dexterity saving throw against your spell save DC, taking\u00a02d8\u00a0fire damage on a failed save or half as much damage on a successful one. The fire ignites any flammable objects in the area that aren't being worn or carried.",
+      "save": "dex"
    },
-   "Protector":{
-      "fail":"True",
-      "title":"Eldritch Cannon: Protector",
-      "desc":"The cannon emits a burst of positive energy that grants itself and each creature of your choice within 10 feet of it a number of temporary hit points equal to\u00a01d8\u00a0+ your Intelligence modifier (minimum of +1).",
-      "thp":"1d8+{intelligenceMod}"
+   "Protector": {
+      "fail": "True",
+      "title": "Eldritch Cannon: Protector",
+      "desc": "The cannon emits a burst of positive energy that grants itself and each creature of your choice within 10 feet of it a number of temporary hit points equal to\u00a01d8\u00a0+ your Intelligence modifier (minimum of +1).",
+      "thp": "1d8+{intelligenceMod}"
    },
-   "Explosive":{
-      "dc":"{spellDC}",
-      "d":"3d8[force]",
-      "half":"True",
-      "title":"Explosive Cannon",
-      "desc":"As an action, you can command the cannon to detonate if you are within 60 feet of it. Doing so destroys the cannon and forces each creature within 20 feet of it to make a Dexterity saving throw against your spell save DC, taking\u00a03d8\u00a0force damage on a failed save or half as much damage on a successful one.",
-      "save":"dex"
+   "Explosive": {
+      "dc": "{spellDC}",
+      "d": "3d8[force]",
+      "half": "True",
+      "title": "Explosive Cannon",
+      "desc": "As an action, you can command the cannon to detonate if you are within 60 feet of it. Doing so destroys the cannon and forces each creature within 20 feet of it to make a Dexterity saving throw against your spell save DC, taking\u00a03d8\u00a0force damage on a failed save or half as much damage on a successful one.",
+      "save": "dex"
    },
-   "Summon":{
-      "dc":"{spellDC}",
-      "d":"2d10[fire]",
-      "title":"Summon Wildfire",
-      "desc":"The spirit appears in an unoccupied space of your choice that you can see within 30 feet of you. Each creature within 10 feet of the spirit (other than you) when it appears must succeed on a Dexterity saving throw against your spell save DC or take 2d10 fire damage.",
-      "save":"dex"
+   "Summon": {
+      "dc": "{spellDC}",
+      "d": "2d10[fire]",
+      "title": "Summon Wildfire",
+      "desc": "The spirit appears in an unoccupied space of your choice that you can see within 30 feet of you. Each creature within 10 feet of the spirit (other than you) when it appears must succeed on a Dexterity saving throw against your spell save DC or take 2d10 fire damage.",
+      "save": "dex"
    },
-   "Fiery":{
-      "dc":"{spellDC}",
-      "d":"1d6+2[fire]",
-      "title":"Fiery Teleportation(Recharges after a Short or Long Rest)",
-      "desc":"The spirit and each willing creature of your choice within 5 feet of it teleport up to 30 feet to unoccupied spaces you can see.  Each creature within 10 feet of the space must succeed on a Dexterity saving throw against your spell save DC or take 1d6+2 fire damage",
-      "cc":"Fiery Teleportation",
-      "save":"dex"
+   "Fiery": {
+      "dc": "{spellDC}",
+      "d": "1d6+2[fire]",
+      "title": "Fiery Teleportation(Recharges after a Short or Long Rest)",
+      "desc": "The spirit and each willing creature of your choice within 5 feet of it teleport up to 30 feet to unoccupied spaces you can see.  Each creature within 10 feet of the space must succeed on a Dexterity saving throw against your spell save DC or take 1d6+2 fire damage",
+      "cc": "Fiery Teleportation",
+      "save": "dex"
    },
-   "arcaneJolt":{
-      "fail":"True",
-      "d":"{Jolt}d6[force]",
-      "cc":"Arcane Jolt",
-      "title":"Arcane Jolt",
-      "desc":"At 9th level, you learn new ways to channel arcane energy to harm or heal. When either you hit a target with a magic weapon attack or your steel defender hits a target, you can channel magical energy through the strike to create the following effect: The target takes an extra 2d6 force damage. You can use this energy a number of times equal to your Intelligence modifier (minimum of once), but you can do so no more than once on a turn. You regain all expended uses when you finish a long rest."
+   "arcaneJolt": {
+      "fail": "True",
+      "d": "{Jolt}d6[force]",
+      "cc": "Arcane Jolt",
+      "title": "Arcane Jolt",
+      "desc": "At 9th level, you learn new ways to channel arcane energy to harm or heal. When either you hit a target with a magic weapon attack or your steel defender hits a target, you can channel magical energy through the strike to create the following effect: The target takes an extra 2d6 force damage. You can use this energy a number of times equal to your Intelligence modifier (minimum of once), but you can do so no more than once on a turn. You regain all expended uses when you finish a long rest."
    },
-   "arcaneHeal":{
-      "fail":"True",
-      "d":"-{Jolt}d6[healing]",
-      "cc":"Arcane Jolt",
-      "title":"Arcane Jolt(Heal)",
-      "desc":"At 9th level, you learn new ways to channel arcane energy to harm or heal. When either you hit a target with a magic weapon attack or your steel defender hits a target, you can channel magical energy through the strike to create the following effect: Choose one creature or object you can see within 30 feet of the target. Healing energy flows into the chosen recipient, restoring 2d6 hit points to it. You can use this energy a number of times equal to your Intelligence modifier (minimum of once), but you can do so no more than once on a turn. You regain all expended uses when you finish a long rest."
+   "arcaneHeal": {
+      "fail": "True",
+      "d": "-{Jolt}d6[healing]",
+      "cc": "Arcane Jolt",
+      "title": "Arcane Jolt(Heal)",
+      "desc": "At 9th level, you learn new ways to channel arcane energy to harm or heal. When either you hit a target with a magic weapon attack or your steel defender hits a target, you can channel magical energy through the strike to create the following effect: Choose one creature or object you can see within 30 feet of the target. Healing energy flows into the chosen recipient, restoring 2d6 hit points to it. You can use this energy a number of times equal to your Intelligence modifier (minimum of once), but you can do so no more than once on a turn. You regain all expended uses when you finish a long rest."
    },
-   "Homunculus":{
-      "fail":"True",
-      "title":"Alchemical Homunculus",
-      "desc":"At 3rd level, you learn ancient methods for magically creating a special homunculus that is formed by alchemical substances. Whenever you finish a long rest and your alchemist’s supplies are with you, you can form this homunculus in an unoccupied space within 5 feet of you. If you already have a homunculus from this feature, the first one immediately dies.."
+   "Homunculus": {
+      "fail": "True",
+      "title": "Alchemical Homunculus",
+      "desc": "At 3rd level, you learn ancient methods for magically creating a special homunculus that is formed by alchemical substances. Whenever you finish a long rest and your alchemist’s supplies are with you, you can form this homunculus in an unoccupied space within 5 feet of you. If you already have a homunculus from this feature, the first one immediately dies.."
    },
-   "jesGift":{
-      "fail":"True",
-      "title":"Jes Gift",
-      "desc":"Your Shape Changing feature allows you to take on an additional bonus once per Long Rest, when your shape changes choose one of the following: \n:white_small_square: - Your shape change feature has advanced to allow you to better imitate people from all walks of life \n:white_small_square: - While your shape is changed, you can choose to gain the powerful build feature while imitating a Goliath, Firbolg, or Bugbear \n:white_small_square: - While your shape is changed, you can change your size to small to better take on the appearance of gnomes and halflings \nYou you may only have one of these effects active at once",
-      "cc":"Jes' Gift"
+   "jesGift": {
+      "fail": "True",
+      "title": "Jes Gift",
+      "desc": "Your Shape Changing feature allows you to take on an additional bonus once per Long Rest, when your shape changes choose one of the following: \n:white_small_square: - Your shape change feature has advanced to allow you to better imitate people from all walks of life \n:white_small_square: - While your shape is changed, you can choose to gain the powerful build feature while imitating a Goliath, Firbolg, or Bugbear \n:white_small_square: - While your shape is changed, you can change your size to small to better take on the appearance of gnomes and halflings \nYou you may only have one of these effects active at once",
+      "cc": "Jes' Gift"
    },
-   "barbedHide":{
-      "fail":"True",
-      "d":"1d6[piercing]",
-      "desc":"As a bonus action you can cause small barbs to protrude or retract from all over your body. At the start of each of your turns you deal 1d6 piercing dmg to any creature you're grappling or that's grappling you",
-      "seffect":"Barbed Hide||",
-      "title":"Barbed Hide"
+   "barbedHide": {
+      "fail": "True",
+      "d": "1d6[piercing]",
+      "desc": "As a bonus action you can cause small barbs to protrude or retract from all over your body. At the start of each of your turns you deal 1d6 piercing dmg to any creature you're grappling or that's grappling you",
+      "seffect": "Barbed Hide||",
+      "title": "Barbed Hide"
    },
-   "ohProne":{
-      "dc":"8+{proficiencyBonus}+{wisdomMod}",
-      "desc":"You can manipulate your enemy's ki when you harness your own. Whenever you hit a creature with one of the attacks granted by your Flurry of Blows, you can impose one of the following effects on that target.\n\n- It must succeed on a Dexterity saving throw or be knocked prone.",
-      "effect":"Prone|Prone|1",
-      "title":"Open Hand Technique: Prone",
-      "save":"dex"
+   "ohProne": {
+      "dc": "8+{proficiencyBonus}+{wisdomMod}",
+      "desc": "You can manipulate your enemy's ki when you harness your own. Whenever you hit a creature with one of the attacks granted by your Flurry of Blows, you can impose one of the following effects on that target.\n\n- It must succeed on a Dexterity saving throw or be knocked prone.",
+      "effect": "Prone|Prone|1",
+      "title": "Open Hand Technique: Prone",
+      "save": "dex"
    },
-   "ohShove":{
-      "dc":"8+{proficiencyBonus}+{wisdomMod}",
-      "desc":"You can manipulate your enemy's ki when you harness your own. Whenever you hit a creature with one of the attacks granted by your Flurry of Blows, you can impose one of the following effects on that target.\n\n- It must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.\n- It can't take reactions until the end of your next turn",
-      "effect":"Shoved|Shoved|1",
-      "title":"Open Hand Technique: Shove",
-      "save":"str"
+   "ohShove": {
+      "dc": "8+{proficiencyBonus}+{wisdomMod}",
+      "desc": "You can manipulate your enemy's ki when you harness your own. Whenever you hit a creature with one of the attacks granted by your Flurry of Blows, you can impose one of the following effects on that target.\n\n- It must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.\n- It can't take reactions until the end of your next turn",
+      "effect": "Shoved|Shoved|1",
+      "title": "Open Hand Technique: Shove",
+      "save": "str"
    },
-   "conq":{
-      "title":"Lessizmur uses Conquering Presence!",
-      "desc":"You can use your Channel Divinity to exude a terrifying presence. As an action, you force each creature of your choice that you can see within 30 feet of you to make a Wisdom saving throw. On a failed save, a creature becomes frightened of you for 1 minute. The frightened creature can repeat this saving throw at the end of each of its turns, ending the effect on itself on a success.",
-      "s":"wis",
-      "dc":"wisdomMod+proficiencyBonus+8",
-      "cc":"Channel Divinity",
-      "effect":"Frightened||10"
+   "conq": {
+      "title": "Lessizmur uses Conquering Presence!",
+      "desc": "You can use your Channel Divinity to exude a terrifying presence. As an action, you force each creature of your choice that you can see within 30 feet of you to make a Wisdom saving throw. On a failed save, a creature becomes frightened of you for 1 minute. The frightened creature can repeat this saving throw at the end of each of its turns, ending the effect on itself on a success.",
+      "s": "wis",
+      "dc": "wisdomMod+proficiencyBonus+8",
+      "cc": "Channel Divinity",
+      "effect": "Frightened||10"
    },
-   "wrathstorm":{
-      "dc":"{spellDC}",
-      "d":"2d8[lightning]",
-      "half":"True",
-      "cc":"Wrath of the Storm",
-      "title":"{name} uses Wrath of the Storm",
-      "desc":"At 1st level, you can thunderously rebuke attackers. When a creature within 5 feet of you that you can see hits you with an attack, you can use your reaction to cause the creature to make a Dexterity saving throw. The creature takes 2d8 lightning or thunder damage (your choice) on a failed saving throw, and half as much damage on a successful one.",
-      "save":"dex"
+   "wrathstorm": {
+      "dc": "{spellDC}",
+      "d": "2d8[lightning]",
+      "half": "True",
+      "cc": "Wrath of the Storm",
+      "title": "{name} uses Wrath of the Storm",
+      "desc": "At 1st level, you can thunderously rebuke attackers. When a creature within 5 feet of you that you can see hits you with an attack, you can use your reaction to cause the creature to make a Dexterity saving throw. The creature takes 2d8 lightning or thunder damage (your choice) on a failed saving throw, and half as much damage on a successful one.",
+      "save": "dex"
    },
-   "halo":{
-      "dc":"{spellDC}",
-      "d":"1d{(({DruidLevel}//6)*2)+(({DruidLevel}//10)*2)+(({DruidLevel}//14)*2)-(({DruidLevel}//12)*2)-(({DruidLevel}//18)*2)+4}[necrotic]",
-      "title":"{name} uses Halo of Spores",
-      "desc":"Starting at 2nd level, you are surrounded by invisible, necrotic spores that are harmless until you unleash them on a creature nearby. When a creature you can see moves into a space within 10 feet of you or starts its turn there, you can use your reaction to deal 1d4 necrotic damage to that creature unless it succeeds on a Constitution saving throw against your spell save DC. The necrotic damage increases to 1d6 at 6th level, 1d8 at 10th level, and 1d10 at 14th level.",
-      "save":"con"
+   "halo": {
+      "dc": "{spellDC}",
+      "d": "1d{(({DruidLevel}//6)*2)+(({DruidLevel}//10)*2)+(({DruidLevel}//14)*2)-(({DruidLevel}//12)*2)-(({DruidLevel}//18)*2)+4}[necrotic]",
+      "title": "{name} uses Halo of Spores",
+      "desc": "Starting at 2nd level, you are surrounded by invisible, necrotic spores that are harmless until you unleash them on a creature nearby. When a creature you can see moves into a space within 10 feet of you or starts its turn there, you can use your reaction to deal 1d4 necrotic damage to that creature unless it succeeds on a Constitution saving throw against your spell save DC. The necrotic damage increases to 1d6 at 6th level, 1d8 at 10th level, and 1d10 at 14th level.",
+      "save": "con"
    },
-   "symbiotic":{
-      "fail":"True",
-      "cc":"Wild Shape",
-      "title":"{name} uses Symbiotic Entity",
-      "desc":"As an action, you can expend a use of your Wild Shape feature to awaken those spores, rather than transforming into a beast form, and you gain 4 temporary hit points for each level you have in this class. While this feature is active, you gain the following benefits:\n- When you deal your Halo of Spores damage, roll the damage die a second time and add it to the total.\n- Your melee weapon attacks deal an extra 1d6 poison damage to any target they hit.",
-      "seffect":"Symbiotic||100",
-      "thp":"{DruidLevel*4}"
+   "symbiotic": {
+      "fail": "True",
+      "cc": "Wild Shape",
+      "title": "{name} uses Symbiotic Entity",
+      "desc": "As an action, you can expend a use of your Wild Shape feature to awaken those spores, rather than transforming into a beast form, and you gain 4 temporary hit points for each level you have in this class. While this feature is active, you gain the following benefits:\n- When you deal your Halo of Spores damage, roll the damage die a second time and add it to the total.\n- Your melee weapon attacks deal an extra 1d6 poison damage to any target they hit.",
+      "seffect": "Symbiotic||100",
+      "thp": "{DruidLevel*4}"
    },
-   "maxgrasp":{
-      "dc":"{spellDC}",
-      "d":"2d6[bludgeoning]",
-      "half":"True",
-      "title":"{name} uses Max's Earthen Grasp feature",
-      "desc":"As an action, you can cause the hand to crush the restrained target, who must make a Strength saving throw. It takes 2d6 bludgeoning damage on a failed save, or half as much damage on a successful one.\n\nTo break out, the restrained target can use its action to make a Strength check against your spell save DC. On a success, the target escapes and is no longer restrained by the hand.",
-      "save":"str"
+   "maxgrasp": {
+      "dc": "{spellDC}",
+      "d": "2d6[bludgeoning]",
+      "half": "True",
+      "title": "{name} uses Max's Earthen Grasp feature",
+      "desc": "As an action, you can cause the hand to crush the restrained target, who must make a Strength saving throw. It takes 2d6 bludgeoning damage on a failed save, or half as much damage on a successful one.\n\nTo break out, the restrained target can use its action to make a Strength check against your spell save DC. On a success, the target escapes and is no longer restrained by the hand.",
+      "save": "str"
    },
-   "felagility":{
-      "fail":"True",
-      "title":"[name] uses their Feline Agility",
-      "desc":"Your reflexes and agility allow you to move with a burst of speed. When you move on your turn in combat, you can double your speed until the end of the turn. Once you use this trait, you can't use it again until you move 0 feet on one of your turns."
+   "felagility": {
+      "fail": "True",
+      "title": "[name] uses their Feline Agility",
+      "desc": "Your reflexes and agility allow you to move with a burst of speed. When you move on your turn in combat, you can double your speed until the end of the turn. Once you use this trait, you can't use it again until you move 0 feet on one of your turns."
    },
-   "sacredweapon":{
+   "sacredweapon": {
       "fail": "True",
       "cc": "Channel Divinity",
       "title": "[name] uses their Channel Divinity: Sacred Weapon",
@@ -143,8 +143,8 @@
    },
    "favfoe": {
       "fail": "True",
-      "d":"1d{scale}",
-      "scale":"{'1':4,'6':6,'14':8}",
+      "d": "1d{scale}",
+      "scale": "{'1':4,'6':6,'14':8}",
       "cc": "Favored Foe",
       "title": "[name] uses their Favored Foe ability!",
       "desc": "The first time on each of your turns that you hit the favored enemy and deal damage to it, including when you mark it, you can increase that damage by 1d4. On the following attacks use `favfoe` snippet after the attack.\n\nYou can use this feature to mark a favored enemy a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest",
@@ -156,5 +156,13 @@
       "d": "-1d{(((MonkLevel // 5) * 2) + ((MonkLevel // 11) * 2) + ((MonkLevel // 17) * 2) - ((MonkLevel //10) * 2) - ((MonkLevel // 15)*2) + 4)}-{wisdomMod}",
       "cc": "Ki Points",
       "title": "[name] uses Hands of Healing!",
-      "desc": "Your mystical touch can mend wounds. As an action, you can spend 1 ki point to touch a creature and restore a number of hit points equal to a roll of your Martial Arts die + your Wisdom modifier.\n\nWhen you use your Flurry of Blows, you can replace one of the unarmed strikes with a use of this feature without spending a ki point for the healing."}
+      "desc": "Your mystical touch can mend wounds. As an action, you can spend 1 ki point to touch a creature and restore a number of hit points equal to a roll of your Martial Arts die + your Wisdom modifier.\n\nWhen you use your Flurry of Blows, you can replace one of the unarmed strikes with a use of this feature without spending a ki point for the healing."
+   },
+   "hypgaze": {
+      "dc": "{spell+10}",
+      "effect": "Charmed by Gaze|charmed|1",
+      "save": "wis",
+      "desc": "Starting at 2nd level when you choose this school, your soft words and enchanting gaze can magically enthrall another creature. As an action, choose one creature that you can see within 5 feet of you. If the target can see or hear you, it must succeed on a Wisdom saving throw against your wizard spell save DC or be charmed by you until the end of your next turn. The charmed creature's speed drops to 0, and the creature is incapacitated and visibly dazed.\n\nOn subsequent turns, you can use your action to maintain this effect, extending its duration until the end of your next turn. However, the effect ends if you move more than 5 feet away from the creature, if the creature can neither see nor hear you, or if the creature takes damage.\n\nOnce the effect ends, or if the creature succeeds on its initial saving throw against this effect, you can't use this feature on that creature again until you finish a long rest.",
+      "cc": "Hypnotic Gaze"
+   }
 }
