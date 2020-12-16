@@ -159,6 +159,7 @@
       "desc": "Your mystical touch can mend wounds. As an action, you can spend 1 ki point to touch a creature and restore a number of hit points equal to a roll of your Martial Arts die + your Wisdom modifier.\n\nWhen you use your Flurry of Blows, you can replace one of the unarmed strikes with a use of this feature without spending a ki point for the healing."
    },
    "hypgaze": {
+      "title" : "[name] uses their Hypnotic Gaze!",
       "dc": "{spell+10}",
       "effect": "Charmed by Gaze|charmed|1",
       "save": "wis",
