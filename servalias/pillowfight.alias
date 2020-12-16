@@ -12,8 +12,9 @@ defaultPFList = ["https://media.giphy.com/media/fQr48EYTVWW52/source.gif",
                  "https://media.giphy.com/media/wIr74BbT5LCpy/source.gif",
                  "https://media.giphy.com/media/zJ2Ad7ECrc67C/source.gif",
                  "https://media.giphy.com/media/xT0xeizZQG6CnbPUmk/source.gif",
-                 "https://media.giphy.com/media/l1J3uOcVZ8QN4nJok/source.gif"]
-randGIF=randint(10)
-returnstr += f'-title "{name} challenges {you} to a pillow fight!" -image {defaultPFList[randGIF]}'
+                 "https://media.giphy.com/media/l1J3uOcVZ8QN4nJok/source.gif",
+                 "https://media.giphy.com/media/yvwGVAoKO9RJK/source.gif"]
+randGIF=randint(len(defaultPFList)-1)
+returnstr += f'-title "Pillow Fight!" -f "{name}| Challenges {you} to a pillow fight!" -image {defaultPFList[randGIF]}'
 return returnstr
 </drac2>

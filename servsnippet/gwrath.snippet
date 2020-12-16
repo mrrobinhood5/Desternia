@@ -1,0 +1,15 @@
+<drac2>
+patrons = {"dao":"bludgeoning","djinni":"thunder","efreeti":"fire","marid":"cold"}
+returnstr = f' -d {proficiencyBonus}'
+if exists("genie"):
+    pass
+else:
+    err("You do not have a genie set. do `!manage custom genie add \"Genie Name\"")
+if genie.lower() in str(patrons.keys()).lower():
+    pass
+else:
+    err("None of those are patrons. How do you not know your patron? tsk tsk.")
+returnstr += f'[{patrons[genie.lower()]}]'
+returnstr += f' -f "Genie\'s Wrath| Once during each of your turns when you hit with an attack roll, you can deal extra thunder damage to the target equal to your proficiency bonus."'
+return returnstr
+</drac2>

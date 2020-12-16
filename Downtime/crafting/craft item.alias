@@ -82,10 +82,10 @@ else:
     set_cvar("bags",dump_json(bagsLoaded)) #dumps the coins back to the cvar
     #does the XP stuff
     xplog = load_json(xplog)
-    xplog.update({xptimestamp:"+25 crafting"})
+    xplog.update({xptimestamp:"+50 crafting"})
     set_cvar("xplog",dump_json(xplog))
     oxp = me.cc_str("Experience")
-    me.mod_cc("Experience",+25)
+    me.mod_cc("Experience",+50)
     nxp =me.cc_str("Experience")
 
 #gets the rolled averages
