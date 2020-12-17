@@ -15,7 +15,7 @@ if pargs.get("key"):
             # grab the string of the PC notes
             playerCharacterSettings = combat().get_combatant(pargs.last("t")).note.split(" | ")
             # skips if its blank or no options
-            if ':' not in playerCharacterSettings:
+            if ':' not in str(playerCharacterSettings):
                 pass
             else:
                 playerCharacterSettings = {x[0].lower(): x[1] for x in
