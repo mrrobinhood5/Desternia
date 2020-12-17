@@ -1,5 +1,6 @@
 tembed -thumb <image> -color <color>
 <drac2>
+#TODO something
 me, settingsCVAR, setting, currentSetting = character(), "ExploreSettings", {}, ""
 returnstr = f' -title "Exploration Alias!" -desc "Listing all available Settings:"'
 # checks for exisiting cvar/svars and settings

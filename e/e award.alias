@@ -18,8 +18,7 @@ if pargs.get("key"):
             if ':' not in str(playerCharacterSettings):
                 pass
             else:
-                playerCharacterSettings = {x[0].lower(): x[1] for x in
-                                           [item.split(": ") for item in playerCharacterSettings]}
+                playerCharacterSettings = {x[0].lower(): x[1] for x in [item.split(": ") for item in playerCharacterSettings]}
                 # grabs the previous prereqs if any
                 if "keys" in playerCharacterSettings.keys():
                     existingPrereqs = playerCharacterSettings["keys"] + ","
@@ -28,7 +27,7 @@ if pargs.get("key"):
                 playerCharacterSettings.update({"keys": existingPrereqs + keyReturned})
                 dataout = ' | '.join([f"{item[0].title()}: {item[1]}" for item in playerCharacterSettings.items()])
                 combat().get_combatant(pargs.last("t")).set_note(dataout)
-                returnstr += f' -f "Key|Has been awarded"'
+                returnstr += f' -f "Key|The {keyReturned} has been awarded by {ctx.author.display_name}"'
             # returnstr += f' -f "Copy and Paste This|\n\n`!e award -take {keyReturned}` "'
         else:
             err("That target is not in combat, oops")
@@ -47,6 +46,6 @@ else:
     #   returnstr += f' -f "Success|You have acquired that prerequisite!"'
 
     # else:
-    #   returnstr += f' -f "Help|Give keys with `!e award -t \"name\" -key \"keyname\"`"'
+    returnstr += f' -f "Help|Give keys with `!e award -t \"name\" -key \"keyname\"`"'
 return returnstr
 </drac2>

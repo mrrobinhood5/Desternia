@@ -1,5 +1,6 @@
 tembed -thumb <image> -color <color>
 <drac2>
+#TODO something
 pargs, me, settingsCVAR, settingType  = argparse(&ARGS&), character(), "ExploreSettings", False
 settings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
 isPrivate, isPublic = False, False
