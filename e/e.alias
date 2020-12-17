@@ -4,6 +4,8 @@ tembed -color <color>
 # TODO: Add a "You are dead" check if your HP is below 0
 # TODO: Fix the CVAR thing for private libraries
 # TODO: TRAPS add trap names and effects to player
+# TODO: have e award save the info on the player notes like map
+# TODO: add a DM name to the DM combatant as a note so that only he can drive
 # from Desternia.FakeTestingStuff import *
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
@@ -13,7 +15,7 @@ me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
 
 # need to decide where to load the savedSettingsFrom, either init or CVAR. 
-if combat(): #check to see if combat is running else error out. It should always be running. 
+if combat(): #check to see if combat is running else error out. It should always be running.
     inCombat = True
     # check to see if you have a DM group and explore is loaded, else error out
     if "explore" in [x.name for x in combat().get_group("DM").combatants]:
@@ -30,6 +32,8 @@ else:
 # cvarData = get("library") if savedExploreSettings['type'] == "private" else 0
 loadedData = load_json(get_gvar(get("library"))) if savedExploreSettings['type'] == "public" else load_json(get_gvar(get_svar("serverlibrary"))) if savedExploreSettings['type'] == "server" else load_json(get(cvarData))
 
+# need to load prereqs from notes.
+activePrereqs = combat().me.note
 
 ## MAIN LOGIC ##
 # checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
@@ -48,6 +52,8 @@ if typedPosition != "":
             # if you are not barred from the next position check to see if you have the prereqs for this position
             if "requires" in loadedData[savedExploreSettings['setting']][position].keys() and not isBar:
                 isAllowed = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
+                # checks for new prereqs and appends them to the new settings
+
             if not isBar and isAllowed:
                 # If you are allowed and not barred, set the next postition to what you typed
                 nextPosition = loadedData[savedExploreSettings['setting']][position]
