@@ -21,8 +21,19 @@ for x in minrolls:
         break
     else:
         pointer += 1
+returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*\n{scoutResult.full}\n`{crimeTarget.title()}` for a multiplier of `{earnMultiplier}`"'
 
-returnstr += f' -f "{scoutSkill.title()} roll| {scoutResult.full}\n{crimeTarget.title()} for a multiplier of {earnMultiplier}"'
+# next rolls for Hidden Roll
+if earnMultiplier == 0:
+    returnstr += f' -f "Hidden Roll| None, you didn\'t find anyone"
+else:
+    # sets the DC for this roll
+    hiddenRollDC = vroll(f'2d10+{floor(level/3)}')
+    #checks for a Disguise Kit in your bag
+    hiddenRoll = me.skills.stealth.d20(True) if "disguise" in bags.lower() else me.skills.stealth.d20()
+    hiddenResult = vroll(hiddenRoll)
+    returnstr += f' -f "Hidden Roll|*Stealth*\nDC: `{hiddenRollDC.full}`\n{hiddenResult.full}\n{"**PASS**" if hiddenResult.total >= hiddenRollDC.total else "**FAIL**"}"'
+
 return returnstr
 # if
 #
