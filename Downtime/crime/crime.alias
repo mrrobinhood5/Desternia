@@ -22,7 +22,7 @@ for x in minrolls:
     else:
         pointer += 1
 
-returnstr += f' -f "{scoutResult.title()} roll| {scoutRoll}\n{crimeTarget.title()} for a multiplier of {earnMultiplier}"'
+returnstr += f' -f "{scoutSkill.title()} roll| {scoutResult.full}\n{crimeTarget.title()} for a multiplier of {earnMultiplier}"'
 return returnstr
 # if
 #
