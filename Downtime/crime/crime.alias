@@ -1,0 +1,19 @@
+embed -title "Crime Downtime" -thumb <image> -color <color>
+<drac2>
+me, returnstr = character(), ""
+# first roll is investigation or perception, whatever is higher.
+if me.skills.perception.value > me.skills.investigation.value:
+    scoutSkill = "perception"
+    scoutRoll = me.skills.perception.d20()
+else:
+    scoutSkill = "investigation"
+    scoutRoll = me.skills.investigation.d20()
+scoutResult = vroll(scoutRoll)
+#checks for a pass
+if scoutResult.total > 9:
+    pass
+else:
+    err(f'You failed bruh, rolled a {scoutResult.full}')
+
+#
+</drac2>
