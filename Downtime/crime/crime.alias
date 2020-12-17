@@ -28,6 +28,7 @@ me, returnstr, downtime = character(), "", "crime"
 results = {timestamp:{downtime:{}}}
 # first check to see if you even have DT left for the day.
 if exists("DTTrack"):
+    workdata = load_json(DTTrack)
     if timestamp not in workdata:
         pass
     else:
