@@ -27,10 +27,15 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 me, returnstr, downtime = character(), "", "crime"
 results = {timestamp:{downtime:{}}}
 # first check to see if you even have DT left for the day.
-character().set_cvar("DTTrack",dump_json(results)) if not exists("DTTrack") else 0
-workdata = load_json(DTTrack)
-if timestamp in workdata:
-    err("You have already did downtime for today. Come back tomorrow")
+if exists("DTTrack"):
+    if timestamp not in workdata:
+        pass
+    else:
+        err("You have already did downtime for today. Come back tomorrow")
+else:
+    character().set_cvar("DTTrack",dump_json(results)) if not exists("DTTrack") else 0
+    workdata = load_json(DTTrack)
+
 
 # first roll is investigation or perception, whatever is higher.
 if me.skills.perception.value > me.skills.investigation.value:
