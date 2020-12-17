@@ -1,4 +1,4 @@
-embed -tite "{name} is doing Crime Downtime" -thumb <image> -color <color>
+embed -tite "{name} is doing Crime Downtime" -desc "This takes up 2 Downtimes" -thumb <image> -color <color>
 
 <drac2> # timestamp stuff
 calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
@@ -24,8 +24,10 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
-me, returnstr = character(), ""
+me, returnstr, downtime = character(), "", "crime"
+results = {timestamp:{downtime:{}}}
 # first check to see if you even have DT left for the day.
+character().set_cvar("DTTrack",dump_json(results)) if not exists("DTTrack") else 0
 workdata = load_json(DTTrack)
 if timestamp in workdata:
     err("You have already did downtime for today. Come back tomorrow")
@@ -92,7 +94,10 @@ returnstr += f'`{ogp}` gp -> `{ngp}` gp"'
 pouch[1].update({'gp':ngp}) #updates new quantities locally
 pouch in bagsLoaded or bagsLoaded.append(pouch)
 me.set_cvar("bags",dump_json(bagsLoaded)) #dumps the coins back to the cvar
-
+# sets the downtime block
+results[timestamp][downtime].update({"1": hiddenPass, "2": stealPass})
+workdata.update(results)
+me.set_cvar("DTTrack",dump_json(workdata))
 return returnstr
 
 </drac2>
