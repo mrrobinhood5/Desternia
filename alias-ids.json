@@ -30,8 +30,8 @@
   "Downtime/learn/dt learn set.alias": "5fa97247181a164697a74969",
   "Downtime/learn/dt learn list.alias": "5fb742e230b59cacdc589cd0",
   "servalias/getpouch.alias": "5fb29dee0cae0e98f6337c38",
-  "servalias/e/e.alias": "5fb98bf930b59cacdc589f08",
-  "servalias/e/e list.alias": "5fcdbb8730b59cacdc58aeff",
-  "servalias/e/e setting.alias": "5fcdbb940260807c831fec6e",
-  "servalias/e/e award.alias": "5fcfd5060260807c831fedd5"
+  "e/e.alias": "5fb98bf930b59cacdc589f08",
+  "e/e list.alias": "5fcdbb8730b59cacdc58aeff",
+  "e/e setting.alias": "5fcdbb940260807c831fec6e",
+  "e/e award.alias": "5fcfd5060260807c831fedd5"
 }
