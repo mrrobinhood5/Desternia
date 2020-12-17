@@ -1,6 +1,6 @@
 # Crime in the City
 
-Crime is taken very seriously in Rosemere. It can be costly and very lucrative. Not all characters are fit for the criminal world. Downtime crimes are limited to small/medium crimes agains notional residents. **DO NOT TRY TO BREAK INTO THE RAVENS QUILL** or stuff like that.
+Crime is taken very seriously in Rosemere. It can be costly and very lucrative. Not all characters are fit for the criminal world. Downtime crimes are limited to small/medium crimes agains notional residents. **DO NOT TRY TO BREAK INTO THE RAVENS QUILL** or stuff like that. This downtimes costs 2 Downtimes as it is very time consuming to be a criminal.
 
 ## **Downtime Rolls**
 - First scout out potential targets with **Perception** or **Investigation**
@@ -20,5 +20,5 @@ ROLL  | Outcome                   | Modifier
 **Rules**
 - You perform the 3 checks with a Random DC of `2d10 + Level % 3`.
 - The city watch will be pinged when you do crime, and they may attempt to catch you based on your **Stealth** Check and their `!dt patrol` downtime.
-- Crime Downtime costs 2gp per day (1gp per DT), but the payout is greater
+- Crime Downtime costs 2gp per day, but the payout is greater
 - Payout is your investment times modifier if you do not get caught.

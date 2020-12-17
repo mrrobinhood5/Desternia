@@ -1,6 +1,35 @@
-embed -title "Crime Downtime" -thumb <image> -color <color>
+embed -tite "{name} is doing Crime Downtime" -thumb <image> -color <color>
+
+<drac2> # timestamp stuff
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+
 <drac2>
 me, returnstr = character(), ""
+# first check to see if you even have DT left for the day.
+workdata = load_json(DTTrack)
+if timestamp in workdata:
+    err("You have already did downtime for today. Come back tomorrow")
+
 # first roll is investigation or perception, whatever is higher.
 if me.skills.perception.value > me.skills.investigation.value:
     scoutSkill = "perception"
@@ -33,7 +62,7 @@ else:
     hiddenRoll = me.skills.stealth.d20(True) if "disguise" in bags.lower() else me.skills.stealth.d20()
     hiddenResult = vroll(hiddenRoll)
     hiddenPass = True if hiddenResult.total >= hiddenRollDC.total else False
-    returnstr += f' -f "Hidden Roll|*Stealth*\nDC: {hiddenRollDC.full}\n{hiddenResult.full}\n{"**PASS**" if hiddenPass else "**FAIL**"}"'
+    returnstr += f' -f "Hidden Roll|*Stealth*\n**DC**: {hiddenRollDC.full}\n{hiddenResult.full} - {"**PASS**" if hiddenPass else "**FAIL**"}"'
 
 # next rolls for Sleight of Hand
 if earnMultiplier == 0 or hiddenPass == False:
@@ -44,7 +73,7 @@ else:
     stealRoll = me.skills.sleightOfHand.d20(True) if "thieve" in bags.lower() else me.skills.sleightOfHand.d20()
     stealResult = vroll(stealRoll)
     stealPass = True if stealResult.total >= stealRollDC.total else False
-    returnstr += f' -f "Steal Roll|*Sleight of Hand*\nDC: {stealRollDC.full}\n{stealResult.full}\n{"**PASS**" if stealPass else "**FAIL**"}"'
+    returnstr += f' -f "Steal Roll|*Sleight of Hand*\n**DC**: {stealRollDC.full}\n{stealResult.full} - {"**PASS**" if stealPass else "**FAIL**"}"'
 
 #calculate gains
 # open up your coin purse
@@ -56,8 +85,8 @@ if earnMultiplier == 0 or hiddenPass == False or stealPass == False:
     returnstr += f' -f "Earnings|You have not earned anything. This encounter cost you `2 gp`\n'
     ngp = ogp-2
 else:
-    returnstr += f' -f "Earnings|You earned `2` gp plus a multipler of `{earnMultiplier}`\n'
-    coinsEarned = 2 + (2*earnMultiplier)
+    coinsEarned = (2*earnMultiplier)
+    returnstr += f' -f "Earnings|You earned `2` gp times `{earnMultiplier}` equals `{coinsEarned}\n'
     ngp = ogp + coinsEarned
 returnstr += f'`{ogp}` gp -> `{ngp}` gp"'
 pouch[1].update({'gp':ngp}) #updates new quantities locally
