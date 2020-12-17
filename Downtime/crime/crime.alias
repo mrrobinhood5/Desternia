@@ -9,11 +9,21 @@ else:
     scoutSkill = "investigation"
     scoutRoll = me.skills.investigation.d20()
 scoutResult = vroll(scoutRoll)
-#checks for a pass
-if scoutResult.total > 9:
-    pass
-else:
-    err(f'You failed bruh, rolled a {scoutResult.full}')
+#checks for a pass and sets the multipler for gains
+multipliers = [3,2,1,.5,.2,0]
+minrolls = [20,18,15,12,10,0]
+targets = ["noble","upperclass","middle class","commoner","poor","failed to find anyone"]
+pointer = 0
+for x in minrolls:
+    if scoutResult.total > x:
+        earnMultiplier = multipliers[pointer]
+        crimeTarget = targets[pointer]
+        break
+    else:
+        pointer += 1
 
+returnstr += f' -f "{scoutResult.title()} roll| {scoutRoll}\n{crimeTarget.title()} for a multiplier of {earnMultiplier}"'
+return returnstr
+# if
 #
 </drac2>
