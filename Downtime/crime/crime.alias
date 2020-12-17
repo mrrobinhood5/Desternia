@@ -46,7 +46,23 @@ else:
     stealPass = True if stealResult.total >= stealRollDC.total else False
     returnstr += f' -f "Steal Roll|*Sleight of Hand*\nDC: {stealRollDC.full}\n{stealResult.full}\n{"**PASS**" if stealPass else "**FAIL**"}"'
 
+#calculate gains
+# open up your coin purse
+bagsLoaded=load_json(bags) #load the bags
+pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
+ogp = pouch[1]['gp'] # what gp was before?
+
+if earnMultiplier == 0 or hiddenPass == False or stealPass == False:
+    returnstr += f' -f "Earnings|You have not earned anything. This encounter cost you `2 gp`\n'
+    ngp = ogp-2
+else:
+    coinsEarned = 2 + (2*earnMultiplier)
+    ngp = ogp + coinsEarned
+returnstr += f'`{ogp}` gp -> `{ngp}` gp"'
+pouch[1].update({'gp':ngp}) #updates new quantities locally
+pouch in bagsLoaded or bagsLoaded.append(pouch)
+me.set_cvar("bags",dump_json(bagsLoaded)) #dumps the coins back to the cvar
+
 return returnstr
-# if
-#
+
 </drac2>
