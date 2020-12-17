@@ -25,7 +25,7 @@ returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*\n{scoutResult.full}\n`{
 
 # next rolls for Hidden Roll
 if earnMultiplier == 0:
-    returnstr += f' -f "Hidden Roll| None, you didn\'t find anyone"
+    returnstr += f' -f "Hidden Roll| None, you didn\'t find anyone"'
 else:
     # sets the DC for this roll
     hiddenRollDC = vroll(f'2d10+{floor(level/3)}')
