@@ -16,7 +16,7 @@ rarities = {"common": {"dailygp": 1, "timemod": 1, "valuemod": 1},
             "vrare": {"dailygp": 200, "timemod": 5, "valuemod": 100},
             "legendary": {"dailygp": 1000, "timemod": 10, "valuemod": 500}}
 #sets the instructions if not all required arguments are passed
-instructions = f'-f \"You must set ability, `str`,`dex`,`con`,`int`,`wis`,`cha`,or`none`\"\n' \
+instructions = f'-f \"You must set ability, `str`,`dex`,`con`,`inte`,`wis`,`cha`,or`none`\"\n' \
                f'-f \"Set material rarity, `common`,`uncommon`,`rare`,`vrare`,`legendary`\"\n' \
                f'-f \"Set Tools bonuses if any with `-b 1` for a +1 tool \"\n' \
                f'-f \"Set base cost in GP from `!craft base` or a core item from the PHB with `-base 10`\"\n' \

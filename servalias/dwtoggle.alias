@@ -1,0 +1,22 @@
+embed -thumb <image> -color <color>
+<drac2>
+returnstr, status, me = "", ["Deactivates","Reactivates"], combat().me
+# check to see if the feat is available
+if "dual wielder" in feats.lower():
+    pass
+else:
+    err("You do not have the 'Dual Wielder' feat. Add in `!manage feat add \"Dual Wielder\"")
+#check to see if you are in combat
+if combat():
+    pass
+else:
+    err("You can only use `!dw` when you are in combat! Booo!")
+#checks  to see if the effect is active, otherwise put it in
+if "No Dual Wield" in [x.name for x in me.effects]:
+    me.remove_effect("No Dual Wield")
+    returnstr += f' -title "Dual Wielder" -f "{name}|{status[1]} their Dual Wielder feat!\n\n Your AC is now at `{me.ac}`"'
+else:
+    me.add_effect("No Dual Wield","-ac -1",-1)
+    returnstr += f' -title "Dual Wielder" -f "{name}|{status[0]} their Dual Wielder feat!\n\n Your AC is now at `{me.ac}`"'
+return returnstr
+</drac2>
