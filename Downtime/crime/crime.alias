@@ -1,4 +1,4 @@
-embed -tite "{name} is doing Crime Downtime" -desc "This takes up 2 Downtimes" -thumb <image> -color <color>
+embed -title "{name} is doing Crime Downtime" -desc "This takes up 2 Downtimes" -thumb <image> -color <color>
 
 <drac2> # timestamp stuff
 calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
