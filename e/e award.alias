@@ -44,7 +44,7 @@ else:
 #   me.set_cvar("ExploreSettings", dump_json(loadedExploreSettings))
 #   returnstr += f' -f "Success|You have acquired that prerequisite!"'
 
-else: 
-  returnstr += f' -f "Help|Give keys with `!e award -t \"name\" -key \"keyname\"`"'
+# else:
+#   returnstr += f' -f "Help|Give keys with `!e award -t \"name\" -key \"keyname\"`"'
 return returnstr
 </drac2>
