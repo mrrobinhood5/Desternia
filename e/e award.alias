@@ -1,50 +1,52 @@
 embed -title "You have been awarded a requirement!" -thumb <image> -color <color>
 <drac2>
 pargs, returnstr, keyReturned, me = argparse(&ARGS&), "", "", character()
-abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz","NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm"]
-#checks for key
+abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
+            "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm"]
+# checks for key
 if pargs.get("key"):
- # checks for targets
- if pargs.get("t"):
-   #checks to see if target is available
-   if pargs.last("t") in str([x.name.lower() for x in combat().combatants]):
-     keyProvided = pargs.last("key")
-     for letter in keyProvided:
-       keyReturned += abcarray[1][abcarray[0].index(letter)]
-    # grab the string of the PC notes
-     playerCharacterSettings = combat().get_combatant(pargs.last("t")).note.split(" | ")
-     # skips if its blank or no options
-     if ':' not in playerCharacterSettings:
-       pass
-     else:
-       playerCharacterSettings = {x[0].lower(): x[1] for x in [item.split(": ") for item in playerCharacterSettings]}
-       # grabs the previous prereqs if any
-       if "keys" in playerCharacterSettings.keys():
-         existingPrereqs = playerCharacterSettings["keys"]+","
-       else:
-         existingPrereqs = ""
-       playerCharacterSettings.update({"keys":existingPrereqs+keyReturned})
-       dataout = ' | '.join([f"{item[0].title()}: {item[1]}" for item in initialstr.items()])
-       combat().get_combatant(pargs.last("t")).set_note(dataout)
-       returnstr += f' -f "Key|Has been awarded"'
-     # returnstr += f' -f "Copy and Paste This|\n\n`!e award -take {keyReturned}` "'
-   else:
-     err("That target is not in combat, oops")
-  else:
-    err("You must provide target or targets like `!e award -t \"name\" -key \"keyname\"")
+    # checks for targets
+    if pargs.get("t"):
+        # checks to see if target is available
+        if pargs.last("t") in str([x.name.lower() for x in combat().combatants]):
+            keyProvided = pargs.last("key")
+            for letter in keyProvided:
+                keyReturned += abcarray[1][abcarray[0].index(letter)]
+            # grab the string of the PC notes
+            playerCharacterSettings = combat().get_combatant(pargs.last("t")).note.split(" | ")
+            # skips if its blank or no options
+            if ':' not in playerCharacterSettings:
+                pass
+            else:
+                playerCharacterSettings = {x[0].lower(): x[1] for x in
+                                           [item.split(": ") for item in playerCharacterSettings]}
+                # grabs the previous prereqs if any
+                if "keys" in playerCharacterSettings.keys():
+                    existingPrereqs = playerCharacterSettings["keys"] + ","
+                else:
+                    existingPrereqs = ""
+                playerCharacterSettings.update({"keys": existingPrereqs + keyReturned})
+                dataout = ' | '.join([f"{item[0].title()}: {item[1]}" for item in playerCharacterSettings.items()])
+                combat().get_combatant(pargs.last("t")).set_note(dataout)
+                returnstr += f' -f "Key|Has been awarded"'
+            # returnstr += f' -f "Copy and Paste This|\n\n`!e award -take {keyReturned}` "'
+        else:
+            err("That target is not in combat, oops")
+    else:
+        err("You must provide target or targets like `!e award -t \"name\" -key \"keyname\"")
 else:
-  err("You must provide a key with `-key \"keyname\""`)
+    err('You must provide a key with `-key "keyname"`')
 
-# elif pargs.get("take"):
-#   keyProvided = pargs.last("take")
-#   for letter in keyProvided:
-#     keyReturned += abcarray[0][abcarray[1].index(letter)]
-#   loadedExploreSettings = load_json(ExploreSettings)
-#   loadedExploreSettings["prereqs"].append(keyReturned)
-#   me.set_cvar("ExploreSettings", dump_json(loadedExploreSettings))
-#   returnstr += f' -f "Success|You have acquired that prerequisite!"'
+    # elif pargs.get("take"):
+    #   keyProvided = pargs.last("take")
+    #   for letter in keyProvided:
+    #     keyReturned += abcarray[0][abcarray[1].index(letter)]
+    #   loadedExploreSettings = load_json(ExploreSettings)
+    #   loadedExploreSettings["prereqs"].append(keyReturned)
+    #   me.set_cvar("ExploreSettings", dump_json(loadedExploreSettings))
+    #   returnstr += f' -f "Success|You have acquired that prerequisite!"'
 
-# else:
-#   returnstr += f' -f "Help|Give keys with `!e award -t \"name\" -key \"keyname\"`"'
+    # else:
+    #   returnstr += f' -f "Help|Give keys with `!e award -t \"name\" -key \"keyname\"`"'
 return returnstr
 </drac2>
