@@ -1,4 +1,4 @@
-embed -title "{{name}} is doing Patrol Downtime" -desc "This takes up 2 Downtimes" -thumb <image> -color <color>
+embed -title "{{name}} is doing Patrol Downtime" -desc "This takes up 2 Downtimes" -thumb <image> -color <color> -footer "Usage - !dt partol [name] [DC]"
 
 <drac2> # timestamp stuff
 calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
@@ -64,7 +64,7 @@ else:
         returnstr += f' -f "SUCCESS| You have caught `{targetCriminal[0].title()}`, RP your interaction with them. "'
     else:
         returnstr += f' -f "FAIL| You have did not catch `{targetCriminal[0].title()}`. They are very very sneaky, sir "'
-    results[timestamp][downtime].update({"customCriminal": True, "2": 2})
+    results[timestamp][downtime].update({targetCriminal[0]: True, "2": 2})
     workdata.update(results)
     me.set_cvar("DTTrack", dump_json(workdata))
     returnstr += f' -f "Logbook| Attempt has been added to your logbook"'
@@ -115,7 +115,6 @@ else:
     #     hiddenBonusStr = "Using Invisibility Spell"
     # else:
     #     hiddenRoll = me.skills.stealth.d20()
-    # TODO build a list of which combos are best dex int or wis
     hiddenResult = vroll(hiddenRoll)
     hiddenPass = True if hiddenResult.total >= hiddenRollDC.total else False
     returnstr += f' -f "Stealthy Roll|*Stealth({hiddenAbility})*\n**DC**: {hiddenRollDC.full}\n{hiddenResult.full} - {"**PASS**" if hiddenPass else "**FAIL**"}"'
