@@ -76,7 +76,7 @@ else:
     if "disguise" in bags.lower():
         hiddenRoll = me.skills.stealth.d20(True)
         hiddenBonusStr = "Using Disguise Kit"
-    elif "alter" in me.spellbook:
+    elif "Alter Self" in me.spellbook:
         hiddenRoll = me.skills.stealth.d20(True)
         hiddenBonusStr = "Using Alter Self Spell"
     else:
