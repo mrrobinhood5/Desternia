@@ -94,7 +94,7 @@ else:
         me.skills.sleightOfHand.d20()
     stealResult = vroll(stealRoll)
     stealPass = True if stealResult.total >= stealRollDC.total else False
-    returnstr += f' -f "Steal Roll|*Sleight of Hand*{" - Using Thieve\'s Tools" if tools else ""}\n**DC**: {stealRollDC.full}\n{stealResult.full} - {"**PASS**" if stealPass else "**FAIL**"}"'
+    returnstr += f' -f "Steal Roll|*Sleight of Hand*{" - Using Thieves Tools" if tools else ""}\n**DC**: {stealRollDC.full}\n{stealResult.full} - {"**PASS**" if stealPass else "**FAIL**"}"'
 
 #calculate gains
 # open up your coin purse
