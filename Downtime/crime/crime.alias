@@ -26,7 +26,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 <drac2>
 me, returnstr, downtime = character(), "", "crime"
 results, disguise, tools= {timestamp:{downtime:{}}}, False, False
-hiddenPass, stealPass = False, False
+hiddenPass, stealPass, hiddenBonusStr = False, False, ""
 # first first check to see if you are in the right channel
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -f "Error|Go do your crime downtime in the #downtime channel"'
@@ -72,15 +72,18 @@ if earnMultiplier == 0:
 else:
     # sets the DC for this roll
     hiddenRollDC = vroll(f'2d10+{floor(level/2)}')
-    #checks for a Disguise Kit in your bag
+    #checks for a Disguise Kit in your bag or if you have alterself / disguise self in spellbook
     if "disguise" in bags.lower():
         hiddenRoll = me.skills.stealth.d20(True)
-        disguise = True
+        hiddenBonusStr = "Using Disguise Kit"
+    elif "alter" in me.spellbook:
+        hiddenRoll = me.skills.stealth.d20(True)
+        hiddenBonusStr = "Using Alter Self Spell"
     else:
         hiddenRoll = me.skills.stealth.d20()
     hiddenResult = vroll(hiddenRoll)
     hiddenPass = True if hiddenResult.total >= hiddenRollDC.total else False
-    returnstr += f' -f "Hidden Roll|*Stealth*{"- Using Disguise Kit" if disguise else ""}\n**DC**: {hiddenRollDC.full}\n{hiddenResult.full} - {"**PASS**" if hiddenPass else "**FAIL**"}"'
+    returnstr += f' -f "Hidden Roll|*Stealth*{hiddenBonusStr}\n**DC**: {hiddenRollDC.full}\n{hiddenResult.full} - {"**PASS**" if hiddenPass else "**FAIL**"}"'
 
 # next rolls for Sleight of Hand
 if earnMultiplier == 0 or hiddenPass == False:
