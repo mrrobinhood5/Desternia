@@ -62,9 +62,9 @@ else:
     returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*\n{scoutResult.full}\n`' \
                  f'Attempting to catch `{targetCriminal[0].title()}` who rolled a `{targetCriminal[1]}`"'
     if scoutResult.total >= int(targetCriminal[1]):
-        returnstr += f' -f "SUCCESS| You have caught `{targetCriminal.title()}`, RP your interaction with them. "'
+        returnstr += f' -f "SUCCESS| You have caught `{targetCriminal[0].title()}`, RP your interaction with them. "'
     else:
-        returnstr += f' -f "FAIL| You have did not catch `{targetCriminal.title()}`. They are very very sneaky, sir "'
+        returnstr += f' -f "FAIL| You have did not catch `{targetCriminal[0].title()}`. They are very very sneaky, sir "'
     return returnstr
 
 # if no target was provided, continue with a randgen criminal
