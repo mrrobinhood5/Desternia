@@ -99,7 +99,7 @@ if earnMultiplier == 0 or hiddenPass == False or stealPass == False:
     ngp = ogp-2
 else:
     coinsEarned = (2*earnMultiplier)
-    returnstr += f' -f "Earnings|You earned `2` gp times `{earnMultiplier}` equals `{coinsEarned}\n'
+    returnstr += f' -f "Earnings|You earned `2` gp times `{earnMultiplier}` equals `{coinsEarned}`\n'
     ngp = ogp + coinsEarned
 returnstr += f'`{ogp}` gp -> `{ngp}` gp"'
 pouch[1].update({'gp':ngp}) #updates new quantities locally
