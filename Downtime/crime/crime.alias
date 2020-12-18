@@ -24,6 +24,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
+#TODO Add a gold converter so it doesnt add decimals to the pouch
 me, returnstr, downtime = character(), "", "crime"
 results, disguise, tools= {timestamp:{downtime:{}}}, False, False
 hiddenPass, stealPass, hiddenBonusStr, stealBonusStr = False, False, "", ""
