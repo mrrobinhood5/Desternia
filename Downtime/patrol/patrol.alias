@@ -24,8 +24,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
-#TODO Add a gold converter so it doesnt add decimals to the pouch
-me, returnstr, downtime, targetCriminal = character(), "", "patrol", %*%
+me, returnstr, downtime, targetCriminal = character(), "", "patrol", &ARGS&
 results, disguise, tools= {timestamp:{downtime:{}}}, False, False
 hiddenPass, stealPass, hiddenBonusStr, stealBonusStr = False, False, "", ""
 # first first check to see if you are in the right channel
@@ -33,16 +32,16 @@ if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -f "Error|Go do your patrol downtime in the #downtime channel"'
 
 # first check to see if you even have DT left for the day.
-# if exists("DTTrack"):
-#     workdata = load_json(DTTrack)
-#     if timestamp not in workdata:
-#         pass
-#     else:
-#         return f' -f "Error|You already did downtime for today. Come back tomorrow"'
-#         #err("You have already did downtime for today. Come back tomorrow")
-# else:
-#     character().set_cvar("DTTrack",dump_json(results)) if not exists("DTTrack") else 0
-#     workdata = load_json(DTTrack)
+if exists("DTTrack"):
+    workdata = load_json(DTTrack)
+    if timestamp not in workdata:
+        pass
+    else:
+        return f' -f "Error|You already did downtime for today. Come back tomorrow"'
+        #err("You have already did downtime for today. Come back tomorrow")
+else:
+    character().set_cvar("DTTrack",dump_json(results)) if not exists("DTTrack") else 0
+    workdata = load_json(DTTrack)
 
 
 # first roll is investigation or perception, whatever is higher.
@@ -55,16 +54,20 @@ else:
 scoutResult = vroll(scoutRoll)
 
 # if you passed a name and number, do a check rq:
-if targetCriminal == "":
+if targetCriminal == []:
     pass
 else:
-    targetCriminal = targetCriminal.split(" ")
+    # targetCriminal = targetCriminal.split(" ")
     returnstr += f' -f "Attempting|To catch `{targetCriminal[0].title()}` who rolled a `{targetCriminal[1]}`" '
     returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*\n{scoutResult.full}\n"'
     if scoutResult.total >= int(targetCriminal[1]):
         returnstr += f' -f "SUCCESS| You have caught `{targetCriminal[0].title()}`, RP your interaction with them. "'
     else:
         returnstr += f' -f "FAIL| You have did not catch `{targetCriminal[0].title()}`. They are very very sneaky, sir "'
+    results[timestamp][downtime].update({"customCriminal": True, "2": 2})
+    workdata.update(results)
+    me.set_cvar("DTTrack", dump_json(workdata))
+    returnstr += f' -f "Logbook| Attempt has been added to your logbook"'
     return returnstr
 
 # if no target was provided, continue with a randgen criminal
@@ -146,21 +149,21 @@ else:
 # pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
 # ogp = pouch[1]['gp'] # what gp was before?
 
-# if earnMultiplier == 0 or hiddenPass == False or stealPass == False:
-#     returnstr += f' -f "Earnings|You have not earned anything. This encounter cost you `2 gp`\n'
-#     ngp = ogp-2
-# else:
-#     coinsEarned = (2*earnMultiplier)
-#     returnstr += f' -f "Earnings|You earned `2` gp times `{earnMultiplier}` equals `{coinsEarned}`\n'
+if earnMultiplier == 0 or hiddenPass == False or apprehendPass == False:
+    returnstr += f' -f "LogBook | Nothing to add to your logbook`"'
+    coinsEarned = 2
+else:
+    coinsEarned = 2+(2*earnMultiplier)
+    returnstr += f' -f "Logbook| Todays multiplier is `{earnMultiplier}` logged in your logbook"'
 #     ngp = ogp + coinsEarned
 # returnstr += f'`{ogp}` gp -> `{ngp}` gp"'
 # pouch[1].update({'gp':ngp}) #updates new quantities locally
 # pouch in bagsLoaded or bagsLoaded.append(pouch)
 # me.set_cvar("bags",dump_json(bagsLoaded)) #dumps the coins back to the cvar
 # sets the downtime block
-# results[timestamp][downtime].update({"1": hiddenPass, "2": stealPass})
-# workdata.update(results)
-# me.set_cvar("DTTrack",dump_json(workdata))
+results[timestamp][downtime].update({"apprehend": apprehendPass, "2": coinsEarned})
+workdata.update(results)
+me.set_cvar("DTTrack",dump_json(workdata))
 return returnstr
 
 </drac2>
