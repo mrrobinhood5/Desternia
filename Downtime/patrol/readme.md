@@ -1,6 +1,6 @@
 # City Watch - Rosemere's Finest
 
-Crime is taken very seriously in Rosemere. The City Watch is a guild of able-bodied good doers committed to fighting crime and keeping our streets safe. City Watchmen patrol the streets for petty crime, to big crimes during their stay at Rosemere.
+Crime is taken very seriously in Rosemere. `City Watch` is a law enforcement agency committed to serving the public, fighting crime, and keeping the city safe. The `City Watch` patrols the streets of Rosemere and guards the city walls and gates, keeping an eye out for any kind of crime or public safety problems.
 
 ## Downtime Rolls
 - First scout out potential criminals with **Perception** or **Investigation**. If another player is doing criminal downtime, you can contest it with your own check to attempt to catch them. If you are not providing a name you will continue to roll against a random criminal.
@@ -10,13 +10,13 @@ Crime is taken very seriously in Rosemere. The City Watch is a guild of able-bod
 SCOUT Roll
 ROLL  | Outcome                   | Modifier
 0-9   | Failed to find anyone     | 0
-10-15 | Petty Crimes              | .2
-16-18 | Minor Crimes              | .5
-19-24 | Medium Crimes             |  1
-25-29 | Major Crimes              |  2
-30+   | Terrorist\Spies threats   |  3
+10-15 | Issuing Warnings          | .2
+16-18 | Petty Crime               | .5
+19-24 | Minor Crimes              |  1
+25-29 | Medium Crimes             |  2
+30+   | Major Crimes              |  3
 ```
 **Rules**
-- You perform the second 2 checks with a Random DC of `2d10 + Level % 3`.
+- You perform the second 2 checks with a Random DC of `2d10 + Level % 2`.
 - Watch Downtime pays 2gp per day, plus bonus if you catch criminals.
 - If you are attempting to catch a specific person, you must provide their name and Hidden Roll (Stealth) to the command like this `!dt patrol mojito 10` otherwise it will generate a random DC.

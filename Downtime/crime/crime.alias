@@ -71,7 +71,7 @@ if earnMultiplier == 0:
     returnstr += f' -f "Hidden Roll| None, you didn\'t find anyone"'
 else:
     # sets the DC for this roll
-    hiddenRollDC = vroll(f'2d10+{floor(level/2)}')
+    hiddenRollDC = vroll(f'2d10+{level}')
     #checks for a Disguise Kit in your bag or if you have alterself / disguise self in spellbook
     if "Pass without Trace" in me.spellbook:
         hiddenRoll = me.skills.stealth.d20(True, mod_override=me.skills.stealth.value+10)
@@ -98,7 +98,7 @@ else:
 if earnMultiplier == 0 or hiddenPass == False:
     returnstr += f' -f "Stealing Roll| Nobody to Steal from!"'
 else:
-    stealRollDC = vroll(f'2d10+{floor(level/2)}')
+    stealRollDC = vroll(f'2d10+{level)}')
     # checks for thieves tools
     if "thieve" in bags.lower():
         stealRoll = me.skills.sleightOfHand.d20(True)
