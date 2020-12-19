@@ -90,7 +90,7 @@ if earnMultiplier == 0:
     returnstr += f' -f "Stealth Roll| None, you didn\'t find anyone"'
 else:
     # sets the DC for this roll
-    hiddenRollDC = vroll(f'2d10+{floor(level/2)}')
+    hiddenRollDC = vroll(f'2d10+{level}')
     #checks for the best combo
     stealthBonuses = [dexterityMod+(me.skills.stealth.prof * proficiencyBonus), intelligenceMod+(me.skills.stealth.prof * proficiencyBonus), dexterityMod+(me.skills.stealth.prof * proficiencyBonus)]
     stealthAbilities = ["dexterity", "intelligence", "wisdom"]
@@ -123,7 +123,7 @@ else:
 if earnMultiplier == 0 or hiddenPass == False:
     returnstr += f' -f "Apprehend Roll| Nobody to catch!"'
 else:
-    apprehendRollDC = vroll(f'2d10+{floor(level/2)}')
+    apprehendRollDC = vroll(f'2d10+{level}')
     # compare athletics or persuasion
     if me.skills.athletics.value > me.skills.persuasion.value:
         apprehendSkill = "athletics"

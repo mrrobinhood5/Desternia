@@ -17,6 +17,6 @@ ROLL  | Outcome                   | Modifier
 30+   | Major Crimes              |  3
 ```
 **Rules**
-- You perform the second 2 checks with a Random DC of `2d10 + Level % 2`.
+- You perform the second 2 checks with a Random DC of `2d10 + Level`.
 - Watch Downtime pays 2gp per day, plus bonus if you catch criminals.
 - If you are attempting to catch a specific person, you must provide their name and Hidden Roll (Stealth) to the command like this `!dt patrol mojito 10` otherwise it will generate a random DC.
