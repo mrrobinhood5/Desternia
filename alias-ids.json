@@ -34,6 +34,8 @@
   "e/e list.alias": "5fcdbb8730b59cacdc58aeff",
   "e/e setting.alias": "5fcdbb940260807c831fec6e",
   "e/e award.alias": "5fcfd5060260807c831fedd5",
-  "Downtime/crime/crime.alias": "",
-  "Downtime/patrol/patrol.alias": ""
+  "Downtime/crime/crime.alias": "5fdb78b0be5b0399e15ff097",
+  "Downtime/patrol/patrol.alias": "5fdb78ce3900b8b352641d8e",
+  "Downtime/patrol/patrol list.alias":"5fdd86a8032beeab19694c4f",
+  "Downtime/patrol/patrol pay.alias": "5fdd86bcadefbcb30a94333b"
 }
