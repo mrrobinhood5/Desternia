@@ -24,7 +24,6 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
-#TODO Add a gold converter so it doesnt add decimals to the pouch
 me, returnstr, downtime = character(), "", "crime"
 results, disguise, tools= {timestamp:{downtime:{}}}, False, False
 hiddenPass, stealPass, hiddenBonusStr, stealBonusStr = False, False, "", ""
@@ -72,7 +71,7 @@ if earnMultiplier == 0:
     returnstr += f' -f "Hidden Roll| None, you didn\'t find anyone"'
 else:
     # sets the DC for this roll
-    hiddenRollDC = vroll(f'2d10+{floor(level/2)}')
+    hiddenRollDC = vroll(f'2d10+{level}')
     #checks for a Disguise Kit in your bag or if you have alterself / disguise self in spellbook
     if "Pass without Trace" in me.spellbook:
         hiddenRoll = me.skills.stealth.d20(True, mod_override=me.skills.stealth.value+10)
@@ -99,7 +98,7 @@ else:
 if earnMultiplier == 0 or hiddenPass == False:
     returnstr += f' -f "Stealing Roll| Nobody to Steal from!"'
 else:
-    stealRollDC = vroll(f'2d10+{floor(level/2)}')
+    stealRollDC = vroll(f'2d10+{level)}')
     # checks for thieves tools
     if "thieve" in bags.lower():
         stealRoll = me.skills.sleightOfHand.d20(True)
@@ -116,16 +115,21 @@ else:
 bagsLoaded=load_json(bags) #load the bags
 pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
 ogp = pouch[1]['gp'] # what gp was before?
+osp = pouch[1]['sp'] #what was sp before
 
 if earnMultiplier == 0 or hiddenPass == False or stealPass == False:
     returnstr += f' -f "Earnings|You have not earned anything. This encounter cost you `2 gp`\n'
     ngp = ogp-2
+    nsp = osp
 else:
     coinsEarned = (2*earnMultiplier)
+    nsp = (int(coinsEarned)-coinsEarned)*10
+    coinsEarned = int(coinsEarned)
     returnstr += f' -f "Earnings|You earned `2` gp times `{earnMultiplier}` equals `{coinsEarned}`\n'
     ngp = ogp + coinsEarned
+    nsp = nsp + osp
 returnstr += f'`{ogp}` gp -> `{ngp}` gp"'
-pouch[1].update({'gp':ngp}) #updates new quantities locally
+pouch[1].update({'gp':ngp, 'sp':nsp}) #updates new quantities locally
 pouch in bagsLoaded or bagsLoaded.append(pouch)
 me.set_cvar("bags",dump_json(bagsLoaded)) #dumps the coins back to the cvar
 # sets the downtime block

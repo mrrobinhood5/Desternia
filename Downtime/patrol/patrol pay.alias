@@ -1,0 +1,62 @@
+tembed -title "{{name}} gets their City Watch salary" -footer "Usage - !dt patrol pay"
+<drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+
+<drac2>
+totalGP, workdata, returnstr, dayCount = 0, load_json(DTTrack) if exists("DTTrack") else False, f' -f "Unpaid Daily|', 0
+if not workdata:
+  err("You dont have any Patrol Data")  #or whatever
+for loggedDay, dt in workdata.items():
+  if loggedDay == timestamp:
+    continue
+  for unpaidDays, dayroll in dt.items():
+    if unpaidDays != 'patrol':
+      continue
+    for criminal, gp in dayroll.items():
+      if criminal == '2':
+        totalGP += int(gp)
+        returnstr += f' {gp}, '
+        dayCount += 1
+      else:
+        pass
+  dt.pop('patrol') if 'patrol' in dt else 0
+# daysworked = len(rollslist)
+# allrollsavg = totalrolls/daysworked
+returnstr += f'\" -f "Total|{totalGP}" '
+## I LEFT OFF HERE
+character().set_cvar("DTTrack",dump_json(workdata))
+# paybonus = 2 if allrollsavg >= 20 else 1.5 if allrollsavg >=16 else 1 if allrollsavg >= 10 else .75
+# paybonus = round(allrollsavg * .1,1)
+# coincount = daysworked * paybonus
+returnstr += f' -f "Salary|You Worked `{dayCount}` for a total of `{totalGP} gp`" '
+#breaks down into gp sp and cp
+ngp = int(totalGP)
+nsp = (totalGP - ngp)*10
+# ncp = int((nsp-int(nsp))*10)
+# nsp = int(nsp)
+bagsLoaded=load_json(bags) #load the bags
+pouch=([x for x in bagsLoaded if x[0]=="Coin Pouch"])[0] #load the coinpouch
+ogp = pouch[1]['gp'] # what gp was before?
+pouch[1].update({'gp':pouch[1]['gp']+ngp, 'sp':pouch[1]['sp']+nsp}) #updates new quantities locally
+pouch in bagsLoaded or bagsLoaded.append(pouch)
+set_cvar("bags",dump_json(bagsLoaded)) #dumps the coins back to the cvar
+returnstr += f' -f "Coins|`{int(ogp)}` gp -> `{int(ogp+ngp)}` gp" '
+return returnstr
+</drac2>

@@ -18,7 +18,7 @@ ROLL  | Outcome                   | Modifier
 20+   | Nobles (Aristocratic)     |  3
 ```
 **Rules**
-- You perform the 3 checks with a Random DC of `2d10 + Level % 3`.
+- You perform the 3 checks with a Random DC of `2d10 + Level`.
 - The city watch will be pinged when you do crime, and they may attempt to catch you based on your **Stealth** Check and their `!dt patrol` downtime.
 - Crime Downtime costs 2gp per day, but the payout is greater
 - Payout is your investment times modifier if you do not get caught.

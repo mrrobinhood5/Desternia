@@ -1,0 +1,25 @@
+tembed -footer "Usage - !dt patrol list"
+#patrol list
+<drac2>
+pargs, downtime, returnstr = argparse(&ARGS&), "patrol", ""
+if not exists("DTTrack") or DTTrack == "":
+  return  f' -title "{name} attemps to check their patrol logbook" -desc "No Logbook history" -f "Fix| Either you havent done patrol, or You already turned it in for pay"'
+else:
+  workdata = load_json(DTTrack)
+returnstr += f' -title "{name} checks their patrol history"'
+returnstr += f' -f "UnReported Days|'
+for day, dayobj in workdata.items():
+  for dt, dtobj in dayobj.items():
+    if dt != downtime:
+      continue
+    returnstr += f'{str(day)}: '
+    for criminal in dtobj.keys():
+        if criminal == "apprehend":
+            returnstr += f'Random Criminal earned you `{dtobj["2"]}` gp\n'
+        elif criminal == "2":
+            pass
+        else:
+            returnstr += f'Player `{criminal}` was {"caught" if dtobj[criminal] else "not caught"} and earned you `{dtobj["2"]}` gp\n'
+returnstr += f' "'
+return returnstr
+</drac2>
