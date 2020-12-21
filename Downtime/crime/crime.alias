@@ -98,7 +98,7 @@ else:
 if earnMultiplier == 0 or hiddenPass == False:
     returnstr += f' -f "Stealing Roll| Nobody to Steal from!"'
 else:
-    stealRollDC = vroll(f'2d10+{level)}')
+    stealRollDC = vroll(f'2d10+{level}')
     # checks for thieves tools
     if "thieve" in bags.lower():
         stealRoll = me.skills.sleightOfHand.d20(True)
