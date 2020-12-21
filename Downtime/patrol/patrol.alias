@@ -26,7 +26,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 <drac2>
 me, returnstr, downtime, targetCriminal = character(), "", "patrol", &ARGS&
 results, disguise, tools= {timestamp:{downtime:{}}}, False, False
-hiddenPass, stealPass, hiddenBonusStr, stealBonusStr = False, False, "", ""
+hiddenPass, stealPass, apprehendPass, hiddenBonusStr, stealBonusStr = False, False, False, "", ""
 # first first check to see if you are in the right channel
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -f "Error|Go do your patrol downtime in the #downtime channel"'
