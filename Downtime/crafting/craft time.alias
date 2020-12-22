@@ -54,7 +54,7 @@ if pargs.get("save"):
   itemname = pargs.get("save")
   set_cvar_nx("savedCraftItems","{}")
   itemcraft=load_json(savedCraftItems)
-  itemcraft.update({itemname[0]: {"mindays": mindays, "dailygp": dailygp, "ab": ab, "stdvalue": stdvalue}})
+  itemcraft.update({itemname[0]: {"mindays": mindays, "dailygp": dailygp, "ab": ab, "stdvalue": stdvalue, "b": craftbonus}})
   character().set_cvar("savedCraftItems",dump_json(itemcraft))
   returnstr += f'-f "Your item has been saved. You can now craft it with `!craft item -tool \\"tool\\" -item \\"{itemname[0]}\\"`"\n'
 #returns whaever is in return string

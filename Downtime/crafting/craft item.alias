@@ -53,7 +53,7 @@ if hasItems and selectedItem:
 #iterates through skills to match up your ability saved in savedCraftItems
 for x,y in me.skills:
   if selectedData["ab"].lower() in x.lower():
-    abmod = y.value + proficiencyBonus
+    abmod = y.value + int(selectedData["b"])
     rollstr += str(abmod)
 
 #before rolling, checks to see if you have a roll for today otherwise wont roll and update the daily roll dict
