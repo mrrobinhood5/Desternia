@@ -119,10 +119,11 @@ hasThumb = True if "thumb" in nextPosition.keys() else False
 # build the map string for init
 if useMap:
     # mapstring being built as a dict
-    mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"]
-    mapstr = mapstr.replace(' ~ ','" , "')
-    mapstr = mapstr.replace(": ",'": "')
-    mapstr = load_json('{"'+mapstr+'"}')
+    mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"].split(" ~ ")
+    # mapstr = mapstr.replace(' ~ ','" , "')
+    # mapstr = mapstr.replace(": ",'": "')
+    # mapstr = load_json('{"'+mapstr+'"}')
+    mapstr = {x[0].lower(): x[1] for x in [item.split(": ") for item in mapstr]}
     ## the Monsters in Init need to be build again for the image. Gonna have to iterate through all combatants for a Location and Token
     for monster in combat().combatants:
         if monster.note == None or monster.note == '':
@@ -137,7 +138,7 @@ if useMap:
             mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "r"})
             mData.update({"size": mData["size"]}) if "size" in mData.keys() else mData.update({"size": "M"})
             monsterstr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
-    mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/@{mapstr["Options"]}/*f{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
+    mapstr = f'https://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
     # push the new update to map attack
 
 #builds the embed for the old setting
