@@ -97,8 +97,7 @@ if typedPosition != "":
                     mapViewLoader = nextPosition["map"] # settings from the room
                     currentmap = combat().get_combatant("map").get_effect("map").effect["attack"]["details"] #currentmap on init
                     #load and update the map settings before it builds the image
-                    currentmap = {x[0].lower(): x[1] for x in
-                                               [item.split(": ") for item in currentmap]}
+                    currentmap = {x[0].lower(): x[1] for x in [item.split(": ") for item in currentmap]}
                     currentmap.update({"FOW":mapViewLoader["FOW"], "View":mapViewLoader["View"]})
                     dataout = ' | '.join([f"{item[0].title()}: {item[1]}" for item in currentmap.items()])
                     combat().get_combatant("map").add_effect("map",f"""-attack '||{dataout}'""", -1, False, None, False,None)
