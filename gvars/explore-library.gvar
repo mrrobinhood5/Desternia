@@ -90,31 +90,41 @@
       "monsters": {
         "k1": ["Kree the Kobold", "e12", "m2v2m~", "M", "r"]
       },
-       "image": "map"
+       "image": "map",
+       "map": {"view": "a7:9x11", "fow": "a7:i17"}
     },
     "North": {
       "description": "The hallway goes down 25ft, there is a painting at the end of the door",
       "choices": ["Room1"],
       "thumb": "https://i.imgur.com/i8VfLXv.jpg",
       "map": {"view": "a1:9x17", "fow": "a1:c7"},
-      "image": "map"
+      "image": "map",
+      "prereqs": "room1northkey"
     },
     "East1": {
       "description": "**Room 2** A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus",
       "choices": ["West Door 1","Room1"],
       "image": "map",
-      "trap": {"dc": 10,"save": "wisdom","damage": "0[paralyzed]"}
+      "trap": {"name":"Rune of Paralyzation","dc": 10,"save": "wisdom","damage": "0[paralyzed]"},
+      "monsters": {
+        "wk1": ["Wayne the Kobold","k5", "9abwp", "M", "r" ]
+      },
+      "prereqs": "room1east1key",
+      "map": {"view": "i1:5x8", "fow": "h1:n9"}
+
     },
     "East2": {
       "description": "",
       "choices": ["Room1"],
-      "image": "map"
+      "image": "map",
+      "prereqs": "room1east2key"
     },
     "South": {
       "description": "",
       "choices": ["Room1"],
       "image": "map",
-      "requires": []
+      "requires": [],
+      "prereqs": "room1east2key"
     }
   }
 }
