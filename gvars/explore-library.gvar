@@ -99,7 +99,7 @@
       "thumb": "https://i.imgur.com/i8VfLXv.jpg",
       "map": {"view": "a1:9x17", "fow": "a1:c7"},
       "image": "map",
-      "prereqs": "room1northkey"
+      "requires": ["room1northkey"]
     },
     "East1": {
       "description": "**Room 2** A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus",
@@ -109,22 +109,59 @@
       "monsters": {
         "wk1": ["Wayne the Kobold","k5", "9abwp", "M", "r" ]
       },
-      "prereqs": "room1east1key",
-      "map": {"view": "i1:5x8", "fow": "h1:n9"}
-
+      "requires": ["room1east1key"],
+      "map": {"view": "i1:5x8", "fow": "i1:m9"}
+    },
+    "WestDoor1":{
+      "description": "The hallway goes down 25ft, and takes a left turn for another 15 feet. There is a painting at the end of the hall",
+      "choices": ["East1"],
+      "image": "map",
+      "map": {"view": "c1:m9", "fow": "c1:i5"}
     },
     "East2": {
-      "description": "",
-      "choices": ["Room1"],
-      "image": "map",
-      "prereqs": "room1east2key"
-    },
-    "South": {
-      "description": "",
-      "choices": ["Room1"],
+      "description": "Hallway adorned with absolutely nothing. Torches light the way every 40 ft, The north way curves back east and north again. The south way curves west. Both directions are obscured by the corners.",
+      "choices": ["North Hallway", "South"],
       "image": "map",
       "requires": [],
-      "prereqs": "room1east2key"
+      "map": {"view": "i9:o19","fow": "i9:o19"}
+    },
+    "South": {
+      "description": "Hallway only goes East.",
+      "choices": ["East2"],
+      "image": "map",
+      "requires": ["room1east2key"],
+      "map": {"view": "a17:k19", "fow": "a17:k19"}
+    },
+    "North Hallway": {
+      "description": "There is nothing of value on this hallway. It turns east.",
+      "map": {"view": "m1:ac11", "fow": "m1:o10"},
+      "image": "map",
+      "choices": ["East Hallway"]
+    },
+    "East Hallway":{
+      "description": "",
+      "image": "map",
+      "map": {"view": "m1:ac11","fow": "m1:ac3"},
+      "choices": ["South Again"]
+    },
+    "South Again": {
+      "description":"",
+      "map": {"fow": "w3:ac11","view": "m1:ac11"},
+      "choices": ["South Door 2", "Creepy Corridor"],
+      "image": "map"
+    },
+    "Creepy Corridor": {
+      "description": "The walls here have been engraved with arcane symbols",
+      "image": "https://i.imgur.com/1unsP0z.png",
+      "map": {"fow": "o7:w9","view": "w3:ac11"},
+      "choices": ["South Again"]
+    },
+    "South Door 2": {
+      "description": "A tapestry of vile acts hangs from the south wall, and an iron chandelier hangs from the ceiling in the north-east corner of the room",
+      "image": "map",
+      "map": {"view": "u11:y22","fow": "u11:y22"},
+      "choices": ["North Door 2","East Door 2","South Door 2"],
+      "trap": {"name":"Arrow Trap","dc": 10,"save": "dexterity","damage": "4d10[piercing]"}
     }
   }
 }

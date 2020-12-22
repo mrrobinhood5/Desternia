@@ -7,6 +7,7 @@ tembed -color <color>
 # DONE: have e award save the info on the player notes like map
 # TODO: add a DM name to the DM combatant as a note so that only he can drive
 # TODO: FOW needs to add to current FOW just like prepreqs
+# TODO: Make traps attack roll or save option
 # from Desternia.FakeTestingStuff import *
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
