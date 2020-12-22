@@ -9,7 +9,7 @@ tembed -color <color>
 # from Desternia.FakeTestingStuff import *
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
-hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap = False, True, False, False, False, False, False
+hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False, False
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
@@ -92,6 +92,16 @@ if typedPosition != "":
                         combat().get_combatant(monster).set_name(mdata[0])
                         # adds it to the saved Settings that its been loaded
                         savedExploreSettings["monsters"].append(monster) if monster not in savedExploreSettings["monsters"] else 0
+                # this is where map updates its stuff for new viewports
+                if "map" in nextPosition.keys():
+                    mapViewLoader = nextPosition["map"] # settings from the room
+                    currentmap = combat().get_combatant("map").get_effect("map").effect["attack"]["details"] #currentmap on init
+                    #load and update the map settings before it builds the image
+                    currentmap = {x[0].lower(): x[1] for x in
+                                               [item.split(": ") for item in currentmap]}
+                    currentmap.update({"FOW":mapViewLoader["FOW"], "View":mapViewLoader["View"]})
+                    dataout = ' | '.join([f"{item[0].title()}: {item[1]}" for item in currentmap.items()])
+                    combat().get_combatant("map").add_effect("map",f"""-attack '||{dataout}'""", -1, False, None, False,None)
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedExploreSettings.update({"position": savedExploreSettings['position']})
@@ -119,10 +129,12 @@ if useMap:
         if monster.note == None or monster.note == '':
             continue
         else:
-            mData = monster.note.replace(': ', '": "')
-            mData = mData.replace(' | ', '", "')
-            mData = f'{{"{mData}"}}'
-            mData = load_json(mData)
+            mData = monster.note.split(" | ")
+            #mData = monster.note.replace(': ', '": "')
+            #mData = mData.replace(' | ', '", "')
+            #mData = f'{{"{mData}"}}'
+            #mData = load_json(mData)
+            mData = {x[0].lower(): x[1] for x in [item.split(": ") for item in mData]}
             mData.update({"Color": mData["Color"]}) if "Color" in mData.keys() else mData.update({"Color": "r"})
             mData.update({"Size": mData["Size"]}) if "Size" in mData.keys() else mData.update({"Size": "M"})
             monsterstr += f'{mData["Location"]}{mData["Size"]}{mData["Color"]}-{monster.name.replace(" ","_")}{"~"+mData["Token"] if "Token" in mData.keys() else ""}/'

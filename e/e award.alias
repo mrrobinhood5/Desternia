@@ -35,17 +35,6 @@ if pargs.get("key"):
         err("You must provide target or targets like `!e award -t \"name\" -key \"keyname\"")
 else:
     err('You must provide a key with `-key "keyname"`')
-
-    # elif pargs.get("take"):
-    #   keyProvided = pargs.last("take")
-    #   for letter in keyProvided:
-    #     keyReturned += abcarray[0][abcarray[1].index(letter)]
-    #   loadedExploreSettings = load_json(ExploreSettings)
-    #   loadedExploreSettings["prereqs"].append(keyReturned)
-    #   me.set_cvar("ExploreSettings", dump_json(loadedExploreSettings))
-    #   returnstr += f' -f "Success|You have acquired that prerequisite!"'
-
-    # else:
     returnstr += f' -f "Help|Give keys with `!e award -t \"name\" -key \"keyname\"`"'
 return returnstr
 </drac2>
