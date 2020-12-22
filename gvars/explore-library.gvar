@@ -96,7 +96,7 @@
       "description": "The hallway goes down 25ft, there is a painting at the end of the door",
       "choices": ["Room1"],
       "thumb": "https://i.imgur.com/i8VfLXv.jpg",
-      "map": {"View": "a1:9x17", "FOW": "a1:c7"},
+      "map": {"view": "a1:9x17", "fow": "a1:c7"},
       "image": "map"
     },
     "East1": {
