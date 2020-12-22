@@ -30,8 +30,7 @@ if pargs.get("key"):
                 returnstr += f' -f "Key|The {keyReturned} has been awarded by {ctx.author.display_name}"'
                 # key needs to go into "prereqs" in cvar exploresettings
                 savedExploreSettings = load_json(get(settingsCVAR))
-                oldprereqs = savedExploreSettings["prereqs"]+", "
-                savedExploreSettings["prereqs"].update({"prereqs":oldprereqs+pargs.last("key")})
+                savedExploreSettings["prereqs"].append(pargs.last("key"))
                 me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
             # returnstr += f' -f "Copy and Paste This|\n\n`!e award -take {keyReturned}` "'
         else:
