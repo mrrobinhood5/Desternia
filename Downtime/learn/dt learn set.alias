@@ -2,10 +2,10 @@ tembed -thumb <image> -color <color>
 <drac2>
 #set primary variables
 parsedArgs, hasMentor, mentorStr, mentor, returnstr, me = argparse(&ARGS&), False, "", "", f' -footer "Usage - !dt learn set [-lang language] [-tool tool] [-mentor mentor]"', character()
-errorstr=f' -title "{me.name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set [-lang \\"Language\\"] [-tool \\"Tool\\" [-mentor \\"Mentor\\"]` "'
+errorstr=f' -title "{me.name} attempts to set a learning activity" -desc "You already know this one!" -f "Usage| `!dt learn set [-prof \\"Proficiency\\"] [-lang \\"Language\\"] [-tool \\"Tool\\" [-mentor \\"Mentor\\"]` "'
 # if set is ran without arguments
 if not &ARGS&:
-  return f' -title "{me.name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" -f "Usage| `!dt learn set [-lang \\"Language\\"] [-tool \\"Tool\\" [-mentor \\"Mentor\\"]` "'
+  return f' -title "{me.name} attempts to set a learning activity" -desc "You didn\'t provide any arguments" -f "Usage| `!dt learn set [-prof \\"Proficiency\\"] [-lang \\"Language\\"] [-tool \\"Tool\\" [-mentor \\"Mentor\\"]` "'
 # checks for mentor and stores info
 if parsedArgs.get("mentor"):
   mentor =  parsedArgs.last("mentor")
@@ -41,6 +41,14 @@ if parsedArgs.get("tool"):
     return errorstr
   returnstr += f' -title "{me. name} sets their tool to learn" -desc "You can now start learning `{activity}`" ' \
                f' -f "Usage| You can now set start rolling for it \n`!dt learn -tool {activity}` " '
+
+#sets up if proficiency is chosen
+if parsedArgs.get("prof"):
+  cvarName = "DTLearnProf"
+  activity = parsedArgs.last("prof")
+  ccName = f'DT Learn-Prof-{activity}'
+  returnstr += f' -title "{me. name} sets their proficiency to learn" -desc "You can now start learning `{activity}`" ' \
+               f' -f "Usage| You can now set start rolling for it \n`!dt learn -prof {activity}` " '
 
 # does the math for number of Downtimes required
 if hasMentor:

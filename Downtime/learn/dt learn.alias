@@ -55,9 +55,9 @@ helpstr += f' -t 201 -desc "You can spend your time learning new languages, and 
            f' 160 divided by 4 = 40 Downtimes (20 full Days, 20gp minimum)\n' \
            f' Doing it twice a day:\n' \
            f' 40 divided by 2 = 20 Days (minimum) and 20gp (minimum)```"' \
-           f' -f "SETUP|```!dt learn set -lang \\"Language\\" OR -tool \\"Tool\\" -mentor \\"Mentor Name\\" ``` \n ' \
+           f' -f "SETUP|```!dt learn set [-prof \\"Profiiency\\"] [-lang \\"Language\\"] [-tool \\"Tool\\"] -mentor \\"Mentor Name\\" ``` \n ' \
            f' **Running Setup after starting training will result in progress to reset**"' \
-           f' -f "USAGE|```!dt learn -lang \\"Language\\" OR -tool \\"Tool\\" [part]```"'
+           f' -f "USAGE|```!dt learn [-prof \\"Profiiency\\"] [-lang \\"Language\\"] [-tool \\"Tool\\"] [part]```"'
 
 # error checks to see if there is any downtime left for the day
 if not &ARGS&:
@@ -98,6 +98,14 @@ if pArgs.get("tool"):
     learnMod = str(me.skills.intelligence.value)
     prev_cc = me.get_cc(ccName)
     isTool = True
+if pArgs.get("prof"):
+    learnType = "proficiency"
+    prof, mentor, ccName, learnStatus = get("DTLearnProf").split(",")
+    hasMentor = False if mentor == "none" else True
+    returnstr += f' -desc "Learning Proficiency: `{prof}` {"mentored by `"+mentor+"`" if hasMentor else "with `no one`. All alone :("} "'
+    learnMod = str(me.skills.intelligence.value)
+    prev_cc = me.get_cc(ccName)
+    isProf = True
 
 #does the rolls
 if learnStatus == "True":
@@ -143,6 +151,30 @@ if isComplete:
         protracker = {tool:{"type":learnType, "proslots": 2, "mentor": mentor, "achieved":timestamp}}
         learnData = (tool, mentor, ccName, learnStatus)
         me.set_cvar("DTLearnTool", ",".join(learnData))
+        # complete the tool things
+        if learnType == "tool":
+            # add tool to tool cvar
+            if exists("pTools"):
+                prev_tools = get("pTools").split(", ")
+                prev_tools.append(tool.capitalize())
+                me.set_cvar("pTools", ", ".join(prev_tools))
+            else:
+                me.set_cvar("pTools", tool.capitalize())
+            protracker = {tool: {"type": learnType, "proslots": 2, "mentor": mentor, "achieved": timestamp}}
+            learnData = (tool, mentor, ccName, learnStatus)
+            me.set_cvar("DTLearnTool", ",".join(learnData))
+        # complete the tool things
+        if learnType == "prof":
+            # add tool to tool cvar
+            if exists("pAdds"):
+                prev_profs = get("pAdds").split(", ")
+                prev_profs.append(prof.capitalize())
+                me.set_cvar("pAdds", ", ".join(prev_profs))
+            else:
+                me.set_cvar("pAdds", prof.capitalize())
+            protracker = {prof: {"type": learnType, "proslots": 3, "mentor": mentor, "achieved": timestamp}}
+            learnData = (prof, mentor, ccName, learnStatus)
+            me.set_cvar("DTLearnProf", ",".join(learnData))
 
 #adds all the data to the learnedProficiencies Tracker
     prodata = load_json(learnedProficiencies)
