@@ -95,7 +95,7 @@ if typedPosition != "":
                 # this is where map updates its stuff for new viewports
                 if "map" in nextPosition.keys():
                     mapViewLoader = nextPosition["map"] # settings from the room
-                    currentmap = combat().get_combatant("map").get_effect("map").effect["attack"]["details"] #currentmap on init
+                    currentmap = combat().get_combatant("map").get_effect("map").effect["attack"]["details"].split(" ~ ") #currentmap on init
                     #load and update the map settings before it builds the image
                     currentmap = {x[0].lower(): x[1] for x in [item.split(": ") for item in currentmap]}
                     currentmap.update({"FOW":mapViewLoader["FOW"], "View":mapViewLoader["View"]})
