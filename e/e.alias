@@ -135,8 +135,8 @@ if useMap:
             #mData = f'{{"{mData}"}}'
             #mData = load_json(mData)
             mData = {x[0].lower(): x[1] for x in [item.split(": ") for item in mData]}
-            mData.update({"Color": mData["color"]}) if "color" in mData.keys() else mData.update({"Color": "r"})
-            mData.update({"Size": mData["size"]}) if "size" in mData.keys() else mData.update({"Size": "M"})
+            mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "r"})
+            mData.update({"size": mData["size"]}) if "size" in mData.keys() else mData.update({"size": "M"})
             monsterstr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
     mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/@{mapstr["Options"]}/*f{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
     # push the new update to map attack
