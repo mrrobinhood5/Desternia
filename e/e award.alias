@@ -1,8 +1,8 @@
 embed -title "You have been awarded a requirement!" -thumb <image> -color <color>
 <drac2>
 pargs, returnstr, keyReturned, me = argparse(&ARGS&), "", "", character()
-abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-            "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm"]
+abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz0123456789",
+            "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm9876543210"]
 # checks for key
 if pargs.get("key"):
     # checks for targets
