@@ -4,12 +4,14 @@ tembed -color <color>
 # TODO: Add a "You are dead" check if your HP is below 0
 # TODO: Fix the CVAR thing for private libraries
 # TODO: TRAPS add trap names and effects to player
-# TODO: have e award save the info on the player notes like map
+# DONE: have e award save the info on the player notes like map
 # TODO: add a DM name to the DM combatant as a note so that only he can drive
+# TODO: FOW needs to add to current FOW just like prepreqs
+# TODO: Make traps attack roll or save option
 # from Desternia.FakeTestingStuff import *
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
-hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap = False, True, False, False, False, False, False
+hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False, False
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
@@ -27,7 +29,7 @@ if combat(): #check to see if combat is running else error out. It should always
     else:
       err("You need to add an explore combatant like this `!i add 0 explore -group \"DM\" -p 0`")
 else:
-    err("Please start initiative with `!i begin` so that stuff works")
+    err("Please start the battle with `!bplan begin <setting name>`")
 
 # cvarData = get("library") if savedExploreSettings['type'] == "private" else 0
 loadedData = load_json(get_gvar(get("library"))) if savedExploreSettings['type'] == "public" else load_json(get_gvar(get_svar("serverlibrary"))) if savedExploreSettings['type'] == "server" else load_json(get(cvarData))
@@ -92,6 +94,17 @@ if typedPosition != "":
                         combat().get_combatant(monster).set_name(mdata[0])
                         # adds it to the saved Settings that its been loaded
                         savedExploreSettings["monsters"].append(monster) if monster not in savedExploreSettings["monsters"] else 0
+                # this is where map updates its stuff for new viewports
+                if "map" in nextPosition.keys():
+                    mapViewLoader = nextPosition["map"] # settings from the room
+                    currentmap = combat().get_combatant("map").get_effect("map").effect["attack"]["details"].split(" ~ ") #currentmap on init
+                    #load and update the map settings before it builds the image
+                    currentmap = {x[0].lower(): x[1] for x in [item.split(": ") for item in currentmap]}
+                    #merges old and new fow to keep it running
+                    newfow = currentmap["fow"]+", "+mapViewLoader["fow"]
+                    currentmap.update({"fow":newfow, "view":mapViewLoader["view"]})
+                    dataout = ' ~ '.join([f"{item[0].title()}: {item[1]}" for item in currentmap.items()])
+                    combat().get_combatant("map").add_effect("map",f"""-attack '||{dataout}'""", -1, False, None, False,None)
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedExploreSettings.update({"position": savedExploreSettings['position']})
@@ -110,23 +123,19 @@ hasThumb = True if "thumb" in nextPosition.keys() else False
 # build the map string for init
 if useMap:
     # mapstring being built as a dict
-    mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"]
-    mapstr = mapstr.replace(' ~ ','" , "')
-    mapstr = mapstr.replace(": ",'": "')
-    mapstr = load_json('{"'+mapstr+'"}')
+    mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"].split(" ~ ")
+    mapstr = {x[0].lower(): x[1] for x in [item.split(": ") for item in mapstr]}
     ## the Monsters in Init need to be build again for the image. Gonna have to iterate through all combatants for a Location and Token
     for monster in combat().combatants:
         if monster.note == None or monster.note == '':
             continue
         else:
-            mData = monster.note.replace(': ', '": "')
-            mData = mData.replace(' | ', '", "')
-            mData = f'{{"{mData}"}}'
-            mData = load_json(mData)
-            mData.update({"Color": mData["Color"]}) if "Color" in mData.keys() else mData.update({"Color": "r"})
-            mData.update({"Size": mData["Size"]}) if "Size" in mData.keys() else mData.update({"Size": "M"})
-            monsterstr += f'{mData["Location"]}{mData["Size"]}{mData["Color"]}-{monster.name.replace(" ","_")}{"~"+mData["Token"] if "Token" in mData.keys() else ""}/'
-    mapstr = f'https://otfbm.io/{mapstr["Size"]}/{mapstr["View"]}/@{mapstr["Options"]}/*f{mapstr["FOW"].replace(":","")}/{monsterstr}?bg={mapstr["Background"]}'
+            mData = monster.note.split(" | ")
+            mData = {x[0].lower(): x[1] for x in [item.split(": ") for item in mData]}
+            mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "r"})
+            mData.update({"size": mData["size"]}) if "size" in mData.keys() else mData.update({"size": "M"})
+            monsterstr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
+    mapstr = f'https://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
     # push the new update to map attack
 
 #builds the embed for the old setting
@@ -145,6 +154,6 @@ returnstr += f' -thumb "{nextPosition["thumb"]}"' if hasThumb else f' -thumb <im
 returnstr += f' -footer "!e <area name>\n' \
              f'For the Help Page:\n'\
              f'!help e\n\n'\
-             f'{combat().me if inCombat else "<Not in Combat"}"'
+             f'{combat().me if inCombat else "<-- Not in Combat -->"}"'
 return returnstr
 </drac2>

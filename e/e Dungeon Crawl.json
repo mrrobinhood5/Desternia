@@ -1,0 +1,9 @@
+{
+   "Dungeon Crawl":[
+      "!i add 0 explore -p 999 -group \"DM\"",
+      "!i add 0 map -p 999 -group \"DM\"",
+      "!i effect map map -attack \"||Size: 29x29 ~ Background: https://i.imgur.com/DV7QATG.png ~ Options: d ~ View: a7:9x11 ~ FOW: a7:i17\"",
+      "!i meta -name \"Hostile Dungeon\"",
+      "!i madd \"kobold inventor\" -rollhp -name \"k1\" -p -999"
+   ]
+}

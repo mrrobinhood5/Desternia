@@ -1,8 +1,8 @@
 embed -title "You have been awarded a requirement!" -thumb <image> -color <color>
 <drac2>
-pargs, returnstr, keyReturned, me = argparse(&ARGS&), "", "", character()
-abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-            "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm"]
+pargs, returnstr, keyReturned, me, settingsCVAR = argparse(&ARGS&), "", "", character(), "ExploreSettings"
+abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz0123456789",
+            "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm9876543210"]
 # checks for key
 if pargs.get("key"):
     # checks for targets
@@ -28,6 +28,10 @@ if pargs.get("key"):
                 dataout = ' | '.join([f"{item[0].title()}: {item[1]}" for item in playerCharacterSettings.items()])
                 combat().get_combatant(pargs.last("t")).set_note(dataout)
                 returnstr += f' -f "Key|The {keyReturned} has been awarded by {ctx.author.display_name}"'
+                # key needs to go into "prereqs" in cvar exploresettings
+                savedExploreSettings = load_json(get(settingsCVAR))
+                savedExploreSettings["prereqs"].append(pargs.last("key"))
+                me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
             # returnstr += f' -f "Copy and Paste This|\n\n`!e award -take {keyReturned}` "'
         else:
             err("That target is not in combat, oops")
@@ -35,17 +39,6 @@ if pargs.get("key"):
         err("You must provide target or targets like `!e award -t \"name\" -key \"keyname\"")
 else:
     err('You must provide a key with `-key "keyname"`')
-
-    # elif pargs.get("take"):
-    #   keyProvided = pargs.last("take")
-    #   for letter in keyProvided:
-    #     keyReturned += abcarray[0][abcarray[1].index(letter)]
-    #   loadedExploreSettings = load_json(ExploreSettings)
-    #   loadedExploreSettings["prereqs"].append(keyReturned)
-    #   me.set_cvar("ExploreSettings", dump_json(loadedExploreSettings))
-    #   returnstr += f' -f "Success|You have acquired that prerequisite!"'
-
-    # else:
     returnstr += f' -f "Help|Give keys with `!e award -t \"name\" -key \"keyname\"`"'
 return returnstr
 </drac2>
