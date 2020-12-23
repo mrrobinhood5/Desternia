@@ -45,12 +45,15 @@ else:
 
 
 # first roll is investigation or perception, whatever is higher.
+# if you have a fmailiar, you can have advantage on this check
+hasFamiliar = True if exists("familiarData") else False
 if me.skills.perception.value > me.skills.investigation.value:
     scoutSkill = "perception"
-    scoutRoll = me.skills.perception.d20()
+    scoutRoll = me.skills.perception.d20() if hasFamiliar == False else me.skills.perception.d20(True)
 else:
     scoutSkill = "investigation"
-    scoutRoll = me.skills.investigation.d20()
+    scoutRoll = me.skills.investigation.d20() if hasFamiliar == False else me.skills.investigation.d20(True)
+scoutBonusStr = "" if hasFamiliar == False else " - Using Familiar"
 scoutResult = vroll(scoutRoll)
 #checks for a pass and sets the multipler for gains
 multipliers = [3,2,1,.5,.2,0]
@@ -64,7 +67,7 @@ for x in minrolls:
         break
     else:
         pointer += 1
-returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*\n{scoutResult.full}\n`{crimeTarget.title()}` for a multiplier of `{earnMultiplier}`"'
+returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}{scoutBonusStr}*\n{scoutResult.full}\n`{crimeTarget.title()}` for a multiplier of `{earnMultiplier}`"'
 
 # next rolls for Hidden Roll
 if earnMultiplier == 0:
