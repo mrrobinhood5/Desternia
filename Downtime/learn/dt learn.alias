@@ -27,7 +27,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 # TODO: add dt learn remove for refactoring the slots
 # TODO: add check to only run in downtime.
 # defines primary variables
-pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", f' -title "Learning Downtime for {timestamp}" -footer "Usage - !dt learn [list] [set]"', character(), False, {"learn":{}}
+pArgs, helpstr, returnstr, me, isComplete, learnTrack = argparse(&ARGS&), "", f' -title "{name} doing Learning Downtime for {timestamp}" -footer "Usage - !dt learn [list] [set]"', character(), False, {"learn":{}}
 #defines secondary variables
 rr = 2 if not pArgs.get("part") else 1
 # defines the roll strings
