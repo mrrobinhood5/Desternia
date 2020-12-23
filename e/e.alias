@@ -8,6 +8,7 @@ tembed -color <color>
 # TODO: add a DM name to the DM combatant as a note so that only he can drive
 # TODO: FOW needs to add to current FOW just like prepreqs
 # TODO: Make traps attack roll or save option
+# TODO: reading the FOWs arent doing it right
 # from Desternia.FakeTestingStuff import *
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
@@ -101,7 +102,10 @@ if typedPosition != "":
                     #load and update the map settings before it builds the image
                     currentmap = {x[0].lower(): x[1] for x in [item.split(": ") for item in currentmap]}
                     #merges old and new fow to keep it running
-                    newfow = currentmap["fow"]+", "+mapViewLoader["fow"]
+                    if  mapViewLoader["fow"] in currentmap["fow"]:
+                        newfow = currentmap["fow"]
+                    else:
+                        newfow = currentmap["fow"]+", "+mapViewLoader["fow"]
                     currentmap.update({"fow":newfow, "view":mapViewLoader["view"]})
                     dataout = ' ~ '.join([f"{item[0].title()}: {item[1]}" for item in currentmap.items()])
                     combat().get_combatant("map").add_effect("map",f"""-attack '||{dataout}'""", -1, False, None, False,None)
@@ -135,7 +139,7 @@ if useMap:
             mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "r"})
             mData.update({"size": mData["size"]}) if "size" in mData.keys() else mData.update({"size": "M"})
             monsterstr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
-    mapstr = f'https://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
+    mapstr = f'https://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(",","/*f")}/{monsterstr}?bg={mapstr["background"]}'
     # push the new update to map attack
 
 #builds the embed for the old setting
