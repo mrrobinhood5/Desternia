@@ -13,6 +13,8 @@ tembed -color <color>
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
 hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False, False
+abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz0123456789",
+            "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm9876543210"]
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
@@ -54,7 +56,16 @@ if typedPosition != "":
                 isBar = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["not"]) else False
             # if you are not barred from the next position check to see if you have the prereqs for this position
             if "requires" in loadedData[savedExploreSettings['setting']][position].keys() and not isBar:
+                # need to decode the key
+                keyReturned = combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"].split(" | ")
+                keyReturned = {x[0].lower(): x[1] for x in [item.split(": ") for item in keyReturned]}
+                keyReturned = keyReturned["keys"]
+                decryptedKey = ""
+                for letter in keyReturned:
+                    decryptedKey += abcarray[1][abcarray[0].index(letter)]
+
                 isAllowed = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
+                isAllowed = True if decryptedKey in loadedData[savedExploreSettings['setting']][position]["requires"] else False
                 # checks for new prereqs and appends them to the new settings
 
             if not isBar and isAllowed:
