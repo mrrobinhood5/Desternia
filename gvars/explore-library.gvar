@@ -42,31 +42,31 @@
       "description": "The sand if very sandy, and you decide to make a sand castle using your best attributes",
       "choices": ["go in the water","go home"],
       "image": "https://i.imgur.com/9qsjMVf.jpg",
-      "trap": {"dc": 10,"save": "charisma","damage": "1d10[fun]"}
+      "trap": {"name":"Sand Castle","dc": 10,"save": "charisma","damage": "1d10[fun]"}
     },
     "go in the water": {
       "description": "The water is very wet, but you decide to go in for a splash. \nThere are crabs and fish in there, some attempt to nibble at you.",
       "choices": ["play a ball game","go home"],
       "image": "https://i.imgur.com/LzllgEf.jpg",
-      "trap": {"dc": 15,"save": "constitution","damage": "2d10[fun]"}
+      "trap": {"name":"Water Hazard","dc": 15,"save": "constitution","damage": "2d10[fun]"}
     },
     "play a ball game": {
       "description": "Volleyball is Great!! You play with your team mates and others in the beach. Maybe you win?",
       "choices": ["read a book","go home"],
       "image": "https://i.imgur.com/MJ5cjUZ.jpg",
-      "trap": {"dc": 15,"save": "dexterity","damage": "2d6[fun]"}
+      "trap": {"name":"Ball","dc": 15,"save": "dexterity","damage": "2d6[fun]"}
     },
     "read a book": {
       "description": "After a lot of fun, you decide to take a break. Recover some energy by reading and relaxing. You read a book by Ron L Hubbard.",
       "choices": ["take a nap","go home"],
       "image": "https://i.imgur.com/2fk75hi.jpg",
-      "trap": {"dc": 100,"save": "wisdom","damage": "-10[rest]"}
+      "trap": {"name":"book","dc": 100,"save": "wisdom","damage": "-10[rest]"}
     },
     "take a nap": {
       "description": "All that reading made you sleepy. You decide to take a nap in the sun. Hopefully you dont burn!",
       "choices": ["go home"],
       "image": "https://i.imgur.com/BEnBTSo.png",
-      "trap": {"dc": 20,"save": "constitution","damage": "5d10[fire]"}
+      "trap": {"name":"nap","dc": 20,"save": "constitution","damage": "5d10[fire]"}
     },
     "go home": {
       "description": "Tough day at the beach. Visit again Soon!",
@@ -103,7 +103,7 @@
     },
     "East1": {
       "description": "**Room 2** A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus",
-      "choices": ["West Door 1","Room1"],
+      "choices": ["WestDoor1","Room1"],
       "image": "map",
       "trap": {"name":"Rune of Paralyzation","dc": 10,"save": "wisdom","damage": "0[paralyzed]"},
       "monsters": {
@@ -122,7 +122,6 @@
       "description": "Hallway adorned with absolutely nothing. Torches light the way every 40 ft, The north way curves back east and north again. The south way curves west. Both directions are obscured by the corners.",
       "choices": ["North Hallway", "South"],
       "image": "map",
-      "requires": [],
       "map": {"view": "i9:o19","fow": "i9:o19"}
     },
     "South": {
@@ -139,13 +138,13 @@
       "choices": ["East Hallway"]
     },
     "East Hallway":{
-      "description": "",
+      "description": "EastHallwayDescription",
       "image": "map",
       "map": {"view": "m1:ac11","fow": "m1:ac3"},
       "choices": ["South Again"]
     },
     "South Again": {
-      "description":"",
+      "description":"SouthAgainDesctiption",
       "map": {"fow": "w3:ac11","view": "m1:ac11"},
       "choices": ["South Door 2", "Creepy Corridor"],
       "image": "map"

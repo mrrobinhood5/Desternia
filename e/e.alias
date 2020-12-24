@@ -8,7 +8,8 @@ tembed -color <color>
 # TODO: add a DM name to the DM combatant as a note so that only he can drive
 # TODO: FOW needs to add to current FOW just like prepreqs
 # TODO: Make traps attack roll or save option
-# TODO: reading the FOWs arent doing it right
+# TODO: have a overmap view option
+# DONE: reading the FOWs arent doing it right
 # from Desternia.FakeTestingStuff import *
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
@@ -85,6 +86,7 @@ if typedPosition != "":
                     hasTrap = True
                     trapSave = combat().me.save(loadedData[savedExploreSettings['setting']][position]["trap"]["save"])
                     trapDC = loadedData[savedExploreSettings['setting']][position]["trap"]["dc"]
+                    trapName = loadedData[savedExploreSettings['setting']][position]["trap"]["name"]
                     saveAbility = str(loadedData[savedExploreSettings['setting']][position]["trap"]["save"]).capitalize()
                     if trapSave.total < trapDC:
                         damageRoll = combat().me.damage(loadedData[savedExploreSettings['setting']][position]["trap"]["damage"])
@@ -157,7 +159,7 @@ if useMap:
 
 #builds the embed for the old setting
 returnstr += f' -title "{savedExploreSettings["setting"]}: {savedExploreSettings["position"]} " '
-returnstr += f' -f "Trap|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
+returnstr += f' -f "Trap - {trapName}|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"' if inCombat and hasTrap else f''
 returnstr += f' -f "Monsters|New Monsters Appeared in INIT!\nCheck `!i list`"' if hasMonsters else f''
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
