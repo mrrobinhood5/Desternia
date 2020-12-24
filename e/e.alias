@@ -59,7 +59,7 @@ if typedPosition != "":
                 # need to decode the key
                 keyReturned = combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"].split(" | ")
                 keyReturned = {x[0].lower(): x[1] for x in [item.split(": ") for item in keyReturned]}
-                keyReturned = keyReturned["keys"]
+                keyReturned = keyReturned["Keys"]
                 decryptedKey = ""
                 for letter in keyReturned:
                     decryptedKey += abcarray[1][abcarray[0].index(letter)]
