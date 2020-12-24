@@ -105,7 +105,7 @@
       "description": "**Room 2** A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus",
       "choices": ["WestDoor1","Room1"],
       "image": "map",
-      "trap": {"name":"Rune of Paralyzation","dc": 10,"save": "wisdom","damage": "0[paralyzed]"},
+      "trap": {"name":"Rune of Paralyzation","type":"save","tofind":"15","dc": 10,"save": "wisdom","damage": "0[paralyzed]"},
       "monsters": {
         "wk1": ["Wayne the Kobold","k5", "9abwp", "M", "r" ]
       },
@@ -160,7 +160,7 @@
       "image": "map",
       "map": {"view": "u11:y22","fow": "u11:y22"},
       "choices": ["North Door 2","East Door 2","South Door 2"],
-      "trap": {"name":"Arrow Trap","dc": 10,"save": "dexterity","damage": "4d10[piercing]"}
+      "trap": {"name":"Arrow Trap","type":"attack","tohit": 11, "tofind":15, "damage": "4d10[piercing]"}
     }
   }
 }

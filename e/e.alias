@@ -3,7 +3,7 @@ tembed -color <color>
 # TODO: move monsters out of the group once they are activated (cant do this until the next update)
 # TODO: Add a "You are dead" check if your HP is below 0
 # TODO: Fix the CVAR thing for private libraries
-# TODO: TRAPS add trap names and effects to player
+# DONE: TRAPS add trap names and effects to player
 # DONE: have e award save the info on the player notes like map
 # TODO: add a DM name to the DM combatant as a note so that only he can drive
 # TODO: FOW needs to add to current FOW just like prepreqs
@@ -12,7 +12,7 @@ tembed -color <color>
 # DONE: reading the FOWs arent doing it right
 # from Desternia.FakeTestingStuff import *
 # sets default variables
-me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr  = character(), "ExploreSettings", "", "", "", ""
+me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr, trapStr  = character(), "ExploreSettings", "", "", "", "", ""
 hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False, False
 abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz0123456789",
             "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm9876543210"]
@@ -84,14 +84,27 @@ if typedPosition != "":
                 #this is where traps get loaded n stuff
                 if inCombat and "trap" in loadedData[savedExploreSettings['setting']][position].keys():
                     hasTrap = True
-                    trapSave = combat().me.save(loadedData[savedExploreSettings['setting']][position]["trap"]["save"])
-                    trapDC = loadedData[savedExploreSettings['setting']][position]["trap"]["dc"]
+                    #decide what kinda trap it is
                     trapName = loadedData[savedExploreSettings['setting']][position]["trap"]["name"]
-                    saveAbility = str(loadedData[savedExploreSettings['setting']][position]["trap"]["save"]).capitalize()
-                    if trapSave.total < trapDC:
-                        damageRoll = combat().me.damage(loadedData[savedExploreSettings['setting']][position]["trap"]["damage"])
-                    else:
-                        damageRoll = False
+                    trapToFind = loadedData[savedExploreSettings['setting']][position]["trap"]["tofind"]
+                    trapDamage = loadedData[savedExploreSettings['setting']][position]["trap"]["damage"]
+                    if loadedData[savedExploreSettings['setting']][position]["trap"] == "attack":
+                        trapToHit = combat().me.save(loadedData[savedExploreSettings['setting']][position]["trap"]["tohit"])
+                        trapRoll = vroll("1d20+"+str(trapToHit))
+                        if trapRoll >= combat().me.ac:
+                            damageRoll = combat().me.damage(trapDamage)
+                        else:
+                            damageRoll = False
+                        trapStr = f' -f "Trap - {trapName}|AC: {combat().me.ac}\nRoll: {trapRoll.full}\n{damageRoll["damage"] if damageRoll else "Miss!"}"'
+                    if loadedData[savedExploreSettings['setting']][position]["trap"] == "save":
+                        trapDC = loadedData[savedExploreSettings['setting']][position]["trap"]["dc"]
+                        saveAbility = str(loadedData[savedExploreSettings['setting']][position]["trap"]["save"]).capitalize()
+                        trapSave = combat().me.save(saveAbility)
+                        if trapSave.total < trapDC:
+                            damageRoll = combat().me.damage(trapDamage)
+                        else:
+                            damageRoll = False
+                        trapStr = f' -f "Trap - {trapName}|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"'
                 #this is where the monsters get loaded into init
                 if inCombat and "monsters" in loadedData[savedExploreSettings['setting']][position].keys():
                     hasMonsters = True
