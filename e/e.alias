@@ -150,7 +150,7 @@ if useMap:
             mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "r"})
             mData.update({"size": mData["size"]}) if "size" in mData.keys() else mData.update({"size": "M"})
             monsterstr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
-    mapstr = f'https://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(",","/*f").replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
+    mapstr = f'http://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(", ","/*f").replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
     # push the new update to map attack
 
 #builds the embed for the old setting
