@@ -59,13 +59,15 @@ if typedPosition != "":
                 # need to decode the key
                 keyReturned = combat().me.note.split(" | ")
                 keyReturned = {x[0].lower(): x[1] for x in [item.split(": ") for item in keyReturned]}
-                keyReturned = keyReturned["keys"]
-                decryptedKey = ""
-                for letter in keyReturned:
-                    decryptedKey += abcarray[1][abcarray[0].index(letter)]
-
+                keyReturned = keyReturned["keys"].split(",")
+                decryptedKeys = []
+                for key in keyReturned:
+                    decryptedKey = ""
+                    for letter in key:
+                        decryptedKey += abcarray[1][abcarray[0].index(letter)]
+                    decryptedKeys.append(decryptedKey)
                 isAllowed = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
-                isAllowed = True if decryptedKey in loadedData[savedExploreSettings['setting']][position]["requires"] else False
+                isAllowed = True if any(item in decryptedKeys for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
                 # checks for new prereqs and appends them to the new settings
 
             if not isBar and isAllowed:
