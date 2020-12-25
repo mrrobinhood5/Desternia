@@ -92,7 +92,7 @@ if typedPosition != "":
                     trapName = loadedData[savedExploreSettings['setting']][position]["trap"]["name"]
                     trapToFind = loadedData[savedExploreSettings['setting']][position]["trap"]["tofind"]
                     trapDamage = loadedData[savedExploreSettings['setting']][position]["trap"]["damage"]
-                    if loadedData[savedExploreSettings['setting']][position]["trap"] == "attack":
+                    if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "attack":
                         trapToHit = combat().me.save(loadedData[savedExploreSettings['setting']][position]["trap"]["tohit"])
                         trapRoll = vroll("1d20+"+str(trapToHit))
                         if trapRoll >= combat().me.ac:
@@ -100,7 +100,7 @@ if typedPosition != "":
                         else:
                             damageRoll = False
                         trapStr = f' -f "Trap - {trapName}|AC: {combat().me.ac}\nRoll: {trapRoll.full}\n{damageRoll["damage"] if damageRoll else "Miss!"}"'
-                    if loadedData[savedExploreSettings['setting']][position]["trap"] == "save":
+                    if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "save":
                         trapDC = loadedData[savedExploreSettings['setting']][position]["trap"]["dc"]
                         saveAbility = str(loadedData[savedExploreSettings['setting']][position]["trap"]["save"]).capitalize()
                         trapSave = combat().me.save(saveAbility)

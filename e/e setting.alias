@@ -90,7 +90,7 @@ if not setPUB and not setPRIV and "&*&" != "":
                 settingType = "public"
                 settings.update({"setting": savedsetting, "position": "begin", "type": "public"})
                 me.set_cvar(settingsCVAR, dump_json(settings))
-                savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
+                savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library" -f "To Begin|run `!bplan {savedsetting}` and join yourself in init"'
 
     if isPrivate and not settingType:
         privateLib = load_json(get(library))
