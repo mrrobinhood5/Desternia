@@ -9,7 +9,9 @@ tembed -color <color>
 # DONE: FOW needs to add to current FOW just like prepreqs
 # DONE: Make traps attack roll or save option
 # TODO: have a overmap view option
-# TODO: passive perception checks on traps
+# TODO: keys need to updated explore settings in init
+# DONE: passive perception checks on traps
+# TODO: Add trap disabling. just like award key, add it to global settings and a check for a disabled trap
 # DONE: reading the FOWs arent doing it right
 # from Desternia.FakeTestingStuff import *
 # sets default variables
@@ -96,10 +98,10 @@ if typedPosition != "":
                     trapDamage = loadedData[savedExploreSettings['setting']][position]["trap"]["damage"]
                     passiveSkills = [combat().me.skills.perception.value, combat().me.skills.investigation.value]
                     passiveNames = ["perception", "investigation"]
-                    passiveSkill = max(passiveSkills)
+                    passiveSkill = max(passiveSkills)+10
                     passiveName = passiveNames[passiveSkills.index(max(passiveSkills))]
                     # check to see if you can find the trap first
-                    if passiveSkill+10 >= trapToFind:
+                    if passiveSkill >= trapToFind:
                         trapStr = f' -f "Trap - {trapName}|Passive {passiveName.capitalize()}: {passiveSkill}\nDC: {trapToFind}\nYou have found a trap. No damage taken"'
                     else:
                         if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "attack":
