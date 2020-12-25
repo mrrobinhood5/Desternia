@@ -70,7 +70,8 @@ if typedPosition != "":
                             decryptedKey += abcarray[1][abcarray[0].index(letter)]
                         decryptedKeys.append(decryptedKey)
                     isAllowed = True if any(item in decryptedKeys for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
-                isAllowed = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
+                if isAllowed == False:
+                    isAllowed = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
 
                 # checks for new prereqs and appends them to the new settings
 
