@@ -59,6 +59,7 @@ if typedPosition != "":
             # if you are not barred from the next position check to see if you have the prereqs for this position
             if "requires" in loadedData[savedExploreSettings['setting']][position].keys() and not isBar:
                 # need to decode the key
+                isAllowed = False
                 keyReturned = combat().me.note.split(" | ")
                 keyReturned = {x[0].lower(): x[1] for x in [item.split(": ") for item in keyReturned]}
                 # check for keys being available otherwise skill it
@@ -98,7 +99,7 @@ if typedPosition != "":
                     passiveSkill = max(passiveSkills)
                     passiveName = passiveNames[passiveSkills.index(max(passiveSkills))]
                     # check to see if you can find the trap first
-                    if passiveSkill >= trapToFind:
+                    if passiveSkill+10 >= trapToFind:
                         trapStr = f' -f "Trap - {trapName}|Passive {passiveName.capitalize()}: {passiveSkill}\nDC: {trapToFind}\nYou have found a trap. No damage taken"'
                     else:
                         if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "attack":
