@@ -95,7 +95,7 @@ if typedPosition != "":
                     if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "attack":
                         trapToHit = loadedData[savedExploreSettings['setting']][position]["trap"]["tohit"]
                         trapRoll = vroll("1d20+"+str(trapToHit))
-                        if trapRoll >= combat().me.ac:
+                        if trapRoll.total >= combat().me.ac:
                             damageRoll = combat().me.damage(trapDamage)
                         else:
                             damageRoll = False
