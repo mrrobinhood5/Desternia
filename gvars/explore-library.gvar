@@ -120,13 +120,13 @@
     },
     "East2": {
       "description": "Hallway adorned with absolutely nothing. Torches light the way every 40 ft, The north way curves back east and north again. The south way curves west. Both directions are obscured by the corners.",
-      "choices": ["North Hallway", "South"],
+      "choices": ["North Hallway", "South", "Room1"],
       "image": "map",
       "map": {"view": "i9:o19","fow": "i9:o19"}
     },
     "South": {
       "description": "Hallway only goes East.",
-      "choices": ["East2"],
+      "choices": ["East2", "Room1"],
       "image": "map",
       "requires": ["room1east2key"],
       "map": {"view": "a17:k19", "fow": "a17:k19"}
