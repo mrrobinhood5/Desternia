@@ -107,7 +107,7 @@
       "image": "map",
       "trap": {"name":"Rune of Paralyzation","type":"save","tofind":15,"dc": 10,"save": "wisdom","damage": "0[paralyzed]"},
       "monsters": {
-        "wk1": ["Wayne the Kobold","k5", "9abwp", "M", "r" ]
+        "k2": ["Wayne the Kobold","k5", "9abwp", "M", "r" ]
       },
       "requires": ["room1east1key"],
       "map": {"view": "i1:5x8", "fow": "i1:m9"}

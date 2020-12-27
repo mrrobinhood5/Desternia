@@ -128,7 +128,7 @@ if typedPosition != "":
                     # iterates through all monsters being loaded
                     for monster, mdata in loadedData[savedExploreSettings['setting']][position]["monsters"].items():
                         # checks to see if you already loaded this one, it wont reload it.
-                        if monster == savedExploreSettings["monsters"]:
+                        if monster in savedExploreSettings["monsters"]:
                           hasMonsters = False
                           continue
                         else:
