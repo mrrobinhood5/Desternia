@@ -19,7 +19,7 @@ me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr, trapStr  = chara
 hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False, False
 abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz0123456789",
             "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm9876543210"]
-defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : []}
+defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : [], "traps":[]}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
 
@@ -101,27 +101,30 @@ if typedPosition != "":
                     passiveNames = ["perception", "investigation"]
                     passiveSkill = max(passiveSkills)+10
                     passiveName = passiveNames[passiveSkills.index(max(passiveSkills))]
-                    # check to see if you can find the trap first
-                    if passiveSkill >= trapToFind:
-                        trapStr = f' -f "Trap - {trapName}|Passive {passiveName.capitalize()}: {passiveSkill}\nDC: {trapToFind}\nYou have found a trap. No damage taken"'
-                    else:
-                        if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "attack":
-                            trapToHit = loadedData[savedExploreSettings['setting']][position]["trap"]["tohit"]
-                            trapRoll = vroll("1d20+"+str(trapToHit))
-                            if trapRoll.total >= combat().me.ac:
-                                damageRoll = combat().me.damage(trapDamage)
-                            else:
-                                damageRoll = False
-                            trapStr = f' -f "Trap - {trapName}|AC: {combat().me.ac}\nRoll: {trapRoll.full}\n{damageRoll["damage"] if damageRoll else "Miss!"}"'
-                        if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "save":
-                            trapDC = loadedData[savedExploreSettings['setting']][position]["trap"]["dc"]
-                            saveAbility = str(loadedData[savedExploreSettings['setting']][position]["trap"]["save"]).capitalize()
-                            trapSave = combat().me.save(saveAbility)
-                            if trapSave.total < trapDC:
-                                damageRoll = combat().me.damage(trapDamage)
-                            else:
-                                damageRoll = False
-                            trapStr = f' -f "Trap - {trapName}|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"'
+                    if trapName in savedExploreSettings["traps"]:
+                        hasTrap = False
+                    if hasTrap:
+                        # check to see if you can find the trap first
+                        if passiveSkill >= trapToFind:
+                            trapStr = f' -f "Trap - {trapName}|Passive {passiveName.capitalize()}: {passiveSkill}\nDC: {trapToFind}\nYou have found a trap. No damage taken"'
+                        else:
+                            if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "attack":
+                                trapToHit = loadedData[savedExploreSettings['setting']][position]["trap"]["tohit"]
+                                trapRoll = vroll("1d20+"+str(trapToHit))
+                                if trapRoll.total >= combat().me.ac:
+                                    damageRoll = combat().me.damage(trapDamage)
+                                else:
+                                    damageRoll = False
+                                trapStr = f' -f "Trap - {trapName}|AC: {combat().me.ac}\nRoll: {trapRoll.full}\n{damageRoll["damage"] if damageRoll else "Miss!"}"'
+                            if loadedData[savedExploreSettings['setting']][position]["trap"]["type"] == "save":
+                                trapDC = loadedData[savedExploreSettings['setting']][position]["trap"]["dc"]
+                                saveAbility = str(loadedData[savedExploreSettings['setting']][position]["trap"]["save"]).capitalize()
+                                trapSave = combat().me.save(saveAbility)
+                                if trapSave.total < trapDC:
+                                    damageRoll = combat().me.damage(trapDamage)
+                                else:
+                                    damageRoll = False
+                                trapStr = f' -f "Trap - {trapName}|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"'
                 #this is where the monsters get loaded into init
                 if inCombat and "monsters" in loadedData[savedExploreSettings['setting']][position].keys():
                     hasMonsters = True
