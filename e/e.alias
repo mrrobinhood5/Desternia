@@ -12,6 +12,7 @@ tembed -color <color>
 # TODO: keys need to updated explore settings in init
 # DONE: passive perception checks on traps
 # TODO: Add trap disabling. just like award key, add it to global settings and a check for a disabled trap
+# TODO: Get rid of saving stuff to CVAR, replace with writing settings to INIT
 # DONE: reading the FOWs arent doing it right
 # from Desternia.FakeTestingStuff import *
 # sets default variables
@@ -58,13 +59,13 @@ if typedPosition != "":
             # before saving, needs to check if theres a barred requirement
             if "not" in loadedData[savedExploreSettings['setting']][position].keys():
                 isBar = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["not"]) else False
-            # if you are not barred from the next position check to see if you have the prereqs for this position
+            # if you are not barred from the next position check to see if you have the prereqs or keys for this position
             if "requires" in loadedData[savedExploreSettings['setting']][position].keys() and not isBar:
                 # need to decode the key
                 isAllowed = False
                 keyReturned = combat().me.note.split(" | ")
                 keyReturned = {x[0].lower(): x[1] for x in [item.split(": ") for item in keyReturned]}
-                # check for keys being available otherwise skill it
+                # check for keys first at the user who ran the command, if not found, checks to see see if doors been open before.
                 if "keys" in keyReturned.keys():
                     keyReturned = keyReturned["keys"].split(",")
                     decryptedKeys = []
@@ -77,9 +78,6 @@ if typedPosition != "":
                     savedExploreSettings.update({"prereqs":decryptedKeys})
                 if isAllowed == False:
                     isAllowed = True if any(item in savedExploreSettings['prereqs'] for item in loadedData[savedExploreSettings['setting']][position]["requires"]) else False
-
-                # checks for new prereqs and appends them to the new settings
-
             if not isBar and isAllowed:
                 # If you are allowed and not barred, set the next postition to what you typed
                 nextPosition = loadedData[savedExploreSettings['setting']][position]
@@ -90,7 +88,7 @@ if typedPosition != "":
                     for x in nextPosition['earns']:
                         if x not in savedExploreSettings['prereqs']:
                             savedExploreSettings['prereqs'].append(x)
-                #this is where traps get loaded n stuff
+                # this is where traps get loaded n stuff
                 if inCombat and "trap" in loadedData[savedExploreSettings['setting']][position].keys():
                     hasTrap = True
                     #decide what kinda trap it is
