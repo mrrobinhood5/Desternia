@@ -16,6 +16,7 @@ tembed -color <color>
 # TODO: Get the current position from your own CVAR so that you can split the party
 # DONE: reading the FOWs arent doing it right
 # from Desternia.FakeTestingStuff import *
+
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr, trapStr  = character(), "ExploreSettings", "", "", "", "", ""
 hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False, False
@@ -23,6 +24,9 @@ abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz0123456789",
             "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm9876543210"]
 defaultSettings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : [], "traps":[]}
 me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
+if pargs.get("dm"):
+
+
 me.set_cvar_nx(settingsCVAR, dump_json(defaultSettings))
 
 # need to decide where to load the savedSettingsFrom, either init or CVAR. 
@@ -33,7 +37,7 @@ if combat(): #check to see if combat is running else error out. It should always
       #check to see if there are settings already available to grab from INIT else load them from CVAR
       if "settings" in [x.name for x in combat().get_combatant("explore").effects]:
         savedInitSettings = load_json(str(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"]))
-        savedCharacterSettings = load_json(get(settingsCVAR))
+        savedCharacterSettings = load_json(ExploreSettings)
     else:
       err("You need to add an explore combatant like this `!i add 0 explore -group \"DM\" -p 0`")
 else:
