@@ -2,7 +2,7 @@ tembed -thumb <image> -color <color>
 <drac2>
 #TODO something
 pargs, me, settingsCVAR, settingType  = argparse(&ARGS&), character(), "ExploreSettings", False
-settings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : [], "traps": }
+settings = {"setting" : "Small Town","type" : "public", "position" : "begin","prereqs" : [], "monsters" : [], "traps": []}
 isPrivate, isPublic = False, False
 returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:"'
 savestr = ""

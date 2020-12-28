@@ -43,14 +43,11 @@ if isKey or isTrap:
             if trapDisabled:
                 initExploreSettings = load_json(str(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"]))
                 # check to see if traps have anything in there to make a check to see if it exists already
-                if len(initExploreSettings["traps"]) > 0:
-                    if trapDisabled in initExploreSettings["traps"]:
-                        trapDisabled = ""
                 #save settings to init settings of character
-                initExploreSettings["traps"].append(trapDisabled) if trapDisabled != "" else 0
+                initExploreSettings["traps"].append(trapDisabled) if trapDisabled not in initExploreSettings["traps"] else 0
                 returnstr += f' -f "Trap|The {trapDisabled} has been disabled by {combat().get_combatant(pargs.last("t")).name}"'
                 # save the stuff into init settings
-                combat().get_combatant("explore").add_effect("settings", f"""-attack '||{initExploreSettings}'""", -1, False, None, False,None)
+                combat().get_combatant("explore").add_effect("settings", f"""-attack '||{dump_json(initExploreSettings)}'""", -1, False, None, False,None)
         else:
             err("That target is not in combat, oops")
     else:
