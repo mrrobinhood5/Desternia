@@ -1,10 +1,21 @@
 tembed -thumb <image> -color <color>
 <drac2>
-#TODO: Remove PUBLIC, PRIVATE libraries. Just use one single CVAR library for holding ExploreSettings. This should work with SVAR too.
+#DONE: Remove PUBLIC, PRIVATE libraries. Just use one single CVAR library for holding ExploreSettings. This should work with SVAR too.
 pargs, me  = argparse(&ARGS&), character()
 settings = {"setting": "","type":"","dm": "","prereqs": [],"monsters": [],"traps": []}
 returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:"'
 savestr = ""
+setLocal = True if pargs.get("local") else False
+
+# if you are setting a new GVAR as local library
+if setLocal:
+    localGVAR = pargs.last("local")
+    # check to see if its a valid GVAR
+    if len(localGVAR) == 36 and localGVAR.count("-") == 4:
+        me.set_cvar("explorelibrary", localGVAR)
+        savestr += f' -f "Library Update|Your Local Library has been updated to a new GVAR. To list available settings in the library use `!e list`"'
+    else:
+        err("The GVAR you provided seems to be wrong. Check again.")
 
 # runs the booleans
 hasServerLib = get_svar("serverexplorelibrary", False)
@@ -21,59 +32,13 @@ elif hasServerLib:
         settings.update({"type":"server"})
 else:
     me.set_cvar_nx("explorelibrary", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
-    loadedSettings = load_json(get_gvar(hasLocalLib))
+    loadedSettings = load_json(get_gvar(explorelibrary))
     settings.update({"type": "local"})
-
-# grabs the current configuration
-# hasSettings = get(settingsCVAR, False)
-
-# if default settings do not exists, make the default ones
-# if not hasSettings:
-#    me.set_cvar_nx("library", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
-#    me.set_cvar_nx(settingsCVAR, dump_json(settings))
-
-# load either the default settings or your current ones
-# loadedSettings = load_json(get(settingsCVAR))
-# currentSetting = loadedSettings["setting"]
-
-# check to see if you are trying to set a public
-# if setPUB:
-#     # check to see if you actually passed a valid GVAR
-#     passedGVAR = pargs.last("public")
-#     validGVAR = True if len(passedGVAR) == 36 and passedGVAR.count("-") == 4 else False
-#     if validGVAR:
-#         me.set_cvar("library", passedGVAR)
-#         returnstr += f' -f "Public Library| You have set your `library` to `{passedGVAR}`\n\n'\
-#                      f'The following settings are now available:\n\n'
-#         publicLibrary = load_json(get_gvar(library))
-#         for savedsetting in publicLibrary.keys():
-#             returnstr += f'{savedsetting}:\n\u2022{publicLibrary[savedsetting]["description"]}\n '
-#         returnstr += f'"'
-#         newSetting = list(publicLibrary.keys())[0]
-#         settings.update({"setting": newSetting, "position": "begin", "type": "public"})
-#     else:
-#         err("You must pass in a valid GVAR ID")
-#
-# # if you passed a -private arg to set a private setting
-# elif setPRIV:
-#     # check to see if the cvar exists
-#     passedCVAR = pargs.last("private")
-#     loadedCVAR = get(passedCVAR, False)
-#     if not loadedCVAR:
-#         err("That CVAR does not exists")
-#     privateLibrary = load_json(loadedCVAR)
-#     me.set_cvar("library", passedCVAR)
-#     returnstr += f' -f "Private Library| You have set your `library` to `{passedCVAR}`\n\n' \
-#                  f'The following settings are now available:\n\n'
-#     for savedsetting in privateLibrary.keys():
-#         returnstr += f'{savedsetting}:\n\u2022{privateLibrary[savedsetting]["description"]}\n '
-#     returnstr += f'"'
-#     # sets the settings to the first one in the library
-#     newSetting = list(privateLibrary.keys())[0]
-#     settings.update({"setting":newSetting, "position":"begin", "type":"private"})
+    me.set_cvar("ExploreSettings", dump_json(settings))
+    returnstr += f' -f "DEFAULTS | No libraries were found, loaded the deafault on in your `explorelibrary` CVAR" '
 
 # if you pass just setting
-if "&*&" != "":
+if "&*&" != "" and not setLocal:
     selectedSetting = "&*&".lower()
     # gonna iterate through loaded library for a setting
     for setting in loadedLibrary.keys():
@@ -86,31 +51,9 @@ if "&*&" != "":
     if savestr == "":
         savestr += f' -f "Setting Error|That setting was not found in any library. Make sure you have already loaded the library\n\n Also Also, check `!e list` to see whats available"'
 
-
-    # if isPublic and not settingType:
-    #     publicLib = load_json(get_gvar(library))
-    #     settingType = "public"
-    #     for savedsetting in publicLib.keys():
-    #         if selectedSetting in savedsetting.lower():
-    #             settingType = "public"
-    #             settings.update({"setting": savedsetting, "position": "begin", "type": "public"})
-    #             me.set_cvar(settingsCVAR, dump_json(settings))
-    #             savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library" -f "To Begin|run `!bplan begin {savedsetting}` and join yourself in init"'
-    #
-    # if isPrivate and not settingType:
-    #     privateLib = load_json(get(library))
-    #     for savedsetting in privateLib.keys():
-    #         if selectedSetting in savedsetting.lower():
-    #             settingType = "private"
-    #             settings.update({"setting": savedsetting, "position": "begin", "type": "private"})
-    #             me.set_cvar(settingsCVAR, dump_json(settings))
-    #             savestr += f' -f "Setting Update|Your setting is now `{savedsetting}` in the `{settingType}` library"'
-
-    # if not settingType:
-    #     savestr += f' -f "Setting Error|That setting was not found in any library. Make sure you have already loaded the library"'
 returnstr += savestr
-returnstr += f' -footer "!e setting \"setting name\" to set a specific loaded setting from your library\n' \
-             f'!e setting public GVAR-ID to set a public GVAR library\n' \
+returnstr += f' -footer "!e setting \\"setting name\\" to set a specific loaded setting from your library\n' \
+             f'!e setting -local GVAR-ID to set a public GVAR library\n' \
              f'!svar serverlibrary GVAR-ID to set the server library (must be DragonSpeaker or Admin)"'
 
 return returnstr

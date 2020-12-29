@@ -80,7 +80,7 @@
     "description": "This is a very hostile setting filled with enemies and traps. ",
     "instructions" : "Next, run `!bplan begin dungeon` \n You must have the battle from `!gvar a3311092-f928-42a3-a3a6-7fe0bee226b6` saved in a UVAR called `Battles`",
     "begin": {
-      "description": "Before you start, load the setting with `!bplan begin hostile`\n\nThe dungeon was created by a lich as a tomb. Its creators were destroyed by attacking raiders, and the dungeon has been attacked and abandoned many times since then.\n**Dungeon Walls**\tHewn Stone (DC 20 to climb)\n**Dungeon Floor**\tNatural Stone (difficult terrain, disadvantage on acrobatics)\n**Temperature**\tCold (DC 10 Constitution save each hour or gain one level of exhaustion)\n**Illumination**\tBright (fires every 40 ft.)",
+      "description": "**Everyone must now join init with `!i join`**\n\nThe dungeon was created by a lich as a tomb. Its creators were destroyed by attacking raiders, and the dungeon has been attacked and abandoned many times since then.\n**Dungeon Walls**\tHewn Stone (DC 20 to climb)\n**Dungeon Floor**\tNatural Stone (difficult terrain, disadvantage on acrobatics)\n**Temperature**\tCold (DC 10 Constitution save each hour or gain one level of exhaustion)\n**Illumination**\tBright (fires every 40 ft.)",
       "choices": [
         "Room1"
       ],
