@@ -41,7 +41,7 @@ if combat():
                 savedInitSettings = load_json(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"])
                 # check to see if player has settings otherwise load defaults
                 if not exists("ExploreSettings"):
-                    me.set_cvar("ExploreSettings",defaultPlayerSettings)
+                    me.set_cvar("ExploreSettings",dump_json(defaultPlayerSettings))
                 # push player keys
                 savedPlayerSettings = load_json(ExploreSettings)
                 # pass on any new keys from the player to init
@@ -76,16 +76,16 @@ else:
 # if combat().me:
 #     if exists("ExploreSettings"):
 #         # if you do have it, load the setting information
-#         savedCharacterSettings = load_json(ExploreSettings)
-#         isServerLib = True if savedCharacterSettings["type"] == "server" else False
-#         isLocalLib = True if savedCharacterSettings["type"] == "local" else False
+#         savedPlayerSettings = load_json(ExploreSettings)
+#         isServerLib = True if savedPlayerSettings["type"] == "server" else False
+#         isLocalLib = True if savedPlayerSettings["type"] == "local" else False
 #     else:
 #         me.set_cvar("ExploreSettings", dump_json(defaultPlayerSettings))
-#         savedCharacterSettings = load_json(ExploreSettings)
+#         savedPlayerSettings = load_json(ExploreSettings)
 # else:
 #     err("You aint in combat. Jump in `!i join`")
 # # checks to see if you are in DM mode
-# if "dm" in savedCharacterSettings.keys() and savedCharacterSettings["dm"] == ctx.author.name:
+# if "dm" in savedPlayerSettings.keys() and savedPlayerSettings["dm"] == ctx.author.name:
 #     DMmode = True
 # else:
 #     DMmode = False
@@ -102,20 +102,20 @@ else:
 #                 savedInitSettings = load_json(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"])
 #                 # push init settings to local settings
 #                 me.set_cvar("ExploreSettings", dump_json(savedInitSettings))
-#                 savedCharacterSettings = savedInitSettings
+#                 savedPlayerSettings = savedInitSettings
 #             else:
 #                 # push local settings to init
-#                 savedCharacterSettings = load_json(ExploreSettings)
-#                 combat().get_combatant("explore").add_effect("settings",f"""-attack '||{dump_json(savedCharacterSettings)}'""", -1,False, None, False, None)
+#                 savedPlayerSettings = load_json(ExploreSettings)
+#                 combat().get_combatant("explore").add_effect("settings",f"""-attack '||{dump_json(savedPlayerSettings)}'""", -1,False, None, False, None)
 #         else:
 #             # check to see if player has settings, otherwise load basic player settings
 #             if not exists("ExploreSettings"):
 #                 me.set_cvar("ExploreSettings",dump_json(defaultPlayerSettings))
 #             # if its a player running the command push your keys
 #             savedInitSettings = load_json(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"])
-#             savedCharacterSettings = load_json(ExploreSettings)
+#             savedPlayerSettings = load_json(ExploreSettings)
 #             # add all of the players keys to prereqs
-#             for key in savedCharacterSettings["keys"]:
+#             for key in savedPlayerSettings["keys"]:
 #                 savedInitSettings["prepreqs"].append(key) if key not in savedInitSettings["prereqs"] else 0
 #     else:
 #       err("You need to add an explore combatant like this `!i add 0 explore -group \"DM\" -p 0`")
@@ -123,7 +123,7 @@ else:
 #     err("Please start the battle with `!bplan begin <setting name>`")
 #
 # # load the full GVAR from the library
-# loadedData = load_json(get_gvar(explorelibrary)) if savedCharacterSettings['type'] == "local" else load_json(get_gvar(get_svar("serverexplorelibrary"))) if savedCharacterSettings['type'] == "server" else False
+# loadedData = load_json(get_gvar(explorelibrary)) if savedPlayerSettings['type'] == "local" else load_json(get_gvar(get_svar("serverexplorelibrary"))) if savedPlayerSettings['type'] == "server" else False
 # err("Something went wrong loading the GVAR for the library. Oops") if not loadedData else 0
 #
 # # need to load prereqs from notes.
@@ -133,10 +133,10 @@ else:
 # checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
 typedPosition = "&*&"
 # sets nextPosition to the default, which is the current position saved in settings
-nextPosition = loadedData[savedCharacterSettings['position']]
+nextPosition = loadedData[savedPlayerSettings['position']]
 if typedPosition != "":
     # iterates over the settings sources
-    for position in loadedData[savedCharacterSettings['position']]['choices']:
+    for position in loadedData[savedPlayerSettings['position']]['choices']:
         # if it finds a match, it means that its a valid next position
         if typedPosition.lower() in position.lower():
             # before saving, needs to check if theres a barred requirement
@@ -165,7 +165,7 @@ if typedPosition != "":
                 # If you are allowed and not barred, set the next postition to what you typed
                 nextPosition = loadedData[position]
                 # save it to settings for the next time this loop runs
-                savedCharacterSettings.update({"position": position})
+                savedPlayerSettings.update({"position": position})
                 #adds the earns for the next position.
                 if "earns" in nextPosition.keys():
                     for x in nextPosition['earns']:
@@ -242,21 +242,27 @@ if typedPosition != "":
                     combat().get_combatant("map").add_effect("map",f"""-attack '||{dataout}'""", -1, False, None, False,None)
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
-                savedCharacterSettings.update({"position": savedCharacterSettings['position']})
+                savedPlayerSettings.update({"position": savedPlayerSettings['position']})
         # if what you typed is not in the possible places
         else:
-            nextPosition = loadedData[savedCharacterSettings['position']]
-            savedCharacterSettings.update({"position": savedCharacterSettings['position']})
+            nextPosition = loadedData[savedPlayerSettings['position']]
+            savedPlayerSettings.update({"position": savedPlayerSettings['position']})
 
+########## SAVES ALL STUFF BACK TO INIT #################
 #saves the new settings to both cvar and init 
-# me.set_cvar(settingsCVAR, dump_json(savedCharacterSettings))
+me.set_cvar("ExploreSettings", dump_json(savedPlayerSettings))
 ## Only some stuff gets put here
 combat().get_combatant("explore").add_effect("settings",f"""-attack '||{dump_json(savedInitSettings)}'""", -1, False, None, False,None)
+
+######## LOADS THE IMAGE FOR THE EMBED ############
 # check to see if there is a map call or a custom image
 if "image" in nextPosition.keys():
     hasImage = True if nextPosition["image"] != "map" else False
     useMap = True if nextPosition["image"] == "map" else False
 hasThumb = True if "thumb" in nextPosition.keys() else False
+
+
+########## MAP MAP MAP ####################
 # build the map string for init
 if useMap:
     # mapstring being built as a dict
@@ -275,8 +281,9 @@ if useMap:
     mapstr = f'http://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(", ","/*f").replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
     # push the new update to map attack
 
+########## EMBED EMBED EMBED #####################
 #builds the embed for the old setting
-returnstr += f' -title "{savedInitSettings["setting"]}: {savedCharacterSettings["position"]} " '
+returnstr += f' -title "{savedInitSettings["setting"]}: {savedPlayerSettings["position"]} " '
 returnstr += trapStr
 returnstr += f' -f "Monsters|New Monsters Appeared in INIT!\nCheck `!i list`"' if hasMonsters else f''
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
@@ -286,11 +293,6 @@ returnstr += f' -f "Choices|{nextPosition["choices"]}"' # if isAllowed and not i
 returnstr += f' -image {mapstr}' if useMap else f''
 returnstr += f' -image "{nextPosition["image"]}"' if hasImage else f''
 returnstr += f' -thumb "{nextPosition["thumb"]}"' if hasThumb else f' -thumb <image>'
-
-# sets the footer
-returnstr += f' -footer "!e <area name>\n' \
-             f'For the Help Page:\n'\
-             f'!help e\n\n'\
-             f'{combat().me if inCombat else "<-- Not in Combat -->"}"'
+returnstr += f' -footer "!e <area name>\nFor the Help Page:\n!help e\n\n{combat().me if combat() else "<-- Not in Combat -->"}"'
 return returnstr
 </drac2>

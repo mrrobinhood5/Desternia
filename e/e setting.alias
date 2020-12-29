@@ -2,7 +2,7 @@ tembed -thumb <image> -color <color>
 <drac2>
 #DONE: Remove PUBLIC, PRIVATE libraries. Just use one single CVAR library for holding ExploreSettings. This should work with SVAR too.
 pargs, me  = argparse(&ARGS&), character()
-settings = {"setting": "","type":"","dm": "","prereqs": [],"monsters": [],"traps": []}
+settings = {"setting": "","type":"","dm": "","prereqs": [],"monsters": [],"traps": [], "position":"begin"}
 returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:"'
 savestr = ""
 setLocal = True if pargs.get("local") else False
