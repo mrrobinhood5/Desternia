@@ -2,24 +2,25 @@ tembed -color <color>
 <drac2>
 # TODO: move monsters out of the group once they are activated (cant do this until the next update)
 # TODO: Add a "You are dead" check if your HP is below 0
-# TODO: Fix the CVAR thing for private libraries
+# DONE: Fix the CVAR thing for private libraries
 # DONE: TRAPS add trap names and effects to player
 # DONE: have e award save the info on the player notes like map
-# TODO: add a DM name to the DM combatant as a note so that only he can drive
+# DONE: add a DM name to the DM combatant as a note so that only he can drive
 # DONE: FOW needs to add to current FOW just like prepreqs
 # DONE: Make traps attack roll or save option
 # DONE: have a overmap view option
 # DONE: keys need to updated explore settings in init
 # DONE: passive perception checks on traps
 # DONE: Add trap disabling. just like award key, add it to global settings and a check for a disabled trap
-# TODO: Get rid of saving stuff to CVAR, replace with writing settings to INIT
-# TODO: Get the current position from your own CVAR so that you can split the party
+# DONE: Get rid of saving stuff to CVAR, replace with writing settings to INIT
+# DONE: Get the current position from your own CVAR so that you can split the party
 # DONE: reading the FOWs arent doing it right
+# TODO: Previous instances of the ExploreSetting CVAR are not being checked for and can cause a player to end up in positions
 # from Desternia.FakeTestingStuff import *
 
 # sets default variables
 me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr, trapStr  = character(), "ExploreSettings", "", "", "", "", ""
-hasMonsters, isAllowed, isBar, validNextPosition, inCombat, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False, False
+hasMonsters, isAllowed, isBar, validNextPosition, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False
 DMmode = False
 abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz0123456789",
             "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm9876543210"]
@@ -35,6 +36,8 @@ defaultPlayerSettings = {"position": "begin" , "keys": []}
 
 if combat():
     if combat().me:
+        if combat().current.name != combat().me.name:
+            err("Its uh, not your turn. Wait your turn")
         if "explore" in [x.name for x in combat().combatants]:
             if "settings" in [x.name for x in combat().get_combatant("explore").effects]:
                 # Pull Settings from here to savedInitSettings
@@ -47,7 +50,7 @@ if combat():
                 # pass on any new keys from the player to init
                 if "dm" not in savedPlayerSettings.keys():
                     for key in savedPlayerSettings["keys"]:
-                        savedInitSettings["keys"].append(key) if key not in savedPlayerSettings["keys"] else 0
+                        savedInitSettings["keys"].append(key) if key not in savedInitSettings["keys"] else 0
             else:
                 # there are no settings, need to push some on there if you are the DM
                 savedPlayerSettings = load_json(ExploreSettings)
@@ -73,62 +76,6 @@ elif savedInitSettings["type"] == "local":
 else:
     err("something is wrong with the init settings bruh")
     
-# if combat().me:
-#     if exists("ExploreSettings"):
-#         # if you do have it, load the setting information
-#         savedPlayerSettings = load_json(ExploreSettings)
-#         isServerLib = True if savedPlayerSettings["type"] == "server" else False
-#         isLocalLib = True if savedPlayerSettings["type"] == "local" else False
-#     else:
-#         me.set_cvar("ExploreSettings", dump_json(defaultPlayerSettings))
-#         savedPlayerSettings = load_json(ExploreSettings)
-# else:
-#     err("You aint in combat. Jump in `!i join`")
-# # checks to see if you are in DM mode
-# if "dm" in savedPlayerSettings.keys() and savedPlayerSettings["dm"] == ctx.author.name:
-#     DMmode = True
-# else:
-#     DMmode = False
-#
-# # next check to see if you are in combat
-# if combat(): #check to see if combat is running else error out. It should always be running.
-#     inCombat = True
-#     # check to see if you have a DM group and explore is loaded, else error out
-#     if "explore" in [x.name for x in combat().get_group("DM").combatants]:
-#         # check to see if its the DM running it, and sync up init changes
-#         if DMmode:
-#             if "settings" in [x.name for x in combat().get_combatant("explore").effects]:
-#                 # pull Init settings into DM if init settings are available
-#                 savedInitSettings = load_json(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"])
-#                 # push init settings to local settings
-#                 me.set_cvar("ExploreSettings", dump_json(savedInitSettings))
-#                 savedPlayerSettings = savedInitSettings
-#             else:
-#                 # push local settings to init
-#                 savedPlayerSettings = load_json(ExploreSettings)
-#                 combat().get_combatant("explore").add_effect("settings",f"""-attack '||{dump_json(savedPlayerSettings)}'""", -1,False, None, False, None)
-#         else:
-#             # check to see if player has settings, otherwise load basic player settings
-#             if not exists("ExploreSettings"):
-#                 me.set_cvar("ExploreSettings",dump_json(defaultPlayerSettings))
-#             # if its a player running the command push your keys
-#             savedInitSettings = load_json(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"])
-#             savedPlayerSettings = load_json(ExploreSettings)
-#             # add all of the players keys to prereqs
-#             for key in savedPlayerSettings["keys"]:
-#                 savedInitSettings["prepreqs"].append(key) if key not in savedInitSettings["prereqs"] else 0
-#     else:
-#       err("You need to add an explore combatant like this `!i add 0 explore -group \"DM\" -p 0`")
-# else:
-#     err("Please start the battle with `!bplan begin <setting name>`")
-#
-# # load the full GVAR from the library
-# loadedData = load_json(get_gvar(explorelibrary)) if savedPlayerSettings['type'] == "local" else load_json(get_gvar(get_svar("serverexplorelibrary"))) if savedPlayerSettings['type'] == "server" else False
-# err("Something went wrong loading the GVAR for the library. Oops") if not loadedData else 0
-#
-# # need to load prereqs from notes.
-# activePrereqs = combat().me.note
-
 ## MAIN LOGIC ##
 # checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
 typedPosition = "&*&"
@@ -139,15 +86,18 @@ if typedPosition != "":
     for position in loadedData[savedPlayerSettings['position']]['choices']:
         # if it finds a match, it means that its a valid next position
         if typedPosition.lower() in position.lower():
+            #### BARS BARS BARS ###
             # before saving, needs to check if theres a barred requirement
             if "not" in loadedData[position].keys():
                 isBar = True if any(item in savedInitSettings['prereqs'] for item in loadedData[position]["not"]) else False
+            ### PREREQS PREREQS PREREQS ###
             # if you are not barred from the next position check to see if you have the prereqs or keys for this position
             if "requires" in loadedData[position].keys() and not isBar:
                 # need to decode the key
                 isAllowed = False
                 keyReturned = combat().me.note.split(" | ")
                 keyReturned = {x[0].lower(): x[1] for x in [item.split(": ") for item in keyReturned]}
+                ### KEYS KEYS KEYS ###
                 # check for keys first at the user who ran the command, if not found, checks to see see if doors been open before.
                 if "keys" in keyReturned.keys():
                     keyReturned = keyReturned["keys"].split(",")
@@ -166,13 +116,15 @@ if typedPosition != "":
                 nextPosition = loadedData[position]
                 # save it to settings for the next time this loop runs
                 savedPlayerSettings.update({"position": position})
-                #adds the earns for the next position.
+                ### EARNS EARNS EARNS ###
+                # adds the earns for the next position.
                 if "earns" in nextPosition.keys():
                     for x in nextPosition['earns']:
                         if x not in savedInitSettings['prereqs']:
                             savedInitSettings['prereqs'].append(x)
+                ### TRAPS TRAPS TRAPS
                 # this is where traps get loaded n stuff
-                if inCombat and "trap" in loadedData[position].keys():
+                if "trap" in loadedData[position].keys():
                     hasTrap = True
                     #decide what kinda trap it is
                     trapName = loadedData[position]["trap"]["name"]
@@ -207,7 +159,7 @@ if typedPosition != "":
                                     damageRoll = False
                                 trapStr = f' -f "Trap - {trapName}|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"'
                 #this is where the monsters get loaded into init
-                if inCombat and "monsters" in loadedData[position].keys():
+                if "monsters" in loadedData[position].keys():
                     hasMonsters = True
                     # iterates through all monsters being loaded
                     for monster, mdata in loadedData[position]["monsters"].items():
@@ -240,6 +192,7 @@ if typedPosition != "":
                     currentmap.update({"fow":newfow, "view":mapViewLoader["view"]})
                     dataout = ' ~ '.join([f"{item[0].title()}: {item[1]}" for item in currentmap.items()])
                     combat().get_combatant("map").add_effect("map",f"""-attack '||{dataout}'""", -1, False, None, False,None)
+                    savedPlayerSettings.update({"view": currentmap["view"]})
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedPlayerSettings.update({"position": savedPlayerSettings['position']})
@@ -249,7 +202,8 @@ if typedPosition != "":
             savedPlayerSettings.update({"position": savedPlayerSettings['position']})
 
 ########## SAVES ALL STUFF BACK TO INIT #################
-#saves the new settings to both cvar and init 
+#saves the new settings to both cvar and init
+
 me.set_cvar("ExploreSettings", dump_json(savedPlayerSettings))
 ## Only some stuff gets put here
 combat().get_combatant("explore").add_effect("settings",f"""-attack '||{dump_json(savedInitSettings)}'""", -1, False, None, False,None)
@@ -275,9 +229,10 @@ if useMap:
         else:
             mData = monster.note.split(" | ")
             mData = {x[0].lower(): x[1] for x in [item.split(": ") for item in mData]}
-            mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "r"})
+            mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "b"})
             mData.update({"size": mData["size"]}) if "size" in mData.keys() else mData.update({"size": "M"})
             monsterstr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
+    mapstr.update({"view":savedPlayerSettings["view"]}) if "view" in savedPlayerSettings.keys() else 0
     mapstr = f'http://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(", ","/*f").replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
     # push the new update to map attack
 
