@@ -2,8 +2,12 @@
    "Dungeon Crawl":[
       "!i add 0 explore -p 999 -group \"DM\"",
       "!i add 0 map -p 999 -group \"DM\"",
-      "!i effect map map -attack \"||Size: 29x29 ~ Background: https://i.imgur.com/DV7QATG.png ~ Options: d ~ View: a7:9x11 ~ FOW: a7:i17\"",
-      "!i meta -name \"Hostile Dungeon\"",
-      "!i madd \"kobold inventor\" -rollhp -name \"k1\" -p -999"
+      "!i effect map map -attack \"||Size: 29x29 ~ Background: https://i.imgur.com/DV7QATG.png ~ Options: d ~ View: a7:9x11 ~ FOW: b10:d13\"",
+      "!i meta -name \"Dungeon Crawl\"",
+      "!i madd \"kobold inventor\" -rollhp -name \"a1\" -p -999 -group \"Monsters\"",
+      "!i madd \"winged kobold\" -n 3 -name \"b#\" -p -999 -rollhp -group \"Monsters\"",
+      "!i madd \"kobold\" -n 3 -name \"c#\" -p -999 -rollhp -group \"Monsters\"",
+      "!i madd \"Lemure\" -n 10 -name \"d#\" -p -999 -rollhp -group \"Monsters\"",
+      "!echo All Players join Init `!init join` and move yourselves between b10 - d13 with `!move b10` . If you are not the DM, run `!e clear` to clear your settings."
    ]
 }

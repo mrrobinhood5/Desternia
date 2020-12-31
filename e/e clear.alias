@@ -1,0 +1,6 @@
+tembed -thumb <image> -color <color>
+<drac2>
+character().delete_cvar("ExploreSettings")
+</drac2>
+-f "Cleared Settings|You can now start `!e` once the DM does its setup"
+-footer "!e clear"

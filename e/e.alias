@@ -15,11 +15,15 @@ tembed -color <color>
 # DONE: Get rid of saving stuff to CVAR, replace with writing settings to INIT
 # DONE: Get the current position from your own CVAR so that you can split the party
 # DONE: reading the FOWs arent doing it right
-# TODO: Previous instances of the ExploreSetting CVAR are not being checked for and can cause a player to end up in positions
+# DONE: Previous instances of the ExploreSetting CVAR are not being checked for and can cause a player to end up in positions
+# TODO: Add trap descriptions and effects
+# DONE: When a new monster appears, say the name on the first embed
+# TODO: Small town settings errors out on road because there is no location information. Maybe add a default location on a bplan
+
 # from Desternia.FakeTestingStuff import *
 
 # sets default variables
-me, settingsCVAR, returnstr, saveAbility, mImgData, monsterstr, trapStr  = character(), "ExploreSettings", "", "", "", "", ""
+me, settingsCVAR, returnstr, saveAbility, mImgData, monsterStr, trapStr, monNames  = character(), "ExploreSettings", "", "", "", "", "", ""
 hasMonsters, isAllowed, isBar, validNextPosition, hasTrap, useMap, mapViewLoader = False, True, False, False, False, False, False
 DMmode = False
 abcarray = ["ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz0123456789",
@@ -33,9 +37,10 @@ defaultPlayerSettings = {"position": "begin" , "keys": []}
 # - Push game changes to Init
 # -
 
-
 if combat():
     if combat().me:
+        if combat().current == None:
+            err("You gotta start init with `!init next`")
         if combat().current.name != combat().me.name:
             err("Its uh, not your turn. Wait your turn")
         if "explore" in [x.name for x in combat().combatants]:
@@ -158,6 +163,8 @@ if typedPosition != "":
                                 else:
                                     damageRoll = False
                                 trapStr = f' -f "Trap - {trapName}|DC: {trapDC}\n{saveAbility} Save: {trapSave}\n{damageRoll["damage"] if damageRoll else "Saved!"}"'
+                
+                ### MONSTER MONSTER MONSTER ###
                 #this is where the monsters get loaded into init
                 if "monsters" in loadedData[position].keys():
                     hasMonsters = True
@@ -171,13 +178,18 @@ if typedPosition != "":
                             # adds the note to the monster for map data and push them to a variable
                             combat().get_combatant(monster).set_note(f'Location: {mdata[1]} | Token: {mdata[2]} | Size: {mdata[3]} | Color: {mdata[4]}')
                             # re rolls their INIT
-                            combat().get_combatant(monster).set_init(vroll("1d20+"+str(combat().get_combatant(monster).initmod)).total)
+                            monInit = vroll("1d20+"+str(combat().get_combatant(monster).initmod))
+                            combat().get_combatant(monster).set_init(monInit.total)
                             # moves it out of DM group # not implemented yet PR #1383
                             # combat().get_combatant(monster).set_group(None)
                             #re names them
                             combat().get_combatant(monster).set_name(mdata[0])
+                            #buils the name string for the embed:
+                            monNames += f'`{mdata[0]}` Init: {monInit.full}\n'
                             # adds it to the saved Settings that its been loaded
                             savedInitSettings["monsters"].append(monster) if monster not in savedInitSettings["monsters"] else 0
+                
+                ### MAP MAP MAP ###
                 # this is where map updates its stuff for new viewports
                 if "map" in nextPosition.keys():
                     mapViewLoader = nextPosition["map"] # settings from the room
@@ -193,6 +205,8 @@ if typedPosition != "":
                     dataout = ' ~ '.join([f"{item[0].title()}: {item[1]}" for item in currentmap.items()])
                     combat().get_combatant("map").add_effect("map",f"""-attack '||{dataout}'""", -1, False, None, False,None)
                     savedPlayerSettings.update({"view": currentmap["view"]})
+            
+            ### ERROR CHECKS ERROR CHECKS ###
             # if anything fails, like being barred or not allowed, save the settings to the previous thing
             else:
                 savedPlayerSettings.update({"position": savedPlayerSettings['position']})
@@ -215,7 +229,6 @@ if "image" in nextPosition.keys():
     useMap = True if nextPosition["image"] == "map" else False
 hasThumb = True if "thumb" in nextPosition.keys() else False
 
-
 ########## MAP MAP MAP ####################
 # build the map string for init
 if useMap:
@@ -231,16 +244,16 @@ if useMap:
             mData = {x[0].lower(): x[1] for x in [item.split(": ") for item in mData]}
             mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "b"})
             mData.update({"size": mData["size"]}) if "size" in mData.keys() else mData.update({"size": "M"})
-            monsterstr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
+            monsterStr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
     mapstr.update({"view":savedPlayerSettings["view"]}) if "view" in savedPlayerSettings.keys() else 0
-    mapstr = f'http://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(", ","/*f").replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
+    mapstr = f'http://otfbm.io/{mapstr["size"]}/{mapstr["view"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(", ","/*f").replace(":","")}/{monsterStr}?bg={mapstr["background"]}'
     # push the new update to map attack
 
 ########## EMBED EMBED EMBED #####################
 #builds the embed for the old setting
 returnstr += f' -title "{savedInitSettings["setting"]}: {savedPlayerSettings["position"]} " '
 returnstr += trapStr
-returnstr += f' -f "Monsters|New Monsters Appeared in INIT!\nCheck `!i list`"' if hasMonsters else f''
+returnstr += f' -f "Monsters|New Monsters Appeared in INIT!\n{monNames}"' if hasMonsters else f''
 returnstr += f' -f "Error| You are barred from this location" ' if isBar else f''
 returnstr += f' -f "Error| You do not have the requirements for this location" ' if not isAllowed else f''
 returnstr += f' -f "Description|{nextPosition["description"]}"' # if isAllowed and not isBar else f''
