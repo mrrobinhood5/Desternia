@@ -1,6 +1,6 @@
 {
   "Small Town": {
-    "description": "Small quaint town in the middle of nowhere. This setting has no monsters, but you still need to start init",
+    "description": "Small quaint town in the middle of nowhere. This setting has no monsters, but you still need to start",
     "instructions" : "Start init with `!init begin`",
     "begin": {
       "description": "The small town gives you the basics of `!e`. This description appears only once and normally has any prerequisite commands to be run by the player or DM, For this setting, you just need `!init begin` and `!init join` commands before starting. \n Describe the setting in general or detail as you wish.",
@@ -44,31 +44,31 @@
       "description": "The sand if very sandy, and you decide to make a sand castle using your best attributes",
       "choices": ["go in the water","go home"],
       "image": "https://i.imgur.com/9qsjMVf.jpg",
-      "trap": {"name":"Sand Castle","dc": 10,"save": "charisma","damage": "1d10[fun]"}
+      "trap": {"name":"Sand Castle","dc": 10,"save": "charisma","damage": "1d10[fun]", "tofind": 20, "type": "save"}
     },
     "go in the water": {
       "description": "The water is very wet, but you decide to go in for a splash. \nThere are crabs and fish in there, some attempt to nibble at you.",
       "choices": ["play a ball game","go home"],
       "image": "https://i.imgur.com/LzllgEf.jpg",
-      "trap": {"name":"Water Hazard","dc": 15,"save": "constitution","damage": "2d10[fun]"}
+      "trap": {"name":"Water Hazard","dc": 15,"save": "constitution","damage": "2d10[fun]", "tofind": 20,"type": "save"}
     },
     "play a ball game": {
       "description": "Volleyball is Great!! You play with your team mates and others in the beach. Maybe you win?",
       "choices": ["read a book","go home"],
       "image": "https://i.imgur.com/MJ5cjUZ.jpg",
-      "trap": {"name":"Ball","dc": 15,"save": "dexterity","damage": "2d6[fun]"}
+      "trap": {"name":"Ball","dc": 15,"save": "dexterity","damage": "2d6[fun]", "tofind": 20,"type": "save"}
     },
     "read a book": {
       "description": "After a lot of fun, you decide to take a break. Recover some energy by reading and relaxing. You read a book by Ron L Hubbard.",
       "choices": ["take a nap","go home"],
       "image": "https://i.imgur.com/2fk75hi.jpg",
-      "trap": {"name":"book","dc": 100,"save": "wisdom","damage": "-10[rest]"}
+      "trap": {"name":"book","dc": 100,"save": "wisdom","damage": "-10[rest]", "tofind": 20,"type": "save"}
     },
     "take a nap": {
       "description": "All that reading made you sleepy. You decide to take a nap in the sun. Hopefully you dont burn!",
       "choices": ["go home"],
       "image": "https://i.imgur.com/BEnBTSo.png",
-      "trap": {"name":"nap","dc": 20,"save": "constitution","damage": "5d10[fire]"}
+      "trap": {"name":"nap","dc": 20,"save": "constitution","damage": "5d10[fire]", "tofind": 20,"type": "save"}
     },
     "go home": {
       "description": "Tough day at the beach. Visit again Soon!",

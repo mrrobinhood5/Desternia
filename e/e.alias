@@ -19,6 +19,12 @@ tembed -color <color>
 # TODO: Add trap descriptions and effects
 # DONE: When a new monster appears, say the name on the first embed
 # TODO: Small town settings errors out on road because there is no location information. Maybe add a default location on a bplan
+# TODO: Rename things to something more abstract instead of cardinal directions
+# TODO: What if the locations changed with the map positions ? or doors unlocking and traps were done with ranges?
+# TODO: have map centerd on someone! and FOW adding all the places
+# TODO: built in commands like look for traps, or check doors
+# TODO: Toggle split or together mode
+
 
 # from Desternia.FakeTestingStuff import *
 
