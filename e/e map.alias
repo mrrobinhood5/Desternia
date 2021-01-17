@@ -1,0 +1,21 @@
+tembed -color <color>
+<drac2>
+monsterstr = ""
+mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"].split(" ~ ")
+mapstr = {x[0].lower(): x[1] for x in [item.split(": ") for item in mapstr]}
+## the Monsters in Init need to be build again for the image. Gonna have to iterate through all combatants for a Location and Token
+for monster in combat().combatants:
+    if monster.note == None or monster.note == '':
+        continue
+    else:
+        mData = monster.note.split(" | ")
+        mData = {x[0].lower(): x[1] for x in [item.split(": ") for item in mData]}
+        mData.update({"color": mData["color"]}) if "color" in mData.keys() else mData.update({"color": "b"})
+        mData.update({"size": mData["size"]}) if "size" in mData.keys() else mData.update({"size": "M"})
+        monsterstr += f'{mData["location"]}{mData["size"]}{mData["color"]}-{monster.name.replace(" ","_")}{"~"+mData["token"] if "token" in mData.keys() else ""}/'
+mapstr = f'http://otfbm.io/{mapstr["size"]}/@{mapstr["options"]}/*f{mapstr["fow"].replace(", ","/*f").replace(":","")}/{monsterstr}?bg={mapstr["background"]}'
+returnstr = f' -f "Overview Map|Seeing the places you have been to" -image "{mapstr}" -footer "Usage - !e map"'
+return returnstr
+</drac2>
+
+

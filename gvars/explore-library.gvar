@@ -1,6 +1,7 @@
 {
   "Small Town": {
-    "description": "Small quaint town in the middle of nowhere.",
+    "description": "Small quaint town in the middle of nowhere. This setting has no monsters, but you still need to start",
+    "instructions" : "Start init with `!init begin`",
     "begin": {
       "description": "The small town gives you the basics of `!e`. This description appears only once and normally has any prerequisite commands to be run by the player or DM, For this setting, you just need `!init begin` and `!init join` commands before starting. \n Describe the setting in general or detail as you wish.",
       "choices": ["Plaza"],
@@ -32,7 +33,8 @@
     }
   },
   "Beach": {
-    "description": "Public Beach for Sunday Fun!",
+    "description": "Public Beach for Sunday Fun! This setting has traps and a linear story line to showcase how you can use traps.",
+    "instructions" : "Start init with `!init begin`",
     "begin": {
       "description": "You start at the beach. Fun in the Sun!! ",
       "choices": ["make a sand castle"],
@@ -42,31 +44,31 @@
       "description": "The sand if very sandy, and you decide to make a sand castle using your best attributes",
       "choices": ["go in the water","go home"],
       "image": "https://i.imgur.com/9qsjMVf.jpg",
-      "trap": {"dc": 10,"save": "charisma","damage": "1d10[fun]"}
+      "trap": {"name":"Sand Castle","dc": 10,"save": "charisma","damage": "1d10[fun]", "tofind": 20, "type": "save"}
     },
     "go in the water": {
       "description": "The water is very wet, but you decide to go in for a splash. \nThere are crabs and fish in there, some attempt to nibble at you.",
       "choices": ["play a ball game","go home"],
       "image": "https://i.imgur.com/LzllgEf.jpg",
-      "trap": {"dc": 15,"save": "constitution","damage": "2d10[fun]"}
+      "trap": {"name":"Water Hazard","dc": 15,"save": "constitution","damage": "2d10[fun]", "tofind": 20,"type": "save"}
     },
     "play a ball game": {
       "description": "Volleyball is Great!! You play with your team mates and others in the beach. Maybe you win?",
       "choices": ["read a book","go home"],
       "image": "https://i.imgur.com/MJ5cjUZ.jpg",
-      "trap": {"dc": 15,"save": "dexterity","damage": "2d6[fun]"}
+      "trap": {"name":"Ball","dc": 15,"save": "dexterity","damage": "2d6[fun]", "tofind": 20,"type": "save"}
     },
     "read a book": {
       "description": "After a lot of fun, you decide to take a break. Recover some energy by reading and relaxing. You read a book by Ron L Hubbard.",
       "choices": ["take a nap","go home"],
       "image": "https://i.imgur.com/2fk75hi.jpg",
-      "trap": {"dc": 100,"save": "wisdom","damage": "-10[rest]"}
+      "trap": {"name":"book","dc": 100,"save": "wisdom","damage": "-10[rest]", "tofind": 20,"type": "save"}
     },
     "take a nap": {
       "description": "All that reading made you sleepy. You decide to take a nap in the sun. Hopefully you dont burn!",
       "choices": ["go home"],
       "image": "https://i.imgur.com/BEnBTSo.png",
-      "trap": {"dc": 20,"save": "constitution","damage": "5d10[fire]"}
+      "trap": {"name":"nap","dc": 20,"save": "constitution","damage": "5d10[fire]", "tofind": 20,"type": "save"}
     },
     "go home": {
       "description": "Tough day at the beach. Visit again Soon!",
@@ -76,8 +78,9 @@
   },
   "Dungeon Crawl": {
     "description": "This is a very hostile setting filled with enemies and traps. ",
+    "instructions" : "Next, run `!bplan begin dungeon` \n You must have the battle from `!gvar a3311092-f928-42a3-a3a6-7fe0bee226b6` saved in a UVAR called `Battles`",
     "begin": {
-      "description": "Before you start, load the setting with `!bplan begin hostile`\n\nThe dungeon was created by a lich as a tomb. Its creators were destroyed by attacking raiders, and the dungeon has been attacked and abandoned many times since then.\n**Dungeon Walls**\tHewn Stone (DC 20 to climb)\n**Dungeon Floor**\tNatural Stone (difficult terrain, disadvantage on acrobatics)\n**Temperature**\tCold (DC 10 Constitution save each hour or gain one level of exhaustion)\n**Illumination**\tBright (fires every 40 ft.)",
+      "description": "**Everyone must now join init with `!i join`**\n\nThe dungeon was created by a lich as a tomb. Its creators were destroyed by attacking raiders, and the dungeon has been attacked and abandoned many times since then.\n**Dungeon Walls**\tHewn Stone (DC 20 to climb)\n**Dungeon Floor**\tNatural Stone (difficult terrain, disadvantage on acrobatics)\n**Temperature**\tCold (DC 10 Constitution save each hour or gain one level of exhaustion)\n**Illumination**\tBright (fires every 40 ft.)",
       "choices": [
         "Room1"
       ],
@@ -88,7 +91,7 @@
       "choices": ["North","East1","East2","South"],
       "thumb": "https://i.imgur.com/Dzy1YYs.jpg",
       "monsters": {
-        "k1": ["Kree the Kobold", "e12", "m2v2m~", "M", "r"]
+        "a1": ["Kree the Kobold", "e12", "m2v2m~", "M", "r"]
       },
        "image": "map",
        "map": {"view": "a7:9x11", "fow": "a7:i17"}
@@ -99,69 +102,172 @@
       "thumb": "https://i.imgur.com/i8VfLXv.jpg",
       "map": {"view": "a1:9x17", "fow": "a1:c7"},
       "image": "map",
-      "requires": ["room1northkey"]
+      "requires": ["north"]
     },
     "East1": {
       "description": "**Room 2** A wooden platform hangs over a deep pit in the center of the room, and the floor is covered with fungus",
-      "choices": ["West Door 1","Room1"],
+      "choices": ["WestDoor1","Room1"],
       "image": "map",
-      "trap": {"name":"Rune of Paralyzation","dc": 10,"save": "wisdom","damage": "0[paralyzed]"},
+      "trap": {"name":"Rune of Paralyzation","type":"save","tofind":15,"todisable":15, "dc": 10,"save": "wisdom","damage": "0[paralyzed]"},
       "monsters": {
-        "wk1": ["Wayne the Kobold","k5", "9abwp", "M", "r" ]
+        "b1": ["Wayne","k5", "9abwp", "M", "r" ]
       },
-      "requires": ["room1east1key"],
+      "requires": ["east1"],
       "map": {"view": "i1:5x8", "fow": "i1:m9"}
     },
     "WestDoor1":{
       "description": "The hallway goes down 25ft, and takes a left turn for another 15 feet. There is a painting at the end of the hall",
       "choices": ["East1"],
       "image": "map",
+      "thumb": "https://i.imgur.com/eId4igB.jpg",
       "map": {"view": "c1:m9", "fow": "c1:i5"}
     },
     "East2": {
       "description": "Hallway adorned with absolutely nothing. Torches light the way every 40 ft, The north way curves back east and north again. The south way curves west. Both directions are obscured by the corners.",
-      "choices": ["North Hallway", "South"],
+      "choices": ["North Hallway", "South", "Room1"],
       "image": "map",
-      "requires": [],
-      "map": {"view": "i9:o19","fow": "i9:o19"}
+      "map": {"view": "i9:o19","fow": "i9:o19"},
+      "monsters": {
+        "d1": ["Lillith", "n10", "88txn", "M", "r"],
+        "d2": ["Lemmy", "m10", "88txn", "M", "r"]
+      }
     },
     "South": {
-      "description": "Hallway only goes East.",
-      "choices": ["East2"],
+      "description": "Hallway only goes East. There is a hunched figure eating rats off the floor, it doesn't seem to notice you",
+      "choices": ["East2", "Room1"],
       "image": "map",
-      "requires": ["room1east2key"],
-      "map": {"view": "a17:k19", "fow": "a17:k19"}
+      "requires": ["east2"],
+      "map": {"view": "a17:k19", "fow": "a17:k19"},
+      "monsters": {
+        "c3": ["Kokiri", "f18", "np49h", "M", "r"]
+      }
     },
     "North Hallway": {
       "description": "There is nothing of value on this hallway. It turns east.",
       "map": {"view": "m1:ac11", "fow": "m1:o10"},
       "image": "map",
-      "choices": ["East Hallway"]
+      "choices": ["East2","Long Hallway"]
     },
-    "East Hallway":{
-      "description": "",
+    "Long Hallway":{
+      "description": "There is a long stretch of empty hallway. Echoes stir at the end of it. In the shadows, something moves",
       "image": "map",
       "map": {"view": "m1:ac11","fow": "m1:ac3"},
-      "choices": ["South Again"]
+      "monsters": {
+        "d3": ["Layla", "aa2", "88txn", "M", "r"],
+        "d4": ["Lulu", "ab2", "88txn", "M", "r"]
+      },
+      "choices": ["North Hallway","Dripping Corridor"]
     },
-    "South Again": {
-      "description":"",
+    "Dripping Corridor": {
+      "description":"The corridor goes around, dark corners and shadows lurk abundantly. Drips of water start pouring from above. ",
       "map": {"fow": "w3:ac11","view": "m1:ac11"},
-      "choices": ["South Door 2", "Creepy Corridor"],
+      "choices": ["Long Hallway","South Door 2", "Creepy Corridor"],
       "image": "map"
     },
     "Creepy Corridor": {
-      "description": "The walls here have been engraved with arcane symbols",
-      "image": "https://i.imgur.com/1unsP0z.png",
-      "map": {"fow": "o7:w9","view": "w3:ac11"},
-      "choices": ["South Again"]
+      "description": "The walls here have been engraved with arcane symbols. A misterious winged figure seems to be looking at them",
+      "image": "map",
+      "thumb": "https://i.imgur.com/1unsP0z.png",
+      "map": {"fow": "o3:w11","view": "m1:ac11"},
+      "choices": ["Dripping Corridor"],
+      "monsters": {
+        "b2": ["Willis","r8", "9abwp", "M", "r" ]
+      }
     },
     "South Door 2": {
       "description": "A tapestry of vile acts hangs from the south wall, and an iron chandelier hangs from the ceiling in the north-east corner of the room",
+      "thumb": "https://i.imgur.com/LnCd56p.jpg",
       "image": "map",
       "map": {"view": "u11:y22","fow": "u11:y22"},
-      "choices": ["North Door 2","East Door 2","South Door 2"],
-      "trap": {"name":"Arrow Trap","dc": 10,"save": "dexterity","damage": "4d10[piercing]"}
+      "choices": ["Dripping Corridor","East Door 2","South Door 3"],
+      "trap": {"name":"Arrow Trap","type":"attack","tohit": 11, "tofind":15, "todisable":10, "damage": "4d10[piercing]"}
+    },
+    "East Door 2": {
+      "description": "The door behind you shuts closed. No way to open it back up. There is only one way to go",
+      "image": "map",
+      "map": {"view": "y17:ac29","fow": "y17:ac29"},
+      "choices": ["First Corridor"]
+    },
+    "South Door 3": {
+      "description": "To the east, there are stairs leading down, further into the dungeon. To the West, more corridors and a shiny object at the end of the hall. Right in front of you, is an open archway. ",
+      "image": "map",
+      "map": {"view": "k20:aa23","fow": "k20:aa23"},
+      "choices": ["~~Downstairs~~","South Door 2","Corridor of Shiny","Archway Room"]
+    },
+    "~~Downstairs~~": {
+      "description": "It is locked. You cannot go there just yet. ",
+      "choices": ["South Door 3"],
+      "image": "https://i.imgur.com/NEINkLa.jpg"
+    },
+    "Archway Room": {
+      "description": "Two Kobolds await you in this room. There is an iron door in the corner of the room. ",
+      "image": "map",
+      "map": {"view": "m23:w27","fow": "m23:w27"},
+      "choices": ["South Door 3","Corner Iron Door"],
+      "monsters": {
+      "c1": ["KuKu", "t25", "np49h", "M", "r"],
+      "c2": ["Kaliman", "o25", "np49h", "M", "r"]
+      }
+    },
+    "Corner Iron Door": {
+      "description": "The broom closet has a dead person inside. It has been there for about 100 years, it seems.",
+      "image": "map",
+      "thumb": "https://i.imgur.com/h3bnA0O.jpg",
+      "map": {"view":"i25:m27", "fow": "i25:m27"},
+      "choices": ["Archway Room"],
+      "requires": ["irondoor"]
+    },
+    "Corridor of Shiny": {
+      "description": "The corridor splits off into 2 more. There is loud banging sounds coming from up ahead. ||If you were 20 ft from the explosion at L24, you are deafened for 1d4 rounds and take damage|| At the end of the hallway, towards the second corridor, There is a demonic idol with large ruby eyes on a pedestal",
+      "choices": ["First Corridor","Second Corridor", "South Door 3"],
+      "map": {"view":"e21:m25", "fow": "e21:m25"},
+      "image": "map",
+      "thumb": "https://i.imgur.com/EgsANLS.jpg",
+      "trap": {
+        "name":"Thunderstone Mine","type":"save","tofind":15,"todisable":15, "dc": 12,"save": "dexterity","damage": "2d10[thunder]"
+      }
+    },
+    "First Corridor": {
+      "description": "This long corridor loops back around the other way. A row of enemies are lined up in the hallway, just wandring. ",
+      "choices": ["Corridor of Shiny","East Door 2"],
+      "map": {"view":"g27:ac29", "fow": "g27:ac29"},
+      "image": "map",
+      "monsters": {
+        "d5": ["Lina", "k28", "88txn", "M", "r"],
+        "d6": ["Luna", "q25", "88txn", "M", "r"],
+        "d7": ["Lana", "t28", "88txn", "M", "r"],
+        "d8": ["Limona", "z28", "88txn", "M", "r"]
+      }
+    },
+    "Second Corridor": {
+      "description": "This snakey corridor seems to be much cleaner than the rest of them. There is sounds of birds up ahead ",
+      "choices": ["Corridor of Shiny","Stairs Room"],
+      "map": {"view":"a23:i29", "fow": "a23:i29"},
+      "image": "map",
+      "monsters": {
+        "d5": ["Lina", "k28", "88txn", "M", "r"],
+        "d6": ["Luna", "q25", "88txn", "M", "r"],
+        "d7": ["Lana", "t28", "88txn", "M", "r"],
+        "d8": ["Limona", "z28", "88txn", "M", "r"]
+      },
+      "trap": {
+        "name":"Net Trap","type":"save","tofind":10,"todisable":10, "dc": 10,"save": "dexterity","damage": "0[restrained]"
+      }
+    },
+    "Stairs Room": {
+    "description": "There are stairs going back up onto the surface. You can hear birds. Are you sure you want to go up, you may never come back. Behind the hallway wall there are two things making out in the corner.",
+      "choices": ["Outside"],
+      "map": {"view":"a19:j29", "fow": "a19:e24"},
+      "image": "map",
+      "monsters": {
+        "d9": ["Lickety", "d25", "88txn", "M", "r"],
+        "d10": ["Lackety", "d26", "88txn", "M", "r"]
+      }
+  },
+    "Outside": {
+      "description": "You have made it out of the dungeon. The door to it dissapears never to be seen again. I hope you got all the stuff you needed from there.",
+      "choices": ["Outside"],
+      "image": "https://i.imgur.com/tSgFOcu.jpg"
     }
   }
 }
