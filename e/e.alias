@@ -106,7 +106,7 @@ if typedPosition != "":
             if "requires" in loadedData[position].keys() and not isBar:
                 # need to decode the key
                 isAllowed = False
-                keyReturned = combat().me.note.split(" | ")
+                keyReturned = combat().me.note.split(" | ") if combat().me.note != None else []
                 keyReturned = {x[0].lower(): x[1] for x in [item.split(": ") for item in keyReturned]}
                 ### KEYS KEYS KEYS ###
                 # check for keys first at the user who ran the command, if not found, checks to see see if doors been open before.
