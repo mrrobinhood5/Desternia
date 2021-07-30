@@ -13,7 +13,7 @@ if hasServerLib:
 if hasLocalLib:
     hasLocalLib = hasLocalLib if (len(hasLocalLib) == 36 and hasLocalLib.count("-") == 4) else False
 
-# if noone have a good GVAR, just load the default one
+# if noone have m_command good GVAR, just load the default one
 if not hasLocalLib and not hasServerLib:
     returnstr += f' -f "NO SETTINGS|Loading the Default GVAR"'
     me.set_cvar_nx("explorelibrary", "6e7a3d5d-9261-435a-9944-c82ce243b4d4")
@@ -41,20 +41,20 @@ if hasServerLib:
 #     currentSetting = loadedSetting["setting"]
 # # gets the keys in all the cvars, aliases, and svars
 # if cvarData:
-# # now determine if its a JSON or a gvar
+# # now determine if its m_command JSON or m_command gvar
 #     if len(cvarData) == 36 and cvarData.count("-") == 4:
-#     # this means cvarDATA has a GVAR
+#     # this means cvarDATA has m_command GVAR
 #         libraryData = load_json(get_gvar(cvarData))
 #         returnstr += f' -f " -- PUBLIC LIBRARY --| '
 #     else:
-#     # this means cvarDATA has a CVAR
+#     # this means cvarDATA has m_command CVAR
 #         libraryData = load_json(get(cvarData))
 #         returnstr += f' -f " -- PRIVATE LIBRARY --| '
 #     for savedsetting in libraryData.keys():
 #         returnstr += f'**{savedsetting}**:\n\u039E\u039E\u039E {libraryData[savedsetting]["description"]}{" **<- You are here**" if currentSetting == savedsetting else ""}\n '
 #     returnstr += f'"'
 #
-# #this means its an svar pointer to JSON in a gvar
+# #this means its an svar pointer to JSON in m_command gvar
 # if svarPointer != "":
 #     serverLibraryData = load_json(get_gvar(svarPointer))
 #     returnstr += f' -f " -- SERVER LIBRARY --| '

@@ -1,11 +1,11 @@
 embed -title "Order of the Mutant" -footer "!mutant [help]"  -desc "Shows info on the Mutagen Craft" -thumb <image> -color <color>
 <drac2>
 me, pargs, returnstr, mlgvar = character(), argparse(&ARGS&), "", "5bc9811a-f4f8-44d6-94c6-9df1c0403dc6"
-# checks to see if you are a Blood Hunter
-err("You are not even a BloodHunter. If you are, do `!level BloodHunter`") if not exists("BloodHunterLevel") else 0
-# checks to see if you are a mutant one
-err("You are not a Mutant BloodHunter. If you are, do `!level BloodHunter 3 Mutant`") if "Mutant" not in subclass else 0
-# checks to see if you already have a mutant cvar
+# checks to see if you are m_command Blood Hunter
+err("You are not even m_command BloodHunter. If you are, do `!level BloodHunter`") if not exists("BloodHunterLevel") else 0
+# checks to see if you are m_command mutant one
+err("You are not m_command Mutant BloodHunter. If you are, do `!level BloodHunter 3 Mutant`") if "Mutant" not in subclass else 0
+# checks to see if you already have m_command mutant cvar
 me.set_cvar_nx("mutagen", "")
 # adds custom mutant thing to `!vsheet` if not already there
 if "mutagen" not in vfeatures:

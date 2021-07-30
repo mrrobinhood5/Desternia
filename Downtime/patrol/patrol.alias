@@ -27,6 +27,8 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 me, returnstr, downtime, targetCriminal = character(), "", "patrol", &ARGS&
 results, disguise, tools= {timestamp:{downtime:{}}}, False, False
 hiddenPass, stealPass, apprehendPass, hiddenBonusStr, stealBonusStr = False, False, False, "", ""
+# set up observant
+observant = True if exists("feats") and "observant" in feats.lower() else False
 # first first check to see if you are in the right channel
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -f "Error|Go do your patrol downtime in the #downtime channel"'
@@ -47,10 +49,10 @@ else:
 # first roll is investigation or perception, whatever is higher.
 if me.skills.perception.value > me.skills.investigation.value:
     scoutSkill = "perception"
-    scoutRoll = me.skills.perception.d20()
+    scoutRoll = me.skills.perception.d20() if not observant else me.skills.perception.d20(True)
 else:
     scoutSkill = "investigation"
-    scoutRoll = me.skills.investigation.d20()
+    scoutRoll = me.skills.investigation.d20() if not observant else me.skills.investigation.d20(True)
 scoutResult = vroll(scoutRoll)
 
 # if you passed a name and number, do a check rq:
@@ -59,7 +61,7 @@ if targetCriminal == []:
 else:
     # targetCriminal = targetCriminal.split(" ")
     returnstr += f' -f "Attempting|To catch `{targetCriminal[0].title()}` who rolled a `{targetCriminal[1]}`" '
-    returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*\n{scoutResult.full}\n"'
+    returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*{"- *Observant*" if observant else ""}\n{scoutResult.full}\n"'
     if scoutResult.total >= int(targetCriminal[1]):
         returnstr += f' -f "SUCCESS| You have caught `{targetCriminal[0].title()}`, RP your interaction with them. "'
     else:
@@ -83,7 +85,7 @@ for x in minrolls:
         break
     else:
         pointer += 1
-returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*\n{scoutResult.full}\n`{crimeTarget.title()}` for a multiplier of `{earnMultiplier}`"'
+returnstr += f' -f "Scouting Roll|*{scoutSkill.title()}*{"- *Observant*" if observant else ""}\n{scoutResult.full}\n`{crimeTarget.title()}` for a multiplier of `{earnMultiplier}`"'
 
 # next rolls for Hidden Roll
 if earnMultiplier == 0:
@@ -92,7 +94,7 @@ else:
     # sets the DC for this roll
     hiddenRollDC = vroll(f'2d10+{level}')
     #checks for the best combo
-    stealthBonuses = [dexterityMod+(me.skills.stealth.prof * proficiencyBonus), intelligenceMod+(me.skills.stealth.prof * proficiencyBonus), dexterityMod+(me.skills.stealth.prof * proficiencyBonus)]
+    stealthBonuses = [dexterityMod+(me.skills.stealth.prof * proficiencyBonus), intelligenceMod+(me.skills.stealth.prof * proficiencyBonus), wisdomMod+(me.skills.stealth.prof * proficiencyBonus)]
     stealthAbilities = ["dexterity", "intelligence", "wisdom"]
     stealthRolls = [me.skills.stealth.d20(), me.skills.stealth.d20(mod_override=intelligenceMod + (me.skills.stealth.prof * proficiencyBonus)),me.skills.stealth.d20(mod_override=wisdomMod + (me.skills.stealth.prof * proficiencyBonus))]
     hiddenRoll = stealthRolls[stealthBonuses.index(max(stealthBonuses))]

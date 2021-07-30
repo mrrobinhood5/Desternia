@@ -31,7 +31,7 @@ if basecost == 0:
 for x in rawpargs:
     if x in abilities.keys():
         ab, abmod = x, abilities[x]
-    #iterates through rarities passed to make sure its a good rarity
+    #iterates through rarities passed to make sure its m_command good rarity
     if x in rarities.keys():
         rarity=x
         y = rarities[x]

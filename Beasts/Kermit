@@ -1,0 +1,23 @@
+Kermit was found near a swamp on the west side of Rosemere. He is a male. He may probably be the last one, they live
+forever and rarely move around unless they are gonna eat.
+
+The arena is not the best place to take full advantage of kermit, but if anyone casts darkness, he can use the
+Shadow Step
+
+What makes Kermit difficult is his swallow.
+
+To Play Kermit, follow these guidelines:
+Add Kermit to init by ( !i madd kermit -name "Kermit" )
+* Heres the order of attacks: Tongue, Bite, Swallow.
+* Tongue attack pulls them in within Bite Distance, and gives a bonus action to Bite IF they fail the grapple check.
+  You cant do swallow in the same turn as a Tongue/Bite combo
+  ( !i a tongue -t target )
+  ( !c acro -dc 15 )
+* Bite attack once they are in melee, another acro check to be grappled. You can only Swallow a grappled creature.
+  ( !i a bite -t target )
+* Once they are grappled, and you make a bite attack, if the attack hits, they are swallowed.
+* Every turn they start inside of Kermit do a Swallow attack to deal acid damage
+  ( !i a swallow -t target )
+* The goal is to just swallow as fast as possible.
+* Again, kermit can be beat easily by fighting it from far away, or with a flying creature.
+

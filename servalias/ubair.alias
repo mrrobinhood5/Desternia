@@ -1,0 +1,52 @@
+embed -title "{{name}} uses Unbroken Air" -color <color>
+-thumb <image> {{args=&ARGS&}}
+<drac2>
+#variables go here
+returnstr = f'-f "'
+subcl = load_json(subclass)
+cc = "Ki Points"
+ch = character()
+pargs = argparse(args)
+ki_use = 2 if not pargs.get('k') else int(pargs.get('k')[0])
+ki_use = 2 if ki_use < 2 else ki_use
+target = None if not pargs.get('t') else pargs.get('t')[0]
+enemy = combat().get_combatant(target)
+save_dc = proficiencyBonus + wisdomMod + 8
+damage = f'{ki_use+1}d10[bludgeoning]'
+footer = f''
+#check to see if you are a 4 elements monk
+if not "MonkLevel" in subcl.keys():
+    err("You are not a monk!")
+    if not "Four Elements" in subcl["MonkLevel"]:
+        err("You are not a Four Elements Monk!")
+#check to see if you have ki points
+if not ch.cc_exists(cc) or ch.get_cc(cc) < ki_use:
+    err("You are tyring to use ki points, but you dont have enough!")
+#check for combat
+if not combat():
+    err("You're Not in Combat. Whoopsie.")
+#check for target and roll its save, deal damange
+if not target:
+    err("You must provide a target with -t target")
+else:
+    save = enemy.save("strength")
+    target_name = enemy.name
+    returnstr += f'{target_name}\n Save DC: {save_dc}\n STR save: {save}; '
+    if save.total >= save_dc:
+        returnstr += f'Success \n'
+        damage_roll = enemy.damage(f'({damage})/2')["damage"]
+        returnstr += f'{damage_roll} \n'
+    else:
+        returnstr += f'Failure \n'
+        damage_roll = enemy.damage(damage)["damage"]
+        enemy.add_effect("Prone","")
+        returnstr += f'{damage_roll} \n'
+        returnstr += f'Effect Added: Prone \n'
+    footer += f'{target_name}{enemy.hp_str()} \n'
+# Cash in the counter
+ch.mod_cc(cc, ki_use*-1)
+returnstr += f'" -f "Ki Points {ch.cc_str(cc)} (-{ki_use})"'
+return returnstr
+</drac2>
+-desc "You can create a blast of compressed air that strikes like a mighty fist. As an action, you can spend 2 ki points and choose a creature within 30 feet of you. That creature must make a Strength saving throw. On a failed save, the creature takes 3d10 bludgeoning damage, plus an extra 1d10 bludgeoning damage for each additional ki point you spend, and you can push the creature up to 20 feet away from you and knock it prone. On a successful save, the creature takes half as much damage, and you don't push it or knock it prone."
+-footer {{footer}}

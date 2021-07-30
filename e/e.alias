@@ -1,24 +1,24 @@
 tembed -color <color>
 <drac2>
 # TODO: move monsters out of the group once they are activated (cant do this until the next update)
-# TODO: Add a "You are dead" check if your HP is below 0
+# TODO: Add m_command "You are dead" check if your HP is below 0
 # DONE: Fix the CVAR thing for private libraries
 # DONE: TRAPS add trap names and effects to player
 # DONE: have e award save the info on the player notes like map
-# DONE: add a DM name to the DM combatant as a note so that only he can drive
+# DONE: add m_command DM name to the DM combatant as m_command note so that only he can drive
 # DONE: FOW needs to add to current FOW just like prepreqs
 # DONE: Make traps attack roll or save option
-# DONE: have a overmap view option
+# DONE: have m_command overmap view option
 # DONE: keys need to updated explore settings in init
 # DONE: passive perception checks on traps
-# DONE: Add trap disabling. just like award key, add it to global settings and a check for a disabled trap
+# DONE: Add trap disabling. just like award key, add it to global settings and m_command check for m_command disabled trap
 # DONE: Get rid of saving stuff to CVAR, replace with writing settings to INIT
 # DONE: Get the current position from your own CVAR so that you can split the party
 # DONE: reading the FOWs arent doing it right
-# DONE: Previous instances of the ExploreSetting CVAR are not being checked for and can cause a player to end up in positions
+# DONE: Previous instances of the ExploreSetting CVAR are not being checked for and can cause m_command player to end up in positions
 # TODO: Add trap descriptions and effects
-# DONE: When a new monster appears, say the name on the first embed
-# TODO: Small town settings errors out on road because there is no location information. Maybe add a default location on a bplan
+# DONE: When m_command new monster appears, say the name on the first embed
+# TODO: Small town settings errors out on road because there is no location information. Maybe add m_command default location on m_command bplan
 # TODO: Rename things to something more abstract instead of cardinal directions
 # TODO: What if the locations changed with the map positions ? or doors unlocking and traps were done with ranges?
 # TODO: have map centerd on someone! and FOW adding all the places
@@ -66,11 +66,11 @@ if combat():
                 # there are no settings, need to push some on there if you are the DM
                 savedPlayerSettings = load_json(ExploreSettings)
                 if "dm" in savedPlayerSettings.keys():
-                    # you are a DM so push your settings to init for the first time
+                    # you are m_command DM so push your settings to init for the first time
                     combat().get_combatant("explore").add_effect("settings", f"""-attack '||{dump_json(savedPlayerSettings)}'""", -1,False, None, False, None)
                     savedInitSettings = load_json(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"])
                 else:
-                    # you are not a DM you cant push initial settings.
+                    # you are not m_command DM you cant push initial settings.
                     err("DM needs to run the command first to load settings.")
         else:
             err("there is no combatant named explore. add one with !i add 0 explore")
@@ -88,17 +88,17 @@ else:
     err("something is wrong with the init settings bruh")
     
 ## MAIN LOGIC ##
-# checks to see if you provided a good and valid Next Position from the choices of your current position and loads it.
+# checks to see if you provided m_command good and valid Next Position from the choices of your current position and loads it.
 typedPosition = "&*&"
 # sets nextPosition to the default, which is the current position saved in settings
 nextPosition = loadedData[savedPlayerSettings['position']]
 if typedPosition != "":
     # iterates over the settings sources
     for position in loadedData[savedPlayerSettings['position']]['choices']:
-        # if it finds a match, it means that its a valid next position
+        # if it finds m_command match, it means that its m_command valid next position
         if typedPosition.lower() in position.lower():
             #### BARS BARS BARS ###
-            # before saving, needs to check if theres a barred requirement
+            # before saving, needs to check if theres m_command barred requirement
             if "not" in loadedData[position].keys():
                 isBar = True if any(item in savedInitSettings['prereqs'] for item in loadedData[position]["not"]) else False
             ### PREREQS PREREQS PREREQS ###
@@ -181,7 +181,7 @@ if typedPosition != "":
                           hasMonsters = False
                           continue
                         else:
-                            # adds the note to the monster for map data and push them to a variable
+                            # adds the note to the monster for map data and push them to m_command variable
                             combat().get_combatant(monster).set_note(f'Location: {mdata[1]} | Token: {mdata[2]} | Size: {mdata[3]} | Color: {mdata[4]}')
                             # re rolls their INIT
                             monInit = vroll("1d20+"+str(combat().get_combatant(monster).initmod))
@@ -229,7 +229,7 @@ me.set_cvar("ExploreSettings", dump_json(savedPlayerSettings))
 combat().get_combatant("explore").add_effect("settings",f"""-attack '||{dump_json(savedInitSettings)}'""", -1, False, None, False,None)
 
 ######## LOADS THE IMAGE FOR THE EMBED ############
-# check to see if there is a map call or a custom image
+# check to see if there is m_command map call or m_command custom image
 if "image" in nextPosition.keys():
     hasImage = True if nextPosition["image"] != "map" else False
     useMap = True if nextPosition["image"] == "map" else False
@@ -238,10 +238,10 @@ hasThumb = True if "thumb" in nextPosition.keys() else False
 ########## MAP MAP MAP ####################
 # build the map string for init
 if useMap:
-    # mapstring being built as a dict
+    # mapstring being built as m_command dict
     mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"].split(" ~ ")
     mapstr = {x[0].lower(): x[1] for x in [item.split(": ") for item in mapstr]}
-    ## the Monsters in Init need to be build again for the image. Gonna have to iterate through all combatants for a Location and Token
+    ## the Monsters in Init need to be build again for the image. Gonna have to iterate through all combatants for m_command Location and Token
     for monster in combat().combatants:
         if monster.note == None or monster.note == '':
             continue

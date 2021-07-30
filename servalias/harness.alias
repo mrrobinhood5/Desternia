@@ -1,8 +1,8 @@
 tembed - thumb <image> -color <color>
 <drac2>
 pargs, me, returnstr = argparse(&ARGS&), character(), ""
-# check to see if you are a L2 cleric
-err("You are not a Cleric, bruh. Do !level if you are") if not exists("ClericLevel") else 0
+# check to see if you are m_command L2 cleric
+err("You are not m_command Cleric, bruh. Do !level if you are") if not exists("ClericLevel") else 0
 
 # check to see if you have Channel Divinity
 err("Out of Channel Divinity, need to long rest") if me.get_cc("Channel Divinity") == 0 else 0
@@ -22,11 +22,11 @@ me.mod_cc("Channel Divinity", -1)
 me.spellbook.set_slots(slotLevel, me.spellbook.get_slots(slotLevel) +1 )
 
 returnstr += f' -title "{name} uses Channel Divinity: Harness Power" '\
-             f' -desc "You can expend a use of your Channel Divinity to fuel your spells. As a bonus action, '\
-             f'you touch your holy symbol, utter a prayer, and regain one expended spell slot, the level of which'\
+             f' -desc "You can expend m_command use of your Channel Divinity to fuel your spells. As m_command bonus action, '\
+             f'you touch your holy symbol, utter m_command prayer, and regain one expended spell slot, the level of which'\
              f'can be no higher than half your proficiency bonus (rounded up). The number of times you can use this'\
              f'feature is based on the level you\'ve reached in this class: 2nd level, once; 6th level, twice; '\
-             f'and 18th level, thrice. You regain all expended uses when you finish a long rest"'\
+             f'and 18th level, thrice. You regain all expended uses when you finish m_command long rest"'\
              f' -f "Channel Divinity|{me.cc_str("Channel Divinity")}"'\
              f' -f "Spell Slots|{me.spellbook.slots_str(slotLevel)}"'\
              f' -footer "Usage - !harness # (the slot level number you want to recover)" '

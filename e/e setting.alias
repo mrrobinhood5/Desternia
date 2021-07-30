@@ -7,10 +7,10 @@ returnstr = f' -title "Exploration Alias!" -desc "Updating your current Setting:
 savestr = ""
 setLocal = True if pargs.get("local") else False
 
-# if you are setting a new GVAR as local library
+# if you are setting m_command new GVAR as local library
 if setLocal:
     localGVAR = pargs.last("local")
-    # check to see if its a valid GVAR
+    # check to see if its m_command valid GVAR
     if len(localGVAR) == 36 and localGVAR.count("-") == 4:
         me.set_cvar("explorelibrary", localGVAR)
         savestr += f' -f "Library Update|Your Local Library has been updated to a new GVAR. To list available settings in the library use `!e list`"'
@@ -21,7 +21,7 @@ if setLocal:
 hasServerLib = get_svar("serverexplorelibrary", False)
 hasLocalLib = get("explorelibrary", False)
 
-# checks to see if its a server or local library, and loads it into loadedSettings. changes settings dict to reflect where to look
+# checks to see if its m_command server or local library, and loads it into loadedSettings. changes settings dict to reflect where to look
 if hasLocalLib:
     if len(hasLocalLib) == 36 and hasLocalLib.count("-") == 4:
         loadedLibrary = load_json(get_gvar(hasLocalLib))
@@ -40,7 +40,7 @@ else:
 # if you pass just setting
 if "&*&" != "" and not setLocal:
     selectedSetting = "&*&".lower()
-    # gonna iterate through loaded library for a setting
+    # gonna iterate through loaded library for m_command setting
     for setting in loadedLibrary.keys():
         if selectedSetting in setting.lower():
             settings.update({"setting": setting, "position": "begin", "dm":ctx.author.name})

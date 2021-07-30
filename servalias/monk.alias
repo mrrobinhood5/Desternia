@@ -1,0 +1,66 @@
+!alias monk embed -color <color> -thumb <image>
+<drac2>
+wis_mod = wisdomMod
+descriptions = load_json(get_gvar("6687a6d3-92fe-4ce9-86c6-fbe26f9e5970"))
+m_command = "&1&"
+user_level = int(MonkLevel) if exists("MonkLevel") else level
+empty_string = ""
+s_class = subclass if exists("subclass") else ""
+save_dc = 8 + proficiencyBonus + wis_mod
+hp = "Hit Points"
+ch = character()
+returnst = ""
+DESC = ""
+# loads the info for the feature you passed in m_command
+feature_object =([x for x in descriptions if 'name' in x and m_command.lower() in x.name.lower()] + [empty_string])[0] if m_command else empty_string
+# feature_object =([x for x in descriptions if 'name' in x and m_command.lower() in x['name'].lower()] + [empty_string])[0] if m_command else empty_string
+
+name = feature_object.name if 'name' in feature_object else empty_string
+# name = feature_object['name'] if 'name' in feature_object else empty_string
+
+original_damage = int("&2&") if "&2&".isdigit() and feature_object and ("Slo" in name or "efl" in name) else 0
+spend_ki = int("&2&") if "&2&".isdigit() else 0
+extra_ki = (feature_object.num if 'num' in feature_object else 1) + spend_ki
+# extra_ki = (feature_object['num'] if 'num' in feature_object else 1) + spend_ki
+
+damage = 0 if not name else vroll(f'{2 * spend_ki}d10') if "Long" in name else vroll("10d10") if "Qui" in name else user_level * 5 if "Slo" in name else vroll(f"1d10+{dexterityMod + user_level}") if "Defl" in name else user_level + wis_mod if "of D" in name else 0
+
+
+
+
+cc = "Ki" if 'cc' in feature_object and feature_object.cc == descriptions[2][1] and cc_exists("Ki") else feature_object.cc if 'cc' in feature_object else empty_string
+# cc = "Ki" if 'cc' in feature_object and feature_object['cc'] == descriptions[2][1] and cc_exists("Ki") else feature_object['cc'] if 'cc' in feature_object else empty_string
+
+success = ('y' in feature_object and cc_exists(cc) and get_cc(cc) >= extra_ki) if cc else 1
+extra_ki = 0 if 'name' in feature_object and "Mas" in name and get_hp() > 0 else extra_ki
+
+# -title "{{f"{name} {'uses'if success else'tries to use'} {name}"if feature_object else" Monk"}}"
+title = f'{name} {"uses" if success else "tries to use"} {name}' if feature_object else "Monk"
+
+########## Build the Descriptions
+if not feature_object:
+    DESC += get_gvar(descriptions[1])
+elif cc and not ch.cc_exists(cc):
+    DESC += descriptions[0]
+elif damage:
+    DESC += feature_object['y'].replace('#d#', str(damage))
+else:
+    DESC += feature_object['y']
+
+if "Flu" in name and "unk" in s_class:
+    DESC += f'\n\n{feature_object["drunk"]}'
+    if feature_object['drunk17']:
+        DESC += f'\n\n{feature_object["drunk17"]}'
+
+if success:
+    if "Flu" in name and "Op" in s_class:
+        DESC += f'\n\n{feature_object["open"]}'
+    else:
+        DESC += feature_object['name']
+
+mod_cc(cc,-extra_ki) if cc and success and (get_cc(cc)==0 if "erf" in name else 1) else empty_string
+
+f"-f '{cc}|{cc_str(cc)}'" if cc and cc_exists(cc) else empty_string
+real_damage = min(original_damage, (damage if str(damage).isdigit() else damage.total))
+f"-f '{descriptions[2][2]}|{real_damage}' -f '{hp}|{empty_string if set_hp(min(hp, real_damage + get_hp())) else empty_string}{get_hp()} / {hp}'"if v and damage and original_damage else empty_string
+(f"-f 'DC|{save_dc}'"if "Stu" in name else f"-f '{hp}|{empty_string if set_hp(1 if 'Mas' in name and get_hp() <= 0 else min(hp, get_hp() + 3 * user_level)if 'Who' in name else get_hp()) else empty_string}{get_hp()} / {hp}'"if("Mas" in name or "Who" in name)else (empty_string if set_temphp(user_level + w) else empty_string) + f"-f 'Temp {hp}|{user_level + wis_mod}'"if "of D" in name else f"-f '{descriptions[2][3]}|{vroll('1d' + str(int((user_level + 13) / 6) * 2))}'"if 'eft' in name else empty_string)if 'name' in feature_object and success else empty_string

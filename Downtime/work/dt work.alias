@@ -28,7 +28,9 @@ if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
 
 #initialize all of the variables
 pargs, downtime, returnstr, baseroll, advroll =argparse(&ARGS&), "work",  "", "1d20+", "2d20kh1+"
-
+eloq_bard = True if "eloquence" in subclass.lower() else False
+eloq_roll = "1d20mi10+"
+eloq_adv_roll = "1d20kh1mi10"
 #determine if it will run once or twice
 downtimes, results = 1 if pargs.get("part") or pargs.get("parttime") or pargs.get("part-time") else 2, {timestamp:{downtime:{}}}
 
@@ -60,15 +62,32 @@ else:
         dtcount += 1
     if dtcount >= 2:
       return f'-t90 -title "{name} attemtps to work" -desc "You dont have enough downtimes" -t 30 -f "Fix| If you only have 1 DT left, try `!dt work part`"'
+
   #loads Job Settings from !dt work save
   js = JobSettings.split(",")
-  for x in range(downtimes):    
-    quanroll = vroll(baseroll+js[1]) if not quanAdv else vroll(advroll+js[1])
-    qualroll = vroll(baseroll+js[5]) if not qualAdv else vroll(advroll+js[5])
-    relationroll = vroll(baseroll+js[7]) if not relationAdv else vroll(advroll+js[7])
+  for x in range(downtimes):
+    if eloq_bard and js[0] == ("persuasion" or "deception"):
+      quanroll = vroll(eloq_roll+js[1]) if not quanAdv else vroll(eloq_adv_roll+js[1])
+    else:
+      quanroll = vroll(baseroll + js[1]) if not quanAdv else vroll(advroll + js[1])
+    # different quality rolls if you have tools expertise
+    if eloq_bard and js[3] == ("persuasion" or "deception"):
+      qualroll = vroll(eloq_roll+js[5]) if not qualAdv else vroll(eloq_adv_roll+js[5])
+    else:
+      qualroll = vroll(baseroll + js[5]) if not qualAdv else vroll(advroll + js[5])
+    if eloq_bard and js[6] == ("persuasion" or "deception"):
+      relationroll = vroll(eloq_roll+js[7]) if not relationAdv else vroll(eloq_adv_roll+js[7])
+    else:
+      relationroll = vroll(baseroll + js[7]) if not relationAdv else vroll(advroll + js[7])
+
     averageroll = (quanroll.total+qualroll.total+relationroll.total)/3
     results[timestamp][downtime].update({str(x+1):floor(averageroll)})
-    returnstr += f' -title "{name} works at {RosemereJob} for {timestamp}" -thumb <image> -f "Results|Work Quantity: *{js[0].capitalize()}(Constitution)*\n{quanroll.full}\nWork Quality: *{js[3].capitalize()}({js[4].capitalize()})*\n{qualroll.full}\nWork Relations: *{js[6].capitalize()}*\n{relationroll.full}" -footer "Usage - !dt work [part] [-adv quan/qual/relation]"'
+    returnstr += f' -title "{name} works at {RosemereJob} for {timestamp}" -thumb <image> ' \
+                 f'-f "Results|Work Quantity: *{js[0].capitalize()}(Constitution)*\n{quanroll.full}\n' \
+                 f'Work Quality: *{js[3].capitalize()}({js[4].capitalize()})*\n{qualroll.full}\n' \
+                 f'Work Relations: *{js[6].capitalize()}*\n{relationroll.full}" ' \
+                 f'-footer "Usage - !dt work [part] [-adv quan/qual/relation]"'
+
     returnstr += f'-f "Familiar|Using your familiar for work gives your advantage on one work roll"' if hasAdv else f''
   workdata.update(results)
   character().set_cvar("DTTrack",dump_json(workdata)) 

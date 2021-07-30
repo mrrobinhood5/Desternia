@@ -1,0 +1,20 @@
+Grabby was found near the north mountains. He is a male. There is a female left in the wild and at some point the plan
+is to reunite them. There are a bunch of babies, and they give live births.
+
+What makes Grabby difficult is that he has the ranged acid splash, and a powerful bite.
+
+To Play Grabby, follow these guidelines:
+Add grabby to init by ( !i madd grabby -name "Grabby" )
+* When players set themselves up around him for ranged attacks, use the Acid Splash ( !i a acid -t target )
+* Acid Splash needs to be answered by a dex save. Its easier to have all the affected players just do the save before
+  attack. The monster attacks don't automate the saves correctly, so those who pass need to recover 1/2 of the damage.
+  ( !hp +10 )
+* After Acid Splashing, move towards them
+* When players are in Melee distance, leverage the bite. ( !i a bite -t target ) if the bite hits, players must
+  contest a grapple since Grabby will hold down its bite. Players do ( !c acro -dc 14 ) to see if they are grappled.
+* Grabby can only keep biting down on the same character WITH ADVANTAGE, if there are more than one players, you can move the grappled
+  player with you towards the other PCs
+* If at any point Grabby starts to get overwhelemed, burrow down to avoid getting hit, and pop up to acid splash.
+* Grabby cannot SEE. Therefore he waits for the player to move towards him or make noise. (This is how to beat him)
+* If a player catches on and uses things to distract him, make Grabby follow the distraction.
+

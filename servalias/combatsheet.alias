@@ -18,7 +18,7 @@ Put these on the ends of rolls to do certain effects:
 
 `-i` (at the end of a spell to ignore using spell slots)
 
-`-L #` (to cast at a higher level)
+`-L #` (to cast at m_command higher level)
 
 `ammo` (deducts your ammo from your attack)
 

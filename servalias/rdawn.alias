@@ -1,0 +1,55 @@
+embed -title "{{name}} uses Channel Divinity: Radiance of the Dawn" -color <color>
+-thumb <image> {{args=&ARGS&}}
+<drac2>
+#variables go here
+returnstr = f'-f "'
+subcl = load_json(subclass)
+cc = "Channel Divinity"
+ch = character()
+pargs = argparse(args)
+cc_use = 1
+target = None if not pargs.get('t') else pargs.get('t')[0]
+ignore = True if pargs.get('i') else False
+# enemy = combat().get_combatant(target) # not needed if multiple targets
+save_dc = proficiencyBonus + wisdomMod + 8
+damage = f'2d10+{ClericLevel}[radiant]'
+footer = f''
+#check to see if you are a light domain cleric
+if not "ClericLevel" in subcl.keys():
+    err("You are not a cleric!")
+    if not "Light Domain" in subcl["ClericLevel"]:
+        err("You are not a Light Domain Cleric!")
+#check to see if you have channel divinities left or if you passed -i for ignore
+if (not ch.cc_exists(cc) or ch.get_cc(cc) < cc_use) and not ignore :
+    err("You have no more uses of Channel Divinity left. You should rest!")
+#check for combat
+if not combat():
+    err("You're Not in Combat. Whoopsie.")
+#check for target and roll its save, deal damange
+if not target:
+    err("You must provide a target with -t target")
+else:
+    # cycle through all targets
+    enemies = pargs.get('t')
+    for each in enemies:
+        enemy = combat().get_combatant(each)
+        save = enemy.save("constituion")
+        target_name = enemy.name
+        returnstr += f'**{target_name}**\n Save DC: {save_dc}\n CON save: {save}; '
+        if save.total >= save_dc:
+            returnstr += f'Success \n'
+            # damage += f'/2'
+            damage_roll = enemy.damage(f'({damage})/2')["damage"]
+            returnstr += f'{damage_roll} \n\n'
+        else:
+            returnstr += f'Failure \n'
+            damage_roll = enemy.damage(damage)["damage"]
+            returnstr += f'{damage_roll} \n\n'
+        footer += f'{enemy.name} {enemy.hp_str()}\n'
+# Cash in the counter
+ch.mod_cc(cc, cc_use*-1) if not ignore else ""
+returnstr += f'" -f "Channel Divinity {ch.cc_str(cc)} (-{cc_use if not ignore else "ignored"})"'
+return returnstr
+</drac2>
+-desc "As an action, you present your holy symbol, and any magical darkness within 30 feet of you is dispelled. Additionally, each hostile creature within 30 feet of you must make a Constitution saving throw. A creature takes radiant damage equal to 2d10 + your cleric level on a failed saving throw, and half as much damage on a successful one. A creature that has total cover from you is not affected."
+-f ".|{{footer}}"

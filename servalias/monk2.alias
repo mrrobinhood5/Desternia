@@ -1,0 +1,44 @@
+embed -title "Monk"
+-f "
+Flurry of Blows: `!monk flurry`
+Patient Defense: `!monk patient`
+Step of the Wind: `!monk wind`
+Deflect Missiles: `!monk deflect [original damage]`
+*Return* Missiles: `!monk return`
+Slow Fall: `!monk slow [original damage]`
+Stunning Strike: `!monk stun`
+Stillness of Mind: `!monk mind`
+Diamond Soul: `!monk diamond`
+Empty Body - Invisibility: `!monk invis`
+Empty Body - Astral Projection: `!monk astral`
+Perfect Self: `!monk perfect`
+
+General Way to spend Ki: `!monk ki [number]`"
+-f "Drunken Master|
+Drunken Technique & Intoxicated Frenzy: make sure your `subclass` cvar has `Drunk` in it
+Leap to Your Feet: `!monk leap`
+Redirect Attack: `!monk redirect`
+Drunkard's Luck: `!monk luck`"
+
+-f "Kensei|
+Agile Parry: `!monk agile`
+Kensei's Shot: `!monk shot`
+Deft Strike: `!monk deft`
+Sharpen the Blade: `!monk sharpen`
+Unerring Accuracy: `!monk unerr`"
+
+-f "Long Death|
+Touch of Death: `!monk touch`
+Hour of Reaping: `!monk reap`
+Mastery of Death: `!monk master`
+Touch of the Long Death: `!monk long`"
+-f "Open Hand|
+Open Hand Technique: make sure your `subclass` cvar has `Open` in it
+Wholeness of Body: `!monk whole`
+Tranquility: `!monk tranq`
+Quivering Palm: `!monk palm`"
+-f "Shadow|
+Shadow Arts: `!monk arts`
+Shadow Step: `!monk \"shadow step\"`
+Cloak of Shadows: `!monk cloak`
+Opportunist: `!monk opp`"

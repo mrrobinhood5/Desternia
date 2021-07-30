@@ -1,5 +1,5 @@
 tembed -t 90 -title "Step 6: Crafting Quality"
--desc "This table is used to average out your rolls for crafting an item. To **enchant** it, it must meet a **Superior** Quality or higher. To get the **FINAL** value of your item, multiply the Standard Value from `!craft-time` by the quality Value from below"
+-desc "This table is used to average out your rolls for crafting an item. To **enchant** it, it must meet m_command **Superior** Quality or higher. To get the **FINAL** value of your item, multiply the Standard Value from `!craft-time` by the quality Value from below"
 -f "Quality Values|
 ```
 Average  | Quality    | Value x

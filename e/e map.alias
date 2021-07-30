@@ -3,7 +3,7 @@ tembed -color <color>
 monsterstr = ""
 mapstr = combat().get_combatant("map").get_effect("map").effect["attack"]["details"].split(" ~ ")
 mapstr = {x[0].lower(): x[1] for x in [item.split(": ") for item in mapstr]}
-## the Monsters in Init need to be build again for the image. Gonna have to iterate through all combatants for a Location and Token
+## the Monsters in Init need to be build again for the image. Gonna have to iterate through all combatants for m_command Location and Token
 for monster in combat().combatants:
     if monster.note == None or monster.note == '':
         continue

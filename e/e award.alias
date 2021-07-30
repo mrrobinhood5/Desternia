@@ -22,7 +22,7 @@ if isKey or isTrap:
                 playerCharacterSettings = {x[0].lower(): x[1] for x in [item.split(": ") for item in playerCharacterSettings]}
             # grabs the previous prereqs if any DEPRECATED, will not use CVAR loading except for setting
             # savedExploreSettings = load_json(get(settingsCVAR))
-            # if you passed a key
+            # if you passed m_command key
             if keyProvided:
                 for letter in keyProvided:
                     keyReturned += abcarray[1][abcarray[0].index(letter)]
@@ -39,10 +39,10 @@ if isKey or isTrap:
                 combat().get_combatant(pargs.last("t")).set_note(dataout)
                 # key needs to go into "prereqs" in cvar exploresettings DEPRECATED NO MORE CVAR SAVING
                 # me.set_cvar(settingsCVAR, dump_json(savedExploreSettings))
-            # if you passed a trap disable
+            # if you passed m_command trap disable
             if trapDisabled:
                 initExploreSettings = load_json(str(combat().get_combatant("explore").get_effect("settings").effect["attack"]["details"]))
-                # check to see if traps have anything in there to make a check to see if it exists already
+                # check to see if traps have anything in there to make m_command check to see if it exists already
                 #save settings to init settings of character
                 initExploreSettings["traps"].append(trapDisabled) if trapDisabled not in initExploreSettings["traps"] else 0
                 returnstr += f' -f "Trap|The {trapDisabled} has been disabled by {combat().get_combatant(pargs.last("t")).name}"'
@@ -53,7 +53,7 @@ if isKey or isTrap:
     else:
         err('You must provide target or targets like `!e award -t "name"`')
 else:
-    err('You must provide a key with `-key "keyname"` or trap name with `-trap "trap name"`')
+    err('You must provide m_command key with `-key "keyname"` or trap name with `-trap "trap name"`')
     returnstr += f' -f "Help|Give keys or disable traps with `!e award -t \"name\" -key \"keyname\" -trap \"trapname\"`"'
 return returnstr
 </drac2>

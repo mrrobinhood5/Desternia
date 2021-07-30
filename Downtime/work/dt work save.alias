@@ -8,10 +8,19 @@ errstr = f' -f "Usage| `!dt work save -quan [skill] -qual [skill or tool|ability
                f' `!dt work save -quan ath -qual fish|wis -relation pers`"'
 jobstr = f' -t 90 -f "Error| You must set your job first with `!dt work job -set \\"jobname\\""`'
 charskills = "persuasiondeceptionperformanceintimidation"
+qualskill = ""
 
 # variables required for Tools
-hasTools,hasToolsE, isTool, isToolE=True if exists("pTools") else False, True if exists("eTools") else False, False, False
-availTools, availToolsE = pTools.split(",") if hasTools else "", eTools.split(",") if hasTools and isToolE else ""
+hasTools = True if exists("pTools") else False
+hasToolsE = True if exists("eTools") else False
+isTool = False
+isToolE = False
+availTools = pTools.split(",") if hasTools else ""
+availToolsE = eTools.split(",") if hasToolsE else ""
+
+#Artificer Checks
+art_infu = infusions if exists("infusions") else ""
+art_level = int(ArtificerLevel) if exists("ArtificerLevel") else 0
 
 # variables for arguments
 qualarg, quanarg, relationarg = pargs.get("qual"),pargs.get("quan"),pargs.get("relation")
@@ -55,15 +64,22 @@ else:
       returnstr +=f' -f "Work Relations| Is set to `{relationskill}`:  +`{relationmod}`"\n'
 
 # checks the qual ability and sets the name and bonus for the ability plus proficiency if you are using tools
-    if isTool and qualargs[1].lower() in x.lower():
+    if (isTool or isToolE) and qualargs[1].lower() in x.lower():
       qualability = x
+      # check for Tool of Armor Infusion
       qualmod = proficiencyBonus + y.value if not isToolE else (proficiencyBonus*2) + y.value
-      # qualmod = y.value-floor((proficiencyBonus*y.prof)) if not isToolE else y.value-floor((proficiencyBonus*y.prof))+(proficiencyBonus*2)
+    #artificer Stusff
+      if "Armor of Tools" in art_infu:
+        qualmod += intelligenceMod
+      if art_level >= 7: #adds flash of genius
+        qualmod += intelligenceMod
+
     if not isTool and qualargs[0].lower() in x.lower():
       qualskill = x
       qualskmod = floor(proficiencyBonus*y.prof)+y.bonus
       qualmod = qualskmod+qualabmod
-
+  if qualskill == "":
+    return errstr
 # builds the return strings
   returnstr += f' -f "Work Quality| Is set to `{qualskill}({qualability})`:  +`{qualmod}`"\n'
   settingstr = f'{quanskill},{quanmod},{isTool},{qualskill},{qualability},{qualmod},{relationskill},{relationmod}'

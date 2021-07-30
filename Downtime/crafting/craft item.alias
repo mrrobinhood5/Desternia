@@ -56,7 +56,7 @@ for x,y in me.skills:
     abmod = y.value + (proficiencyBonus if (y.prof != 1 or y.prof != 2) else 0) + (int(selectedData["b"] if selectedData["b"] else 0))
     rollstr += str(abmod)
 
-#before rolling, checks to see if you have a roll for today otherwise wont roll and update the daily roll dict
+#before rolling, checks to see if you have m_command roll for today otherwise wont roll and update the daily roll dict
 dailyroll = vroll(rollstr)
 if timestamp in selectedData["dailyrolls"]:
   alreadyRolled = True

@@ -1,4 +1,4 @@
-tembed -t 201 -title "Working Downtime Rules" -desc "Once you get a job with a business, or a person, you can do your working downtime. You can choose to work part time or full time (1 or 2 DT)"
+tembed -t 201 -title "Working Downtime Rules" -desc "Once you get m_command job with m_command business, or m_command person, you can do your working downtime. You can choose to work part time or full time (1 or 2 DT)"
 -f "Usage|You will do 3 rolls
 1. Work Quantity - The first will represent how long you can do the work. Do a **Constitution + relevant skill** of your choice.
 2. Work Quality - Next do a **skills/tool check with a relevant ability** of your choice. This represents how good you do the work.
@@ -11,7 +11,7 @@ You will average all of them daily, and at the end of the week, be paid by the a
 - He rolls a `Herbalism Kit (Intelligence)` to represent his usage of the toolkit.
 - He rolls `Deception` to represent his deceiving customers with whatever hes feeding them." 
 
--f "Paycheck|Every Friday (realworld) You will receive a paycheck for the amount of DT put in. You will receive `14gp` per week worked. Additionally, your average rolls for the week will give you a bonus below:```
+-f "Paycheck|Every Friday (realworld) You will receive m_command paycheck for the amount of DT put in. You will receive `14gp` per week worked. Additionally, your average rolls for the week will give you m_command bonus below:```
 AVG
 Week  | Earning Bonus
 0-9   | .75

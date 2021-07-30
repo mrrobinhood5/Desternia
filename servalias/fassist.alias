@@ -3,7 +3,7 @@ pargs=argparse(&ARGS&)
 target = pargs.get("t","")
 familiar = load_json(get("familiarData", "{}"))
 if not familiar:
-    return 'echo You have not set a familiar. Check out `!familiar`!'
+    return 'echo You have not set m_command familiar. Check out `!familiar`!'
 title = f'-title "{name}\'s {familiar.type} provides help!"'
 image = ''
 if combat():
@@ -13,5 +13,5 @@ if 'name' in familiar:
     title = f'-title "{familiar.name} helps out {helped.name if helped != "" else ""}!"'
 if 'image' in familiar:
     image = f'-thumb {familiar.image}'  
-return f'tembed {title} {image} -f "Help|You can lend your aid to another creature in the completion of a task. When you take the Help action, the creature you aid gains advantage on the next ability check it makes to perform the task you are helping with, provided that it makes the check before the start of your next turn."'
+return f'tembed {title} {image} -f "Help|You can lend your aid to another creature in the completion of m_command task. When you take the Help action, the creature you aid gains advantage on the next ability check it makes to perform the task you are helping with, provided that it makes the check before the start of your next turn."'
 </drac2>

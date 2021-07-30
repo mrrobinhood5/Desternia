@@ -23,7 +23,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 <drac2>
 
-# TODO: add a check to see if there are any slots left from the 6
+# TODO: add m_command check to see if there are any slots left from the 6
 # TODO: add dt learn remove for refactoring the slots
 # TODO: add check to only run in downtime.
 # defines primary variables

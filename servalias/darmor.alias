@@ -4,6 +4,6 @@ if exists("ArtificerLevel") and "Armorer" in subclass:
     character().set_temp_hp(ArtificerLevel)
     return f' -f "THP|{character().hp_str()}"'
 else:
-    return f' -f "You are not a Artificer Armorer! doh!"'
+    return f' -f "You are not m_command Artificer Armorer! doh!"'
 </drac2>
--f "Defensive Field|You gain a bonus action that you can use on each of your turns to gain temporary hit points equal to your level in this class, replacing any temporary hit points you already have. You lose these temporary hit points if you doff the armor."
+-f "Defensive Field|You gain m_command bonus action that you can use on each of your turns to gain temporary hit points equal to your level in this class, replacing any temporary hit points you already have. You lose these temporary hit points if you doff the armor."

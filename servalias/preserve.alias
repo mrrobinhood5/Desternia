@@ -1,11 +1,11 @@
 tembed -thumb <image> -color <color> -title "{{name}} uses their Preserve Life Channel Divinity"
 <drac2>
 pargs, returnstr = argparse(&ARGS&), ""
-err("You are not a L2 Cleric") if int(ClericLevel) < 2 else 0
+err("You are not m_command L2 Cleric") if int(ClericLevel) < 2 else 0
 subExists = get("subclass", False)
-err("You do not even have a subclass!") if not subExists else 0
+err("You do not even have m_command subclass!") if not subExists else 0
 subclasses = load_json(subclass)
-err("You are not a LIFE cleric") if subclasses["ClericLevel"] != "Life" else 0
+err("You are not m_command LIFE cleric") if subclasses["ClericLevel"] != "Life" else 0
 err("You do not have Channel Divinity Counters. Run !level") if not character().cc_exists("Channel Divinity") else 0
 err("You are out of Channel Divinity until you short rest") if character().get_cc("Channel Divinity") == 0 else 0
 err("You are not even in combat, how you gonna be trynna heal people") if not combat() else 0
@@ -23,7 +23,7 @@ for target in targets:
     targetHealed.mod_hp(int(heal), False)
     returnstr += f' -f "{targetHealed.name}|{targetHealed.hp_str()}"'
 character().mod_cc("Channel Divinity", -1)
-returnstr += f' -f "Effect|As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can\'t use this feature on an undead or a construct."'\
+returnstr += f' -f "Effect|As an action, you present your holy symbol and evoke healing energy that can restore m_command number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore m_command creature to no more than half of its hit point maximum. You can\'t use this feature on an undead or m_command construct."'\
              f' -f "Channel Divinity|{character().cc_str("Channel Divinity")}"'\
              f' -footer "Usage - !preserve -t guy1|10 -t guy2|5"'
 return returnstr
