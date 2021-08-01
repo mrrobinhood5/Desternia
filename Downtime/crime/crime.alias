@@ -45,17 +45,33 @@ else:
 
 
 # first roll is investigation or perception, whatever is higher.
-# if you have m_command fmailiar, you can have advantage on this check
+# if you have a fmailiar, you can have advantage on this check
 hasFamiliar = True if exists("familiarData") else False
+isObservant = False if not exists("feats") else True if "Observant" in feats else False
 if me.skills.perception.value > me.skills.investigation.value:
     scoutSkill = "perception"
-    scoutRoll = me.skills.perception.d20() if hasFamiliar == False else me.skills.perception.d20(True)
+    if hasFamiliar:
+        scoutRoll = me.skills.perception.d20(True)
+        scoutBonusStr = " - Using Familiar"
+    elif isObservant:
+        scoutRoll = me.skills.perception.d20(True)
+        scoutBonusStr = " - is Observant"
+    else:
+        me.skills.perception.d20()
+        scoutBonusStr = ""
 else:
     scoutSkill = "investigation"
-    scoutRoll = me.skills.investigation.d20() if hasFamiliar == False else me.skills.investigation.d20(True)
-scoutBonusStr = "" if hasFamiliar == False else " - Using Familiar"
+    if hasFamiliar:
+        scoutRoll = me.skills.investigation.d20(True)
+        scoutBonusStr = " - Using Familiar"
+    elif isObservant:
+        scoutRoll = me.skills.investigation.d20(True)
+        scoutBonusStr = " - is Observant"
+    else:
+        scoutRoll = me.skills.investigation.d20()
+        scoutBonusStr = ""
 scoutResult = vroll(scoutRoll)
-#checks for m_command pass and sets the multipler for gains
+#checks for a pass and sets the multipler for gains
 multipliers = [3,2,1,.5,.2,0]
 minrolls = [20,18,15,12,10,0]
 targets = ["noble","upperclass","middle class","commoner","poor","failed to find anyone"]
@@ -75,7 +91,7 @@ if earnMultiplier == 0:
 else:
     # sets the DC for this roll
     hiddenRollDC = vroll(f'2d10+{level}')
-    #checks for m_command Disguise Kit in your bag or if you have alterself / disguise self in spellbook
+    #checks for a Disguise Kit in your bag or if you have alterself / disguise self in spellbook
     if "Pass without Trace" in me.spellbook:
         hiddenRoll = me.skills.stealth.d20(True, mod_override=me.skills.stealth.value+10)
         hiddenBonusStr = "Using Pass without Trace"
@@ -104,8 +120,13 @@ else:
     stealRollDC = vroll(f'2d10+{level}')
     # checks for thieves tools
     if "thieve" in bags.lower():
-        # stealRoll = me.skills.sleightOfHand.d20(True)
-        steal_mod = proficiencyBonus*2 if "Thieve" in exp_tools else proficiencyBonus if "Thieve" in pTools else 0
+        steal_mod = 0
+        if exists("pTools"):
+            if "Thieve" in pTools:
+                steal_mod = proficiencyBonus
+        elif exists("eTools"):
+            if "Thieve" in eTools:
+                steal_mod = proficiencyBonus*2
 
         stealRoll = me.skills.dexterity.d20(True)+"+"+steal_mod
         tools = True
