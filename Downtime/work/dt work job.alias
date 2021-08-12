@@ -1,5 +1,8 @@
 tembed
 <drac2>
+if str(ctx.channel.id) not in "772364979898417162, 746529962361749594":
+  return f' -title "{name} attempts to set their job..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work configs in  #avrae-temple channel"'
+
 pargs=argparse(&ARGS&)
 if not &ARGS&:
   return f' -t 90 -title \"{name} attempts to set their job\" -desc \"You didn\'t provide any arguments\" -f \"Usage| `!dt work job -[set] Bunnis Bar and Grill` "'

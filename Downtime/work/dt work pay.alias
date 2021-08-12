@@ -20,6 +20,9 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to get paid..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+
 rollslist, totalrolls, workdata, returnstr = [], 0, load_json(DTTrack) if exists("DTTrack") else False, f' -f "Unpaid Rolls|'
 if not workdata:
   err("You dont have any Work Data")  #or whatever

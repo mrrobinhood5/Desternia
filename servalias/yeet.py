@@ -13,6 +13,6 @@ defaultPFList = ["https://media.giphy.com/media/5PhDdJQd2yG1MvHzJ6/giphy.gif",
                  ]
 
 randGIF=randint(len(defaultPFList)-1)
-returnstr += f'-title "Yeet!" -f "{name} yeets {thing}!" -image {defaultPFList[randGIF]}'
+returnstr += f'-title "{name} Fucking Yeets a {thing}!" -image {defaultPFList[randGIF]}'
 return returnstr
 </drac2>

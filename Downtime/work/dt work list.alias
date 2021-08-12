@@ -1,6 +1,9 @@
 tembed
 #dt work list
 <drac2>
+if str(ctx.channel.id) not in "772364979898417162, 746529962361749594":
+  return f' -title "{name} attempts list their jobs..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work configs in  #avrae-temple channel"'
+
 pargs, downtime, returnstr, footer = argparse(&ARGS&), "work", "", f' -footer "Usage - !dt work list"'
 if not exists("DTTrack") or DTTrack == "":
   return  f' -title "{name} attemps to check their work history" -desc "No Work History" -f "Fix| Either you havent worked today, or You already got paid for it" {footer} '
