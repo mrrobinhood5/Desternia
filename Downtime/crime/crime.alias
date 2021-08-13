@@ -57,7 +57,7 @@ if me.skills.perception.value > me.skills.investigation.value:
         scoutRoll = me.skills.perception.d20(True)
         scoutBonusStr = " - is Observant"
     else:
-        me.skills.perception.d20()
+        scoutRoll = me.skills.perception.d20()
         scoutBonusStr = ""
 else:
     scoutSkill = "investigation"
