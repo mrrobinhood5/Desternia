@@ -124,7 +124,7 @@ else:
         if exists("pTools"):
             if "Thieve" in pTools:
                 steal_mod = proficiencyBonus
-        elif exists("eTools"):
+        if exists("eTools"):
             if "Thieve" in eTools:
                 steal_mod = proficiencyBonus*2
 
