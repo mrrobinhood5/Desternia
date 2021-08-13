@@ -111,7 +111,7 @@ else:
         hiddenRoll = me.skills.stealth.d20()
     hiddenResult = vroll(hiddenRoll)
     hiddenPass = True if hiddenResult.total >= hiddenRollDC.total else False
-    returnstr += f' -f "Hidden Roll|*Stealth - {hiddenBonusStr}*\n**DC**: {hiddenRollDC.full}\n{hiddenResult.full} - {"**PASS**" if hiddenPass else "**FAIL**"}"'
+    returnstr += f' -f "Hidden Roll|*Stealth* - *{hiddenBonusStr}*\n**DC**: {hiddenRollDC.full}\n{hiddenResult.full} - {"**PASS**" if hiddenPass else "**FAIL**"}"'
 
 # next rolls for Sleight of Hand
 if earnMultiplier == 0 or hiddenPass == False:
@@ -135,7 +135,7 @@ else:
         stealRoll = me.skills.sleightOfHand.d20()
     stealResult = vroll(stealRoll)
     stealPass = True if stealResult.total >= stealRollDC.total else False
-    returnstr += f' -f "Steal Roll|*Sleight of Hand - {stealBonusStr}*\n**DC**: {stealRollDC.full}\n{stealResult.full} - {"**PASS**" if stealPass else "**FAIL**"}"'
+    returnstr += f' -f "Steal Roll|*Sleight of Hand* - *{stealBonusStr}*\n**DC**: {stealRollDC.full}\n{stealResult.full} - {"**PASS**" if stealPass else "**FAIL**"}"'
 
 #calculate gains
 # open up your coin purse
