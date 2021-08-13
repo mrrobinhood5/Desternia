@@ -26,7 +26,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 <drac2>
 me, returnstr, downtime = character(), "", "crime"
 results, disguise, tools, exp_tools = {timestamp:{downtime:{}}}, False, False, eTools if exists("eTools") else ""
-hiddenPass, stealPass, hiddenBonusStr, stealBonusStr = False, False, "", ""
+hiddenPass, stealPass, hiddenBonusStr, stealBonusStr = False, False, "*", "*"
 # first first check to see if you are in the right channel
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -f "Error|Go do your crime downtime in the #downtime channel"'
@@ -94,24 +94,24 @@ else:
     #checks for a Disguise Kit in your bag or if you have alterself / disguise self in spellbook
     if "Pass without Trace" in me.spellbook:
         hiddenRoll = me.skills.stealth.d20(True, mod_override=me.skills.stealth.value+10)
-        hiddenBonusStr = "Using Pass without Trace"
+        hiddenBonusStr = " - Using Pass without Trace*"
     elif "disguise" in bags.lower():
         hiddenRoll = me.skills.stealth.d20(True)
-        hiddenBonusStr = "Using Disguise Kit"
+        hiddenBonusStr = " - Using Disguise Kit*"
     elif "Alter Self" in me.spellbook:
         hiddenRoll = me.skills.stealth.d20(True)
-        hiddenBonusStr = "Using Alter Self Spell"
+        hiddenBonusStr = " - Using Alter Self Spell*"
     elif "Disguise Self" in me.spellbook:
         hiddenRoll = me.skills.stealth.d20(True)
-        hiddenBonusStr = "Using Disguise Self Spell"
+        hiddenBonusStr = " - Using Disguise Self Spell*"
     elif "Invisibility" in me.spellbook:
         hiddenRoll = me.skills.stealth.d20(True)
-        hiddenBonusStr = "Using Invisibility Spell"
+        hiddenBonusStr = " - Using Invisibility Spell*"
     else:
         hiddenRoll = me.skills.stealth.d20()
     hiddenResult = vroll(hiddenRoll)
     hiddenPass = True if hiddenResult.total >= hiddenRollDC.total else False
-    returnstr += f' -f "Hidden Roll|*Stealth* - *{hiddenBonusStr}*\n**DC**: {hiddenRollDC.full}\n{hiddenResult.full} - {"**PASS**" if hiddenPass else "**FAIL**"}"'
+    returnstr += f' -f "Hidden Roll|*Stealth{hiddenBonusStr}\n**DC**: {hiddenRollDC.full}\n{hiddenResult.full} - {"**PASS**" if hiddenPass else "**FAIL**"}"'
 
 # next rolls for Sleight of Hand
 if earnMultiplier == 0 or hiddenPass == False:
@@ -130,12 +130,12 @@ else:
 
         stealRoll = me.skills.dexterity.d20(True)+"+"+steal_mod
         tools = True
-        stealBonusStr = "Using Thieve's Tools"
+        stealBonusStr = " - Using Thieve's Tools*"
     else:
         stealRoll = me.skills.sleightOfHand.d20()
     stealResult = vroll(stealRoll)
     stealPass = True if stealResult.total >= stealRollDC.total else False
-    returnstr += f' -f "Steal Roll|*Sleight of Hand* - *{stealBonusStr}*\n**DC**: {stealRollDC.full}\n{stealResult.full} - {"**PASS**" if stealPass else "**FAIL**"}"'
+    returnstr += f' -f "Steal Roll|*Sleight of Hand{stealBonusStr}\n**DC**: {stealRollDC.full}\n{stealResult.full} - {"**PASS**" if stealPass else "**FAIL**"}"'
 
 #calculate gains
 # open up your coin purse
