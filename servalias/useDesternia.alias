@@ -1,2 +1,3 @@
 tembed -desc "You are now using custom `!use` cvars from **Dungeons of Desternia**"
-{{set_cvar("resources","[\"a8dc85f0-3bef-442f-918b-3935610d96ab\",\"4df6c4b7-efd2-4903-8766-4dfcebcdd695\"]")}}
+{{set_cvar("resources","[\"a8dc85f0-3bef-442f-918b-3935610d96ab\",\"4df6c4b7-efd2-4903-8766-4dfcebcdd695\",\"f833a2de-8c2b-4d15-926e-ce39c9f5ad72\"]")}}
+{{set_cvar("extraRaceSpells","[\"58cb91e2-457a-43bb-b0b7-60667b1cfc00\"]")}}

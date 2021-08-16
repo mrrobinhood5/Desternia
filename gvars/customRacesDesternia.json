@@ -1,0 +1,207 @@
+[
+ {
+  "name":"Custom Desternia Races",
+  "featureResources":"f833a2de-8c2b-4d15-926e-ce39c9f5ad72",
+  "counters":[],
+  "cvars":{
+   "race":"",
+   "speed":"30 ft.",
+   "languages":"Common",
+   "size":"Medium",
+   "creatureType":"Humanoid",
+   "resist":"",
+   "immune":"",
+   "cimmune":"",
+   "vuln":"",
+   "senses":""
+  }
+ },
+ {
+  "name":"anthrolupe",
+  "cvars":{
+   "race":"Anthrolupe",
+   "speed":"35 ft.",
+   "languages":"Common, Sylvan",
+   "senses":"Darkvision 60ft"
+  }
+ },
+ {
+  "name": "dragonfolk",
+  "cvars": {
+   "race": "Arcane Dragonfolk",
+   "languages": "Common, Draconic",
+   "creatureType": "Humanoid/Dragon"
+  }
+ },
+ {
+  "name": "dragonfolk arcane",
+  "cvars": {
+   "race": "Arcane Dragonfolk",
+   "languages": "Common, Draconic",
+   "creatureType": "Humanoid/Dragon"
+  }
+ },
+ {
+  "name": "dragonfolk hardened",
+  "cvars": {
+   "race": "Hardened Dragonfolk",
+   "languages": "Common, Draconic",
+   "creatureType": "Humanoid/Dragon"
+  }
+ },
+   {
+  "name":"dragonfolk shadow",
+  "cvars":{
+   "race":"Shadow Dragonfolk",
+   "languages":"Common, Draconic",
+   "creatureType":"Humanoid/Dragon"
+  }
+ },
+ {
+  "name": "dragonfolk tatsu",
+  "cvars": {
+   "race": "Tatsu Dragonfolk",
+   "languages": "Common, Draconic",
+   "creatureType": "Humanoid/Dragon"
+  }
+ },
+   {
+  "name":"kitsune",
+  "cvars":{
+   "race":"Kitsune",
+   "speed":"30 ft. / 35 ft. on all fours"
+  }
+ },
+    {
+  "name":"kitsune zenko",
+  "counters":[
+    {"name":"Bless","reset":"long","level":3,"use":"racecast 'Bless' [-t target]"},
+    {"name":"Calm Emotions","reset":"long","level":5,"use":"racecast 'Calm Emotion' [-t target]"}
+  ],
+  "cvars":{
+   "race":"Zenko Kitsune",
+   "languages": "Common, Celestial"
+  }
+ },
+ {
+  "name":"kitsune yako",
+  "counters":[
+    {"name":"Cause Fear","reset":"long","level":3,"use":"racecast 'Cause Fear' [-t target]"},
+    {"name":"Phantasmal Force","reset":"long","level":5,"use":"racecast 'Phantasmal Force' [-t target]"}
+  ],
+  "cvars":{
+   "race":"Yako Kitsune",
+   "languages": "Common, Sylvan"
+  }
+ },
+ {
+  "name":"kitsune half",
+  "cvars":{
+   "race":"Half-Breed Kitsune",
+   "languages": "Common, Sylvan, One other of your choice"
+  }
+ },
+ {
+  "name":"thri-kreen",
+  "cvars":{
+   "race":"Thri-Kreen",
+   "speed":"40 ft. / 0ft in water",
+   "languages":"Common, Thri-Kreen",
+   "senses":"Darkvision 60ft"
+  }
+ },
+ {
+  "name":"imperial",
+  "counters": [
+    {"name":"Imperial Luck","reset":"none","level": 0,"desc":"You can reroll a 1 for an ability check. You must use the new roll", "use":"use impluck"},
+    {"name":"Voice of the Empire","reset":"long","min":"0", "max":"2", "level": 1,"desc":"", "use":"use empirevoice"}
+  ],
+  "cvars":{
+   "race":"Imperial"
+  }
+ },
+  {
+  "name":"nord",
+  "counters": [
+    {"name":"Enduring","reset":"long","level":1,"use":"use enduring"},
+    {"name":"Battle Cry","reset":"long","level":1,"use":"use battlecry -t [target]"}
+  ],
+  "cvars":{
+   "race":"Imperial",
+   "resist": "cold"
+  }
+ },
+   {
+  "name":"breton",
+  "counters": [
+    {"name":"Natural Ward","reset":"none","level":1,"use":"use natward [dmg]"},
+    {"name":"Dragon Skin","reset":"long","level":1,"use":"!dskin [dmg]"}
+  ],
+  "cvars":{
+   "race":"Breton"
+  }
+ },
+ {
+  "name":"bosmer",
+  "counters": [
+    {"name":"Command Animal","reset":"long","level":1,"use":"use commandanimal"}
+  ],
+  "cvars":{
+   "race":"Bosmer",
+   "speed":"35 ft.",
+   "resist": "poison"
+  }
+ },
+ {
+  "name":"redguard",
+  "counters": [
+    {"name":"Adrenaline Rush","reset":"long","level":1,"use":"use arush"},
+    {"name":"Strikers","reset":"short","level":1,"use":"use strikers"}
+  ],
+  "cvars":{
+   "race":"Redguard"
+  }
+ },
+ {
+  "name":"dunmer",
+  "counters": [
+    {"name":"Ancestor's Wrath","reset":"long","level":1,"use":"use awrath"}
+  ],
+  "cvars":{
+   "race":"Dunmer",
+   "resist": "fire"
+  }
+ },
+  {
+  "name":"kahjiit",
+  "counters": [
+    {"name":"Night Eye","reset":"long","level":1,"use":"use nighteye"}
+  ],
+  "cvars":{
+   "race":"Kahjiit",
+   "senses":"Darkvision 60ft"
+  }
+ },
+ {
+  "name":"orsimer",
+  "counters": [
+    {"name":"Berzerker Rage","reset":"long","level":1,"use":"use brage"}
+  ],
+  "cvars":{
+   "race":"Orsimer"
+
+  }
+ },
+  {
+  "name":"argonian",
+  "counters": [
+    {"name":"Histskin","reset":"long","level":1,"use":"use histskin"}
+  ],
+  "cvars":{
+   "race":"Argonian",
+   "speed": "30ft walking/30ft swimming "
+
+  }
+ }
+
+]

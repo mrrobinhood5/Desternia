@@ -9,6 +9,9 @@
 !setrace [racename]
 !level [class] [lvl] [subclass]```
 "
+-f "**DRAGONFOLK ONLY**|```css" \
+!manage res add [resistance]```
+"
 -f "**SUBSCRIBE TO CUSTOM SERVER**|```css
 !useDesternia```
 "

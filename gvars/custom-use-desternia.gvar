@@ -171,5 +171,54 @@
       "cc": "Genie's Vessel: Bottled Respite",
       "title": "[name] uses Bottled Respite!",
       "desc": "As an action, you can magically vanish and enter your vessel, which remains in the space you left. The interior of the vessel is an extradimensional space in the shape of a 20-foot-radius cylinder, 20 feet high, and resembles your vessel. The interior is appointed with cushions and low tables and is a comfortable temperature. While inside, you can hear the area around your vessel as if you were in its space. \nYou can remain inside the vessel up to a number of hours equal to twice your proficiency bonus. You exit the vessel early if you use a bonus action to leave, if you die, or if the vessel is destroyed. When you exit the vessel, you appear in the unoccupied space closest to it. \nAny objects left in the vessel remain there until carried out, and if the vessel is destroyed, every object stored there harmlessly appears in the unoccupied spaces closest to the vessel's former space. \n\nOnce you enter the vessel, you can't enter again until you finish a long rest."},
-   "sorcguide": {"fail": "True", "cc": "Sorcery Points", "title": "[name] uses their Magical Guidance feature!", "desc": "You can tap into your inner wellspring of magic to try to conjure success from failure. When you make an ability check that fails, you can spend 1 sorcery point to reroll the d20, and you must use the new roll, potentially turning the failure into a success.", "roll": "1d20"}
+   "sorcguide": {
+      "fail": "True",
+      "cc": "Sorcery Points",
+      "title": "[name] uses their Magical Guidance feature!",
+      "desc": "You can tap into your inner wellspring of magic to try to conjure success from failure. When you make an ability check that fails, you can spend 1 sorcery point to reroll the d20, and you must use the new roll, potentially turning the failure into a success.",
+      "roll": "1d20"
+   },
+   "vamp": {
+      "dc": "{8+proficiencyBonus+constitutionMod}",
+      "d": "1d12 [necrotic]",
+      "title": "{name} explodes in a Vampiric Burst",
+      "desc": "Each creature of your choice that you can see within 30 feet of you must succeed on a Constitution saving throw or take 1d12 necrotic damage. You also gain temporary hit points equal to 1d12 plus your barbarian level.",
+      "save": "con"
+   },
+   "awareness": {
+      "fail": "True",
+      "cc": "Magic Awareness",
+      "title": "{name} becomes more aware of magic",
+      "desc": "As an action, you can open your awareness to the presence of concentrated magic. Until the end of your next turn, you know the location of any spell or magic item within 60 feet of you that isn't behind total cover. When you sense a spell, you learn which school of magic it belongs to.\n\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.",
+      "seffect": "Magic Awareness|end|2"
+   },
+   "burst": {
+      "dc": "{8+proficiencyBonus+constitutionMod}",
+      "d": "1d6 [radiant]",
+      "effect": "Blinded",
+      "title": "A bolt of light bursts from {name}'s chest!",
+      "desc": "A bolt of light shoots from you chest. Another creature of your choice that you can see within 30 feet of you must succeed on a Constitution saving throw or take 1d6 radiant damage and be blinded until the start of your next turn. Until your rage ends, you can use this effect again on each of your turns as a bonus action.",
+      "save": "con",
+      "seffect": "Blinding Burst|parent|1"
+   },
+   "explode": {
+      "dc": "{8+proficiencyBonus+constitutionMod}",
+      "d": "1d6 [force]",
+      "title": "{name} causes an intangible spirit to Explode!",
+      "desc": "An intangible spirit, which looks like a flumph or a pixie (your choice), appears within 5 feet of one creature of your choice that you can see within 30 feet of you. At the end fo the current turn, the spirit explodes, and each creature within 5 feet of it must succeed on a Dexterity saving throw or take 1d6 force damage. Until your rage ends you can sue this effect again, summoning another spirit, on each of your turns as a bonus action.",
+      "save": "con"
+   },
+   "shroud": {
+      "fail": "True",
+      "effect": "Shroud|-ac +1",
+      "title": "{name} provides a protective shroud for their allies!",
+      "desc": "Until your rage ends, you are surrounded by multicolored protective lights; you gain a +1 bonus to AC, and while within 10 feet of you, your allies gain the same bonus."
+   },
+   "quickheal":{
+      "fail": "True",
+      "d": "-1d{(((MonkLevel // 5) * 2) + ((MonkLevel // 11) * 2) + ((MonkLevel // 17) * 2) - ((MonkLevel //10) * 2) - ((MonkLevel // 15)*2) + 4)}-{proficiencyBonus}",
+      "cc": "Ki Points",
+      "title": "[name] uses Quickened Healing!",
+      "desc": "As an action, you can spend 2 ki points and roll a Martial Arts die. You regain a number of hit points equal to the number rolled plus your proficiency bonus."
+   }
 }

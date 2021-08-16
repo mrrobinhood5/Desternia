@@ -1,0 +1,22 @@
+[
+   {
+  "name":"zenko kitsune",
+  "limitedUse":["Calm Emotions","Bless"],
+  "atWill": ["Flame"],
+  "feature":"Kitsune Divinity",
+  "featureDesc":"You know the produce flame cantrip, with the exception that your flame is blue. When you reach 3rd level, you can cast the bless spell once and need to finish a long rest before you can cast it again. When you reach 5th level, you can also cast the calm emotions spell once and need to finish a long rest before you can cast it again. Charisma is your spellcasting ability for these spells."
+ },
+  {
+  "name":"yako kitsune",
+  "limitedUse":["Cause Fear","Phantasmal Force"],
+  "atWill": ["Flame"],
+  "feature":"Kitsune Arcana",
+  "featureDesc":"You know the produce flame cantrip, with the exception that your flame is blue. When you reach 3rd level, you can cast the cause fear[1] spell once and need to finish a long rest before you can cast it again. When you reach 5th level, you can also cast the phantasmal force spell once and need to finish a long rest before you can cast it again. Charisma is your spellcasting ability for these spells."
+ },
+     {
+  "name":"half kitsune",
+  "atWill": ["Flame", "Minor Illusion"],
+  "feature":"Kitsune Magic",
+  "featureDesc":"You still have some magic in your blood grating you some limited power, which you are able to call upon with your cunning or charm. You gain access to the produce flame cantrip and the minor illusion cantrip. You can cast these without material components. Your the casting modifier is your wisdom or charisma, depending on which is higher."
+ }
+]

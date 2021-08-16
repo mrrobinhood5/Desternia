@@ -1,0 +1,76 @@
+{
+  "enduring": {
+    "title": "Nord: Enduring",
+    "desc": "Once per long rest when reduced to 0, you can instead be reduced to 1",
+    "nosave": "True",
+    "cc": "enduring"
+  },
+  "impluck": {
+    "title": "Imperial Luck",
+    "desc": "Once per long rest you can re-roll a 1 on an ability check. You must use your new roll",
+    "nosave": "True"
+  },
+  "battlecry": {
+    "save": "wis",
+    "dc": "10+{proficiencyBonus}",
+    "title": "Nord Battle Cry",
+    "desc": "As an action, roar forcing up to 5 targets within a 20 ft sphere to make a Wisdom Saving Throw DC10 + proficiency bonus or become frightened of you for 2 rounds. You must take along rest to use this feature again.",
+    "effect": "Battle Cry|frightened|2",
+    "effectdesc": "Frightened of {name}",
+    "cc": "Battle Cry"
+  },
+  "empirevoice": {
+    "save": "cha",
+    "dc": "{charisma}",
+    "title": "Voice of the Empire ",
+    "desc": "As an action, choose a target within 30ft with a CR of 1/8 your level that can understand you. It must make a Charisma Saving Trhow with a DC equal to your Charisma schore. If they fail, they stop combat and will give advantage on persuasion rolls for 30min. Any aggressive action toward the target or its allies breaks the effect. This feature has 2 uses that recharge when you take a long rest",
+    "effect": "Imperial Voice",
+    "cc": "Voice of the Empire"
+  },
+  "commandanimal": {
+    "save": "wis",
+    "dc": "10+{character().skills.animalHandling.bonus}",
+    "title": "Command Animal",
+    "desc": "As an action, choose a target beast within 30ft with a CR of 1/8 your level. It must pass a Wisdom Saving Throw DC 10+ your animal handling bonus. If they fail, they are your ally for 30 minutes. You must take a long rest to use this feature again.",
+    "cc": "Command Animal"
+  },
+  "strikers": {
+    "title": "Redguard Strikers",
+    "desc": "As a bonus action you can move up to your speed towards a hostile creature you can see. You need to take a short rest to use this again.",
+    "nosave": "True",
+    "cc": "Strikers"
+  },
+  "arush": {
+    "title": "Adrenaline Rush",
+    "desc": "As a bonus action, you gain 10 speed and perform an additional action this turn. You must take a long rest to use this feature again.",
+    "nosave": "True",
+    "cc": "Adrenaline Rush"
+  },
+  "awrath": {
+    "title": "Ancestor's Wrath",
+    "desc": "As an action, you can ignite yourself to deal 1d4 damange to any targets that come within 5 feet of you until the start of your next turn. The damage is increased by 1d4 at levels 5, 10, 15, and 20. This feature has 2 uses that recharge on a long rest.\n\n Create the attack with: `!a add \"\"'Ancestor's Wrath'\"\" -d 1d4 -desc \"\"'At 5th, 10th, 15th, and 20th level add -b 1d4 for each'\"\" hit proper`",
+    "nosave" : "True",
+    "cc": "Ancestor's Wrath"
+  },
+  "nighteye": {
+    "title": "Night Eye",
+    "desc": "As a bonus action, you break any blind effect on you and become immune to blinds, gain 30ft of superior low light vision, gain advatange on perception checks and can see invisible units within 5ft, all for 10 minutes. This feature has 2 uses that recharge when you take a long rest",
+    "nosave" : "True",
+    "cc": "Night Eye"
+  },
+  "brage": {
+    "title": "Berzerker Rage",
+    "desc": "As a bonus action, become resistant to all damage and have advantage on attack rolls until the end of your next turn. You must take a long rest to use this feature again.",
+    "nosave" : "True",
+    "cc": "Berzerker Rage",
+    "seffect": "Berzerker Rage|-resist slashing -resist piercing -resist bludgeoning -resist poison -resist acid -resist fire -resist cold -resist radiant adv|2"
+  },
+   "histskin": {
+    "title": "Histskin",
+    "desc": "As a bonus action on your turn, you can spend a number of HitDice equal to half your level plus your proficiency bonus and regain that much missing health. You must take a long rest to use this feature again",
+    "nosave" : "True",
+    "cc": "Histskin"
+
+  }
+}
+
