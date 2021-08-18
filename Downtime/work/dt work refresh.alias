@@ -1,0 +1,77 @@
+embed -title "Refresh Job Settings" -thumb <image> -footer "Usage - !dt work refresh"
+<drac2>
+if str(ctx.channel.id) not in "772364979898417162, 746529962361749594":
+  return f' -title "{name} attempts to refresh work..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work configs in  #avrae-temple channel"'
+
+# set primary variables
+pargs,me,returnstr = argparse(&ARGS&),character(),""
+errstr = f' -f "Usage| `!dt work refresh`"\n '\
+               f' -f "But Why? | Sometimes you level up and your stats change. Downtime is not designed to auto-update.  '\
+               f' Think of it as like asking for a raise."'
+
+if not exists("RosemereJob"):
+  return f' -t 90 -title "{name} wants a rasie" -desc "But you dont even have a job." -f "Fix| Set your job with `!dt work job -set \\"Bunnis Bar and Grill\\"`" '
+if not exists("JobSettings"):
+  return f' -t 90 -title "{name} wants a raise" -desc "You havent set up your job settings" -f "Fix| Do `!dt work save` for more info" '
+
+job_settings = JobSettings.split(",")
+new_settings = []
+# update quantity
+for (skill_name, skill) in me.skills:
+    if skill_name == job_settings[0]:
+        new_settings.append(skill_name)
+        new_settings.append(floor(proficiencyBonus * skill.prof) + skill.bonus + constitutionMod)
+
+# set if its a tool or not (True or False)
+new_settings.append(job_settings[2])
+
+# do the thing if quality is a tool
+if job_settings[2] == "True":
+    # check to see if its in pTools
+    new_settings.append(job_settings[3])
+    qual_skill_bonus = 0
+    if exists("pTools"):
+        if job_settings[3] in pTools:
+            qual_skill_bonus = proficiencyBonus
+    if exists("eTools"):
+        if job_settings[3] in eTools:
+            qual_skill_bonus = proficiencyBonus * 2
+
+else:
+#quality is a skill, not a tool
+    for (skill_name, skill) in me.skills:
+        if skill_name == job_settings[3]:
+            new_settings.append(skill_name)
+            qual_skill = skill
+
+# get quality ability
+for (skill_name, skill) in me.skills:
+    if skill_name == job_settings[4]:
+        new_settings.append(skill_name)
+        qual_ability = skill
+
+# calculate new quality score
+#if its a tool, its just proficiency plus ability
+if job_settings[2] == "True":
+    new_settings.append(qual_skill_bonus+qual_ability.value)
+#otherwise its skill proficiency plus ability
+else:
+    new_settings.append(floor(qual_skill.prof * proficiencyBonus)+qual_ability.value)
+
+#get charisma skills
+for (skill_name, skill) in me.skills:
+    if skill_name == job_settings[6]:
+        new_settings.append(skill_name)
+        new_settings.append(skill.value)
+
+
+returnstr += f'-f "Work Quantity|Is now `{new_settings[0]}`: +`{new_settings[1]}`"\n'
+returnstr += f'-f "Work Quality|Is now `{new_settings[3]}({new_settings[4]})`: +`{new_settings[5]}`"\n'
+returnstr += f'-f "Work Relation|Is now `{new_settings[6]}`: `{new_settings[7]}`"\n'
+returnstr += errstr
+
+cvar_str = f'{new_settings[0]},{new_settings[1]},{new_settings[2]},{new_settings[3]},{new_settings[4]},{new_settings[5]},{new_settings[6]},{new_settings[7]}'
+me.set_cvar("JobSettings",cvar_str)
+
+return returnstr
+</drac2>

@@ -1,39 +1,30 @@
-!alias initial tembed -title "Initial Commands" -desc "Run these in order to setup the basic aspects of your Player Character with Avrae. **DO NOT TYPE IN THE BRACKETS []**"
+!servalias initial tembed -title "Initial Commands" -desc "Run these in order to setup the basic aspects of your Player Character with Avrae. **DO NOT TYPE IN THE BRACKETS []**"
 -f "**LOAD CHARACTER**| Only do one of these:
 ```css
 !gsheet [link]
 !beyond [link]
-!dicecloud [link]```
-"
+!dicecloud [link]```"
 -f "**SETUP STATS**|```css
 !setrace [racename]
-!level [class] [lvl] [subclass]```
-"
--f "**DRAGONFOLK ONLY**|```css" \
-!manage res add [resistance]```
-"
+!level [class] [lvl] [subclass]```"
+-f "**DRAGONFOLK ONLY**|```css
+!manage res add [resistance]```"
 -f "**SUBSCRIBE TO CUSTOM SERVER**|```css
-!useDesternia```
-"
+!useDesternia```"
 -f "**ADD PROFICIENCIES**|```css
 !tool pro [tool]
 !manage lang learn [lang] [lang]
-!manage back add [\"Background Feature\"]```
-"
+!manage back add [\"Background Feature\"]```"
 -f "**IN GAME TRACKERS**|```css
 !bag
 !coins +[#gp]
-!xp +900```
-"
+!xp +900```"
 -f "**BAG INVENTORY SETUP**|```css
 !bag pack [\"Explorer\"]
 !bag [\"Bag 1\"] name [\"Backpack\"]
-!bag + [\"item name\"]```
-"
+!bag + [\"item name\"]```"
 -f "**IF YOU PREP SPELLS**|```css
-!prep add [\"spell\"] [\"spell\"]```
-"
+!prep add [\"spell\"] [\"spell\"]```"
 -f "**POST VSHEET**|```css
-!vsheet```
-"
+!vsheet```"
 -footer "Created by @MrRobinhood#1999"
