@@ -25,6 +25,9 @@
 !bag + [\"item name\"]```"
 -f "**IF YOU PREP SPELLS**|```css
 !prep add [\"spell\"] [\"spell\"]```"
+-f "CHECK YOUSELF|```css
+!checkme
+ (Fix any issues before continuing)```"
 -f "**POST VSHEET**|```css
 !vsheet```"
 -footer "Created by @MrRobinhood#1999"

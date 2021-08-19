@@ -65,8 +65,8 @@ for (skill_name, skill) in me.skills:
         new_settings.append(skill.value)
 
 
-returnstr += f'-f "Work Quantity|Is now `{new_settings[0]}`: +`{new_settings[1]}`"\n'
-returnstr += f'-f "Work Quality|Is now `{new_settings[3]}({new_settings[4]})`: +`{new_settings[5]}`"\n'
+returnstr += f'-f "Work Quantity|Is now `{new_settings[0]}`: `{new_settings[1]}`"\n'
+returnstr += f'-f "Work Quality|Is now `{new_settings[3]}({new_settings[4]})`: `{new_settings[5]}`"\n'
 returnstr += f'-f "Work Relation|Is now `{new_settings[6]}`: `{new_settings[7]}`"\n'
 returnstr += errstr
 

@@ -1,0 +1,95 @@
+embed -title "Checking - {{name}}" -footer "Dungeons of Desternia Online" -thumb {{image}}
+<drac2>
+me = character()
+returnstr = ""
+a = 0
+class_lang = 0
+if exists("DruidLevel"):
+    class_lang += 1
+#RaceCheck
+if exists("size"):
+    returnstr += f'-f "Race Check|You have set your race to `{me.race}` :white_check_mark:"\n'
+else:
+    returnstr += f'-f "Race Check|You have no race set up. Run `!setrace {me.race}` :no_entry_sign:" \n'
+#SubClassCheck
+if exists("subclass"):
+    s_class = load_json(subclass).values()
+    for sclass in s_class:
+        if "knowledge" in subclass.lower():
+            class_lang += 2
+        if "mastermind" in subclass.lower() and int(level) >= 3:
+            class_lang += 3
+        if sclass != '':
+            returnstr += f'-f "Subclass Check|Your subclass is `{sclass}` :white_check_mark:"\n'
+            a += 1
+            break
+    if a == 0:
+        returnstr += f'-f "Subclass Check|You have no sublcass set up. Run `!level [class] # [subclass]` :no_entry_sign:"\n'
+else:
+    returnstr += f'-f "Subclass Check|You have no sublcass set up. Run `!level [class] # [subclass]` :no_entry_sign:"\n'
+# LangCehck
+missing_langs = []
+returnstr += f'-f "Language Check|'
+race_lang_raw_data = load_json(get_gvar("db5c7250-6117-4624-954c-18883f66f515"))
+bg_lang_raw_data = load_json(get_gvar("6255090c-e5fd-446a-a23d-febb92928aad"))
+my_langs = languages.split(", ")
+auth_lang_count = class_lang
+race_lang_data = race_lang_raw_data[me.race]
+bg_lang_data = bg_lang_raw_data[me.background]
+
+for lang in race_lang_data:
+    if typeof(lang) == "int":
+        auth_lang_count += lang
+    else:
+        auth_lang_count += 1
+auth_lang_count += bg_lang_data[0]
+returnstr += f'You authorized `{auth_lang_count}` languages.\n'
+if len(my_langs) < auth_lang_count:
+    returnstr += f'You are missing `{auth_lang_count - len(my_langs)}` language. :no_entry_sign: \n Run `!manage lang learn [language]` \n'
+elif len(my_langs) > auth_lang_count:
+    returnstr += f'You are over by `{len(my_langs)- auth_lang_count}`\n'
+
+for lang in race_lang_data:
+  if lang not in my_langs:
+    missing_langs.append(lang) if typeof(lang) != "int" else ""
+
+if len(missing_langs) != 0:
+    returnstr += f'`{missing_langs}` are missing :no_entry_sign:"\n'
+else:
+    returnstr += f'No missing race languages :white_check_mark: "\n'
+
+#BgFeature
+returnstr += f'-f "Background Feature|'
+if not exists("backgroundFeature"):
+    returnstr += f'No Background Feature set up, run `!manage back add [feature]` :no_entry_sign:"\n'
+else:
+    returnstr += f'Background features is `{backgroundFeature}`. :white_check_mark:"\n'
+
+# useDesternia
+returnstr += f'-f "Desternia Localizations|'
+if not exists("resources") or not exists("extraRaceSpells"):
+    returnstr += f'Missing some resources, run `!useDesternia` again :no_entry_sign:"\n'
+elif exists("resources"):
+    if resources != '["a8dc85f0-3bef-442f-918b-3935610d96ab","4df6c4b7-efd2-4903-8766-4dfcebcdd695","f833a2de-8c2b-4d15-926e-ce39c9f5ad72"]':
+        returnstr += f'Missing some resources, run `!useDesternia` again :no_entry_sign:"\n'
+    else:
+        returnstr += f'All resources found. :white_check_mark:"\n'
+else:
+    returnstr += f'All resources found. :white_check_mark:"\n'
+
+#BagCheck
+returnstr += f'-f "Trackers Check|'
+if not exists("xplog"):
+    returnstr += f'Missing your `!xp` :no_entry_sign:\n'
+if not exists("bags"):
+    returnstr += f'Missing your `!bag` and `!coins` :no_entry_sign:"\n'
+elif exists("bags"):
+    if "Coin Pouch" not in bags:
+        returnstr += f'Missing your Coin Pouch, Run `!coins +##` :no_entry_sign:"\n'
+    if ("Backpack" or "Pack") not in bags:
+        returnstr += f'Missing your Pack or a Backpack. Run `!bag pack [packname]` :no_entry_sign:"\n'
+    returnstr += f'All trackers are fine. :white_check_mark:"\n'
+
+returnstr += f'-f "Complete|If you pass all checks, post your `!vsheet` in #vsheet-applications"\n'
+return returnstr
+</drac2>
