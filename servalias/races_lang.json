@@ -29,6 +29,7 @@
   "Eladrin Elf": ["Common", "Elvish"],
   "High Elf": ["Common", "Elvish"],
   "Shadow Elf": ["Common", "Elvish"],
+  "Mark of Shadow Elf": ["Common", "Elvish"],
   "Pallid Elf": ["Common", "Elvish"],
   "Sea Elf": ["Common", "Elvish"],
   "Shadar-kai": ["Common", "Elvish"],
@@ -68,6 +69,7 @@
   "Stout Halfling": ["Common", "Halfling"],
   "Hobgoblin": ["Common", "Goblin"],
   "Human": ["Common", 1],
+  "Variant Human": ["Common", 1],
   "Kenku": ["Common", "Auran"],
   "Kobold":["Common", "Draconic"],
   "Kor":["Common", "Kor"],
@@ -104,5 +106,6 @@
   "Dunmer":["Common"],
   "Khajitt":["Common"],
   "Orsimer":["Common"],
-  "Argonian":["Common"]
+  "Argonian":["Common"],
+  "Dhampir" :["Common", 1]
 }

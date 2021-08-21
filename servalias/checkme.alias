@@ -11,6 +11,7 @@ if exists("size"):
     returnstr += f'-f "Race Check|You have set your race to `{me.race}` :white_check_mark:"\n'
 else:
     returnstr += f'-f "Race Check|You have no race set up. Run `!setrace {me.race}` :no_entry_sign:" \n'
+
 #SubClassCheck
 if exists("subclass"):
     s_class = load_json(subclass).values()
@@ -32,10 +33,14 @@ missing_langs = []
 returnstr += f'-f "Language Check|'
 race_lang_raw_data = load_json(get_gvar("db5c7250-6117-4624-954c-18883f66f515"))
 bg_lang_raw_data = load_json(get_gvar("6255090c-e5fd-446a-a23d-febb92928aad"))
-my_langs = languages.split(", ")
+if exists("languages"):
+    my_langs = languages.split(", ")
+else:
+    my_langs = []
 auth_lang_count = class_lang
 race_lang_data = race_lang_raw_data[me.race]
-bg_lang_data = bg_lang_raw_data[me.background]
+bg = me.background.split()[0].strip('*')
+bg_lang_data = bg_lang_raw_data[bg]
 
 for lang in race_lang_data:
     if typeof(lang) == "int":
@@ -85,9 +90,9 @@ if not exists("bags"):
     returnstr += f'Missing your `!bag` and `!coins` :no_entry_sign:"\n'
 elif exists("bags"):
     if "Coin Pouch" not in bags:
-        returnstr += f'Missing your Coin Pouch, Run `!coins +##` :no_entry_sign:"\n'
+        returnstr += f'Missing your Coin Pouch, Run `!coins +##` :no_entry_sign:\n'
     if ("Backpack" or "Pack") not in bags:
-        returnstr += f'Missing your Pack or a Backpack. Run `!bag pack [packname]` :no_entry_sign:"\n'
+        returnstr += f'Missing your Pack or a Backpack. Run `!bag pack [packname]` :no_entry_sign:\n'
     returnstr += f'All trackers are fine. :white_check_mark:"\n'
 
 returnstr += f'-f "Complete|If you pass all checks, post your `!vsheet` in #vsheet-applications"\n'
