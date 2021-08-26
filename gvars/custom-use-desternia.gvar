@@ -220,5 +220,10 @@
       "cc": "Ki Points",
       "title": "[name] uses Quickened Healing!",
       "desc": "As an action, you can spend 2 ki points and roll a Martial Arts die. You regain a number of hit points equal to the number rolled plus your proficiency bonus."
+   },
+   "msense": {
+      "fail": "True",
+      "desc": "At 3rd level, you gain the ability to peer at a creature and magically discern how best to hurt it. As an action, choose one creature you can see within 60 feet of you. You immediately learn whether the creature has any damage immunities, resistances, or vulnerabilities and what they are. If the creature is hidden from divination magic, you sense that it has no damage immunities, resistances, or vulnerabilities.",
+      "cc": "Hunter's Sense"
    }
 }

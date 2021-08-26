@@ -23,6 +23,10 @@ xptimestamp=f'{day:02}.{month:02}.{str(year)[2:]} ({hour:02}:{minute:02}:{second
 timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 <drac2>
+# checks to see if you are in the correct channel
+if str(ctx.channel.id) not in "859175856761339914, 746529962361749594":
+  return f' -f "Error| All crafting rolls go into #craft-rolls."'
+
 #sets all all primary variables
 alreadyRolled, hasTools, hasItems, me, dailyroll, numberOfRolls, hasRolls, averagerolls, returnstr, foundTool, foundItem, oxp, nxp = False, True if exists("pTools") else False, True if exists("savedCraftItems") else False, character(), 0, 0, False, 0, "", False, False, 0, 0
 rollstr = ["1d20+","2d20kh1+","3d20kh1+","2d20kl1+"]

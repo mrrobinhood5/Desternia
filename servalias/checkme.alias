@@ -13,6 +13,15 @@ else:
     returnstr += f'-f "Race Check|You have no race set up. Run `!setrace {me.race}` :no_entry_sign:" \n'
 
 #SubClassCheck
+# Load list of classes that dont require a subclass at current level
+class_info = load_json(get_gvar("8d407dd7-2f99-4acd-b42f-81a7ab78bbb3"))
+for (c, l) in me.levels:
+    if c in class_info:
+        if l < class_info[c]:
+            ClassNotRequired = True
+        else:
+            ClassNotRequired = False
+
 if exists("subclass"):
     s_class = load_json(subclass).values()
     for sclass in s_class:
@@ -27,7 +36,10 @@ if exists("subclass"):
     if a == 0:
         returnstr += f'-f "Subclass Check|You have no sublcass set up. Run `!level [class] # [subclass]` :no_entry_sign:"\n'
 else:
-    returnstr += f'-f "Subclass Check|You have no sublcass set up. Run `!level [class] # [subclass]` :no_entry_sign:"\n'
+    if ClassNotRequired:
+        returnstr += f'-f "Subclass Check|You dont require a sublass yet. :white_check_mark: "\n'
+    else:
+        returnstr += f'-f "Subclass Check|You have no sublcass set up. Run `!level [class] # [subclass]` :no_entry_sign:"\n'
 # LangCehck
 missing_langs = []
 returnstr += f'-f "Language Check|'

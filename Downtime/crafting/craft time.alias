@@ -1,6 +1,10 @@
 tembed -title "Step 4: Crafting Time" -footer "Usage - !dt craft time (ability) (rarity) [-b bonus] -base # [-save ItemName]"
 # craft-time v2
 <drac2>
+# checks to see if you are in the correct channel
+if str(ctx.channel.id) not in "859170236753772544, 746529962361749594":
+  return f' -f "Error| All craft-time item setups go into #crafting-setup."'
+
 #loads both raw arguments and parsed arguments
 rawpargs, pargs =&ARGS&, argparse(&ARGS&)
 #loads primary variables
