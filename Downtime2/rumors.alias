@@ -1,0 +1,87 @@
+tembed -thumb "<image>" -color "<color>" -title "Rumors - <name>" -footer "Downtime options - !help dt"
+<drac2>
+# vars
+me = character()
+
+errorstr = f' -f "Alert|You do not have a valid rumor scout. Do `!dt rumors new` first"'
+rumorstr = f' -f "Rumor Roll|'
+resultstr = f' -f "Results|'
+returnstr = ""
+
+# channel check
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+
+# check for valid cvar
+if not exists("DTv2"):
+  return errorstr
+
+#load JSON
+dt_cvar_data = load_json(DTv2)
+
+# more error checks
+if "rumors" not in dt_cvar_data.keys():
+  return errorstr
+else:
+  if dt_cvar_data['rumors'].get('friends') == "None" or not dt_cvar_data['rumors'].get('friends'):
+    return errorstr
+
+# check for heat and renown keys
+if "heat" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"heat": 0})
+if "renown" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"renown": 0})
+
+# get current renown
+my_renown = dt_cvar_data["renown"]
+renownstr = f' -f "Renown: {my_renown}| Current DC is `{dt_cvar_data["rumors"]["dc"]}`'
+
+# get current costs
+my_costs = dt_cvar_data["renown"]["cost"]
+
+# check if you have heat
+if dt_cvar_data["heat"] > 0:
+  return f' -f "Alert| You cannot sow rumors while having heat :( "'
+
+# roll
+if me.skills.deception.value > me.skills.persuasion.value:
+  rumor_roll = vroll(me.skills.deception.d20())
+  rumorstr += f'**Deception**: {rumor_roll.full}'
+else:
+  rumor_roll = vroll(me.skills.persuasion.d20())
+  rumorstr += f'**Persuasion**: {rumor_roll.full}'
+
+# pass fail
+rumor_count = dt_cvar_data['rumors']['count']
+if rumor_roll.total >= dt_cvar_data["rumors"]["dc"]:
+  rumorstr += '\n`PASS` :white_check_mark:"'
+  #checks crits
+  if rumor_roll.results.crit == 1:
+    resultstr += f'`CRIT` get free rumors downtime\n'
+    rumor_count += 1
+  elif rumor_roll.results.crit == 2:
+    resultstr += f'`NAT1` double cost and no progress\n'
+    my_costs = my_costs * 2
+  else:
+    rumor_count += 1
+else:
+  rumorstr += '\n`FAIL` :no_entry_sign:"'
+
+# check counts
+resultstr += f'Cost: `{my_costs} gp`\n'
+resultstr += f'Successful Rumors: `{rumor_count}`\n'
+if rumor_count >= 5:
+  my_renown += dt_cvar_data['rumors']['rp']
+  resultstr += f'Rumor Successful! +1 Renown: `{my_renown}`'
+  rumor_count = 0
+  dt_cvar_data["rumors"]["friends"] = "None"
+resultstr += '"'
+
+# save the json back to the cvar
+dt_cvar_data['rumors'].update({"count": rumor_count, })
+me.set_cvar("DTv2", dump_json(dt_cvar_data))
+
+# end it
+returnstr += f'{renownstr}{rumorstr}{resultstr}'
+return returnstr
+</drac2>

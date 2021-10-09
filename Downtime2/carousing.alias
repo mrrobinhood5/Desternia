@@ -92,6 +92,13 @@ elif day == 5:
     party_roll = vroll(me.skills.medicine.d20(base_adv=has_adv))
     partystr += f'\n**Medicine**: {party_roll.full}\nThe last day of partying. You self medicate and spend it making' \
                 f'sure you dont overdose on whatever youve been doing"'
+    # crit check
+    if party_roll.result.crit == 1:
+        dt_cvar_data['renown'] += 1
+        resultstr += f'\n`CRIT` adds `+1` Renown\n'
+    if party_roll.result.crit == 2:
+        dt_cvar_data['renown'] -= 1 if dt_cvar_data['renown'] > 1 else dt_cvar_data['renown']
+        resultstr += f'\n`NAT1` removes `-1` Renown\n'
     # add bonuses
     running = running + dt_cvar_data['carousing']['bonus']
     resultstr += f'\n\nRunning Count: `{running}`\n\n'
@@ -145,6 +152,12 @@ elif day == 5:
     return returnstr
 
 # give temp results
+if party_roll.result.crit == 1:
+    dt_cvar_data['renown'] += 1
+    resultstr += f'\n`CRIT` adds `+1` Renown\n'
+if party_roll.result.crit == 2:
+    dt_cvar_data['renown'] -= 1 if dt_cvar_data['renown'] > 1 else dt_cvar_data['renown']
+    resultstr += f'\n`NAT1` removes `-1` Renown\n'
 resultstr += f' Running Count: `{running}`\n Gold spent: `{dt_cvar_data["carousing"]["cost"]*day}`"'
 if day < 5:
     day += 1

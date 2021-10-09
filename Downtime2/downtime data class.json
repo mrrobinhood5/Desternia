@@ -10,7 +10,13 @@
         "cost" : 0,
         "friends": "Wealthy",
         "day": 1,
-        "penalty": 0
-
+        "bonus": 0
+    },
+    "rumors":{
+        "count": 0,
+        "cost": 5,
+        "friends": "Aristocratic",
+        "dc": 10,
+        "rp": 1
     }
 }

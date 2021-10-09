@@ -1,0 +1,84 @@
+tembed -thumb "<image>" -color "<color>" -title "Rumors - <name>" -footer "Downtime options - !help dt"
+<drac2>
+# add time check
+
+#vars
+me = character()
+scoutstr = f' -f "Scout Roll|'
+default_cvar_dtv2 = "{}"
+has_adv = None
+resultstr = f' -f "Results|'
+returnstr = ''
+
+#channel check
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -desc "BUT! You are in the wrong channel" -f "Fix|Go do your work downtime in the #downtime channel"'
+
+# check to see if you have new downtime cvars
+me.set_cvar_nx("DTv2", default_cvar_dtv2)
+
+# load the json
+dt_cvar_data = load_json(DTv2)
+if "rumors" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"rumors":{}})
+
+# get current renown
+if "renown" in dt_cvar_data.keys():
+    my_renown = dt_cvar_data["renown"]
+else:
+    dt_cvar_data.update({"renown":0})
+    my_renown = 0
+renownstr = f' -f "Renown-{my_renown}|'
+
+# use renown to build the DC roll
+if 10 <= my_renown < 25:
+    dc_mod = -1
+    renownstr += f'You have a -1 to your DC"'
+elif my_renown >= 25:
+    dc_mod = -2
+    renownstr += f'You have a -2 to your DC"'
+else:
+    dc_mod = 0
+    renownstr += f'You dont have Renown perks"'
+
+# choose which is the best to roll
+if me.skills.perception.value > me.skills.investigation.value:
+    scout_roll = vroll(me.skills.perception.d20(base_adv=has_adv))
+    scoutstr += f'**Perception**: {scout_roll.full}'
+else:
+    scout_roll = vroll(me.skills.investigation.d20(base_adv=has_adv))
+    scoutstr += f'**Investigation**: {scout_roll.full}'
+scoutstr += '"'
+
+# build results
+if scout_roll.total < 10:
+    resultstr += 'You cannot find anyone to rumor with. Try again tomorrow."'
+    dt_cvar_data['rumors'].update({"cost": 0, "friends": "None", "rp": 0})
+elif 10 <= scout_roll.total < 15:
+    # Poor / modest
+    resultstr += f'You found a group of `Poor/Modest` people to rumor with. It costs `5gp` per rumors and' \
+                 f'`DC 12`' \
+                 '\n Start with `!dt rumors`"'
+    dt_cvar_data['rumors'].update({"cost": 5, "friends": "Poor/Modest", "dc": 12+dc_mod, "rp": 1})
+elif 15 <= scout_roll.total < 20:
+    # wealthy
+    resultstr += f'You found a group of `Wealthy` people to rumor with. It costs `10gp` per rumors and' \
+                 f'`DC 14`'\
+                 '\n Start with `!dt rumors`"'
+    dt_cvar_data['rumors'].update({"cost": 10, "friends": "Wealthy", "dc": 14+dc_mod, "rp": 2})
+elif scout_roll.total >= 20:
+    # aristocratic
+    resultstr += f'You found a group of `Aristocratic` people to rumor with. It costs `15gp` per rumors and' \
+                 f'`DC 20`'\
+                 '\n Start with `!dt rumors`"'
+    dt_cvar_data['rumors'].update({"cost": 15, "friends": "Aristocratic", "dc": 20+dc_mod, "rp": 3})
+
+# save the current options
+dt_cvar_data['rumors'].update({"count": 0})
+me.set_cvar("DTv2", dump_json(dt_cvar_data))
+
+#build the embed
+returnstr += f'{renownstr}{scoutstr}{resultstr}'
+return returnstr
+
+</drac2>
