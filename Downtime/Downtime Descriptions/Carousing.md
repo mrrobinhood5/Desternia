@@ -34,11 +34,11 @@ Renown will give you perks on your rolls to sow Rumors.
 
 There are no DCs, but your Scout Roll will determine how much you spend per day partying.
 
-| Scout Roll  | Victim | Cost |
-| ----  | :------: | --- |
-| 10-14 | Poor / Modest | 1 |
-| 15-17 | Wealthy     |  3 |
-| 20+   | Aristocratic| 5 |
+| Scout Roll  | Victim | Cost | Bonus |
+| ----  | :------: | --- | --- |
+| 10-14 | Poor / Modest | 1gp * level| 5
+| 15-19 | Wealthy     |  3gp * level | 15
+| 20+   | Aristocratic| 5gp * level | 25
 
 # Costs
 Costs for daily carousing are in line with DCs. They are also dependent on the final Day Results.

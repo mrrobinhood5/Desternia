@@ -2,7 +2,15 @@
     "heat": 1
     "renown": 1
     "cs":{
-        "prev_heat": 0
+        "prev_heat": 0,
         "progress": 0
+    },
+    "carousing":{
+        "running": 0,
+        "cost" : 0,
+        "friends": "Wealthy",
+        "day": 1,
+        "penalty": 0
+
     }
 }

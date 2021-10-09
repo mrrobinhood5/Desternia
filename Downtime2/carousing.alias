@@ -1,0 +1,161 @@
+tembed -thumb "<image>" -color "<color>" -title "Carousing - <name>" -footer "Downtime options - !help dt"
+<drac2>
+# vars
+me = character()
+errorstr = f' -f "Alert|You do not have a valid carousing scout. Do `!dt carousing new` first"'
+has_adv = None
+returnstr = ""
+renownstr = ""
+partystr = f' -f "Party Roll - Day '
+resultstr = f' -f "Results|'
+
+# channel check
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+
+# check to see if you have a valid carousing find
+if not exists("DTv2"):
+    me.set_cvar("DTv2", "{}")
+    return errorstr
+
+dt_cvar_data = load_json(DTv2)
+if "carousing" not in dt_cvar_data.keys():
+    return errorstr
+else:
+    if dt_cvar_data['carousing'].get('friends') == "None" or not dt_cvar_data['carousing'].get('friends'):
+        return errorstr
+
+# check for heat and renown keys
+if "heat" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"heat": 0})
+if "renown" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"renown": 0})
+
+# get current renown
+my_renown = dt_cvar_data["renown"]
+
+# use renown to build the rolls
+renownstr += f' -f "Renown: {my_renown}|'
+if 10 <= my_renown < 25:
+    renownstr += f'You have 10% chance to gain advantage. '
+    if randint(1,11) == 1:
+        has_adv = True
+        renownstr += f'`ADV gained`'
+    else:
+        renownstr += f'`no ADV`'
+elif my_renown >= 25:
+    renownstr += f'You have 25% chance to gain advantage. '
+    if randint(1,5) == 1:
+        has_adv = True
+        renownstr += f'`ADV gained`'
+    else:
+        renownstr += f'`no ADV`'
+else:
+    renownstr += f'You dont get any renown perks.'
+renownstr += '"'
+
+# grab the running count
+running = dt_cvar_data['carousing']['running']
+day = dt_cvar_data['carousing']['day']
+
+# spend the gold required
+
+
+# roll for the day you are on, and increment the day
+partystr += f'{day}|Partying with `{dt_cvar_data["carousing"]["friends"]}` friends. Bonus is `{dt_cvar_data["carousing"]["bonus"]}`\n'
+if day == 1:
+    party_roll = vroll(me.skills.persuasion.d20(base_adv=has_adv))
+    partystr += f'\n**Persusasion**: {party_roll.full}\nYou spend the day making friends, and getting to know everyone"'
+    running += party_roll.total
+elif day == 2:
+    party_roll = vroll(me.skills.deception.d20(base_adv=has_adv))
+    partystr += f'\n**Deception**: {party_roll.full}\nYou spend your day avoiding your enemies, making sure they ' \
+                f'stay away from you"'
+    running += party_roll.total
+elif day == 3:
+    party_roll = vroll(me.skills.performance.d20(base_adv=has_adv))
+    partystr += f'\n**Performance**: {party_roll.full}\nYou spend this day entertaining your friends, being the ' \
+                f'life of the party"'
+    running += party_roll.total
+elif day == 4:
+    if me.skills.religion.value > me.skills.history.value:
+        party_roll = vroll(me.skills.religion.d20(base_adv=has_adv))
+        partystr += f'\n**Religion**: {party_roll.full}\nYou annoy your friends with drunken conversations about your views on ' \
+                    f'Religion and/or your patron/god"'
+        running += party_roll.total
+    else:
+        party_roll = vroll(me.skills.history.d20(base_adv=has_adv))
+        partystr += f'\n**History**: {party_roll.full}\nYou annoy your friends with drunken conversations about how back in the ' \
+                    f'day you did this and that.."'
+        running += party_roll.total
+elif day == 5:
+    party_roll = vroll(me.skills.medicine.d20(base_adv=has_adv))
+    partystr += f'\n**Medicine**: {party_roll.full}\nThe last day of partying. You self medicate and spend it making' \
+                f'sure you dont overdose on whatever youve been doing"'
+    # add bonuses
+    running = running + dt_cvar_data['carousing']['bonus']
+    resultstr += f'\n\nRunning Count: `{running}`\n\n'
+    if running <= 50:
+        dt_cvar_data["heat"] += 3
+        dt_cvar_data["renown"] -= 5
+        if dt_cvar_data["renown"] < 0:
+            dt_cvar_data["renown"] = 0
+        resultstr += f'You accidentally start a fire in a random part of town. ' \
+                     f'Nobody got Hurt, but people are not happy. \n' \
+                     f'-5 Renown: `{dt_cvar_data["renown"]}`\n' \
+                     f'+3 Heat: `{dt_cvar_data["heat"]}`"'
+
+    elif running <= 60:
+        dt_cvar_data["heat"] += 1
+        dt_cvar_data["renown"] -= 1
+        if dt_cvar_data["renown"] < 0:
+            dt_cvar_data["renown"] = 0
+        resultstr += f'You are jailed for {vroll("1d4")} days at the end of the downtime period on charges of ' \
+                     f'disorderly conduct and disturbing the peace. You can pay a fine of 10 gp.\n ' \
+                     f'+1 Heat: `{dt_cvar_data["heat"]}`\n' \
+                     f'-1 Renown: `{dt_cvar_data["renown"]}`"'
+
+    elif running <= 70:
+        resultstr += f'You had a great party. Nothing Bad Happened. Nothing Good Happened, you just had a wonderful time."'
+    elif running <= 80:
+        dt_cvar_data["renown"] += 1
+        resultstr += f'You are caught up in a whirlwind romance. The romance ends amicably. ' \
+                     f'They tell their friends about you\n' \
+                     f'+1 Renown: `{dt_cvar_data["renown"]}`"'
+    elif running <= 90:
+        dt_cvar_data["renown"] += 2
+        resultstr += f'You gain the local reputation as the life of the party.\n' \
+                     f'+2 Renown: `{dt_cvar_data["renown"]}`"'
+
+    elif running <= 100:
+        resultstr += f'You win a bar bet and gain the services of two guys. They followed you around doing your ' \
+                     f'thing for 5 days. You looked cool.\n' \
+                     f'+3 Renown: `{dt_cvar_data["renown"]}`"'
+        dt_cvar_data["renown"] += 3
+    elif running > 100:
+        small_fortune = vroll("4d6*10")
+        resultstr += f'You make a small fortune gambling. You recuperate your carousing expenses for the ' \
+                     f'time spent carousing and gain {small_fortune.full}. Your carousing becomes the stuff of local legend\n ' \
+                     f'+4 Renown: `{dt_cvar_data["renown"]}"'
+        dt_cvar_data["renown"] += 4
+# reset carousing
+    dt_cvar_data['carousing'].update({"friends": "None", "running":0, "cost": 0, "day": 0})
+    returnstr += f'{renownstr}{partystr}{resultstr}'
+    me.set_cvar("DTv2", dump_json(dt_cvar_data))
+    return returnstr
+
+# give temp results
+resultstr += f' Running Count: `{running}`\n Gold spent: `{dt_cvar_data["carousing"]["cost"]*day}`"'
+if day < 5:
+    day += 1
+
+
+
+# save the json back to the cvar
+dt_cvar_data['carousing'].update({"day": day, "running": running})
+me.set_cvar("DTv2", dump_json(dt_cvar_data))
+
+# end it
+returnstr += f'{renownstr}{partystr}{resultstr}'
+return returnstr
+</drac2>

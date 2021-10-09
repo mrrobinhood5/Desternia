@@ -1,4 +1,9 @@
-tembed -thumb "<image>" -color "<color>" -title "Community Service - <name>"
+tembed -thumb "<image>" -color "<color>" -title "Community Service - <name>" -footer "Downtime options - !help dt"
+# add time
+
+# add time check to see if you already did one today
+
+
 <drac2>
 # vars
 me = character()
