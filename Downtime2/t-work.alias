@@ -23,22 +23,23 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
+# Checks
+## Channel Checks
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -title "{name} attempts to work..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+## Heat Checks
+if exists("RosemereHeat"):
 
 #initialize all of the variables
 pargs, downtime, returnstr, baseroll, advroll =argparse(&ARGS&), "work",  "", "1d20+", "2d20kh1+"
-if exist("subclass"):
-  eloq_bard = True if "eloquence" in subclass.lower() else False
-else:
-  eloq_bard = False
+eloq_bard = True if "eloquence" in subclass.lower() else False
 eloq_roll = "1d20mi10+"
 eloq_adv_roll = "1d20kh1mi10"
 #determine if it will run once or twice
 downtimes, results = 1 if pargs.get("part") or pargs.get("parttime") or pargs.get("part-time") else 2, {timestamp:{downtime:{}}}
 
 #If this is first time, save an empty dict for today and load the work history
-character().set_cvar("DTTrack",dump_json(results)) if not exists("DTTrack") else 0 
+character().set_cvar("DTTrack",dump_json(results)) if not exists("DTTrack") else 0
 workdata = load_json(DTTrack)
 
 # Flag which skill will have advantage
@@ -47,7 +48,7 @@ if hasAdv:
   quanAdv = True if pargs.get("adv")[0] == "quan" else False
   qualAdv = True if pargs.get("adv")[0] == "qual" else False
   relationAdv = True if pargs.get("adv")[0] == "relation" else False
-else: 
+else:
   quanAdv, qualAdv, relationAdv = False, False, False
 
 # check if Job and Settings have been set first, and then parse the arguments
@@ -93,6 +94,6 @@ else:
 
     returnstr += f'-f "Familiar|Using your familiar for work gives your advantage on one work roll"' if hasAdv else f''
   workdata.update(results)
-  character().set_cvar("DTTrack",dump_json(workdata)) 
+  character().set_cvar("DTTrack",dump_json(workdata))
   return returnstr
 </drac2>

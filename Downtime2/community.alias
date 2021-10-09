@@ -1,0 +1,171 @@
+tembed -thumb "<image>" -color "<color>" -title "Community Service - <name>"
+<drac2>
+# vars
+me = character()
+has_adv = None
+dc_roll = ["2d10+", "3d10kl2+"]
+default_cvar_dtv2 = "{}"
+returnstr = ""
+renownstr = ""
+communitystr = ' -f "Community Roll|'
+workstr = ' -f "Work Roll|'
+resultstr = ' -f "Results|'
+p = 0
+
+# skills
+cs_skill_b = [me.skills.performance.value, me.skills.persuasion.value, me.skills.deception.value]
+cs_skill_n = ["performance", "persuasion", "deception"]
+cs_skill = [me.skills.performance, me.skills.persuasion, me.skills.deception]
+csw_skill_b = [me.skills.athletics.value, me.skills.performance.value, me.skills.acrobatics.value]
+csw_skill_n = ["athletics", "performance", "acrobatics"]
+csw_skill = [me.skills.athletics, me.skills.performance, me.skills.acrobatics]
+
+# channel check
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+
+# check to see if you have new downtime cvars
+me.set_cvar_nx("DTv2", default_cvar_dtv2)
+
+# check to see if there is a community service key
+dt_cvar_data = load_json(DTv2)
+
+#check for previous heat to reset
+if "heat" in dt_cvar_data.keys():
+    if "cs" in dt_cvar_data.keys():
+        if "prev_heat" in dt_cvar_data["cs"].keys():
+            if dt_cvar_data["cs"]["prev_heat"] < dt_cvar_data["heat"]:
+                returnstr += f' -f "Alert|Your Community Service progress has been reset. You accrued heat."'
+                dt_cvar_data["cs"].update({"progress":0})
+                dt_cvar_data["cs"]["prev_heat"] = dt_cvar_data["heat"]
+        else:
+            dt_cvar_data["cs"].update({"prev_heat": dt_cvar_data["heat"]})
+    else:
+        dt_cvar_data.update({"cs":{"prev_heat": 0, "progress": 0}})
+else:
+    dt_cvar_data.update({"heat": 0})
+    dt_cvar_data.update({"cs": {"prev_heat": 0, "progress": 0}})
+
+# get the current renown
+if "renown" in dt_cvar_data.keys():
+    my_renown = dt_cvar_data["renown"]
+else:
+    dt_cvar_data.update({"renown":0})
+    my_renown = 0
+
+# use renown to build the rolls
+renownstr += f' -f "Renown: {my_renown}|'
+if my_renown < 3:
+    renownstr += f'You dont get any renown perks.'
+
+if 10 > my_renown >= 3:
+    renownstr += f'You have 10% chance to gain advantage. '
+    if randint(1,11) == 1:
+        has_adv = True
+        renownstr += f'`ADV gained`'
+    else:
+        renownstr += f'`no ADV`'
+
+if my_renown >= 10:
+    renownstr += f'You have 25% chance to gain advantage. '
+    if randint(1,5) == 1:
+        has_adv = True
+        renownstr += f'`ADV gained`'
+    else:
+        renownstr += f'`no ADV`'
+
+if 25 <= my_renown < 50:
+    renownstr += f'\n You have 10% chance for DC to roll disadvantage. '
+    if randint(1,11) == 1:
+        dc_roll = dc_roll[1]
+        renownstr += f'`DIS gained`'
+    else:
+        renownstr += f'`no DIS`'
+        dc_roll = dc_roll[0]
+
+if my_renown >= 50:
+    renownstr += f'\n You have 25% chance for DC to roll disadvantage. '
+    if randint(1,5) == 1:
+        dc_roll = dc_roll[1]
+        renownstr += f'`DIS gained`'
+    else:
+        renownstr += f'`no DIS`'
+        dc_roll = dc_roll[0]
+
+if typeof(dc_roll) == "SafeList":
+    dc_roll = dc_roll[0]
+renownstr += f'"'
+
+# build the DCs for the 2 rolls
+community_dc = vroll(f"{dc_roll}{me.levels.total_level}")
+work_dc = vroll(f"{dc_roll}{me.levels.total_level}")
+
+# get the max value of each
+community_skill = cs_skill[cs_skill_b.index(max(cs_skill_b))]
+cs_skill_n = cs_skill_n[cs_skill_b.index(max(cs_skill_b))]
+work_skill = csw_skill[csw_skill_b.index(max(csw_skill_b))]
+csw_skill_n = csw_skill_n[csw_skill_b.index(max(csw_skill_b))]
+
+# get the rolls
+community_roll = vroll(community_skill.d20(base_adv=has_adv))
+work_roll = vroll(work_skill.d20(base_adv=has_adv))
+
+# assess the rolls
+if community_roll.result.crit == 1:
+    communitystr += f'**{cs_skill_n.title()}**: {community_roll.full}\n`AUTO-PASS` from CRIT :white_check_mark:'
+    p += 1
+elif community_roll == 2:
+    communitystr += f'**{cs_skill_n.title()}**: {community_roll.full}\n`AUTO-FAIL` from NAT-1 :no_entry_sign:'
+else:
+    communitystr += f'**DC**: {community_dc.full}\n **{cs_skill_n.title()}**: {community_roll.full}'
+    if community_roll.total >= community_dc.total:
+        communitystr += f'\n `PASS` :white_check_mark:'
+        p += 1
+    else:
+        communitystr += f'\n `FAIL` :no_entry_sign:'
+communitystr += '"'
+
+if work_roll.result.crit == 1:
+    workstr += f'**{csw_skill_n.title()}**: {work_roll.full}\n`AUTO-PASS` from CRIT :white_check_mark:'
+    p += 1
+elif work_roll == 2:
+    workstr += f'**{csw_skill_n.title()}**: {work_roll.full}\n`AUTO-FAIL` from NAT-1 :no_entry_sign:'
+else:
+    workstr += f'**DC**: {work_dc.full}\n **{csw_skill_n.title()}**: {work_roll.full}'
+    if work_roll.total >= work_dc.total:
+        workstr += f'\n `PASS` :white_check_mark:'
+        p += 1
+    else:
+        workstr += f'\n `FAIL` :no_entry_sign:'
+workstr += '"'
+
+# increment progress if both pass
+if "progress" not in dt_cvar_data['cs'].keys():
+    dt_cvar_data['cs'].update({"progress": 0})
+else:
+    if p == 2:
+        dt_cvar_data['cs']['progress'] += 1
+        resultstr += f'Community Service Progress is now at `{dt_cvar_data["cs"]["progress"]}`'
+    else:
+        resultstr += f'No progress made, still at: `{dt_cvar_data["cs"]["progress"]}`'
+
+# check to see if you are at 10 to remove 1 heat
+if dt_cvar_data['cs']['progress'] >= 10 and dt_cvar_data['heat'] == 0:
+    dt_cvar_data['renown'] += 1
+    resultstr += f'\n 10 Community Service converted to +1 Renown: `{dt_cvar_data["renown"]}`'
+    dt_cvar_data['cs']['progress'] = 0
+
+elif dt_cvar_data['cs']['progress'] >= 10 and dt_cvar_data['heat'] != 0:
+    dt_cvar_data['heat'] -= 1
+    dt_cvar_data['cs']['prev_heat'] = dt_cvar_data['heat']
+    resultstr += f'\n 10 Community Service converted to -1 Heat: `{dt_cvar_data["heat"]}`'
+    dt_cvar_data['cs']['progress'] = 0
+resultstr += '"'
+
+# save the json back to the cvar
+me.set_cvar("DTv2", dump_json(dt_cvar_data))
+
+# build the return strings
+returnstr += f'{renownstr}{communitystr}{workstr}{resultstr}'
+return returnstr
+</drac2>
