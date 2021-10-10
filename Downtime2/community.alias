@@ -102,8 +102,8 @@ if typeof(dc_roll) == "SafeList":
 renownstr += f'"'
 
 # build the DCs for the 2 rolls
-community_dc = vroll(f"{dc_roll}{me.levels.total_level}")
-work_dc = vroll(f"{dc_roll}{me.levels.total_level}")
+community_dc = vroll(f"{dc_roll}{proficiencyBonus}")
+work_dc = vroll(f"{dc_roll}{proficiencyBonus}")
 
 # get the max value of each
 community_skill = cs_skill[cs_skill_b.index(max(cs_skill_b))]

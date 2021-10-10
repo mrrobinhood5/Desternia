@@ -1,0 +1,87 @@
+tembed -title "Religious Service - <name>" -footer "Downtime options - !help dt"
+
+<drac2>
+me = character()
+default_cvar_dtv2 = "{}"
+renownstr = ""
+resultstr = f' -f "Results|'
+returnstr = ""
+t_rolls = []
+has_adv = None
+
+# channel check
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+
+
+# check for valid cvar
+if not exists("DTv2"):
+  me.set_cvar("DTv2", default_cvar_dtv2)
+
+#load JSON
+dt_cvar_data = load_json(DTv2)
+
+# check for heat
+if "heat" in dt_cvar_data.keys():
+    if dt_cvar_data["heat"] > 0:
+        return f' -f "Alert|You cannot perform Religious Service with Heat: `{dt_cvar_data["heat"]}`"'
+
+# get current renown
+if "renown" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"renown": 0})
+my_renown = dt_cvar_data["renown"]
+renownstr += f' -f "Renown: {my_renown}|'
+if 10 > my_renown >=5:
+    renownstr += f'You have 5% chance to gain advantage. '
+    if randint(1, 21) == 1:
+        has_adv = True
+        renownstr += f'`ADV gained`'
+    else:
+        renownstr += f'`no ADV`'
+elif 24 > my_renown >= 10:
+    renownstr += f'You have 10% chance to gain advantage. '
+    if randint(1, 11) == 1:
+        has_adv = True
+        renownstr += f'`ADV gained`'
+    else:
+        renownstr += f'`no ADV`'
+elif my_renown >= 25:
+    renownstr += f'You have 25% chance to gain advantage. '
+    if randint(1, 5) == 1:
+        has_adv = True
+        renownstr += f'`ADV gained`'
+    else:
+        renownstr += f'`no ADV`'
+else:
+    renownstr += f'You dont get any renown perks.'
+renownstr += '"'
+
+#find which 3 are your top
+skill_b = [me.skills.religion.value, me.skills.insight.value, me.skills.medicine.value, me.skills.persuasion.value, me.skills.history.value]
+skill_c = ["religion", "insight", "medicine", "persuasion", "history"]
+a = []
+for _ in range(3):
+    # a.append(SKILL[SKILL_B.index(max(SKILL_B))])
+    a_roll = vroll(me.skills[skill_c[skill_b.index(max(skill_b))]].d20(base_adv = has_adv))
+    if a_roll.result.crit == 1:
+        my_renown += 1
+        resultstr += f'`CRIT` +1 Renown: `{my_renown}`\n'
+    t_rolls.append(a_roll.total)
+    resultstr += f'**{skill_c[skill_b.index(max(skill_b))].title()}**: {a_roll.full}\n\n'
+    # record the result here
+    skill_b.pop(skill_b.index(max(skill_b)))
+    skill_c.pop(skill_b.index(max(skill_b)))
+
+# do the averag
+resultstr += f'Roll Average: `{sum(t_rolls)/len(t_rolls)}`\n'
+resultstr += '"'
+
+# write results back to JSON then CVAR
+dt_cvar_data['renown'] = my_renown
+me.set_cvar("DTv2", dump_json(dt_cvar_data))
+
+# build the returnstr
+returnstr += f'{renownstr}{resultstr}'
+return returnstr
+
+</drac2>

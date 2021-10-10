@@ -26,7 +26,7 @@ Renown will give you perks on your rolls.
 | 50  | 25% chance for DCs to roll with DIS | 
 
 # DCs
-All DCs are random 2d10 + level
+All DCs are random 2d10 + proficiency bonus
 
 # Costs
 No costs for community service

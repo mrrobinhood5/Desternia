@@ -36,9 +36,9 @@ There are no DCs, but your Scout Roll will determine how much you spend per day 
 
 | Scout Roll  | Victim | Cost | Bonus |
 | ----  | :------: | --- | --- |
-| 10-14 | Poor / Modest | 1gp * level| 5
-| 15-19 | Wealthy     |  3gp * level | 15
-| 20+   | Aristocratic| 5gp * level | 25
+| 10-14 | Poor / Modest | 1gp * level| 10
+| 15-19 | Wealthy     |  3gp * level | 20
+| 20+   | Aristocratic| 5gp * level | 30
 
 # Costs
 Costs for daily carousing are in line with DCs. They are also dependent on the final Day Results.
