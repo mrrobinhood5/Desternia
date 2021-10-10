@@ -11,18 +11,17 @@ Nat 1s rolled in Stealth or SoH rolls will result in +1 Heat
 Nat 20s rolled in Stealth or SoH will result in +1 Renown
 
 # Heat
-| Heat | Consequence |
+~~| Heat | Consequence |
 | ---- | ----------- |
 | 15 + | Cannot do Crime DT |
 | 10 + | All rolls will be with DIS |
 | 5 +  | 25% chance to roll with DIS |
-| 3 +  | 10% chance to roll with DIS |
-
+| 3 +  | 10% chance to roll with DIS |~~
 # Renown
 If you have ANY Renown, a successful completion of Crime DT will -1 your Renown until you are at 0, and then you can start collecting heat.
 
 # DCs
-All DCs are random 2d10 + level
+All DCs are random 2d10 + proficiency bonus
 
 # Costs
 1 DT costs 2gp

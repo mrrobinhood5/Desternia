@@ -1,4 +1,27 @@
-tembed -title "Religious Service - <name>" -footer "Downtime options - !help dt"
+tembed -title "Religious Service - <name>" -footer "Downtime options - !help dt" -color <color> -thumb <image>
+
+<drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
 
 <drac2>
 me = character()
@@ -17,14 +40,21 @@ if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
 # check for valid cvar
 if not exists("DTv2"):
   me.set_cvar("DTv2", default_cvar_dtv2)
+if not exists("DTTv2"):
+    me.set_cvar("DTTv2", default_cvar_dtv2)
 
 #load JSON
 dt_cvar_data = load_json(DTv2)
+dtt_cvar_data = load_json(DTTv2)
+
+#check for work today
+if timestamp in dtt_cvar_data.keys():
+    return f' -f "Alert|You have already worked for today, try again tomorrow\n\n:warning:"'
 
 # check for heat
 if "heat" in dt_cvar_data.keys():
     if dt_cvar_data["heat"] > 0:
-        return f' -f "Alert|You cannot perform Religious Service with Heat: `{dt_cvar_data["heat"]}`"'
+        return f' -f "Alert|You cannot perform Religious Service with Heat: `{dt_cvar_data["heat"]}`\n\n:warning:"'
 
 # get current renown
 if "renown" not in dt_cvar_data.keys():
@@ -68,20 +98,32 @@ for _ in range(3):
         resultstr += f'`CRIT` +1 Renown: `{my_renown}`\n'
     t_rolls.append(a_roll.total)
     resultstr += f'**{skill_c[skill_b.index(max(skill_b))].title()}**: {a_roll.full}\n\n'
-    # record the result here
     skill_b.pop(skill_b.index(max(skill_b)))
     skill_c.pop(skill_b.index(max(skill_b)))
 
-# do the averag
-resultstr += f'Roll Average: `{sum(t_rolls)/len(t_rolls)}`\n'
+# do the daily total and record it
+resultstr += f'Day Total: `{sum(t_rolls)}`\n'
+dtt_cvar_data.update({timestamp: ("service", sum(t_rolls))})
+
+# show running average
+a = []
+for day, act in dtt_cvar_data.items():
+    if act[0] == 'service':
+        a.append(act[1])
+resultstr += f'Running Average: `{sum(a)/len(a)}`'
 resultstr += '"'
 
 # write results back to JSON then CVAR
 dt_cvar_data['renown'] = my_renown
 me.set_cvar("DTv2", dump_json(dt_cvar_data))
+me.set_cvar("DTTv2", dump_json(dtt_cvar_data))
 
 # build the returnstr
 returnstr += f'{renownstr}{resultstr}'
 return returnstr
 
 </drac2>
+
+for day, act in dtt2.items():
+    if act[0] == 'service':
+        a.append(act[1])
