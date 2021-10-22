@@ -38,10 +38,8 @@ if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
 
 
 # check for valid cvar
-if not exists("DTv2"):
-  me.set_cvar("DTv2", default_cvar_dtv2)
-if not exists("DTTv2"):
-    me.set_cvar("DTTv2", default_cvar_dtv2)
+me.set_cvar_nx("DTv2", default_cvar_dtv2)
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
 
 #load JSON
 dt_cvar_data = load_json(DTv2)
@@ -123,7 +121,3 @@ returnstr += f'{renownstr}{resultstr}'
 return returnstr
 
 </drac2>
-
-for day, act in dtt2.items():
-    if act[0] == 'service':
-        a.append(act[1])

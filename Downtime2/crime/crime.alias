@@ -1,0 +1,201 @@
+tembed -title "Crime - <name>" -footer "Downtime options - !help dt" -color <color> -thumb <image>
+
+<drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+
+<drac2>
+me = character()
+default_cvar_dtv2 = "{}"
+renownstr = f' -f "Reputation|'
+resultstr = f' -f "Results|'
+returnstr = ""
+rollstr = f' -f "Rolls|'
+t_rolls = []
+has_adv = None
+stealth_adv = None
+soh_adv = None
+pay_mod = 0
+stealth_override = None
+soh_adv = None
+soh_override = None
+sohstr = ""
+
+# channel check
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+
+# check for valid cvar
+me.set_cvar_nx("DTv2", default_cvar_dtv2)
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
+
+#load JSON
+dt_cvar_data = load_json(DTv2)
+dtt_cvar_data = load_json(DTTv2)
+# load bag here
+
+#check for work today
+if timestamp in dtt_cvar_data.keys():
+    return f' -f "Alert|You have already did downtime for today, try again tomorrow\n\n:warning:"'
+
+# get current renown
+if "renown" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"renown": 0})
+my_renown = dt_cvar_data["renown"]
+renownstr += f'Renown:`{my_renown}`\n'
+
+# check heat
+if "heat" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"heat": 0})
+my_heat = dt_cvar_data["heat"]
+renownstr += f'Heat: `{my_heat}`'
+# add the different renown strings here
+renownstr += f'"\n'
+# heat over 15 is a nogo
+if my_heat > 15:
+    resultstr += f'You have `{my_heat}` Heat. You are too hot to do crime, you can lower it by doing `!dt community`"'
+    return f'{renownstr}{resultstr}'
+
+# Scout roll
+if me.skills.deception.value > me.skills.persuasion.value:
+  scout_roll = vroll(me.skills.deception.d20())
+  rollstr += f'**Deception**: {scout_roll.full}\n'
+else:
+  scout_roll = vroll(me.skills.persuasion.d20())
+  rollstr += f'**Persuasion**: {scout_roll.full}\n'
+# scout results and set mod
+if scout_roll.total < 10:
+    rollstr += '"'
+    resultstr += f'Could not find anyone to steal from. Try again tomorrow"'
+    return f'{renownstr}{rollstr}{resultstr}'
+
+elif scout_roll.total in range(10, 12):
+    pay_mod = .2
+    rollstr += f'Found `Poor` people with a mod of `.2`\n\n '
+
+elif scout_roll.total in range(12, 15):
+    pay_mod = .5
+    rollstr += f'Found `Modest` people with a mod of `.5`\n\n '
+
+elif scout_roll.total in range(15, 18):
+    pay_mod = 1
+    rollstr += f'Found `Comfortable` people with a mod of `1`\n\n '
+
+elif scout_roll.total in range(18, 20):
+    pay_mod = 2
+    rollstr += f'Found `Wealthy` people with a mod of `2`\n\n '
+
+else:
+    pay_mod = 3
+    rollstr += f'Found `Aristocratic` people with a mod of `3`\n\n '
+
+# build DCs
+stealth_dc = vroll("2d10+"+str(proficiencyBonus))
+soh_dc = vroll("2d10+"+str(proficiencyBonus))
+
+
+# Stealth Roll
+# check for other stuff to give you a better stealth roll
+if "Pass without Trace" in me.spellbook:
+    stealth_override = me.skills.stealth.value+10
+    stealthstr = " - *Using Pass without Trace Spell*"
+elif "disguise" in bags.lower():
+    stealth_adv = True
+    stealthstr = " - *Using Disguise Kit*"
+elif "Alter Self" in me.spellbook:
+    stealth_adv = True
+    hiddenBonusStr = " - *Using Alter Self Spell*"
+elif "Disguise Self" in me.spellbook:
+    stealth_adv = True
+    stealthstr = " - *Using Disguise Self Spell*"
+elif "Invisibility" in me.spellbook:
+    stealth_adv = True
+    stealthstr = " - *Using Invisibility Spell*"
+else:
+    stealthstr = ""
+
+stealth_roll = vroll(me.skills.stealth.d20(base_adv = stealth_adv, mod_override=stealth_override))
+
+
+rollstr += f'{stealthstr}\n'
+rollstr += f'**Stealth**: {stealth_roll.full}\n'
+if stealth_roll.result.crit == 1:
+    my_heat += 1
+    resultstr += f'`CRIT` Heat:`{my_heat}`(+1)\n'
+elif stealth_roll.result.crit == 2:
+    my_heat -= 1
+    resultstr += f' `NAT1` Heat:`{my_heat}`(-1)\n'
+
+rollstr += f'**DC**: {stealth_dc.full}'
+
+# Compare with DCs
+if stealth_dc.total > stealth_roll.total:
+    rollstr += '"'
+    resultstr += f'You werent sneaky enough. `FAILED` :no_entry_sign:"'
+    return f'{renownstr}{rollstr}{resultstr}'
+else:
+    rollstr += ":white_check_mark:\n\n"
+
+# SOH Roll
+# check for thieves tools
+if "thieve" in bags.lower():
+
+    if exists("pTools"):
+        if "Thieve" in pTools:
+            soh_override = me.skills.sleightOfHand.value+proficiencyBonus
+            sohstr = " - *Using Proficiency in Thieves' Tools*"
+    if exists("eTools"):
+        if "Thieve" in eTools:
+            soh_override = me.skills.sleightOfHand.value+(proficiencyBonus*2)
+            sohstr = " - *Using Expertise in Thieves' Tools*"
+
+
+soh_roll = vroll(me.skills.sleightOfHand.d20(base_adv = soh_adv, mod_override=soh_override))
+rollstr += f'{sohstr}\n'
+rollstr += f'**SleighOfHand**: {soh_roll.full}\n'
+if soh_roll.result.crit == 1:
+    my_heat += 1
+    resultstr += f'`CRIT` Heat:`{my_heat}`(+1)\n'
+elif soh_roll.result.crit == 2:
+    my_heat -= 1
+    rollstr += f' `NAT1` Heat:`{my_heat}`(-1)\n'
+
+rollstr += f'**DC**: {soh_dc.full}'
+
+# Compare with DCs
+if soh_dc.total > soh_roll.total:
+    rollstr += '"'
+    resultstr += f'You werent sneaky enough. `FAILED` :no_entry_sign:"'
+    return f'{renownstr}{rollstr}{resultstr}'
+else:
+    rollstr += f':white_check_mark:\n"'
+
+# save JSON
+dt_cvar_data.update({"heat": my_heat})
+#dtt_cvar_data.update({timestamp: ["cs", dt_cvar_data['cs']['progress']]})
+me.set_cvar("DTv2", dump_json(dt_cvar_data))
+#me.set_cvar("DTTv2", dump_json(dtt_cvar_data))
+
+#caluclate money
+resultstr += f'**GOLD**: You earned `{(2 * pay_mod) * (max(1, my_heat))}gp`"'
+return f'{renownstr}{rollstr}{resultstr}'
+</drac2>

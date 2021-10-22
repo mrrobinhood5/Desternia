@@ -2,13 +2,19 @@
 ## Rolls
 * Scout Roll - Perception or Investigation
 * Stealth Roll - Stealth, Disguise Kit = ADV
+  * Supported Spells / Items in order of precedence
+    * Pass without Trace - adds +10 to your stealth roll
+    * Disguise Kit - Adds Advantage
+    * Alter Self - Adds Advantange
+    * Disguise Self - Adds Advantage
+    * Invisibility - Adds Advantage
 * Sleight of Hand Roll - SoH, Thieves' Tools = ADV
 
 # Nat 1's
-Nat 1s rolled in Stealth or SoH rolls will result in +1 Heat
+Nat 1s rolled in Stealth or SoH rolls will result in -1 Heat
 
 # Nat 20s
-Nat 20s rolled in Stealth or SoH will result in +1 Renown
+Nat 20s rolled in Stealth or SoH will result in +1 Heat
 
 # Heat
 ~~| Heat | Consequence |

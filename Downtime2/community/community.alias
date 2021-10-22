@@ -1,7 +1,26 @@
 tembed -thumb "<image>" -color "<color>" -title "Community Service - <name>" -footer "Downtime options - !help dt"
-# add time
-
-# add time check to see if you already did one today
+<drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
 
 
 <drac2>
@@ -29,11 +48,16 @@ csw_skill = [me.skills.athletics, me.skills.performance, me.skills.acrobatics]
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
 
-# check to see if you have new downtime cvars
+# check cvars and load JSON
 me.set_cvar_nx("DTv2", default_cvar_dtv2)
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
 
-# check to see if there is a community service key
 dt_cvar_data = load_json(DTv2)
+dtt_cvar_data = load_json(DTTv2)
+
+#check for work today
+if timestamp in dtt_cvar_data.keys():
+    return f' -f "Alert|You have already worked for today, try again tomorrow\n\n:warning:"'
 
 #check for previous heat to reset
 if "heat" in dt_cvar_data.keys():
@@ -44,7 +68,7 @@ if "heat" in dt_cvar_data.keys():
                 dt_cvar_data["cs"].update({"progress":0})
                 dt_cvar_data["cs"]["prev_heat"] = dt_cvar_data["heat"]
         else:
-            dt_cvar_data["cs"].update({"prev_heat": dt_cvar_data["heat"]})
+            dt_cvar_data["cs"].update({"prev_heat": dt_cvar_data["heat"]}) # this doesnt get run to update prev_heat
     else:
         dt_cvar_data.update({"cs":{"prev_heat": 0, "progress": 0}})
 else:
@@ -168,7 +192,9 @@ elif dt_cvar_data['cs']['progress'] >= 10 and dt_cvar_data['heat'] != 0:
 resultstr += '"'
 
 # save the json back to the cvar
+dtt_cvar_data.update({timestamp: ["cs", dt_cvar_data['cs']['progress']]})
 me.set_cvar("DTv2", dump_json(dt_cvar_data))
+me.set_cvar("DTTv2", dump_json(dtt_cvar_data))
 
 # build the return strings
 returnstr += f'{renownstr}{communitystr}{workstr}{resultstr}'

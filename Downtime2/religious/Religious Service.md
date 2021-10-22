@@ -32,9 +32,12 @@ Religious Service costs nothing.
 ## Payout
 Base pay is 2 gp a day, plus bonuses for payout table.
 
+The day total will be divided into the days worked. 
+
+
 | Avg Week  | Earning Bonus |
 | --- | --- |
-0-9   | .75
-10-15 |  1
-16-19 |  1.5
-20+   |  2
+0-25  | .75
+26-40 |  1
+41-54 |  1.5
+55+   |  2

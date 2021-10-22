@@ -1,0 +1,131 @@
+tembed -title "Gambling - <name>" -footer "Downtime options - !help dt" -color <color> -thumb <image>
+
+<drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+
+<drac2>
+# load vars
+me = character()
+default_cvar_dtv2 = "{}"
+renownstr = f' -f "Reputation|'
+rollstr = f' -f "Rolls|'
+resultstr = f' -f "Results|'
+returnstr = ""
+winnings = 0
+losses = 0
+end_result = None
+
+pargs = argparse(&ARGS&)
+args = &ARGS&
+
+# channel check
+if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
+  return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
+
+# check for valid cvar
+me.set_cvar_nx("DTv2", default_cvar_dtv2)
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
+
+# check args before anything else
+bet = args[0] if len(args) > 0 else None
+
+number = pargs.last('n', default=None, type_=int)
+if not number or not bet:
+    if not any([pargs.last('odd'),pargs.last('even'), pargs.last('low'), pargs.last('high')]):
+        return f' -f "Alert|You must use `!dt gamble 10 -n #` if you are betting on a specific number\n' \
+               f'`!dt gamble 10 high` to bet on high numbers or a variant of it \n' \
+               f'`!dt gamble 10 low`\n' \
+               f'`!dt gabmble 10 odd`\n' \
+               f'`!dt gamble 10 even` \n:warning:"'
+else:
+    if 36 < number < 1:
+        return f' -f "Alert|Your `-n` number must be between 1 and 36 \n:warning:"'
+
+#load JSON
+dt_cvar_data = load_json(DTv2)
+dtt_cvar_data = load_json(DTTv2)
+
+#check for work today
+if timestamp in dtt_cvar_data.keys():
+    return f' -f "Alert|You have already did downtime for today, try again tomorrow\n\n:warning:"'
+
+# get current renown
+if "renown" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"renown": 0})
+my_renown = dt_cvar_data["renown"]
+renownstr += f'Renown:`{my_renown}`\n'
+
+
+# check heat
+if "heat" not in dt_cvar_data.keys():
+    dt_cvar_data.update({"heat": 0})
+my_heat = dt_cvar_data["heat"]
+
+# finish building renown str
+renownstr += f'Heat: `{my_heat}`'
+# add the different renown strings here
+# heat over 15 is a nogo
+if my_heat > 15:
+    resultstr += f'You have `{my_heat}` Heat. You are too hot to do crime, you can lower it by doing `!dt community`"'
+    return f'{renownstr}{resultstr}'
+renownstr += '"'
+
+# make rolls for numbers
+dealer = vroll('1d36')
+
+# check for win
+rollstr += f'**Player Bet**: `{bet} gp`\n'
+rollstr += f'**Player Game**: `{number if number else args[1]}`\n'
+rollstr += f'**Dealer Roll**: {dealer.full}"'
+
+# checks for a single number
+if number:
+    if number == dealer.total:
+        end_result = "w"
+    else:
+        end_result = "l"
+#checks for any other game
+else:
+    if pargs.last("high"):
+        end_result = "w" if dealer.total > 18 else "l"
+    elif pargs.last("low"):
+        end_result = "w" if dealer.total < 19 else "l"
+    elif pargs.last("odd"):
+        end_result = "w" if dealer.total%2 == 1 else  "l"
+    elif pargs.last("even"):
+        end_result = "w" if dealer.total%2 == 0 else "l"
+
+#calculate winnings or losses
+winnings = bet * 35 if number else bet * 2
+winnings *= 1 if end_result == "w" else -1
+
+# build result str
+resultstr += f'{"**WINNER**" if end_result == "w" else "**LOSE**"}\n'
+resultstr += f'{"**PRIZE**" if end_result == "w" else "**DEBT**"}: `{winnings} gp`\n'
+resultstr += '"'
+
+return f'{renownstr}{rollstr}{resultstr}'
+
+
+
+</drac2>

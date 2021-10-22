@@ -1,5 +1,28 @@
 tembed -thumb "<image>" -color "<color>" -title "Carousing - <name>" -footer "Downtime options - !help dt"
 <drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+
+<drac2>
 # vars
 me = character()
 errorstr = f' -f "Alert|You do not have a valid carousing scout. Do `!dt carousing new` first"'
@@ -8,22 +31,31 @@ returnstr = ""
 renownstr = ""
 partystr = f' -f "Party Roll - Day '
 resultstr = f' -f "Results|'
+default_cvar_dtv2 = "{}"
 
 # channel check
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
 
-# check to see if you have a valid carousing find
-if not exists("DTv2"):
-    me.set_cvar("DTv2", "{}")
+#load JSON
+me.set_cvar_nx("DTv2", default_cvar_dtv2)
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
+if DTv2 == "{}":
     return errorstr
 
 dt_cvar_data = load_json(DTv2)
+dtt_cvar_data = load_json(DTTv2)
+
+# check to see if you have a valid carousing find
 if "carousing" not in dt_cvar_data.keys():
     return errorstr
 else:
     if dt_cvar_data['carousing'].get('friends') == "None" or not dt_cvar_data['carousing'].get('friends'):
         return errorstr
+
+# check to see if you already caroused for the day
+if timestamp in dtt_cvar_data.keys():
+    return f' -f "Alert|You have already worked for today, try again tomorrow\n\n:warning:"'
 
 # check for heat and renown keys
 if "heat" not in dt_cvar_data.keys():
@@ -148,6 +180,8 @@ elif day == 5:
 # reset carousing
     dt_cvar_data['carousing'].update({"friends": "None", "running":0, "cost": 0, "day": 0})
     returnstr += f'{renownstr}{partystr}{resultstr}'
+    dtt_cvar_data.update({timestamp: ["carousing", day]})
+    me.set_cvar("DTTv2", dump_json(dtt_cvar_data))
     me.set_cvar("DTv2", dump_json(dt_cvar_data))
     return returnstr
 
@@ -159,14 +193,16 @@ if party_roll.result.crit == 2:
     dt_cvar_data['renown'] -= 1 if dt_cvar_data['renown'] > 1 else dt_cvar_data['renown']
     resultstr += f'\n`NAT1` removes `-1` Renown\n'
 resultstr += f' Running Count: `{running}`\n Gold spent: `{dt_cvar_data["carousing"]["cost"]*day}`"'
+
+# save to DTT
+dtt_cvar_data.update({timestamp: ["carousing", day]})
 if day < 5:
     day += 1
-
-
 
 # save the json back to the cvar
 dt_cvar_data['carousing'].update({"day": day, "running": running})
 me.set_cvar("DTv2", dump_json(dt_cvar_data))
+me.set_cvar("DTTv2", dump_json(dtt_cvar_data))
 
 # end it
 returnstr += f'{renownstr}{partystr}{resultstr}'

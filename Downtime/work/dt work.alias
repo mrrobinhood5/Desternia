@@ -28,10 +28,7 @@ if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
 
 #initialize all of the variables
 pargs, downtime, returnstr, baseroll, advroll =argparse(&ARGS&), "work",  "", "1d20+", "2d20kh1+"
-if exist("subclass"):
-  eloq_bard = True if "eloquence" in subclass.lower() else False
-else:
-  eloq_bard = False
+eloq_bard = True if "eloquence" in subclass.lower() else False
 eloq_roll = "1d20mi10+"
 eloq_adv_roll = "1d20kh1mi10"
 #determine if it will run once or twice

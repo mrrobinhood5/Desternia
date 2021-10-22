@@ -1,5 +1,28 @@
 tembed -thumb "<image>" -color "<color>" -title "Rumors - <name>" -footer "Downtime options - !help dt"
 <drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+
+<drac2>
 # vars
 me = character()
 
@@ -7,17 +30,20 @@ errorstr = f' -f "Alert|You do not have a valid rumor scout. Do `!dt rumors new`
 rumorstr = f' -f "Rumor Roll|'
 resultstr = f' -f "Results|'
 returnstr = ""
+default_cvar_dtv2 = "{}"
 
 # channel check
 if str(ctx.channel.id) not in "746529962361749594, 773790279530184714":
   return f' -title "{name} attempts to do downtime..." -desc "BUT! You are in the wrong channel" -thumb <image> -f "Fix|Go do your work downtime in the #downtime channel"'
 
 # check for valid cvar
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
 if not exists("DTv2"):
   return errorstr
 
 #load JSON
 dt_cvar_data = load_json(DTv2)
+dtt_cvar_data = load_json(DTTv2)
 
 # more error checks
 if "rumors" not in dt_cvar_data.keys():
@@ -78,6 +104,7 @@ if rumor_count >= 5:
 resultstr += '"'
 
 # save the json back to the cvar
+dtt_cvar_data.update({timestamp: ["rumors", rumor_count]})
 dt_cvar_data['rumors'].update({"count": rumor_count, })
 me.set_cvar("DTv2", dump_json(dt_cvar_data))
 
