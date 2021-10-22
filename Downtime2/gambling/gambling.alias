@@ -18,7 +18,7 @@ minute=int(Time%86400%3600//60)
 second=int(Time%86400%3600%60)
 monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
 day,month=calendarDay,1
-[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+# [(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
 #timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
 timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
@@ -73,8 +73,12 @@ if timestamp in dtt_cvar_data.keys():
 if "renown" not in dt_cvar_data.keys():
     dt_cvar_data.update({"renown": 0})
 my_renown = dt_cvar_data["renown"]
-renownstr += f'Renown:`{my_renown}`\n'
-
+renownstr += f'Renown:`{my_renown}`'
+if my_renown >= 10:
+    renownstr += f'\nYou only pay half if dealer wins'
+if my_renown >= 25:
+    renownstr += f'\nYou can roll twice'
+renownstr += f'\n'
 
 # check heat
 if "heat" not in dt_cvar_data.keys():
@@ -82,12 +86,15 @@ if "heat" not in dt_cvar_data.keys():
 my_heat = dt_cvar_data["heat"]
 
 # finish building renown str
-renownstr += f'Heat: `{my_heat}`'
-# add the different renown strings here
-# heat over 15 is a nogo
+renownstr += f'Heat: `{my_heat}` '
 if my_heat > 15:
-    resultstr += f'You have `{my_heat}` Heat. You are too hot to do crime, you can lower it by doing `!dt community`"'
+    renownstr += '"'
+    resultstr += f'\nYou have more than 15 heat. You cannot gamble. Try lowering with `!dt community`"'
     return f'{renownstr}{resultstr}'
+if my_heat >= 5:
+    renownstr += f'\nYou pay 10% tax on your winnings.'
+if my_heat >= 10:
+    renownstr += f'\nDealer rolls twice.'
 renownstr += '"'
 
 # make rolls for numbers
