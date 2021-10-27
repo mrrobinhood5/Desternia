@@ -2,12 +2,17 @@ tembed  -footer "Downtime - !brew recipe list [toolkit]" -color <color> -thumb <
 
 <drac2>
 # vars
+recipe_list = {}
 me = character()
-recipe_list = load_json(get_gvar("543e9be3-264c-4102-be56-61a6c8de08b9"))
+gvars = load_json(get_svar("recipe_list"))
 returnstr = ''
 args = &ARGS&
 your_kit = "herbalism"
 toolkits = ["herbalism", "poisoners", "alchemists"]
+
+# build recipe lists
+for g in gvars:
+    recipe_list.update(load_json(get_gvar(g)))
 
 # check what toolkit was passed or default to herbalism
 for t in toolkits:
