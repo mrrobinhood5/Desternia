@@ -1,0 +1,76 @@
+{
+  "herbalism": {
+    "common": {
+      "Antitoxin": {
+        "description": "A creature that drinks this vial of liquid gains advantage on saving throws against poison for 1 hour. It confers no benefit to undead or constructs.",
+        "ingredients": ["Everfrost Berrie", "Cat’s Tongue"]
+      },
+      "Potion of Healing": {
+        "description": "You regain 2d4 + 2 hit points when you drink this potion. The potion's red liquid glimmers when agitated. It confers no benefit to undead or constructs.",
+        "ingredients": ["Red Amanita Mushroom"]
+      },
+      "Soothing Salve": {
+        "description": "A sticky, sour smelling salve that can be applied to wounds. When you expend hit dice to recover hit points while using this salve, you recover an additional 3 hit points for each hit die expended. This effect lasts for 1 hour after applied.",
+        "ingredients": ["Sourgrass", "Gillyweed"]
+      },
+      "Muroosa Balm": {
+        "description": "This paste made from the muroosa bush is known to help prevent sunburn, but it is also a fire retardant. After spending 1 minute applying a quarter pint of muroosa balm to your skin, you gain resistance against fire damage for 1 hour.",
+        "ingredients": ["Flask of Oil", "Muroosa twigs"]
+      },
+      "Willowshade Oil": {
+        "description": "A dark blue oil can be extracted from the fruit of the Willowshade plant. A creature can use its action to apply the oil to another creature that has been petrified for less than 1 minute, causing the petrified condition on that creature to end at the start of what would be that creature’s next turn.",
+        "ingredients": ["Willowshade Fruit"]
+      }
+    }
+  },
+  "poisoners": {
+    "common": {
+      "Basic Poison": {
+        "description": "You can use the poison in this vial to coat one slashing or piercing weapon or up to three pieces of ammunition. Applying the poison takes an action. A creature hit by the Poisoned weapon or ammunition must make a DC 10 Constitution saving throw or take 1d4 poison damage. Once applied, the poison retains potency for 1 minute before drying.",
+        "type": "Injury",
+        "ingredients": ["Nightshade"]
+      },
+      "Liquid Paranoia": {
+        "description": "A creature who ingests this poison is inflicted with the frightened condition, with the source of fear being the next humanoid it sees within 5 minutes of ingestion. This fear lasts for 1 hour on a failed Wisdom saving throw (DC 15) or half as long on a success.",
+        "type": "Ingested",
+        "ingredients": ["Moonstalker"]
+      }
+    }
+  },
+  "alchemist": {
+    "common": {
+      "Alchemist's Fire": {
+        "description": "This sticky, adhesive fluid ignites when exposed to air. As an action, you can throw this flask up to 20 feet, shattering it on impact. Make a ranged Attack against a creature or object, treating the alchemist's fire as an improvised weapon.\n\nOn a hit, the target takes 1d4 fire damage at the start of each of its turns. A creature can end this damage by using its action to make a DC 10 Dexterity check to extinguish the flames.",
+        "ingredients": ["Fire Elemental Ember", "Flask of Oil"]
+      },
+      "Grenade, smoke": {
+        "description": "As an action, a character can throw a grenade at a point up to 60 feet away. With a grenade launcher, the character can propel the grenade up to 120 feet away.\n\nOne round after a smoke grenade lands, it emits a cloud of smoke that creates a heavily obscured area in a 20-foot radius. A moderate wind (at least 10 miles per hour) disperses the smoke in 4 rounds; a strong wind (20 or more miles per hour) disperses it in 1 round.",
+        "ingredients": ["Air Elemental Whisp", "ashblossom"]
+      },
+      "Ink": {
+        "description": "1 ounce bottle used in writing.",
+        "ingredients": ["Charcoal"]
+      },
+      "Blasting Powder": {
+        "description": "This volatile alchemical powder comes in a small pouch. When ignited by an open flame or a fuse, the powder explodes. Each creature within 5 feet of the exploding pouch must make a DC 13 Dexterity saving throw, taking 3d6 bludgeoning damage on a failed save, or half as much damage on a successful one.\n\nA character can bind multiple pouches of blasting powder together so they explode at the same time. Each additional pouch increases the damage by 1d6 (maximum of 10d6) and the blast radius by 5 feet (maximum of 20 feet).",
+        "ingredients": ["Ashblossom", "Charcoal"]
+      },
+      "Potion of Climbing": {
+        "description": "When you drink this potion, you gain a climbing speed equal to your walking speed for 1 hour. During this time, you have advantage on Strength (Athletics) checks you make to climb. The potion is separated into brown, silver, and gray layers resembling bands of stone. Shaking the bottle fails to mix the colors.",
+        "ingredients": ["Giant Wolf Spider Hair", "Earth Elemental Dust"]
+      },
+      "Potion of Swimming": {
+        "description": "The potion is made of layers of teal, light blue, and indigo fluid that resemble a deep ocean. Shaking the bottle fails to mix the colors.\n\nWhen you drink this potion, you gain a swimming speed equal to your walking speed for 1 hour. During this time, you have advantage on Strength (Athletics) checks you make to swim.",
+        "ingredients": ["Quipper Scale (x3)", "Water Elemental Droplet"]
+      },
+      "Soothsalts": {
+        "description": "Soothsalts are derived from a naturally occurring crystalline. Soothsalts are consumed orally in lozenge-sized doses, and frequent users can be identified by the telltale crimson stain around their mouths. A creature subjected to a dose of soothsalts gains advantage on all Intelligence checks for 1d4 hours.\n\nFor each dose of soothsalts consumed, the creature must succeed on a DC 15 Constitution saving throw or gain one level of exhaustion—an effect which is cumulative with multiple doses.",
+        "ingredients": ["Soothsalt Geode"]
+      },
+      "Vial of Acid": {
+        "description": "As an action, you can splash the contents of this vial onto a creature within 5 feet of you or throw the vial up to 20 feet, shattering it on impact. In either case, make a ranged Attack against a creature or object, treating the acid as an improvised weapon. On a hit, the target takes 2d6 acid damage.",
+        "ingredients": ["Gray Ooze Residue", "Crawler Mucus"]
+      }
+    }
+  }
+}

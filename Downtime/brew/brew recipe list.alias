@@ -1,0 +1,42 @@
+tembed  -footer "Downtime - !brew recipe list [toolkit]" -color <color> -thumb <image>
+
+<drac2>
+# vars
+me = character()
+recipe_list = load_json(get_gvar("543e9be3-264c-4102-be56-61a6c8de08b9"))
+returnstr = ''
+args = &ARGS&
+your_kit = "herbalism"
+toolkits = ["herbalism", "poisoners", "alchemists"]
+
+# check what toolkit was passed or default to herbalism
+for t in toolkits:
+    if args[0] in t:
+        your_kit = t
+returnstr += f' -title "Brew - Recipe - List - {your_kit.title()} Kit" '
+
+
+# focus in on that key
+recipe_list = recipe_list[your_kit]
+
+# look up your available recipes
+if proficiencyBonus < 3:
+    available_recipes = ["common"]
+elif proficiencyBonus < 5:
+    available_recipes = ["common", "uncommon"]
+elif proficiencyBonus < 6:
+    available_recipes = ["common", "uncommon", "rare"]
+else:
+    available_recipes = ["common", "uncommon", "rare", "very rare"]
+
+# look through and add to the return string
+for rarity in available_recipes:
+    returnstr += f' -f "{rarity.title()}|'
+    for recipe, data in recipe_list[rarity].items():
+        returnstr += f'**Name**: {recipe}\n'
+        returnstr += f'**Desctiption**: {data["description"]}\n'
+        returnstr += f'**Ingredients**: {data["ingredients"]}\n\n'
+    returnstr += '"'
+
+return returnstr
+</drac2>
