@@ -1,0 +1,38 @@
+{
+  "herbalism": {
+    "uncommon": {
+      "Mandrake Root": {
+        "description": "This twisted pale root resembles a gnarled humanoid infant. It inflicts the poisoned condition for 1 hour when ingested.",
+        "quantity": "1d4[roots]"
+      },
+      "Frost Lichen": {
+        "description": "An eyeblindingly white lichen that grows on rocks in regions of year long freezing temperatures.",
+        "quantity": "1d6[bunches]"
+      }
+    }
+  },
+  "poisoner's": {
+    "uncommon": {
+      "Ankheg Ichor": {
+        "description": "A creature that comes in contact with this mucus must succeed on a DC 13 Constitution saving throw or be Poisoned for 1 minute. The Poisoned creature is Paralyzed. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+        "quantity": "1d4[vials]"
+      },
+      "Crawler Mucus": {
+        "description":"A creature that comes in contact with this mucus must succeed on a DC 13 Constitution saving throw or be Poisoned for 1 minute. The Poisoned creature is Paralyzed. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+        "quantity": "1d4[vials]"
+      }
+    }
+  },
+  "alchemist's": {
+    "uncommon": {
+      "Ectoplasm": {
+        "description": "uh, basically ghost jizz",
+        "quantity": "1d4[flasks]"
+      },
+      "Grey Ooze Residue": {
+        "description": "ewww, you touched that?",
+        "quantity": "1d4"
+      }
+    }
+  }
+}

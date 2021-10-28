@@ -1,0 +1,67 @@
+tembed -color <color> -thumb <image>
+
+<drac2>
+returnstr = ''
+args = &ARGS&
+search_str = " ".join(&ARGS&)
+gvars = load_json(get_svar("brew_ingredients"))
+ingredient_list = {}
+ingredient = {}
+
+# help file
+if not args:
+    returnstr += f' -t 201 -title "Locating and Harvesting Rules"'
+    returnstr += f' -f "Locating Ingredients | You will use your Intelligence modifier and the appropriate toolkit with to locate the ingredient you are looking for."'
+    returnstr += f' -f "Harvesting Ingredients | You will use your Dexterity modifier and the appropriate toolkit to attempt to harvest the ingredient, making it usable for the recipe."'
+    returnstr += f' -f "DCs|```css\nCommon = 10\nUncommon = 15\nRare = 20\nVery Rare = 25```"'
+    returnstr += f' -f "Failing a DC | If you fail a DC, you can still attempt to recover some of the ingredients by rolling a `1d4`"'
+    returnstr += f' -f "Ingredient Recover|```css\n1 = The ingredients are destroyed\n2 = Only half were recovered\n3 = Only a quarter were recovered\n4 = All were recovered```"'
+    returnstr += f' -f "Crafting | Once you have the ingredients for your recipe, you can brew it with `!brew [recipe]` your ingredients will reduce the cost of your brew by the following: '
+    returnstr += f'```css\nCommon = -5gp\nUncommon = -10gp\nRare = -50gp\nVery Rare = -150gp```"'
+    returnstr += f' -footer "Usage - !brew harvest [ingredient]"'
+    return returnstr
+
+# return str
+returnstr += f' -title "Brew - Harvesting"'
+returnstr += f' -footer "Usage - !brew harvest [ingredient]"'
+
+# build ingredient lists
+for c, g in enumerate(gvars):
+    if not c:
+        ingredient_list = (load_json(get_gvar(g)))
+    else:
+        _r = (load_json(get_gvar(g)))
+        for k in ingredient_list.keys():
+            if k in _r.keys():
+                ingredient_list[k].update(_r[k])
+
+# lookup the searchstring
+for _tk, _a in ingredient_list.items():
+    for _rarity, _ingredient in _a.items():
+        for _name, _data in _ingredient.items():
+            if search_str.lower() in _name.lower():
+                ingredient = {_tk:{_rarity:{_name: _data}}}
+
+# Error out if ingredient not found
+if not ingredient:
+    returnstr += f' -desc "Searching for keyword: `{search_str}`"'
+    returnstr += f' -f "No results|We could not find any results, try a more specific keyword"'
+    return returnstr
+
+# build vars instead of dict to clean it up a bit
+for _tk, _a in ingredient.items():
+    i_tk = _tk
+    for _rarity, _ingredient in _a.items():
+        i_rarity = _rarity
+        for _name, _data in _ingredient.items():
+            i_name = _name
+            for _k, _v in _data.items():
+                if _k == "description":
+                    i_desc = _v
+                else:
+                    i_roll = _v
+
+# first check is to see if you have the toolkit in your bag
+if i_tk not in bags.lower():
+    returnstr += f' -f "ToolKit Error|You dont own that toolkit in your bag. If this is an error, add it to `!qb {i_tk}`"'
+    return returnstr

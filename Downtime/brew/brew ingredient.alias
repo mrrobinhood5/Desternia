@@ -1,0 +1,59 @@
+tembed -color <color> -thumb <image>
+
+<drac2>
+returnstr = ''
+args = &ARGS&
+if not args:
+    returnstr += f' -t 201 -title "Using Ingredients"'
+    returnstr += f' -f "Level Requirements| There are no level requirements to find ingredients."'
+    returnstr += f' -f "Time | You have to take a day of downtime to locate and harvest ingredients. `!brew harvest`"'
+    returnstr += f' -f "Locating Ingredients | Depending on the rarity of the ingredient, you must pass a DC check to find that ingredient either in nature or the marketplace" '
+    returnstr += f' -f "Harvesting Ingredients | Each ingredient has a toolkit required to harvest and a separate DC"'
+    returnstr += f' -f "DCs|```css\nCommon = 10\nUncommon = 15\nRare = 20\nVery Rare = 25```"'
+    returnstr += f' -footer "Usage - !brew ingredient [name]"'
+    return returnstr
+
+# vars
+search_str = " ".join(&ARGS&)
+gvars = load_json(get_svar("brew_ingredients"))
+ingredient_list = {}
+ingredient = {}
+
+# return str
+returnstr += f' -title "Ingredient Lookup"'
+returnstr += f' -desc "Searching for keyword: `{search_str}`"'
+returnstr += f' -footer "Usage - !brew ingredient [name]"'
+
+# build ingredient lists
+for c, g in enumerate(gvars):
+    if not c:
+        ingredient_list = (load_json(get_gvar(g)))
+    else:
+        _r = (load_json(get_gvar(g)))
+        for k in ingredient_list.keys():
+            if k in _r.keys():
+                ingredient_list[k].update(_r[k])
+
+# lookup the searchstring
+for _tk, _a in ingredient_list.items():
+    for _rarity, _ingredient in _a.items():
+        for _name, _data in _ingredient.items():
+            if search_str.lower() in _name.lower():
+                ingredient = {_tk:{_rarity:{_name: _data}}}
+
+#build the results
+if not ingredient:
+    returnstr += f' -f "No results|We could not find any results, try a more specific keyword'
+else:
+    for _tk, _a in ingredient.items():
+        returnstr += f' -f "Required: {_tk.title()} Kit|'
+        for _rarity, _ingredient in _a.items():
+            returnstr += f'**Rarity**: `{_rarity.title()}`\n'
+            for _name, _data in _ingredient.items():
+                returnstr += f'**Name**: `{_name}`\n'
+                for _k, _v in _data.items():
+                    returnstr += f'**{_k.title()}**: {_v}\n'
+returnstr += '"'
+return returnstr
+
+</drac2>

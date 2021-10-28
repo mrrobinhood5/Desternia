@@ -23,7 +23,7 @@
       }
     }
   },
-  "poisoners": {
+  "poisoner's": {
     "common": {
       "Basic Poison": {
         "description": "You can use the poison in this vial to coat one slashing or piercing weapon or up to three pieces of ammunition. Applying the poison takes an action. A creature hit by the Poisoned weapon or ammunition must make a DC 10 Constitution saving throw or take 1d4 poison damage. Once applied, the poison retains potency for 1 minute before drying.",
@@ -37,7 +37,7 @@
       }
     }
   },
-  "alchemist": {
+  "alchemist's": {
     "common": {
       "Alchemist's Fire": {
         "description": "This sticky, adhesive fluid ignites when exposed to air. As an action, you can throw this flask up to 20 feet, shattering it on impact. Make a ranged Attack against a creature or object, treating the alchemist's fire as an improvised weapon.\n\nOn a hit, the target takes 1d4 fire damage at the start of each of its turns. A creature can end this damage by using its action to make a DC 10 Dexterity check to extinguish the flames.",

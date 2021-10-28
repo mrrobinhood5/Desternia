@@ -1,0 +1,63 @@
+tembed -color <color> -thumb <image>
+
+<drac2>
+returnstr = ''
+args = &ARGS&
+if not args:
+    returnstr += f' -t 201 -title "Learning new recipes"'
+    returnstr += f' -f "Level Requirements| You can only learn recipes of this rarity based on your level: '
+    returnstr += f'```css\n1-4 = Common\n5-12 = Uncommon\n13-16 = Rare\n17-20 = Very Rare```"'
+    returnstr += f' -f "Time | You must complete this downtime for this amount of days for each rarity of recipe you wish to learn '
+    returnstr += f'```css\nCommon = 1 day\nUncommon = 5 days\nRare = 10 days\nVery Rare = 30 days```"'
+    returnstr += f' -f "Costs | All this research takes money too! '
+    returnstr += f'```css\nCommon = 50gp\nUncommon = 250gp\nRare = 500gp\nVery Rare = 1000gp```"'
+    returnstr += f' -f "Lists | A recipe list based on your level and toolkit will be available via `!brew recipe list [toolkit]`"'
+    returnstr += f' -f "Lookup | You can also lookup a specific recipe via `!brew recipe [part of the name]`"'
+    returnstr += f' -f "Learning | You can learn an amount of recipes equal to your level. To start learning do `!brew recipe learn [name]`"'
+    returnstr += f' -footer "Usage - !brew recipe [name]"'
+    return returnstr
+
+# vars
+search_str = " ".join(&ARGS&)
+gvars = load_json(get_svar("brew_recipes"))
+recipe_list = {}
+recipe = {}
+
+# return str
+returnstr += f' -title "Recipe Lookup"'
+returnstr += f' -desc "Searching for keyword: `{search_str}`"'
+returnstr += f' -footer "Usage - !brew recipe [name]"'
+
+# build recipe lists
+for c, g in enumerate(gvars):
+    if not c:
+        recipe_list = (load_json(get_gvar(g)))
+    else:
+        _r = (load_json(get_gvar(g)))
+        for k in recipe_list.keys():
+            if k in _r.keys():
+                recipe_list[k].update(_r[k])
+
+# lookup the searchstring
+for _tk, _a in recipe_list.items():
+    for _rarity, _recipe in _a.items():
+        for _name, _data in _recipe.items():
+            if search_str.lower() in _name.lower():
+                recipe = {_tk:{_rarity:{_name: _data}}}
+
+#build the results
+if not recipe:
+    returnstr += f' -f "No results|We could not find any results, try a more specific keyword'
+else:
+    for _tk, _a in recipe.items():
+        returnstr += f' -f "{_tk.title()} Kit|'
+        for _rarity, _recipe in _a.items():
+            returnstr += f'**Rarity**: `{_rarity.title()}`\n'
+            for _name, _data in _recipe.items():
+                returnstr += f'**Name**: `{_name}`\n'
+                for _k, _v in _data.items():
+                    returnstr += f'**{_k.title()}**: {_v}\n'
+returnstr += '"'
+return returnstr
+
+</drac2>

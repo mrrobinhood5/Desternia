@@ -1,0 +1,53 @@
+tembed  -footer "Downtime - !brew ingredient list [toolkit]" -color <color> -thumb <image>
+
+<drac2>
+#vars
+ingredient_list = {}
+gvars = load_json(get_svar("brew_ingredients"))
+returnstr = ''
+args = &ARGS&
+your_kit = "herbalism"
+toolkits = ["herbalism", "poisoners", "alchemists"]
+
+# build ingredient lists
+for c, g in enumerate(gvars):
+    if not c:
+        ingredient_list = (load_json(get_gvar(g)))
+    else:
+        _r = (load_json(get_gvar(g)))
+        for k in ingredient_list.keys():
+            if k in _r.keys():
+                ingredient_list[k].update(_r[k])
+
+# check what toolkit was passed or default to herbalism
+for t in toolkits:
+    if args:
+        if args[0] in t:
+            your_kit = t
+returnstr += f' -title "Brew - Ingredient - List - {your_kit.title()} Kit" '
+
+# focus in on that key
+ingredient_list = ingredient_list[your_kit]
+
+# look up your available recipes
+# if proficiencyBonus < 3:
+#     available_ingredients = ["common"]
+# elif proficiencyBonus < 5:
+#     available_ingredients = ["common", "uncommon"]
+# elif proficiencyBonus < 6:
+#     available_ingredients = ["common", "uncommon", "rare"]
+# else:
+
+# uncomment this when all gvars have rare and very rare
+# available_ingredients = ["common", "uncommon", "rare", "very rare"]
+available_ingredients = ["common", "uncommon"]
+
+# list only admin data to keep embed short
+for rarity in available_ingredients:
+    returnstr += f' -f "{rarity.title()}|```css\n'
+    for ingredient in ingredient_list[rarity].keys():
+        returnstr += f'{ingredient}\n' if ingredient else f'...\n'
+    returnstr += '```"'
+
+return returnstr
+</drac2>

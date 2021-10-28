@@ -1,0 +1,29 @@
+{
+  "herbalism": {
+    "common": {
+      "Cat's Tongue": {
+        "description": "This mid-sized herbaceous plant has bundles of small, 5 bladed, purple/white flowers that quickly turn and ripen into fig sized pods. The pods have a slightly toxic outer shell revealing an inner fruit that has a tard taste and great nutritional properties.",
+        "quantity": "2d4[pods]"
+      },
+      "Dreamlilly": {
+        "description": "A white, slightly silvery 5 pointed flower with an intoxicating smell. It can be soaked in warm water to create a psychoactive liquid that smells and tastes like your favorite beverage. A creature under the effects of dreamlily is poisoned for 1 hour. While poisoned in this way, the creature is immune to fear, and the first time it drops to 0 hit points without being killed outright, it drops to 1 hit point instead",
+        "quantity": "2d6[flowers]"
+      }
+    }
+  },
+  "poisoner's": {
+    "common": {
+      "Serpent's venom": {
+        "description": " A creature hit with an attack by a weapon coated in this venom must succeed on a DC 11 Constitution saving throw, taking 10 (3d6) poison damage on a failed save, or half as much damage on a successful one.",
+        "quantity": "1d3[vials]"
+      },
+      "Giant Wolf Spider Hair": {
+        "description":"Its just, uh, Giant Wolf Spider Hair",
+        "quantity": "1d8[locks]"
+      }
+    }
+  },
+  "alchemist's": {
+    "common": {}
+  }
+}

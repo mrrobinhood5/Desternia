@@ -3,21 +3,28 @@ tembed  -footer "Downtime - !brew recipe list [toolkit]" -color <color> -thumb <
 <drac2>
 # vars
 recipe_list = {}
-me = character()
-gvars = load_json(get_svar("recipe_list"))
+gvars = load_json(get_svar("brew_recipes"))
 returnstr = ''
 args = &ARGS&
 your_kit = "herbalism"
 toolkits = ["herbalism", "poisoners", "alchemists"]
 
 # build recipe lists
-for g in gvars:
-    recipe_list.update(load_json(get_gvar(g)))
+for c, g in enumerate(gvars):
+    if not c:
+        recipe_list = (load_json(get_gvar(g)))
+    else:
+        _r = (load_json(get_gvar(g)))
+        for k in recipe_list.keys():
+            if k in _r.keys():
+                recipe_list[k].update(_r[k])
+
 
 # check what toolkit was passed or default to herbalism
 for t in toolkits:
-    if args[0] in t:
-        your_kit = t
+    if args:
+        if args[0] in t:
+            your_kit = t
 returnstr += f' -title "Brew - Recipe - List - {your_kit.title()} Kit" '
 
 
@@ -35,13 +42,20 @@ else:
     available_recipes = ["common", "uncommon", "rare", "very rare"]
 
 # look through and add to the return string
+# for rarity in available_recipes:
+#     returnstr += f' -f "{rarity.title()}|'
+#     for recipe, data in recipe_list[rarity].items():
+#         returnstr += f'**Name**: {recipe}\n'
+#         returnstr += f'**Desctiption**: {data["description"]}\n'
+#         returnstr += f'**Ingredients**: {data["ingredients"]}\n\n'
+#     returnstr += '"'
+
+# list only admin data to keep embed short
 for rarity in available_recipes:
-    returnstr += f' -f "{rarity.title()}|'
-    for recipe, data in recipe_list[rarity].items():
-        returnstr += f'**Name**: {recipe}\n'
-        returnstr += f'**Desctiption**: {data["description"]}\n'
-        returnstr += f'**Ingredients**: {data["ingredients"]}\n\n'
-    returnstr += '"'
+    returnstr += f' -f "{rarity.title()}|```css\n'
+    for recipe in recipe_list[rarity].keys():
+        returnstr += f'{recipe}\n'
+    returnstr += '```"'
 
 return returnstr
 </drac2>

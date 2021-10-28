@@ -1,5 +1,5 @@
 {
-  "alchemists": {
+  "alchemist's": {
     "uncommon": {
       "Ink (Rare)": {
         "description": "1 ounce bottle used in writing: Sufficient for Lvl. 1-5 spell scroll crafting.",
@@ -51,7 +51,7 @@
       }
     }
   },
-  "poisoners": {
+  "poisoner's": {
     "uncommon": {
       "Assassin’s Blood": {
         "description": "A creature subjected to this poison must make a DC 10 Constitution saving throw. On a failed save, it takes 6 (1d12) poison damage and is Poisoned for 24 hours. On a successful save, the creature takes half damage and isn’t Poisoned.",
