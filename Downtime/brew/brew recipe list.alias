@@ -7,7 +7,7 @@ gvars = load_json(get_svar("brew_recipes"))
 returnstr = ''
 args = &ARGS&
 your_kit = "herbalism"
-toolkits = ["herbalism", "poisoners", "alchemists"]
+toolkits = ["herbalism", "poisoner's", "alchemist's"]
 
 # build recipe lists
 for c, g in enumerate(gvars):

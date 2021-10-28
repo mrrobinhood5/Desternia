@@ -1,29 +1,44 @@
-tembed -color <color> -thumb <image>
+tembed -color <color> -thumb <image> -footer "Usage - !brew harvest [ingredient]"
 
 <drac2>
+
+# at some point the ingredients get added to the bag
+# then the XP for this gets added
+# and the downtime log gets added to DTTv2
+# recipe learning needs to happen first, otherswise why whould you be gatherin ingredients
+me = character()
 returnstr = ''
 args = &ARGS&
-search_str = " ".join(&ARGS&)
 gvars = load_json(get_svar("brew_ingredients"))
 ingredient_list = {}
 ingredient = {}
+pError, eError = False, False
+tk_prof = 0
+DCS = [10, 15, 20, 25]
+rarities = ["common", "uncommon", "rare", "very rare"]
+i_str = ''
+roll_str = ''
+recover_str = ''
+result_str = ''
+recover = ["The ingredients are destroyed","Only half were recovered", "Only a quarter were recovered", "All were recovered"]
+final_quantity = 0
 
 # help file
 if not args:
     returnstr += f' -t 201 -title "Locating and Harvesting Rules"'
-    returnstr += f' -f "Locating Ingredients | You will use your Intelligence modifier and the appropriate toolkit with to locate the ingredient you are looking for."'
-    returnstr += f' -f "Harvesting Ingredients | You will use your Dexterity modifier and the appropriate toolkit to attempt to harvest the ingredient, making it usable for the recipe."'
+    returnstr += f' -f "Locating Ingredients | You will use your Wisdom modifier and the appropriate toolkit with to locate the ingredient you are looking for."'
+    returnstr += f' -f "Harvesting Ingredients | You will use your Intelligence modifier and the appropriate toolkit to attempt to harvest the ingredient, making it usable for the recipe."'
     returnstr += f' -f "DCs|```css\nCommon = 10\nUncommon = 15\nRare = 20\nVery Rare = 25```"'
     returnstr += f' -f "Failing a DC | If you fail a DC, you can still attempt to recover some of the ingredients by rolling a `1d4`"'
     returnstr += f' -f "Ingredient Recover|```css\n1 = The ingredients are destroyed\n2 = Only half were recovered\n3 = Only a quarter were recovered\n4 = All were recovered```"'
     returnstr += f' -f "Crafting | Once you have the ingredients for your recipe, you can brew it with `!brew [recipe]` your ingredients will reduce the cost of your brew by the following: '
     returnstr += f'```css\nCommon = -5gp\nUncommon = -10gp\nRare = -50gp\nVery Rare = -150gp```"'
-    returnstr += f' -footer "Usage - !brew harvest [ingredient]"'
     return returnstr
 
 # return str
+search_str = " ".join(&ARGS&)
 returnstr += f' -title "Brew - Harvesting"'
-returnstr += f' -footer "Usage - !brew harvest [ingredient]"'
+
 
 # build ingredient lists
 for c, g in enumerate(gvars):
@@ -65,3 +80,94 @@ for _tk, _a in ingredient.items():
 if i_tk not in bags.lower():
     returnstr += f' -f "ToolKit Error|You dont own that toolkit in your bag. If this is an error, add it to `!qb {i_tk}`"'
     return returnstr
+
+# check for proficiencies in that toolkit
+if not exists("pTools") and not exists("eTools"):
+    pError = True
+if exists("pTools"):
+   if i_tk.lower() not in pTools.lower():
+       pError = True
+   else:
+       tk_prof = f'+{proficiencyBonus}'
+if exists("eTools"):
+    if i_tk.lower() not in eTools.lower():
+        eError = True
+    else:
+        tk_prof = f'+{proficiencyBonus * 2}'
+if pError and eError:
+
+    return returnstr
+
+if not exists("pTools"):
+    pError = True
+if exists("pTools"):
+   if i_tk.lower() not in pTools.lower():
+       pError = True
+   else:
+       tk_prof = f'+{proficiencyBonus}'
+if not exists("eTools"):
+    eError = True
+if exists("eTools"):
+    if i_tk.lower() not in eTools.lower():
+        eError = True
+    else:
+        tk_prof = f'+{proficiencyBonus * 2}'
+        eError = False
+if pError and eError:
+    returnstr += f' -f "Proficiency Error|You don\'t have the required proficiencies! If this is a mistake, add proficiency with `!tool pro {i_tk}` or expertise with `!tool exp {i_tk}`"'
+    return returnstr
+
+# choose the DC
+dc = DCS[rarities.index(i_rarity)]
+
+# build the rolls
+locating_roll = vroll(me.skills.intelligence.d20()+tk_prof)
+harvesting_roll = vroll(me.skills.wisdom.d20()+tk_prof)
+recover_roll = vroll("1d4")
+quantity_roll = vroll(i_roll)
+
+locating_pass = True if locating_roll.total >= dc else False
+harvesting_pass = True if harvesting_roll.total >= dc else False
+
+
+# meta info
+i_str += f' -f "{i_name}|'
+i_str += f'**Using Kit**: `{i_tk} Kit`\n'
+i_str += f'**Rarity**: `{i_rarity.title()}`\n'
+i_str += f'**Description**: {i_desc}\n'
+i_str += f'**DC**: `{dc}`"'
+
+# roll string
+roll_str += f' -f "Locating Roll|'
+roll_str += f'**Intelligence**: {locating_roll.full} ' \
+            f'{":white_check_mark:" if locating_pass else ":no_entry_sign:"}"'
+if locating_pass:
+    roll_str += f' -f "Harvesting Roll|'
+    roll_str += f'**Wisdom**: {harvesting_roll.full}' \
+                f'{":white_check_mark:" if harvesting_pass else ":no_entry_sign:"}'
+    if harvesting_pass:
+        roll_str += f'\n**Quantity**: {quantity_roll.full}'
+        final_quantity = quantity_roll.total
+    roll_str += '"'
+
+# if recover roll is required
+if locating_pass and not harvesting_pass:
+    recover_str += f' -f "Recover Roll| {recover_roll.full}\n'
+    recover_str += f'{recover[recover_roll.total-1]}"'
+    if recover_roll.total == 1:
+        final_quantity = 0
+    elif recover_roll.total == 2:
+        final_quantity = floor(final_quantity/2)
+    elif recover_roll.total == 3:
+        final_quantity = floor(final_quantity/4)
+
+# results
+result_str += f' -f "Results|'
+if not locating_pass:
+    result_str += f'You could not locate the desired ingredient. Try again tomorrow"'
+    return f'{i_str}{roll_str}{recover_str}{result_str}'
+result_str += f'Harvest sucessful.\n`{final_quantity} {i_name}` added to your bags.\n\n'
+result_str += f'XP: `xx` earned "'
+return f'{i_str}{roll_str}{recover_str}{result_str}'
+
+</drac2>
