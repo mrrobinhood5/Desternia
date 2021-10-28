@@ -4,8 +4,12 @@
   "gvars/low-level-beasts-hunt-dt-hns.gvar": "3f0f4d76-efd5-4190-9520-8e707b288053",
   "gvars/mid-level-beasts-hunt-dt-hns.gvar": "b2186794-8fc7-46b3-a237-1c78d48a5494",
   "gvars/explore-library.gvar": "6e7a3d5d-9261-435a-9944-c82ce243b4d4",
-  "Downtime/brew/brew recipe list coommon.gvar": "543e9be3-264c-4102-be56-61a6c8de08b9",
+  "Downtime/brew/brew recipe list common.gvar": "543e9be3-264c-4102-be56-61a6c8de08b9",
   "Downtime/brew/brew recipe list uncommon.gvar": "c688260b-acdc-4123-b893-ed2118727928",
+  "Downtime/brew/brew recipe list rare.gvar": "095c17c1-0c10-412e-b890-691f66d263ed",
+  "Downtime/brew/brew recipe list veryrare.gvar": "f83f33e4-7a67-4c6e-a4f8-38c7b4b01d58",
   "Downtime/brew/brew ingredient list common.gvar": "3fafcce2-764f-4c92-99b6-9ab0f519d992",
-  "Downtime/brew/brew ingredient list uncommon.gvar": "ac6db10f-ba57-4cda-bc27-43c7127ae266"
+  "Downtime/brew/brew ingredient list uncommon.gvar": "ac6db10f-ba57-4cda-bc27-43c7127ae266",
+  "Downtime/brew/brew ingredient list rare.gvar": "e1322d9e-75cb-4ab3-aad1-9fc4a078b4a2",
+  "Downtime/brew/brew ingredient list veryrare.gvar": "16a773e1-fb3e-48b7-8d37-e9185f453a64"
 }
