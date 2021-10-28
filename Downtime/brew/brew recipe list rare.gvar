@@ -1,0 +1,95 @@
+{
+  "alchemist's": {
+    "very rare": {
+      "Ink (Very Rare)": {
+        "description": "1 ounce bottle used in writing. Sufficient for Lvl. 6-8 spell scroll crafting.",
+        "ingredients": ["Charcoal","finely ground iron", "Willowshade Fruit"]
+      },
+      "Invisible Ink": {
+        "description": "1 ounce bottle of ink that can only be made visible with spells, traits or items that see the invisible, or by applying a mild acid.",
+        "ingredients": ["Pixie's Parasol", "Ink"]
+      },
+      "Midnight Oil": {
+        "description": "A small flask of inky black oil that resembles a night sky when viewed in a certain light. When the midnight oil is used to light a lantern, it emits bright light for 5 feet and dim light a further 5 feet for 8 hours. If a creature stays in the light emitted by this oil for the full 8 hours, they get all the benefits of a long rest without needing to sleep, provided they only engage in light activity such as reading, studying, talking, etc.",
+        "ingredients": ["Flask of Oil", "Pixie's Parasol"]
+      },
+      "Oil of Dragon's Bane": {
+        "description": "This oil can coat a single weapon for 3 uses, or up to 3 pieces of ammunition can be dipped in the oil for 1 use each. A dragon that takes damage from a weapon or piece of ammunition covered in the oil takes an additional 6d6 damage from the attack. The oil dries after 1 hour and becomes inert.",
+        "ingredients": ["Dragon's Blood", "Wyvern Poison"]
+      },
+      "Potion of Gaseous Form": {
+        "description": "When you drink this potion, you gain the effect of the gaseous form spell for 1 hour (no concentration required) or until you end the effect as a bonus action. This potion's container seems to hold fog that moves and pours like water.",
+        "ingredients": ["Ectoplasm", "Singing Nettle"]
+      },
+      "Oil of Etherealness": {
+        "description": "Beads of this cloudy gray oil form on the outside of its container and quickly evaporate. The oil can cover a Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the etherealness spell for 1 hour.",
+        "ingredients": ["Ectoplasm", "Flask of Oil"]
+      },
+      "Potion of Clairvoyance": {
+        "description": "When you drink this potion, you gain the effect of the clairvoyance spell. An eyeball bobs in this yellowish liquid but vanishes when the potion is opened.",
+        "ingredients": ["Morning Dew", "Mandrake Root"]
+      },
+      "Potion of Diminution": {
+        "description": "When you drink this potion, you gain the \"reduce\" effect of the enlarge/reduce spell for 1d4 hours (no concentration required). The red in the potion's liquid continuously contracts to a tiny bead and then expands to color the clear liquid around it. Shaking the bottle fails to interrupt this process.",
+        "ingredients": ["Pixie's Parasol", "Moonstalker"]
+      },
+      "Potion of Heroism": {
+        "description": "For 1 hour after drinking it, you gain 10 temporary hit points that last for 1 hour. For the same duration, you are under the effect of the bless spell (no concentration required). This blue potion bubbles and steams as if boiling.",
+        "ingredients": ["Hagfinger", "Cat's Tongue"]
+      },
+      "Potion of Invulnerability": {
+        "description": "For 1 minute after you drink this potion, you have Resistance to all damage. The potion's syrupy liquid looks like liquefied iron.",
+        "ingredients": "Lightning Struck Metal"
+      },
+      "Potion of Mind Reading": {
+        "description": "When you drink this potion, you gain the effect of the detect thoughts spell (save DC 13). The potion's dense, purple liquid has an ovoid cloud of pink floating in it.",
+        "ingredients": ["Mindflayer Stinkhorn", "Moonstalker"]
+      }
+    }
+  },
+  "herbalism": {
+    "rare": {
+      "Elixir of Health": {
+        "description": "When you drink this potion, it cures any disease afflicting you, and it removes the blinded, deafened, paralyzed, and poisoned conditions. The clear red liquid has tiny bubbles of light in it. It confers no benefit to undead or constructs.",
+        "ingredients": ["Fairy Stool", "Gillyweed"]
+      },
+      "Potion of Superior Healing": {
+        "description": "You regain 8d4 + 8 hit points when you drink this potion. The potion's red liquid glimmers when agitated. It confers no benefit to undead or constructs.",
+        "ingredients": "Red Amanita Mushroom x3"
+      },
+      "Tincture of Werewolf's Bane": {
+        "description": "Any lycanthrope that drinks this tincture must make a Constitution saving throw. On a failed save, the lycanthrope takes 3d10 necrotic damage and must change to its humanoid form if it was not already in that form, after which the lycanthrope cannot change form for 24 hours. On a success, the lycanthrope only takes half that damage.",
+        "ingredients": ["Wolfsbane", "Silverthorn"]
+      }
+    }
+  },
+  "poisoner's": {
+    "rare": {
+      "Burnt Othur Fumes": {
+        "description": "A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or take 10 (3d6) poison damage, and must repeat the saving throw at the start of each of its turns. On each successive failed save, the character takes 3 (1d6) poison damage. After three successful saves, the poison ends.",
+        "type": "Inhaled",
+        "ingredients": ["Ashblossom", "Moonshade"]
+      },
+      "Drow Poison": {
+        "description": "This poison is typically made only by the drow, and only in a place far removed from sunlight. A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or be Poisoned for 1 hour. If the saving throw fails by 5 or more, the creature is also Unconscious while Poisoned in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake.",
+        "type": "Injury",
+        "ingredients": ["Drider Venom", "Mandrake Root"]
+      },
+      "Essence of Ether": {
+        "description": "A creature subjected to this poison must succeed on a DC 15 Constitution saving throw or become poisoned for 8 hours. The poisoned creature is unconscious. The creature wakes up if it takes damage or if another creature takes an action to shake it awake.",
+        "type": "Inhaled",
+        "ingredients": ["Nightshade", "Mandrake Root"]
+      },
+      "Oil of Taggit": {
+        "description": "A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or become Poisoned for 24 hours. The Poisoned creature is Unconscious. The creature wakes up if it takes damage.",
+        "type": "Contact",
+        "ingredients": ["Flask of Oil", "Wolfsbane"]
+      },
+      "Torpor": {
+        "description": "A creature subjected to this poison must succeed on a DC 15 Constitution saving throw or become poisoned for 4d6 hours. The poisoned creature is incapacitated.",
+        "type": "Ingested",
+        "ingredients": ["Mandrake Root", "Lightning Moss"]
+      }
+    }
+  }
+}

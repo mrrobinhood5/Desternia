@@ -8,6 +8,42 @@
       "Frost Lichen": {
         "description": "An eyeblindingly white lichen that grows on rocks in regions of year long freezing temperatures.",
         "quantity": "1d6[bunches]"
+      },
+      "Lightning Moss": {
+        "description": "This light blue moss grows only where lightning has struck and gives off a faint static electric shock when touched. If rubbed on the bottom of a creature's feet or pair of shoes, the creature's speed increases by 5 feet for 1 hou",
+        "quantity": "1d6[clumps]"
+      },
+      "Mindflayer Stinkhorn": {
+        "description": "This purple fungus has slimy, tentacle-looking stalks and smells of rotting flesh. A creature who eats this fungus must make a Constitution saving throw (DC10). On a success, the creature can cast detect thoughts at will for 1 hour, requiring no material components. On a failure, the creature takes 1d6 psychic damage.",
+        "quantity": "1d4[stalks]"
+      },
+      "Muroosa bush": {
+        "description": "Growing in arid areas in Savannahs and deserts, this bush seems to be utterly unaffected by heat and the sun no matter the intensity",
+        "quantity": "1d6[twigs]"
+      },
+      "Nightshade": {
+        "description": "An inky black flower with purple stalk. It deals 1d4 poison damage when ingested and, on a failed Constitution saving throw, inflicts the poisoned condition for 2d4 hours.",
+        "quantity": "1d6[flowers]"
+      },
+      "Olisuba Leaf": {
+        "description": "These dried leaves of the Olisuba tree, when steeped to make a tea, can help a body recover from strenuous activity. If you drink a dose of Olisuba tea during a long rest, your exhaustion level is reduced by 2 instead of 1 at the end of that long rest.",
+        "quantity": "2d6[leaves]"
+      },
+      "Singing Nettle": {
+        "description": "This vine has sharp, stinging hairs covering it. A creature who touches these hairs must make a Wisdom saving throw (DC 15) or be overwhelmed by the urge to bellow a song at the top of their lungs.",
+        "quantity": "2d4[leaves]"
+      },
+      "Sourgrass": {
+        "description": "This green, long-bladed grass has a pungent smell and flavor. Humanoids who come within 5 feet of uncut sourgrass must make a successful Constitution saving throw (DC 10) or become overwhelmed with nausea and inflicted with the poisoned condition for 30 seconds.",
+        "quantity": "2d4[clumps]"
+      },
+      "Theki Root": {
+        "description": "This thick root tastes bitter but is thought to aid digestive health. When you use an action to consume a dose, you gain advantage on saving throws against the effects of poisonous or toxic substances for 8 hours.",
+        "quantity": "1d6[roots]"
+      },
+      "Willowshade Fruit": {
+        "description": "A pepper shaped fruit with great digestive aiding properties.",
+        "quantity": "1d8[fruit]"
       }
     }
   },
@@ -19,6 +55,14 @@
       },
       "Crawler Mucus": {
         "description":"A creature that comes in contact with this mucus must succeed on a DC 13 Constitution saving throw or be Poisoned for 1 minute. The Poisoned creature is Paralyzed. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+        "quantity": "1d4[vials]"
+      },
+      "Eagle Claw": {
+        "description": "Caw Caw! Caw Caw!",
+        "quantity": "1d8[claws]"
+      },
+      "Amphibian Saliva": {
+        "description": "Saliva from a Giant Toad. Ribbit!!",
         "quantity": "1d4[vials]"
       }
     }
@@ -32,6 +76,14 @@
       "Grey Ooze Residue": {
         "description": "ewww, you touched that?",
         "quantity": "1d4"
+      },
+      "Nothic Tears": {
+        "description": "When used as eyedrops provide 1d4 hours of darksight",
+        "quantity": "1d4[vials]"
+      },
+      "Skulk Claw": {
+        "description": "A claw of a skull.. No wait, a Skulk. Skulking in a corner.",
+        "quantity": "1d10"
       }
     }
   }

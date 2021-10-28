@@ -40,7 +40,7 @@ ingredient_list = ingredient_list[your_kit]
 
 # uncomment this when all gvars have rare and very rare
 # available_ingredients = ["common", "uncommon", "rare", "very rare"]
-available_ingredients = ["common", "uncommon"]
+available_ingredients = ["common", "uncommon", "rare", "very rare"]
 
 # list only admin data to keep embed short
 for rarity in available_ingredients:

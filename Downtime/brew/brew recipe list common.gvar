@@ -41,11 +41,11 @@
     "common": {
       "Alchemist's Fire": {
         "description": "This sticky, adhesive fluid ignites when exposed to air. As an action, you can throw this flask up to 20 feet, shattering it on impact. Make a ranged Attack against a creature or object, treating the alchemist's fire as an improvised weapon.\n\nOn a hit, the target takes 1d4 fire damage at the start of each of its turns. A creature can end this damage by using its action to make a DC 10 Dexterity check to extinguish the flames.",
-        "ingredients": ["Fire Elemental Ember", "Flask of Oil"]
+        "ingredients": ["Fire Elemental Essence", "Flask of Oil"]
       },
       "Grenade, smoke": {
         "description": "As an action, a character can throw a grenade at a point up to 60 feet away. With a grenade launcher, the character can propel the grenade up to 120 feet away.\n\nOne round after a smoke grenade lands, it emits a cloud of smoke that creates a heavily obscured area in a 20-foot radius. A moderate wind (at least 10 miles per hour) disperses the smoke in 4 rounds; a strong wind (20 or more miles per hour) disperses it in 1 round.",
-        "ingredients": ["Air Elemental Whisp", "ashblossom"]
+        "ingredients": ["Air Elemental Essence", "Ashblossom"]
       },
       "Ink": {
         "description": "1 ounce bottle used in writing.",
@@ -57,11 +57,11 @@
       },
       "Potion of Climbing": {
         "description": "When you drink this potion, you gain a climbing speed equal to your walking speed for 1 hour. During this time, you have advantage on Strength (Athletics) checks you make to climb. The potion is separated into brown, silver, and gray layers resembling bands of stone. Shaking the bottle fails to mix the colors.",
-        "ingredients": ["Giant Wolf Spider Hair", "Earth Elemental Dust"]
+        "ingredients": ["Giant Wolf Spider Hair", "Earth Elemental Essence"]
       },
       "Potion of Swimming": {
         "description": "The potion is made of layers of teal, light blue, and indigo fluid that resemble a deep ocean. Shaking the bottle fails to mix the colors.\n\nWhen you drink this potion, you gain a swimming speed equal to your walking speed for 1 hour. During this time, you have advantage on Strength (Athletics) checks you make to swim.",
-        "ingredients": ["Quipper Scale (x3)", "Water Elemental Droplet"]
+        "ingredients": ["Quipper Scale x3", "Water Elemental Essence"]
       },
       "Soothsalts": {
         "description": "Soothsalts are derived from a naturally occurring crystalline. Soothsalts are consumed orally in lozenge-sized doses, and frequent users can be identified by the telltale crimson stain around their mouths. A creature subjected to a dose of soothsalts gains advantage on all Intelligence checks for 1d4 hours.\n\nFor each dose of soothsalts consumed, the creature must succeed on a DC 15 Constitution saving throw or gain one level of exhaustion—an effect which is cumulative with multiple doses.",

@@ -1,0 +1,99 @@
+{
+  "herbalism": {
+    "rare": {
+      "Ashblossom": {
+        "description:": "This tiny flower is bright red with a yellow centre, and is found growing only in hot environments. It deals 1d4 fire damage when ingested, but it can be used to brew many fire-related potions by a knowledgeable alchemist.",
+        "quantity": "1d6[blossoms]"
+      },
+      "Black Cup Mushroom": {
+        "description:": "This beautiful, blue-ish black, cup-shaped mushroom with an extremely poisonous bite is hard to miss against the green background of its surroundings, though best left alone. Touching this fungus without gloves or other protective gear forces the creature touching it to make a DC 16 Constitution saving throw. On a failed save, the creature take 1d10 poison damage.",
+        "quantity": "1d4[stalks]"
+      },
+      "Black Sap": {
+        "description": "This tarry substance harvested from the dark boughs of the death’s head willow is a powerful intoxicant. It can be smoked as a concentrate or injected directly into the bloodstream. A creature subjected to a dose of black sap cannot be charmed or frightened for 1d6 hours.\n\nFor each dose of black sap consumed, a creature must succeed on a DC 15 Constitution saving throw or become poisoned for 2d4 hours—an effect that is cumulative with multiple doses.",
+        "quantity": "1d6[doses]"
+      },
+      "Blight Spores": {
+        "description": "Bright red spores from Blightshrooms, growing exclusively in caves on the Blightshore and the Eastern side of the Penumbra Range. A creature exposed to a large dose of the spores must succeed a DC 16 Constitution saving throw or be Poisoned for 3d6 hours. While the creature is poisoned, it experiences the same effects as if it were under the Confusion spell. A restoration spell or a dose of antitoxin can remove the effect.",
+        "quantity": "1d6[doses]"
+      },
+      "Death Cap": {
+        "description": "Though unassuming looking with a slender, white stalk and white to lightly brown and on rare occasions greenish head, death cap is anything but harmless. 12 hours after ingesting the mushroom or an extract of it, a creature must make a DC 17 constitution saving throw or be poisoned. Once a creature is poisoned, it takes 2d8 poison damage and suffers severe stomach aches and cramps lasting 24 hours. If antidote is not taken during this period, the creature’s liver starts being degraded resulting in jaundice and takes 1d10 poison damage at midday until a Greater Restoration or Regenerate is performed or an elixir of health is consumed.",
+        "quantity": "1d4[heads]"
+      },
+      "Hagfinger": {
+        "description": "These small tubers are a pale, sickly green and resemble long fingers. When dried and ground up into a powder, it gives off a strong aroma and can be used as an herbalism and potion ingredient.",
+        "quantity": "1d4[dried fingers]"
+      },
+      "Moonstalker": {
+        "description": "This pale blue flower grows in pairs and blooms only during the nighttime, and has an ethereal glow. The flower sheds dim light for 5 feet when blooming, and is often mistaken for glowing eyes from a distance.",
+        "quantity": "1d4[flowers]*2"
+      },
+      "Pixie's Parasol": {
+        "description": "A tiny mushroom, though with it’s bright blue cap and white stalk and gills but one hard to miss. At night, they are downright easy to find due to their bioluminescence. They are key ingredients in many potions and inks. Harvesting them may be a hassle, though, since pixies often defend them from those who wish to take them.",
+        "quantity": "1d12[stalks]"
+      },
+      "Silverthorn": {
+        "description": "This thorny vine is a pale silver color, and is hard as metal. Patches of silverthorn create difficult terrain, and deal 1d6 piercing damage if moved through at normal speed.",
+        "quantity": "1d6[thorns]"
+      },
+      "Wolfsbane": {
+        "description": "This white-grey flower blooms only on a full moon and in high altitudes. Canines who come within 10 feet of wolfsbane must make a Wisdom save (DC 15) or be forced to move as far as they can away from the plant.",
+        "quantity": "1d4[flowers]"
+      }
+    }
+  },
+  "alchemist's": {
+    "rare": {
+      "Lightning Struck Metal": {
+        "description": "A piece of metal struck by metal weighing at least 0,5 Ounces.",
+        "quantity": "1"
+      },
+      "Soothsalt Geode": {
+        "description": "A geode covered in a crystalline substance that can be extracted into soothsalts.",
+        "quantity": "1d4[geodes]"
+      },
+      "Air Elemental Essence": {
+        "description": "Whoooosh!!",
+        "quantity": "1d6[vials]"
+      },
+      "Earth Elemental Essence": {
+        "description": "Thump!! Thump!!",
+        "quantity": "1d6[vials]"
+      },
+      "Fire Elemental Essence": {
+        "description": "Crack!! Crack!!",
+        "quantity": "1d6[vials]"
+      },
+      "Water Elemental Essence": {
+        "description": "Wishhhh!! Washhhh!!",
+        "quantity": "1d6[vials]"
+      },
+      "Imp Heart": {
+        "description": "Tullio's Heart, allegedly",
+        "quantity": "1"
+      },
+      "Remorhaz Ichor": {
+        "description": "I cant even pronounce any of those words.",
+        "quantity": "1d6"
+      },
+      "Dragon's Blood": {
+        "description": "Blood of true Dragons",
+        "quantity": "1d4"
+      }
+    }
+  },
+  "poisoner's": {
+    "rare": {
+      "Drider Posion": {
+        "description": "Poison extracted from a Drider. An underdark creature. 80's horror flick nightmare fuel",
+        "quantity": "1d6[vials]"
+      },
+      "Wyvern Poison": {
+        "description": "A creature hit with an attack by a weapon coated in this poison must make a DC 15 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one.",
+        "quantity": "1d8[vials]"
+      }
+    }
+  }
+
+}

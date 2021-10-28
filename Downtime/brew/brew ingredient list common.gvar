@@ -8,6 +8,26 @@
       "Dreamlilly": {
         "description": "A white, slightly silvery 5 pointed flower with an intoxicating smell. It can be soaked in warm water to create a psychoactive liquid that smells and tastes like your favorite beverage. A creature under the effects of dreamlily is poisoned for 1 hour. While poisoned in this way, the creature is immune to fear, and the first time it drops to 0 hit points without being killed outright, it drops to 1 hit point instead",
         "quantity": "2d6[flowers]"
+      },
+      "Everfrost Berries": {
+        "description": "A babyblue, heartshaped berry the size of a blueberry known for their purifying properties. The plants these berries grow on are wholly immune to any frost damage, and are known for their abundance of fruit during harsh winters.",
+        "quantity": "3d6[berries]"
+      },
+      "Fairy Stool": {
+        "description": "This small pink mushroom is most often found in fairy rings. Ingesting it causes blindness for 1 minute on a failed Constitution saving throw (DC 20), along with vivid hallucinations.",
+        "quantity": "1d4[stalks]"
+      },
+      "Gillyweed": {
+        "description": "This emerald green kelp is found underwater and is always covered in tiny air bubbles, which makes it easy to spot by a trained herbalist.",
+        "quantity": "2d4[leaves]"
+      },
+      "Morning Dew": {
+        "description": "This plant grows into either a large shrub or small tree and seems to reproduce via root systems since it has no flowers of any kind. The long, narrow leaves of this plant are used in teas and medicine.",
+        "quantity": "2d6[leaves]"
+      },
+      "Red Amanita Mushroom": {
+        "description": "This red-capped mushroom can grow to the size of a small dish. It deals 1d4 poison damage when ingested, but can be used to brew healing potions by a careful herbalist.",
+        "quantity": "2d4[stalks]"
       }
     }
   },
@@ -16,14 +36,19 @@
       "Serpent's venom": {
         "description": " A creature hit with an attack by a weapon coated in this venom must succeed on a DC 11 Constitution saving throw, taking 10 (3d6) poison damage on a failed save, or half as much damage on a successful one.",
         "quantity": "1d3[vials]"
-      },
-      "Giant Wolf Spider Hair": {
-        "description":"Its just, uh, Giant Wolf Spider Hair",
-        "quantity": "1d8[locks]"
       }
     }
   },
   "alchemist's": {
-    "common": {}
+    "common": {
+      "Giant Wolf Spider Hair": {
+        "description":"Its just, uh, Giant Wolf Spider Hair",
+        "quantity": "1d8[locks]"
+      },
+      "Quipper Scale": {
+        "description": "its just a fish scale",
+        "quantity": "1d4[scales]"
+      }
+    }
   }
 }

@@ -1,0 +1,16 @@
+{
+  "poisoner's": {
+    "very rare": {
+      "Purple Worm Poison": {
+        "description": "A creature hit with an attack by a weapon coated in this poison must make a DC 19 Constitution saving throw, taking 42 (12d6) poison damage on a failed save, or half as much",
+        "quantity": "1d8[vials]"
+      }
+    }
+  },
+  "herbalism": {
+    "very rare": {}
+  },
+  "alchemist's": {
+    "very rare": {}
+  }
+}
