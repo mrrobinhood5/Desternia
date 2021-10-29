@@ -8,6 +8,7 @@ returnstr = ''
 args = &ARGS&
 your_kit = "herbalism"
 toolkits = ["herbalism", "poisoner's", "alchemist's"]
+rarities = [("common",2),("uncommon",4), ("rare",5), ("very rare", 6)]
 
 # build recipe lists
 for c, g in enumerate(gvars):
@@ -19,7 +20,6 @@ for c, g in enumerate(gvars):
             if k in _r.keys():
                 recipe_list[k].update(_r[k])
 
-
 # check what toolkit was passed or default to herbalism
 for t in toolkits:
     if args:
@@ -27,19 +27,11 @@ for t in toolkits:
             your_kit = t
 returnstr += f' -title "Brew - Recipe - List - {your_kit.title()} Kit" '
 
-
 # focus in on that key
 recipe_list = recipe_list[your_kit]
 
 # look up your available recipes
-if proficiencyBonus < 3:
-    available_recipes = ["common"]
-elif proficiencyBonus < 5:
-    available_recipes = ["common", "uncommon"]
-elif proficiencyBonus < 6:
-    available_recipes = ["common", "uncommon", "rare"]
-else:
-    available_recipes = ["common", "uncommon", "rare", "very rare"]
+available_recipes = [rarity[0] for rarity in rarities if proficiencyBonus >= rarity[1]]
 
 # look through and add to the return string
 # for rarity in available_recipes:

@@ -1,0 +1,21 @@
+tembed -color <color> -thumb <image>
+
+<drac2>
+returnstr = ''
+rarities = [("common",2),("uncommon",4), ("rare",5), ("very rare", 6)]
+
+
+# look up your available recipes
+available_recipes = [rarity[0] for rarity in rarities if proficiencyBonus >= rarity[1]]
+
+if not args:
+    returnstr += f' -t 201 -title "Downtime - Recipe - Learn"'
+    returnstr += f' -f "Info| This screen will show your status of your recipes known"'
+    returnstr += f' -f "Meta | You can learn up to `{level}` recipes.\nYou already know `x` recipes.\n' \
+                 f'The highest recipe rarity you can learn is {available_recipes[-1]}"'
+    returnstr += f' -f "Known Recipes | You know the following recipes'
+    returnstr += f'```{"None"}```"'
+    returnstr += f' -footer "Usage - !brew recipe learn [recipe name]"'
+    return returnstr
+
+</drac2>
