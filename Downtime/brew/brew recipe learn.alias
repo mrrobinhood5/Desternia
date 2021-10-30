@@ -24,7 +24,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
-returnstr = ''
+returnstr = f' -title "Downtime - Recipe - Learn" -footer "Usage - !brew recipe learn [recipe name]"'
 me = character()
 args = &ARGS&
 # rarities format: "rarity", min_level, gp_cost, days_to_learn
@@ -53,13 +53,12 @@ if exists("brew_recipes"):
 
 # default screen
 if not args:
-    returnstr += f' -t 201 -title "Downtime - Recipe - Learn"'
+    returnstr += f' -t 201'
     returnstr += f' -f "Info| This screen will show your status of your recipes known"'
     returnstr += f' -f "Meta | You can learn up to `{level}` recipes.\nYou already know `x` recipes.\n' \
                  f'The highest recipe rarity you can learn is {available_recipes[-1]}"'
     returnstr += f' -f "Known Recipes | You know the following recipes\n'
     returnstr += f'```{"None" if not known_recipes else known_recipes} ```"'
-    returnstr += f' -footer "Usage - !brew recipe learn [recipe name]"'
     return returnstr
 
 # build recipe lists
@@ -108,7 +107,7 @@ else: # recipe found
                 recipe_name = _name
                 for _k, _v in _data.items():
                     returnstr += f'**{_k.title()}**: {_v}\n'
-returnstr += '"'
+returnstr += '"\n------\n'
 
 # if you cannot afford, end it here or deduct recipe cost
 if not can_afford:
@@ -131,12 +130,27 @@ else:
 # check to see if you are done
 if downtime_data["brew learn"][recipe_name] >= days_to_learn:
     downtime_data["brew learn"].pop(recipe_name)
-    returnstr += f' -f "Recipe Learned|You have learned `{recipe_name}`. You can go look for ingredients now `!brew harvest [ingredient]"'
+    returnstr += f' -f "Recipe Learned|You have learned `{recipe_name}`. You can go look for ingredients now `!brew harvest [ingredient]`\n'
+    returnstr += f'This recipe cost you `{recipe_cost} gp`"'
+    known_recipes.append(recipe_name)
+    my_gp -= recipe_cost
 else:
     downtime_data["brew learn"][recipe_name] += 1
     returnstr += f' -f "Recipe Progress|You have `{downtime_data["brew learn"][recipe_name]}`. You have `{days_to_learn-downtime_data["brew learn"][recipe_name]}` to go."'
 
 # add to the cvar here
+me.set_cvar("known_recipes", dump_json(known_recipes))
+me.set_cvar("DTv2", dump_json(downtime_data))
+me.set_cvar("DTTv2", dump_json(downtime_data))
+
+# refactor the coin pouch and write it back
+coin_pouch[0].update({'cp': int((((my_gp%1)*10)%1)*10), 'sp': int((my_gp % 1)*10) , 'ep': 0, 'gp': int(my_gp), 'pp': 0})
+for bag in my_bags:
+    if bag[0] == 'Coin Pouch':
+        bag[1] = coin_pouch[0]
+me.set_cvar('bags', my_bags)
+
+#write back to
 
 return returnstr
 </drac2>
