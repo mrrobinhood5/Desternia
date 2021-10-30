@@ -94,11 +94,6 @@ if timestamp in downtimes.keys():
     returnstr += f' -f "Error|You have already done your downtime for today, try tomorrow"'
     return returnstr
 
-# check to see if you you already know this recipe
-if recipe_name in known_recipes:
-    returnstr += f' -f "Error|You already know this recipe. Smart guy."'
-    return returnstr
-
 #build the results
 if not recipe: # recipe not found
     returnstr += f' -f "No results|We could not find any results, try a more specific keyword"'
@@ -114,6 +109,11 @@ else: # recipe found
                 for _k, _v in _data.items():
                     returnstr += f'**{_k.title()}**: {_v}\n'
 returnstr += '"\n------\n'
+
+# check to see if you you already know this recipe
+if recipe_name in known_recipes:
+    returnstr += f' -f "Error|You already know this recipe. Smart guy."'
+    return returnstr
 
 # if you cannot afford, end it here or deduct recipe cost
 if not can_afford:
