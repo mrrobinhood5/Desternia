@@ -48,7 +48,7 @@ me.set_cvar_nx("DTTv2", default_cvar_dtv2)
 available_recipes = [rarity[0] for rarity in rarities if proficiencyBonus >= rarity[1]]
 
 # lookup your known recipes
-if exists("brew_recipes"):
+if exists("known_recipes"):
     known_recipes = load_json(known_recipes)
 
 # default screen
