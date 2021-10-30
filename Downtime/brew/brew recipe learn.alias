@@ -48,8 +48,8 @@ me.set_cvar_nx("DTTv2", default_cvar_dtv2)
 available_recipes = [rarity[0] for rarity in rarities if proficiencyBonus >= rarity[1]]
 
 # lookup your known recipes
-if exists("known_recipes"):
-    known_recipes = load_json(known_recipes)
+if exists("brew_recipes"):
+    known_recipes = load_json(brew_recipes)
 
 # default screen
 if not args:
@@ -146,7 +146,7 @@ else:
 
 # add to the cvar here
 downtimes.update({timestamp:["brew learn", 1]})
-me.set_cvar("known_recipes", dump_json(known_recipes))
+me.set_cvar("brew_recipes", dump_json(known_recipes))
 me.set_cvar("DTv2", dump_json(downtime_data))
 me.set_cvar("DTTv2", dump_json(downtimes))
 
