@@ -74,10 +74,10 @@ for c, g in enumerate(gvars):
 
 # load your coin amount in GP
 my_bags = load_json(bags)
-coin_pouch = [bag[1] for bag in bags if bag[0] == 'Coin Pouch']
+coin_pouch = [bag[1] for bag in my_bags if bag[0] == 'Coin Pouch']
 my_gp = 0
 for _c, _a in coin_pouch[0].items():
-    my_gp += _a * .01 if _c == 'cp' else _a * .10 if c == 'sp' else _a * .5 if c == 'ep' else _a * 10 if _c == 'pp' else _a
+    my_gp += _a * .01 if _c == 'cp' else _a * .10 if _c == 'sp' else _a * .5 if _c == 'ep' else _a * 10 if _c == 'pp' else _a
 
 # lookup the searchstring, and check to see if you can afford it
 for _tk, _a in recipe_list.items():
