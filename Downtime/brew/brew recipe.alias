@@ -1,8 +1,15 @@
 tembed -color <color> -thumb <image>
 
 <drac2>
+# vars
 returnstr = ''
 args = &ARGS&
+search_str = " ".join(&ARGS&) if args else ""
+gvars = load_json(get_svar("brew_recipes"))
+recipe_list = {}
+recipe = {}
+
+# default screen
 if not args:
     returnstr += f' -t 201 -title "Help - New Recipes"'
     returnstr += f' -f "Level Requirements| You can only learn recipes of this rarity based on your level: '
@@ -16,12 +23,6 @@ if not args:
     returnstr += f' -f "Learning | You can learn an amount of recipes equal to your level. To start learning do `!brew recipe learn [name]`"'
     returnstr += f' -footer "Usage - !brew recipe [name]"'
     return returnstr
-
-# vars
-search_str = " ".join(&ARGS&)
-gvars = load_json(get_svar("brew_recipes"))
-recipe_list = {}
-recipe = {}
 
 # return str
 returnstr += f' -title "Recipe Lookup"'

@@ -1,22 +1,142 @@
 tembed -color <color> -thumb <image>
 
 <drac2>
-returnstr = ''
-args = &ARGS&
-rarities = [("common",2),("uncommon",4), ("rare",5), ("very rare", 6)]
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
 
+<drac2>
+returnstr = ''
+me = character()
+args = &ARGS&
+# rarities format: "rarity", min_level, gp_cost, days_to_learn
+rarities = [("common",2, 50, 1),("uncommon",4, 250, 5), ("rare",5, 500, 10), ("very rare", 6, 1000, 30)]
+known_recipes = []
+search_str = " ".join(&ARGS&) if args else ""
+gvars = load_json(get_svar("brew_recipes"))
+recipe_list = {}
+recipe = {}
+can_afford = False
+recipe_cost = 0
+recipe_name = ""
+default_cvar_dtv2 = {}
+days_to_learn = 0
+
+#load JSON
+me.set_cvar_nx("DTv2", default_cvar_dtv2)
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
 
 # look up your available recipes
 available_recipes = [rarity[0] for rarity in rarities if proficiencyBonus >= rarity[1]]
 
+# lookup your known recipes
+if exists("brew_recipes"):
+    known_recipes = load_json(known_recipes)
+
+# default screen
 if not args:
     returnstr += f' -t 201 -title "Downtime - Recipe - Learn"'
     returnstr += f' -f "Info| This screen will show your status of your recipes known"'
     returnstr += f' -f "Meta | You can learn up to `{level}` recipes.\nYou already know `x` recipes.\n' \
                  f'The highest recipe rarity you can learn is {available_recipes[-1]}"'
-    returnstr += f' -f "Known Recipes | You know the following recipes'
-    returnstr += f'```{"None"}```"'
+    returnstr += f' -f "Known Recipes | You know the following recipes\n'
+    returnstr += f'```{"None" if not known_recipes else known_recipes} ```"'
     returnstr += f' -footer "Usage - !brew recipe learn [recipe name]"'
     return returnstr
 
+# build recipe lists
+for c, g in enumerate(gvars):
+    if not c:
+        recipe_list = (load_json(get_gvar(g)))
+    else:
+        _r = (load_json(get_gvar(g)))
+        for k in recipe_list.keys():
+            if k in _r.keys():
+                recipe_list[k].update(_r[k])
+
+# load your coin amount in GP
+my_bags = load_json(bags)
+coin_pouch = [bag[1] for bag in bags if bag[0] == 'Coin Pouch']
+my_gp = 0
+for _c, _a in coin_pouch[0].items():
+    my_gp += _a * .01 if _c == 'cp' else _a * .10 if c == 'sp' else _a * .5 if c == 'ep' else _a * 10 if _c == 'pp' else _a
+
+# lookup the searchstring, and check to see if you can afford it
+for _tk, _a in recipe_list.items():
+    for _rarity, _recipe in _a.items():
+        for _name, _data in _recipe.items():
+            if search_str.lower() in _name.lower():
+                recipe = {_tk:{_rarity:{_name: _data}}}
+                recipe_cost = [_r[2] for _r in rarities if _r[0] == _rarity][0]
+                days_to_learn = [_r[3] for _r in rarities if _r[0] == _rarity][0]
+                can_afford = my_gp >= recipe_cost
+
+# check to see if you have any DTT left for today
+downtimes = load_json(DTTv2)
+if timestamp in downtimes.keys():
+    returnstr += f' "Error|You have already done your downtime for today, try tomorrow"'
+
+#build the results
+if not recipe: # recipe not found
+    returnstr += f' -f "No results|We could not find any results, try a more specific keyword"'
+    return returnstr
+else: # recipe found
+    for _tk, _a in recipe.items():
+        returnstr += f' -f "{_tk.title()} Kit|'
+        for _rarity, _recipe in _a.items():
+            returnstr += f'**Rarity**: `{_rarity.title()}`\n'
+            for _name, _data in _recipe.items():
+                returnstr += f'**Name**: `{_name}`\n'
+                recipe_name = _name
+                for _k, _v in _data.items():
+                    returnstr += f'**{_k.title()}**: {_v}\n'
+returnstr += '"'
+
+# if you cannot afford, end it here or deduct recipe cost
+if not can_afford:
+    returnstr += f' -f "Error|You do not have enough gold to learn this recipe. Get a job you bum."'
+    return returnstr
+else:
+    my_gp -= recipe_cost
+    returnstr += f' -f "Learn Day Completed|You have completed a learning day on {recipe_name}"'
+
+# load your DTv2, and grab the info on the current recipe
+downtime_data = load_json(DTv2)
+# check to see if brew learn is present, if not, add this recipe progress
+if not downtime_data.get("brew learn"):
+    downtime_data.update({"brew learn": {recipe_name: 1}})
+else:
+    # if brew learn is present, check to see if recipe is present if not add it
+    if not downtime_data["brew learn"].get(recipe_name):
+        downtime_data["brew learn"].update({recipe_name: 1})
+
+# check to see if you are done
+if downtime_data["brew learn"][recipe_name] >= days_to_learn:
+    downtime_data["brew learn"].pop(recipe_name)
+    returnstr += f' -f "Recipe Learned|You have learned `{recipe_name}`. You can go look for ingredients now `!brew harvest [ingredient]"'
+else:
+    downtime_data["brew learn"][recipe_name] += 1
+    returnstr += f' -f "Recipe Progress|You have `{downtime_data["brew learn"][recipe_name]}`. You have `{days_to_learn-downtime_data["brew learn"][recipe_name]}` to go."'
+
+# add to the cvar here
+
+return returnstr
 </drac2>
