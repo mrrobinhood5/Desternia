@@ -141,7 +141,7 @@ else:
 # add to the cvar here
 me.set_cvar("known_recipes", dump_json(known_recipes))
 me.set_cvar("DTv2", dump_json(downtime_data))
-me.set_cvar("DTTv2", dump_json(downtime_data))
+me.set_cvar("DTTv2", dump_json(downtimes))
 
 # refactor the coin pouch and write it back
 coin_pouch[0].update({'cp': int((((my_gp%1)*10)%1)*10), 'sp': int((my_gp % 1)*10) , 'ep': 0, 'gp': int(my_gp), 'pp': 0})
