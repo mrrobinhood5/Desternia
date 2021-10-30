@@ -92,6 +92,12 @@ for _tk, _a in recipe_list.items():
 downtimes = load_json(DTTv2)
 if timestamp in downtimes.keys():
     returnstr += f' "Error|You have already done your downtime for today, try tomorrow"'
+    return returnstr
+
+# check to see if you you already know this recipe
+if recipe_name in known_recipes:
+    returnstr += f' "Error|You already know this recipe. Smart guy."'
+    return returnstr
 
 #build the results
 if not recipe: # recipe not found
@@ -114,7 +120,6 @@ if not can_afford:
     returnstr += f' -f "Error|You do not have enough gold to learn this recipe. Get a job you bum."'
     return returnstr
 else:
-    my_gp -= recipe_cost
     returnstr += f' -f "Learn Day Completed|You have completed a learning day on {recipe_name}"'
 
 # load your DTv2, and grab the info on the current recipe
@@ -134,11 +139,13 @@ if downtime_data["brew learn"][recipe_name] >= days_to_learn:
     returnstr += f'This recipe cost you `{recipe_cost} gp`"'
     known_recipes.append(recipe_name)
     my_gp -= recipe_cost
+    my_gp = round(my_gp, 2)
 else:
     downtime_data["brew learn"][recipe_name] += 1
     returnstr += f' -f "Recipe Progress|You have `{downtime_data["brew learn"][recipe_name]}`. You have `{days_to_learn-downtime_data["brew learn"][recipe_name]}` to go."'
 
 # add to the cvar here
+downtimes.update({timestamp:["brew learn", 1]})
 me.set_cvar("known_recipes", dump_json(known_recipes))
 me.set_cvar("DTv2", dump_json(downtime_data))
 me.set_cvar("DTTv2", dump_json(downtimes))
