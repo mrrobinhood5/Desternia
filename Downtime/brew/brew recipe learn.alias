@@ -61,6 +61,10 @@ if not args:
     returnstr += f'```{"None" if not known_recipes else known_recipes} ```"'
     return returnstr
 
+# cannot learn any more
+if known_recipes >= level:
+    returnstr += f' -f "Error| You already know the maximum amount of recipes. You gotta level up."'
+
 # build recipe lists
 for c, g in enumerate(gvars):
     if not c:
