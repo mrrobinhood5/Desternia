@@ -91,12 +91,12 @@ for _tk, _a in recipe_list.items():
 # check to see if you have any DTT left for today
 downtimes = load_json(DTTv2)
 if timestamp in downtimes.keys():
-    returnstr += f' "Error|You have already done your downtime for today, try tomorrow"'
+    returnstr += f' -f "Error|You have already done your downtime for today, try tomorrow"'
     return returnstr
 
 # check to see if you you already know this recipe
 if recipe_name in known_recipes:
-    returnstr += f' "Error|You already know this recipe. Smart guy."'
+    returnstr += f' -f "Error|You already know this recipe. Smart guy."'
     return returnstr
 
 #build the results
