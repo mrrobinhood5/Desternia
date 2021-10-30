@@ -55,8 +55,8 @@ if exists("brew_recipes"):
 if not args:
     returnstr += f' -t 201'
     returnstr += f' -f "Info| This screen will show your status of your recipes known"'
-    returnstr += f' -f "Meta | You can learn up to `{level}` recipes.\nYou already know `x` recipes.\n' \
-                 f'The highest recipe rarity you can learn is {available_recipes[-1]}"'
+    returnstr += f' -f "Meta | You can learn up to `{level}` recipes.\nYou already know `{len(known_recipes)}` recipes.\n' \
+                 f'The highest recipe rarity you can learn is `{available_recipes[-1]}`"'
     returnstr += f' -f "Known Recipes | You know the following recipes\n'
     returnstr += f'```{"None" if not known_recipes else known_recipes} ```"'
     return returnstr
@@ -148,7 +148,7 @@ coin_pouch[0].update({'cp': int((((my_gp%1)*10)%1)*10), 'sp': int((my_gp % 1)*10
 for bag in my_bags:
     if bag[0] == 'Coin Pouch':
         bag[1] = coin_pouch[0]
-me.set_cvar('bags', my_bags)
+me.set_cvar('bags', dump_json(my_bags))
 
 #write back to
 
