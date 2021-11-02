@@ -3,7 +3,7 @@
     "very rare": {
       "Ink (Legendary)": {
         "description": "1 ounce bottle of ink used in writing. Sufficient for Lvl. 9 spell scroll crafting.",
-        "ingredients": ["Charcoal", "finely ground iron", "Willowshade Oil x3"]
+        "ingredients": ["Charcoal", "Finely Ground Iron", "Willowshade Oil x3"]
       },
       "Oil of Sharpness": {
         "desctiption": "his clear, gelatinous oil sparkles with tiny, ultrathin silver shards. The oil can coat one slashing or piercing weapon or up to 5 pieces of slashing or piercing ammunition. Applying the oil takes 1 minute. For 1 hour, the coated item is magical and has a +3 bonus to attack and damage rolls.",
@@ -44,7 +44,7 @@
       "Midnight Tears": {
         "description": "A creature that ingests this poison suffers no effect until the stroke of midnight. If the poison has not been neutralized before then, the creature must succeed on a DC 17 Constitution saving throw, taking 31 (9d6) poison damage on a failed save, or half as much damage on a successful one.",
         "type": "Ingested",
-        "ingredients": ["Death Cap", "Ankheg ichor"]
+        "ingredients": ["Death Cap", "Ankheg Ichor"]
       },
       "Deathsleep": {
         "description": "A creature that Ingests this poison must succeed at DC 19 Constitution saving throw or become poisoned for 24 hours. The poisoned creature appears to be dead, and only a successful Medicine check (DC 20) can determine otherwise.",

@@ -17,7 +17,7 @@
         "description": "This purple fungus has slimy, tentacle-looking stalks and smells of rotting flesh. A creature who eats this fungus must make a Constitution saving throw (DC10). On a success, the creature can cast detect thoughts at will for 1 hour, requiring no material components. On a failure, the creature takes 1d6 psychic damage.",
         "quantity": "1d4[stalks]"
       },
-      "Muroosa bush": {
+      "Muroosa Twigs": {
         "description": "Growing in arid areas in Savannahs and deserts, this bush seems to be utterly unaffected by heat and the sun no matter the intensity",
         "quantity": "1d6[twigs]"
       },
@@ -57,7 +57,7 @@
         "description":"A creature that comes in contact with this mucus must succeed on a DC 13 Constitution saving throw or be Poisoned for 1 minute. The Poisoned creature is Paralyzed. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
         "quantity": "1d4[vials]"
       },
-      "Eagle Claw": {
+      "Eagle's Claw": {
         "description": "Caw Caw! Caw Caw!",
         "quantity": "1d8[claws]"
       },
@@ -73,7 +73,7 @@
         "description": "uh, basically ghost jizz",
         "quantity": "1d4[flasks]"
       },
-      "Grey Ooze Residue": {
+      "Gray Ooze Residue": {
         "description": "ewww, you touched that?",
         "quantity": "1d4"
       },

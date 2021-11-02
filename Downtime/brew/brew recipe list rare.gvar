@@ -3,7 +3,7 @@
     "very rare": {
       "Ink (Very Rare)": {
         "description": "1 ounce bottle used in writing. Sufficient for Lvl. 6-8 spell scroll crafting.",
-        "ingredients": ["Charcoal","finely ground iron", "Willowshade Fruit"]
+        "ingredients": ["Charcoal","Finely Ground Iron", "Willowshade Fruit"]
       },
       "Invisible Ink": {
         "description": "1 ounce bottle of ink that can only be made visible with spells, traits or items that see the invisible, or by applying a mild acid.",
@@ -55,7 +55,7 @@
       },
       "Potion of Superior Healing": {
         "description": "You regain 8d4 + 8 hit points when you drink this potion. The potion's red liquid glimmers when agitated. It confers no benefit to undead or constructs.",
-        "ingredients": "Red Amanita Mushroom x3"
+        "ingredients": ["Red Amanita Mushroom x3"]
       },
       "Tincture of Werewolf's Bane": {
         "description": "Any lycanthrope that drinks this tincture must make a Constitution saving throw. On a failed save, the lycanthrope takes 3d10 necrotic damage and must change to its humanoid form if it was not already in that form, after which the lycanthrope cannot change form for 24 hours. On a success, the lycanthrope only takes half that damage.",

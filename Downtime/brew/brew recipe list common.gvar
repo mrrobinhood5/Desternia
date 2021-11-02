@@ -3,7 +3,7 @@
     "common": {
       "Antitoxin": {
         "description": "A creature that drinks this vial of liquid gains advantage on saving throws against poison for 1 hour. It confers no benefit to undead or constructs.",
-        "ingredients": ["Everfrost Berrie", "Cat’s Tongue"]
+        "ingredients": ["Everfrost Berries", "Cat's Tongue"]
       },
       "Potion of Healing": {
         "description": "You regain 2d4 + 2 hit points when you drink this potion. The potion's red liquid glimmers when agitated. It confers no benefit to undead or constructs.",
@@ -15,7 +15,7 @@
       },
       "Muroosa Balm": {
         "description": "This paste made from the muroosa bush is known to help prevent sunburn, but it is also a fire retardant. After spending 1 minute applying a quarter pint of muroosa balm to your skin, you gain resistance against fire damage for 1 hour.",
-        "ingredients": ["Flask of Oil", "Muroosa twigs"]
+        "ingredients": ["Flask of Oil", "Muroosa Twigs"]
       },
       "Willowshade Oil": {
         "description": "A dark blue oil can be extracted from the fruit of the Willowshade plant. A creature can use its action to apply the oil to another creature that has been petrified for less than 1 minute, causing the petrified condition on that creature to end at the start of what would be that creature’s next turn.",

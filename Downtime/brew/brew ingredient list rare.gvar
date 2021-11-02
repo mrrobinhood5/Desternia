@@ -5,7 +5,7 @@
         "description:": "This tiny flower is bright red with a yellow centre, and is found growing only in hot environments. It deals 1d4 fire damage when ingested, but it can be used to brew many fire-related potions by a knowledgeable alchemist.",
         "quantity": "1d6[blossoms]"
       },
-      "Black Cup Mushroom": {
+      "Black Cap Mushroom": {
         "description:": "This beautiful, blue-ish black, cup-shaped mushroom with an extremely poisonous bite is hard to miss against the green background of its surroundings, though best left alone. Touching this fungus without gloves or other protective gear forces the creature touching it to make a DC 16 Constitution saving throw. On a failed save, the creature take 1d10 poison damage.",
         "quantity": "1d4[stalks]"
       },
