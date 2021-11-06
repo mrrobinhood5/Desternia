@@ -172,7 +172,7 @@ result_str += f'XP: `xx` earned "'
 # add stuff to bags
 my_bags = load_json(bags)
 
-if "Ingredient Pouch" not in [_b[0] for _b in b]:
+if "Ingredient Pouch" not in [bag[0] for bag in my_bags]:
   my_bags.append(["Ingredient Pouch", {}])
 
 i_pouch = [bag[1] for bag in my_bags if bag[0] == "Ingredient Pouch"]
