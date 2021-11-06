@@ -85,8 +85,8 @@
   },
   "poisoner's": {
     "rare": {
-      "Drider Posion": {
-        "description": "Poison extracted from a Drider. An underdark creature. 80's horror flick nightmare fuel",
+      "Drider Venom": {
+        "description": "Venom extracted from a Drider. An underdark creature. 80's horror flick nightmare fuel",
         "quantity": "1d6[vials]"
       },
       "Wyvern Poison": {

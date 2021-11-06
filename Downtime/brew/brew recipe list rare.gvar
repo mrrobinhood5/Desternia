@@ -11,7 +11,7 @@
       },
       "Midnight Oil": {
         "description": "A small flask of inky black oil that resembles a night sky when viewed in a certain light. When the midnight oil is used to light a lantern, it emits bright light for 5 feet and dim light a further 5 feet for 8 hours. If a creature stays in the light emitted by this oil for the full 8 hours, they get all the benefits of a long rest without needing to sleep, provided they only engage in light activity such as reading, studying, talking, etc.",
-        "ingredients": ["Flask of Oil", "Pixie's Parasol"]
+        "ingredients": ["Oil (Flask)", "Pixie's Parasol"]
       },
       "Oil of Dragon's Bane": {
         "description": "This oil can coat a single weapon for 3 uses, or up to 3 pieces of ammunition can be dipped in the oil for 1 use each. A dragon that takes damage from a weapon or piece of ammunition covered in the oil takes an additional 6d6 damage from the attack. The oil dries after 1 hour and becomes inert.",
@@ -23,7 +23,7 @@
       },
       "Oil of Etherealness": {
         "description": "Beads of this cloudy gray oil form on the outside of its container and quickly evaporate. The oil can cover a Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the etherealness spell for 1 hour.",
-        "ingredients": ["Ectoplasm", "Flask of Oil"]
+        "ingredients": ["Ectoplasm", "Oil (Flask)"]
       },
       "Potion of Clairvoyance": {
         "description": "When you drink this potion, you gain the effect of the clairvoyance spell. An eyeball bobs in this yellowish liquid but vanishes when the potion is opened.",
@@ -83,7 +83,7 @@
       "Oil of Taggit": {
         "description": "A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or become Poisoned for 24 hours. The Poisoned creature is Unconscious. The creature wakes up if it takes damage.",
         "type": "Contact",
-        "ingredients": ["Flask of Oil", "Wolfsbane"]
+        "ingredients": ["Oil (Flask)", "Wolfsbane"]
       },
       "Torpor": {
         "description": "A creature subjected to this poison must succeed on a DC 15 Constitution saving throw or become poisoned for 4d6 hours. The poisoned creature is incapacitated.",

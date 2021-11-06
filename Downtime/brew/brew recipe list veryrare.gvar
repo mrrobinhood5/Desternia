@@ -23,7 +23,7 @@
       },
       "Potion of Speed": {
         "description": "When you drink this potion, you gain the effect of the haste spell for 1 minute (no concentration required). The potion's yellow fluid is streaked with black and swirls on its own.",
-        "ingredients": ["Eagle's claw x4", "Lightning Moss", "Sugar"]
+        "ingredients": ["Eagle's Claw x4", "Lightning Moss", "Sugar"]
       },
       "Potion of Truesight": {
         "description": "When you drink this potion, you gain truesight with a range of 120 feet for 1 hour.",
@@ -54,7 +54,7 @@
       "Water of Death": {
         "description": "This liquid looks, smells and tastes like water. Even the majority of alchemic and magical tests on this liquid cannot distinguish it from water. Only the spell Identify cast as a level 7 or higher or detailed alchemic test, lasting 24 hours and costing 300 gp, will reveal that this liquid is actually one of the deadliest poisons in existence.\n\nMade from rare mushrooms, herbs and poisons, any contact with this poison forces the subjected creature to make a DC 20 Constitution saving throw. On a failed save, the creature suffers blindness and deafness for 48 hours and becomes too riddled with pain to move for 24 hours. The creature’s maximum hitpoints is permanently reduced by 2d12 and receives 7d10 poison damage after 12 hours. On a successful save, the creature’s maximum hitpoints is reduced by 2d12 hitpoints and has blurred vision and muffled hearing for 24 hours.\n\nThe lost maximum hitpoints can only be restored by healing after ingesting a Potion of Vitality or by a Greater Restoration or a Regenerate spell cast at level 8 or higher.",
         "type": "Ingestion",
-        "ingredients": ["Black Cap Mushroom", "Wyvern poison", "Dreamlilly", "Hagfinger"]
+        "ingredients": ["Black Cap Mushroom", "Wyvern Poison", "Dreamlilly", "Hagfinger"]
       }
     }
   }

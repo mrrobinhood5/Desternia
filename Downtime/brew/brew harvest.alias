@@ -121,8 +121,8 @@ if pError and eError:
 dc = DCS[rarities.index(i_rarity)]
 
 # build the rolls
-locating_roll = vroll(me.skills.intelligence.d20()+tk_prof)
-harvesting_roll = vroll(me.skills.wisdom.d20()+tk_prof)
+locating_roll = vroll(me.skills.wisdom.d20()+tk_prof)
+harvesting_roll = vroll(me.skills.intelligence.d20()+tk_prof)
 recover_roll = vroll("1d4")
 quantity_roll = vroll(i_roll)
 
@@ -139,11 +139,11 @@ i_str += f'**DC**: `{dc}`"'
 
 # roll string
 roll_str += f' -f "Locating Roll|'
-roll_str += f'**Intelligence**: {locating_roll.full} ' \
+roll_str += f'**Wisdom**: {locating_roll.full} ' \
             f'{":white_check_mark:" if locating_pass else ":no_entry_sign:"}"'
 if locating_pass:
     roll_str += f' -f "Harvesting Roll|'
-    roll_str += f'**Wisdom**: {harvesting_roll.full}' \
+    roll_str += f'**Intelligence**: {harvesting_roll.full}' \
                 f'{":white_check_mark:" if harvesting_pass else ":no_entry_sign:"}'
     if harvesting_pass:
         roll_str += f'\n**Quantity**: {quantity_roll.full}'
@@ -168,6 +168,26 @@ if not locating_pass:
     return f'{i_str}{roll_str}{recover_str}{result_str}'
 result_str += f'Harvest sucessful.\n`{final_quantity} {i_name}` added to your bags.\n\n'
 result_str += f'XP: `xx` earned "'
+
+# add stuff to bags
+my_bags = load_json(bags)
+
+if "Ingredient Pouch" not in [_b[0] for _b in b]:
+  my_bags.append(["Ingredient Pouch", {}])
+
+i_pouch = [bag[1] for bag in my_bags if bag[0] == "Ingredient Pouch"]
+adding_ingredient = my_bags[0]["Ingredient Pouch"].get(i_name)
+if not adding_ingredient:
+    i_pouch[0].update({i_name: final_quantity})
+else:
+    i_pouch[0].update({i_name: final_quantity+i_pouch[0][i_name]})
+
+for bag in my_bags:
+    if bag[0] == 'Ingredient Pouch':
+        bag[1] = i_pouch[0]
+me.set_cvar('bags', dump_json(my_bags))
+
+
 return f'{i_str}{roll_str}{recover_str}{result_str}'
 
 </drac2>

@@ -33,7 +33,7 @@
   },
   "poisoner's": {
     "common": {
-      "Serpent's venom": {
+      "Serpent's Venom": {
         "description": " A creature hit with an attack by a weapon coated in this venom must succeed on a DC 11 Constitution saving throw, taking 10 (3d6) poison damage on a failed save, or half as much damage on a successful one.",
         "quantity": "1d3[vials]"
       }
@@ -48,6 +48,10 @@
       "Quipper Scale": {
         "description": "its just a fish scale",
         "quantity": "1d4[scales]"
+      },
+      "Charcoal": {
+        "description": "Burned Wood, made into Charcoal",
+        "quantity": "1d8[briquettes]"
       }
     }
   }

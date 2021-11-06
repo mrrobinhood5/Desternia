@@ -15,7 +15,7 @@
       },
       "Muroosa Balm": {
         "description": "This paste made from the muroosa bush is known to help prevent sunburn, but it is also a fire retardant. After spending 1 minute applying a quarter pint of muroosa balm to your skin, you gain resistance against fire damage for 1 hour.",
-        "ingredients": ["Flask of Oil", "Muroosa Twigs"]
+        "ingredients": ["Oil (Flask)", "Muroosa Twigs"]
       },
       "Willowshade Oil": {
         "description": "A dark blue oil can be extracted from the fruit of the Willowshade plant. A creature can use its action to apply the oil to another creature that has been petrified for less than 1 minute, causing the petrified condition on that creature to end at the start of what would be that creature’s next turn.",
@@ -41,7 +41,7 @@
     "common": {
       "Alchemist's Fire": {
         "description": "This sticky, adhesive fluid ignites when exposed to air. As an action, you can throw this flask up to 20 feet, shattering it on impact. Make a ranged Attack against a creature or object, treating the alchemist's fire as an improvised weapon.\n\nOn a hit, the target takes 1d4 fire damage at the start of each of its turns. A creature can end this damage by using its action to make a DC 10 Dexterity check to extinguish the flames.",
-        "ingredients": ["Fire Elemental Essence", "Flask of Oil"]
+        "ingredients": ["Fire Elemental Essence", "Oil (Flask)"]
       },
       "Grenade, smoke": {
         "description": "As an action, a character can throw a grenade at a point up to 60 feet away. With a grenade launcher, the character can propel the grenade up to 120 feet away.\n\nOne round after a smoke grenade lands, it emits a cloud of smoke that creates a heavily obscured area in a 20-foot radius. A moderate wind (at least 10 miles per hour) disperses the smoke in 4 rounds; a strong wind (20 or more miles per hour) disperses it in 1 round.",
