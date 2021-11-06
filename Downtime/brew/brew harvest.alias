@@ -176,7 +176,7 @@ if "Ingredient Pouch" not in [bag[0] for bag in my_bags]:
   my_bags.append(["Ingredient Pouch", {}])
 
 i_pouch = [bag[1] for bag in my_bags if bag[0] == "Ingredient Pouch"]
-adding_ingredient = my_bags[0]["Ingredient Pouch"].get(i_name)
+adding_ingredient = i_pouch[0]["Ingredient Pouch"].get(i_name)
 if not adding_ingredient:
     i_pouch[0].update({i_name: final_quantity})
 else:
