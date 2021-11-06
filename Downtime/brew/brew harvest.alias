@@ -82,22 +82,6 @@ if i_tk not in bags.lower():
     return returnstr
 
 # check for proficiencies in that toolkit
-if not exists("pTools") and not exists("eTools"):
-    pError = True
-if exists("pTools"):
-   if i_tk.lower() not in pTools.lower():
-       pError = True
-   else:
-       tk_prof = f'+{proficiencyBonus}'
-if exists("eTools"):
-    if i_tk.lower() not in eTools.lower():
-        eError = True
-    else:
-        tk_prof = f'+{proficiencyBonus * 2}'
-if pError and eError:
-
-    return returnstr
-
 if not exists("pTools"):
     pError = True
 if exists("pTools"):
@@ -171,23 +155,20 @@ result_str += f'XP: `xx` earned "'
 
 # add stuff to bags
 my_bags = load_json(bags)
-
 if "Ingredient Pouch" not in [bag[0] for bag in my_bags]:
   my_bags.append(["Ingredient Pouch", {}])
-
 i_pouch = [bag[1] for bag in my_bags if bag[0] == "Ingredient Pouch"]
 adding_ingredient = i_pouch[0].get(i_name)
 if not adding_ingredient:
     i_pouch[0].update({i_name: final_quantity})
 else:
     i_pouch[0].update({i_name: final_quantity+i_pouch[0][i_name]})
-
 for bag in my_bags:
     if bag[0] == 'Ingredient Pouch':
         bag[1] = i_pouch[0]
 me.set_cvar('bags', dump_json(my_bags))
 
-
+# return the thing
 return f'{i_str}{roll_str}{recover_str}{result_str}'
 
 </drac2>
