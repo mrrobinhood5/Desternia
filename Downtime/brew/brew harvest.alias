@@ -42,6 +42,10 @@ recover_str = ''
 result_str = ''
 recover = ["The ingredients are destroyed","Only half were recovered", "Only a quarter were recovered", "All were recovered"]
 final_quantity = 0
+default_cvar_dtv2 = {}
+
+# load DTTv2 or
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
 current_dtt = load_json(DTTv2)
 
 # help file
