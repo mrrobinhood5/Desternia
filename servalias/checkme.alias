@@ -14,53 +14,11 @@ if exists("size"):
 else:
     returnstr += f'-f "Race Check|You have no race set up. Run `!setrace {me.race}` :no_entry_sign:" \n'
 
+# check for hill dward race
+if "hill" in me.race.lower():
+    me_hp += int(level)
+
 #SubClassCheck
-# Load list of classes that dont require a subclass at current level
-class_info = load_json(get_gvar("8d407dd7-2f99-4acd-b42f-81a7ab78bbb3"))
-for (c, l) in me.levels:
-    if c in class_info:
-        me_hp += int((l * me.skills.constitution.value) + (((class_info[c][1]/2) + 1) * (l - 1)) + class_info[c][1])
-        if l < class_info[c][0]:
-            ClassNotRequired = True
-        else:
-            ClassNotRequired = False
-
-# lookup hitdice by class
-if me_hp != hp:
-    returnstr += f'-f "HP Check| Your HP is `{hp}` and should be `{me_hp}` :no_entry_sign:"\n'
-else:
-    returnstr += f'-f "HP Check| Your HP is `{hp}` and should be `{me_hp}` :white_check_mark:"\n'
-
-# check your point buy
-ability_scores_byrace = load_json(get_gvar("22b492a7-5a23-40c7-bf32-1839928a12c5"))
-i = 0
-ab_sum = 0
-new_ab_scores = []
-SCORE = [8, 9, 10, 11, 12, 13, 14, 15]
-COST = [0, 1, 2, 3, 4, 5, 7, 9]
-SKILLS = [strength, dexterity, constitution, intelligence, wisdom, charisma]
-# error check if we cannot calculate:
-if me.race not in ability_scores_byrace.keys():
-    returnstr += f'-f "Ability Scores|Your race is not in the Ability Score DB. Itll have to be manually checked."\n'
-elif me.levels.total_level > 3:
-    returnstr += f'-f "Ability Scores| Only available for Level 3s or below. Sowwy"\n'
-else:
-    if ability_scores_byrace[me.race] == []:
-        returnstr += f'-f "Ability Scores|Your scores cannot be calculated for this race, itll have to be manually checked"\n'
-    else:
-        for _ in SKILLS:
-            new_ab_scores.append( _ - ability_scores_byrace[me.race][i])
-            i += 1
-        for _ in new_ab_scores:
-            if _ > 15:
-                returnstr += f'-f "Ability Scores|One of your scores is above the legal limit. Recalculate. :no_entry_sign:"\n'
-            else:
-                ab_sum += COST[SCORE.index(_)]
-        if ab_sum != 27:
-            returnstr += f'-f "Ability Scores| Your point buy is `{ab_sum}` :no_entry_sign:"\n'
-        else:
-            returnstr += f'-f "Ability Scores| Your point buy is `{ab_sum}` :white_check_mark:"\n'
-
 if exists("subclass"):
     s_class = load_json(subclass).values()
     for sclass in s_class:
@@ -79,6 +37,55 @@ else:
         returnstr += f'-f "Subclass Check|You dont require a sublass yet. :white_check_mark: "\n'
     else:
         returnstr += f'-f "Subclass Check|You have no sublcass set up. Run `!level [class] # [subclass]` :no_entry_sign:"\n'
+
+
+# Load list of classes that dont require a subclass at current level
+class_info = load_json(get_gvar("8d407dd7-2f99-4acd-b42f-81a7ab78bbb3"))
+for (c, l) in me.levels:
+    if c in class_info:
+        me_hp += int((l * me.skills.constitution.value) + (((class_info[c][1]/2) + 1) * (l - 1)) + class_info[c][1])
+        if l < class_info[c][0]:
+            ClassNotRequired = True
+        else:
+            ClassNotRequired = False
+
+# lookup hitdice by class
+if me_hp != hp:
+    returnstr += f'-f "HP Check| Your HP is `{hp}` and should be `{me_hp}` :no_entry_sign:"\n'
+else:
+    returnstr += f'-f "HP Check| Your HP is `{hp}` and should be `{me_hp}` :white_check_mark:"\n'
+
+# # check your point buy
+# ability_scores_byrace = load_json(get_gvar("22b492a7-5a23-40c7-bf32-1839928a12c5"))
+# i = 0
+# ab_sum = 0
+# new_ab_scores = []
+# SCORE = [8, 9, 10, 11, 12, 13, 14, 15]
+# COST = [0, 1, 2, 3, 4, 5, 7, 9]
+# SKILLS = [strength, dexterity, constitution, intelligence, wisdom, charisma]
+# # error check if we cannot calculate:
+# if me.race not in ability_scores_byrace.keys():
+#     returnstr += f'-f "Ability Scores|Your race is not in the Ability Score DB. Itll have to be manually checked."\n'
+# elif me.levels.total_level > 3:
+#     returnstr += f'-f "Ability Scores| Only available for Level 3s or below. Sowwy"\n'
+# else:
+#     if ability_scores_byrace[me.race] == []:
+#         returnstr += f'-f "Ability Scores|Your scores cannot be calculated for this race, itll have to be manually checked"\n'
+#     else:
+#         for _ in SKILLS:
+#             new_ab_scores.append( _ - ability_scores_byrace[me.race][i])
+#             i += 1
+#         for _ in new_ab_scores:
+#             if _ > 15:
+#                 returnstr += f'-f "Ability Scores|One of your scores is above the legal limit. Recalculate. :no_entry_sign:"\n'
+#             else:
+#                 ab_sum += COST[SCORE.index(_)]
+#         if ab_sum != 27:
+#             returnstr += f'-f "Ability Scores| Your point buy is `{ab_sum}` :no_entry_sign:"\n'
+#         else:
+#             returnstr += f'-f "Ability Scores| Your point buy is `{ab_sum}` :white_check_mark:"\n'
+
+
 # LangCehck
 missing_langs = []
 returnstr += f'-f "Language Check|'
