@@ -128,13 +128,14 @@ else:
 
 # load your DTv2, and grab the info on the current recipe
 downtime_data = load_json(DTv2)
+
 # check to see if brew learn is present, if not, add this recipe progress
 if not downtime_data.get("brew learn"):
-    downtime_data.update({"brew learn": {recipe_name: 1}})
+    downtime_data.update({"brew learn": {recipe_name: 0}})
 else:
     # if brew learn is present, check to see if recipe is present if not add it
     if not downtime_data["brew learn"].get(recipe_name):
-        downtime_data["brew learn"].update({recipe_name: 1})
+        downtime_data["brew learn"].update({recipe_name: 0})
 
 # check to see if you are done
 if downtime_data["brew learn"][recipe_name] >= days_to_learn:
