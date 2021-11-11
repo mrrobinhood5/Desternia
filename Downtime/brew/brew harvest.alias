@@ -195,7 +195,7 @@ me.set_cvar('bags', dump_json(my_bags))
 # add the XP
 my_xp = load_json(xplog)
 my_xp.update({timestamp: f'+50 !brew harvest'})
-dump_json("xplog", my_xp)
+me.set_cvar("xplog", dump_json(my_xp))
 me.mod_cc("Experience", 50)
 
 # return the thing
