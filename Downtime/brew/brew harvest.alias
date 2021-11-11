@@ -122,6 +122,7 @@ i_str += f'**Description**: {i_desc}\n'
 i_str += f'**DC**: `{dc}`"'
 
 # roll string
+final_quantity = quantity_roll.total
 roll_str += f' -f "Locating Roll|'
 roll_str += f'**Wisdom**: {locating_roll.full} ' \
             f'{":white_check_mark:" if locating_pass else ":no_entry_sign:"}"'
@@ -131,7 +132,7 @@ if locating_pass:
                 f'{":white_check_mark:" if harvesting_pass else ":no_entry_sign:"}'
     if harvesting_pass:
         roll_str += f'\n**Quantity**: {quantity_roll.full}'
-        final_quantity = quantity_roll.total
+
     roll_str += '"'
 
 # if recover roll is required
@@ -144,6 +145,8 @@ if locating_pass and not harvesting_pass:
         final_quantity = floor(final_quantity/2)
     elif recover_roll.total == 3:
         final_quantity = floor(final_quantity/4)
+    else:
+        final_quantity = final_quantity
 
 # results
 result_str += f' -f "Results|'
