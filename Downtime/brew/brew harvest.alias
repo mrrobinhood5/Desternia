@@ -1,8 +1,31 @@
 tembed -color <color> -thumb <image> -footer "Usage - !brew harvest [ingredient]"
 
+
+<drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+
 <drac2>
 
-# at some point the ingredients get added to the bag
 # then the XP for this gets added
 # and the downtime log gets added to DTTv2
 # recipe learning needs to happen first, otherswise why whould you be gatherin ingredients
@@ -130,9 +153,7 @@ if locating_pass:
     roll_str += f' -f "Harvesting Roll|'
     roll_str += f'**Intelligence**: {harvesting_roll.full}' \
                 f'{":white_check_mark:" if harvesting_pass else ":no_entry_sign:"}'
-    if harvesting_pass:
-        roll_str += f'\n**Quantity**: {quantity_roll.full}'
-
+    roll_str += f'\n**Quantity**: {quantity_roll.full}'
     roll_str += '"'
 
 # if recover roll is required
@@ -154,7 +175,7 @@ if not locating_pass:
     result_str += f'You could not locate the desired ingredient. Try again tomorrow"'
     return f'{i_str}{roll_str}{recover_str}{result_str}'
 result_str += f'Harvest sucessful.\n`{final_quantity} {i_name}` added to your bags.\n\n'
-result_str += f'XP: `xx` earned "'
+result_str += f'XP: `50` earned "'
 
 # add stuff to bags
 my_bags = load_json(bags)
@@ -170,6 +191,12 @@ for bag in my_bags:
     if bag[0] == 'Ingredient Pouch':
         bag[1] = i_pouch[0]
 me.set_cvar('bags', dump_json(my_bags))
+
+# add the XP
+my_xp = load_json(xplog)
+my_xp.update({timestamp: f'+50 !brew harvest'})
+dump_json("xplog", my_xp)
+me.mod_cc("Experience", 50)
 
 # return the thing
 return f'{i_str}{roll_str}{recover_str}{result_str}'
