@@ -8,7 +8,8 @@ returnstr = ''
 args = &ARGS&
 your_kit = "herbalism"
 toolkits = ["herbalism", "poisoner's", "alchemist's"]
-rarities = [("common",2),("uncommon",4), ("rare",5), ("very rare", 6)]
+# rarities format: rarity, level
+rarities = [("common",2),("uncommon",3), ("rare",5), ("very rare", 6)]
 
 # build recipe lists
 for c, g in enumerate(gvars):
