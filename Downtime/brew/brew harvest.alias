@@ -25,9 +25,6 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 </drac2>
 
 <drac2>
-
-# then the XP for this gets added
-# and the downtime log gets added to DTTv2
 # recipe learning needs to happen first, otherswise why whould you be gatherin ingredients
 me = character()
 returnstr = ''
@@ -45,6 +42,7 @@ recover_str = ''
 result_str = ''
 recover = ["The ingredients are destroyed","Only half were recovered", "Only a quarter were recovered", "All were recovered"]
 final_quantity = 0
+current_dtt = load_json("DTTv2")
 
 # help file
 if not args:
@@ -62,6 +60,10 @@ if not args:
 search_str = " ".join(&ARGS&)
 returnstr += f' -title "Brew - Harvesting"'
 
+# check to see if they have done DT today
+if timestamp in current_dtt.keys():
+    returnstr += f' -f "Downtime Error|Youve done Downtime for today, try again tomorrow.`"'
+    return returnstr
 
 # build ingredient lists
 for c, g in enumerate(gvars):
@@ -197,6 +199,10 @@ my_xp = load_json(xplog)
 my_xp.update({timestamp: f'+50 !brew harvest'})
 me.set_cvar("xplog", dump_json(my_xp))
 me.mod_cc("Experience", 50)
+
+# add the downtime key
+current_dtt.update({timestamp:["brew harvest", final_quantity]})
+me.set_cvar("DTTv2", dump_json(current_dtt))
 
 # return the thing
 return f'{i_str}{roll_str}{recover_str}{result_str}'
