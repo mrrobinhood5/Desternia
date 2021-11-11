@@ -27,7 +27,7 @@ timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
 returnstr = f' -title "Downtime - Recipe - Learn" -footer "Usage - !brew recipe learn [recipe name]"'
 me = character()
 args = &ARGS&
-# rarities format: "rarity", min_level, gp_cost, days_to_learn
+# rarities format: "rarity", prof bonus, gp_cost, days_to_learn
 rarities = [("common",2, 50, 1),("uncommon",3, 250, 5), ("rare",5, 500, 10), ("very rare", 6, 1000, 30)]
 known_recipes = []
 search_str = " ".join(&ARGS&) if args else ""
@@ -62,7 +62,7 @@ if not args:
     return returnstr
 
 # cannot learn any more
-if known_recipes >= level:
+if len(known_recipes) >= int(level):
     returnstr += f' -f "Error| You already know the maximum amount of recipes. You gotta level up."'
 
 # build recipe lists
