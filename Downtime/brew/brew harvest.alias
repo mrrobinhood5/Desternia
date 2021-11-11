@@ -66,7 +66,7 @@ returnstr += f' -title "Brew - Harvesting"'
 
 # check to see if they have done DT today
 if timestamp in current_dtt.keys():
-    returnstr += f' -f "Downtime Error|Youve done Downtime for today, try again tomorrow.`"'
+    returnstr += f' -f "Downtime Error|You\'ve done Downtime for today, try again tomorrow."'
     return returnstr
 
 # build ingredient lists
