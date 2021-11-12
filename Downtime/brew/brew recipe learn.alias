@@ -112,7 +112,7 @@ else: # recipe found
                 recipe_name = _name
                 for _k, _v in _data.items():
                     if typeof(_v) == "SafeList":
-                        returnstr += f'**{_k.title()}**: `{_v}`\n'
+                        returnstr += f'**{_k.title()}**: `{[_ for _ in _v]}`\n'
                     else:
                         returnstr += f'**{_k.title()}**: {_v}\n'
 returnstr += '"\n------\n'
