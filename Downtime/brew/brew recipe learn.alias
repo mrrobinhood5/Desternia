@@ -39,6 +39,7 @@ recipe_cost = 0
 recipe_name = ""
 default_cvar_dtv2 = {}
 days_to_learn = 0
+can_learn = False
 
 #load JSON
 me.set_cvar_nx("DTv2", default_cvar_dtv2)
@@ -91,6 +92,12 @@ for _tk, _a in recipe_list.items():
                 recipe_cost = [_r[2] for _r in rarities if _r[0] == _rarity][0]
                 days_to_learn = [_r[3] for _r in rarities if _r[0] == _rarity][0]
                 can_afford = my_gp >= recipe_cost
+                can_learn = True if _rarity in available_recipes else False
+
+# check to see if you are able to learn this
+if not can_learn:
+    returnstr += f' -f "Error|You cannot learn a recipe of this rarity. Level up."'
+    return returnstr
 
 # check to see if you have any DTT left for today
 downtimes = load_json(DTTv2)
