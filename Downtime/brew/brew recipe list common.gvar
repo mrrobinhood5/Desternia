@@ -3,7 +3,7 @@
     "common": {
       "Antitoxin": {
         "description": "A creature that drinks this vial of liquid gains advantage on saving throws against poison for 1 hour. It confers no benefit to undead or constructs.",
-        "ingredients": ["Everfrost Berries", "Cat's Tongue"]
+        "ingredients": ["Everfrost Berries", "Cats Tongue"]
       },
       "Potion of Healing": {
         "description": "You regain 2d4 + 2 hit points when you drink this potion. The potion's red liquid glimmers when agitated. It confers no benefit to undead or constructs.",

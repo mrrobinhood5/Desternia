@@ -1,7 +1,7 @@
 {
   "herbalism": {
     "common": {
-      "Cat's Tongue": {
+      "Cats Tongue": {
         "description": "This mid-sized herbaceous plant has bundles of small, 5 bladed, purple/white flowers that quickly turn and ripen into fig sized pods. The pods have a slightly toxic outer shell revealing an inner fruit that has a tard taste and great nutritional properties.",
         "quantity": "2d4[pods]"
       },

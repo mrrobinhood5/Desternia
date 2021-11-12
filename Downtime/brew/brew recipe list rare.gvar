@@ -35,7 +35,7 @@
       },
       "Potion of Heroism": {
         "description": "For 1 hour after drinking it, you gain 10 temporary hit points that last for 1 hour. For the same duration, you are under the effect of the bless spell (no concentration required). This blue potion bubbles and steams as if boiling.",
-        "ingredients": ["Hagfinger", "Cat's Tongue"]
+        "ingredients": ["Hagfinger", "Cats Tongue"]
       },
       "Potion of Invulnerability": {
         "description": "For 1 minute after you drink this potion, you have Resistance to all damage. The potion's syrupy liquid looks like liquefied iron.",
