@@ -1,0 +1,156 @@
+tembed -color <color> -thumb <image> -footer "Usage - !brew item [recipe]"
+
+<drac2>
+calendar=load_json(get_gvar("1aec09a0-9e25-4700-9c2d-42d79cb0163b"))
+hourOffset=calendar.get('hourOffset',0)+int(get('timezone',0))
+baseYear=calendar.get("yearOffset",1970)
+Time=time()+(3600*hourOffset)
+totalDayCount=int((Time)//86400)
+yearsPassed=totalDayCount//calendar.length
+numLeapYears=len([x for x in range(baseYear,baseYear+yearsPassed-4) if x//calendar.get('leapCycle',4)==x/calendar.get('leapCycle',4)]) if calendar.get('leapCycle') else 0
+yearStartDay=yearsPassed*calendar.length+numLeapYears
+totalDays=totalDayCount-yearStartDay
+year=int((totalDayCount-numLeapYears-1)//calendar.length)+baseYear
+isLeapYear=year//calendar.get('leapCycle',4)==year/calendar.get('leapCycle',4) if numLeapYears else 0
+calendarDay=totalDays%(calendar.length+isLeapYear) or calendar.length+isLeapYear
+hour=int(Time%86400//3600)
+minute=int(Time%86400%3600//60)
+second=int(Time%86400%3600%60)
+monthLengths=[x.length+(isLeapYear and x.name==calendar.get('leapMonth','February')) for x in calendar.months]
+day,month=calendarDay,1
+[(day:=day-monthLengths[x],month:=month+1) for x in range(len(monthLengths)) if month>x and day>monthLengths[x]]
+#timestamp=f'{month:02}/{day:02}/{str(year)[2:]} ({hour:02}:{minute:02}:{second:02})'
+timestamp=f'{month:02}.{day:02}.{str(year)[2:]}'
+</drac2>
+
+<drac2>
+me = character()
+returnstr = ''
+args = &ARGS&
+gvars = load_json(get_svar("brew_recipes"))
+# rarities format: "rarity", prof bonus, gp_cost, days_to_learn, DC
+rarities = [("common",2, 50, 1, 10),("uncommon",3, 250, 5, 15), ("rare",5, 500, 10, 20), ("very rare", 6, 1000, 30, 25)]
+pError, eError = False, False
+
+
+# check your known recipes
+if exists("brew_recipes"):
+    my_recipes = load_json(brew_recipes)
+else:
+    my_recipes = False
+
+# load your bags
+my_bags = load_json(bags)
+if "Ingredient Pouch" not in [bag[0] for bag in my_bags]:
+    returnstr += f' -f "Error|You do not have any ingredients, have you harvested with `!brew harvest [ingredient]`"'
+    return returnstr
+
+# load the ingredient Pouch
+i_pouch = [bag[1] for bag in my_bags if bag[0] == "Ingredient Pouch"]
+
+# default screen
+if not args:
+    returnstr += f' -t 201'
+    returnstr += f' -f "Info| If you are trying to brew a known recipe, you need to specify which one. `!brew item [recipe]`"'
+    returnstr += f' -f "Known Recipes | You know the following recipes\n'
+    returnstr += f'```{"None" if not my_recipes else my_recipes} ```"'
+    returnstr += f' -f "Ingredients | You have the following ingredients\n'
+    returnstr += f'```{i_pouch.items()} ```"'
+    return returnstr
+
+# if you do not know any recipes, and try to brew
+if not my_recipes:
+    returnstr += f' -f "Recipe Error|You don\'t know any recipes, learn with `!brew recipe learn [recipe]`"'
+    return returnstr
+
+#load JSON
+me.set_cvar_nx("DTv2", default_cvar_dtv2)
+me.set_cvar_nx("DTTv2", default_cvar_dtv2)
+current_dtt = load_json(DTTv2)
+current_dt = load_json(DTv2)
+
+# return str
+search_str = " ".join(&ARGS&)
+returnstr += f' -title "Brew - Brewing!!"'
+
+# check to see if they have done DT today
+# if timestamp in current_dtt.keys():
+#     returnstr += f' -f "Downtime Error|You\'ve done Downtime for today, try again tomorrow."'
+#     return returnstr
+
+# build recipe lists
+for c, g in enumerate(gvars):
+    if not c:
+        recipe_list = (load_json(get_gvar(g)))
+    else:
+        _r = (load_json(get_gvar(g)))
+        for k in recipe_list.keys():
+            if k in _r.keys():
+                recipe_list[k].update(_r[k])
+
+# load your coin amount in GP
+my_bags = load_json(bags)
+coin_pouch = [bag[1] for bag in my_bags if bag[0] == 'Coin Pouch']
+my_gp = 0
+for _c, _a in coin_pouch[0].items():
+    my_gp += _a * .01 if _c == 'cp' else _a * .10 if _c == 'sp' else _a * .5 if _c == 'ep' else _a * 10 if _c == 'pp' else _a
+
+# lookup searchstring to see if you know this
+if search_str not in my_recipes.lower():
+    returnstr += f' -f "Error|You do not know this recipe. Learn it with `!brew recipe learn [recipe]`"'
+    return returnstr
+
+# lookup the searchstring, and grab the recipe
+for _tk, _a in recipe_list.items():
+    i_tk = _tk
+    for _rarity, _recipe in _a.items():
+        for _name, _data in _recipe.items():
+            if search_str.lower() in _name.lower():
+                recipe = {_tk:{_rarity:{_name: _data}}}
+                potion_cost = [_r[2] for _r in rarities if _r[0] == _rarity][0]
+                days_to_craft = [_r[3] for _r in rarities if _r[0] == _rarity][0]
+                dc = [_r[4] for _r in rarities if _r[0] == _rarity][0]
+                can_afford = my_gp >= potion_cost
+
+# first check is to see if you have the toolkit in your bag
+if i_tk not in bags.lower():
+    returnstr += f' -f "ToolKit Error|You dont own that toolkit in your bag. If this is an error, add it to `!qb {i_tk}`"'
+    return returnstr
+
+# check for proficiencies in that toolkit
+if not exists("pTools"):
+    pError = True
+if exists("pTools"):
+   if i_tk.lower() not in pTools.lower():
+       pError = True
+   else:
+       tk_prof = f'+{proficiencyBonus}'
+if not exists("eTools"):
+    eError = True
+if exists("eTools"):
+    if i_tk.lower() not in eTools.lower():
+        eError = True
+    else:
+        tk_prof = f'+{proficiencyBonus * 2}'
+        eError = False
+if pError and eError:
+    returnstr += f' -f "Proficiency Error|You don\'t have the required proficiencies! If this is a mistake, add proficiency with `!tool pro {i_tk}` or expertise with `!tool exp {i_tk}`"'
+    return returnstr
+
+# if you cannot afford, end it here or deduct recipe cost
+if not can_afford:
+    returnstr += f' -f "Error|You do not have enough gold to brew this potion. Go make some money money."'
+    return returnstr
+
+# check to see if you have all the ingredients
+returnstr += f' -f "Ingredients|All ingredients found"'
+
+return returnstr
+
+# add the XP
+# deduct the gold
+# update DTv2 and DTTv2
+# deduct the ingredient and write bag back to cvar
+# if finished, add the potion to bag
+
+</drac2>
