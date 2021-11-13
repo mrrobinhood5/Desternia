@@ -116,6 +116,7 @@ for _tk, _a in recipe_list.items():
                 days_to_craft = [_r[3] for _r in rarities if _r[0] == _rarity][0]
                 dc = [_r[4] for _r in rarities if _r[0] == _rarity][0]
                 can_afford = my_gp >= potion_cost
+                r_ingredients = [_i if "ingredients" == _name for _i in _data]
 
 # first check is to see if you have the toolkit in your bag
 if i_tk not in bags.lower():
@@ -148,7 +149,7 @@ if not can_afford:
     return returnstr
 
 # check to see if you have all the ingredients
-returnstr += f' -f "Recipe|Requires {recipe["ingredients"]}"'
+returnstr += f' -f "Recipe|Requires {r_ingredients}"'
 returnstr += f' -f "Ingredients|All ingredients found"'
 
 return returnstr
