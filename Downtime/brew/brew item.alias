@@ -116,8 +116,9 @@ for _tk, _a in recipe_list.items():
                 days_to_craft = [_r[3] for _r in rarities if _r[0] == _rarity][0]
                 dc = [_r[4] for _r in rarities if _r[0] == _rarity][0]
                 can_afford = my_gp >= potion_cost
-                if "ingredients" == _name:
-                    r_ingredients = [_i for _i in _data]
+                for _xx, _yy in _data.items():
+                    if "ingredients" == _xx:
+                        r_ingredients = [_i for _i in _yy]
 
 # first check is to see if you have the toolkit in your bag
 if i_tk not in bags.lower():
