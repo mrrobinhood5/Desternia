@@ -101,7 +101,7 @@ for _c, _a in coin_pouch[0].items():
     my_gp += _a * .01 if _c == 'cp' else _a * .10 if _c == 'sp' else _a * .5 if _c == 'ep' else _a * 10 if _c == 'pp' else _a
 
 # lookup searchstring to see if you know this
-if search_str not in [r.lower() for r in my_recipes]:
+if search_str.lower() not in str(my_recipes).lower():
     returnstr += f' -f "Error|You do not know this recipe. Learn it with `!brew recipe learn [recipe]`"'
     return returnstr
 
@@ -148,6 +148,7 @@ if not can_afford:
     return returnstr
 
 # check to see if you have all the ingredients
+returnstr += f' -f "Recipe|Requires {recipe["ingredients"]}"'
 returnstr += f' -f "Ingredients|All ingredients found"'
 
 return returnstr
