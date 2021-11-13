@@ -58,7 +58,10 @@ if not args:
     returnstr += f' -f "Known Recipes | You know the following recipes\n'
     returnstr += f'```{"None" if not my_recipes else my_recipes} ```"'
     returnstr += f' -f "Ingredients | You have the following ingredients\n'
-    returnstr += f'```{str(i_pouch.keys())}```"'
+    returnstr += f'```'
+    for i, q in i_pouch[0].items():
+        returnstr += f'{q}: {i}\n'
+    returnstr += f'```"'
     return returnstr
 
 # if you do not know any recipes, and try to brew
