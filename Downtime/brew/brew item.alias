@@ -32,6 +32,9 @@ gvars = load_json(get_svar("brew_recipes"))
 rarities = [("common",2, 50, 1, 10),("uncommon",3, 250, 5, 15), ("rare",5, 500, 10, 20), ("very rare", 6, 1000, 30, 25)]
 pError, eError = False, False
 
+# return str
+search_str = " ".join(&ARGS&)
+returnstr += f' -title "Brew - Brewing!!"'
 
 # check your known recipes
 if exists("brew_recipes"):
@@ -55,7 +58,7 @@ if not args:
     returnstr += f' -f "Known Recipes | You know the following recipes\n'
     returnstr += f'```{"None" if not my_recipes else my_recipes} ```"'
     returnstr += f' -f "Ingredients | You have the following ingredients\n'
-    returnstr += f'```{i_pouch.items()} ```"'
+    returnstr += f'```{str(i_pouch.keys())}```"'
     return returnstr
 
 # if you do not know any recipes, and try to brew
@@ -69,9 +72,7 @@ me.set_cvar_nx("DTTv2", default_cvar_dtv2)
 current_dtt = load_json(DTTv2)
 current_dt = load_json(DTv2)
 
-# return str
-search_str = " ".join(&ARGS&)
-returnstr += f' -title "Brew - Brewing!!"'
+
 
 # check to see if they have done DT today
 # if timestamp in current_dtt.keys():
